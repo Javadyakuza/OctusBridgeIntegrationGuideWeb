@@ -3,15 +3,15 @@
 1. Deposit desired amount of the target token that is going to be transferred to the EVERSCALE in a contract named `MultiVault` which is in the origin EVM network.
 
 2. Through the previous operation, two events will be emitted. one of them is always `Deposit` and another one depended on the situation is either `AlienTransfer` or `NativeTransfer`.\
-   see [alien ERC-20 token approve ](./concepts.md#approving-alien-erc-20-tokens).
+   see [alien ERC-20 token approve ](./Concepts/Operations.md#approving-alien-erc-20-tokens).
 3. Once depositing the target token to MultiVault is done, it's time for deploying an event Contract on the Everscale network.\
    relayers will vote on event contract and confirm the deposit in evm network.\
    Now the event contract is confirmed, following steps can be performed based on the situation :
 
-   - 3.1: If the user at the time of deposit wanted to pay the EVERSCALE [operations](./concepts.md#ever-network-operations) gas fees with the origin EVM network native coin, user must attach enough evm native coin to tx, the [credit backend](./concepts.md#credit-backend) will equalizes balances on both sides and deploys the event contract.
-     In order to perform such a operation, besides attaching sufficient value to tx, we must set [expexte_evers](./concepts.md#event-contract-deploy-value-expected_evers) to a [certain amount](FAQ.md#how-to-set-expected_evers).
+   - 3.1: If the user at the time of deposit wanted to pay the EVERSCALE [operations](./Concepts/Operations.md#ever-network-operations) gas fees with the origin EVM network native coin, user must attach enough evm native coin to tx, the [credit backend](./Concepts/CreditBackend.md#credit-backend) will equalizes balances on both sides and deploys the event contract.
+     In order to perform such a operation, besides attaching sufficient value to tx, we must set [expexte_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) to a [certain amount](FAQ.md#how-to-set-expected_evers).
 
-   - 3.2: If the user has chosen to pay the EVERSCALE [operations](./concepts.md#ever-network-operations) gas fee with ever, which is operable by not attaching enough evm native coin and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers the token will be released if ever native Token and minted if ever alien token.
+   - 3.2: If the user has chosen to pay the EVERSCALE [operations](./Concepts/Operations.md#ever-network-operations) gas fee with ever, which is operable by not attaching enough evm native coin and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers the token will be released if ever native Token and minted if ever alien token.
 
 > NOTICE : All of the referenced contracts addresses can be found at [addresses.md](./addresses.md).
 
@@ -40,13 +40,13 @@
   }
   ```
 
-  | param          | description                                                                    |
-  | -------------- | ------------------------------------------------------------------------------ |
-  | recipient      | ever address of recipient                                                      |
-  | token          | target token                                                                   |
-  | amount         | amount of the target token                                                     |
-  | expected_evers | see [expected_evers](./concepts.md#event-contract-deploy-value-expected_evers) |
-  | payload        | operational payload, see [payloads](./concepts.md#payloads)                    |
+  | param          | description                                                                               |
+  | -------------- | ----------------------------------------------------------------------------------------- |
+  | recipient      | ever address of recipient                                                                 |
+  | token          | target token                                                                              |
+  | amount         | amount of the target token                                                                |
+  | expected_evers | see [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) |
+  | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
 - 1.2: If target token was the EVM network native coin, we must use `depositByNativeToken` on `MultiVault` contract and attach the desired amount of the native coin equal to it's amount parameter to tx:
 
@@ -69,12 +69,12 @@ struct DepositNativeTokenParams {
 }
 ```
 
-| param          | description                                                                    |
-| -------------- | ------------------------------------------------------------------------------ |
-| recipient      | ever address of recipient                                                      |
-| amount         | amount of native coin                                                          |
-| expected_evers | see [expected_evers](./concepts.md#event-contract-deploy-value-expected_evers) |
-| payload        | operational payload, see [payloads](./concepts.md#payloads)                    |
+| param          | description                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------- |
+| recipient      | ever address of recipient                                                                 |
+| amount         | amount of native coin                                                                     |
+| expected_evers | see [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) |
+| payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
 ### NOTE : Continue if paying the EVERSCALE network operations with its native coin !!
 
@@ -104,7 +104,7 @@ struct EthereumEverscaleEventVoteData {
 }
 ```
 
-The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../EVER-TO-EVM/scripts/deployEvents/).
+The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../scripts/deployEvents/).
 
 | param            | description           |
 | ---------------- | --------------------- |

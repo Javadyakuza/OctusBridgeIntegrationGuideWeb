@@ -83,6 +83,25 @@ module.exports = {
           },
         ],
       },
+      {
+        text: 'Concepts',
+        collapsable: true,
+        items: [
+          { text: 'Token Types', collapsable: false, link: '/docs/Concepts/TokenTypes.md' },
+          { text: 'Operations', collapsable: false, link: '/docs/Concepts/Operations.md' },
+          { text: 'Events', collapsable: false, link: '/docs/Concepts/Events.md' },
+          { text: 'Credit Backend', collapsable: false, link: '/docs/Concepts/CreditBackend.md' },
+          { text: 'Payloads', collapsable: false, link: '/docs/Concepts/Payloads.md' },
+        ],
+      },
+      {
+        text: 'Addresses',
+        collapsable: true,
+      },
+      {
+        text: 'FAQ',
+        collapsable: true,
+      },
     ],
 
     socialLinks: [{ icon: 'github', link: GITHUB_URL }],
