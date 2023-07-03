@@ -2,7 +2,7 @@ import vue from '@vitejs/plugin-vue';
 
 const HELP_URL = 'https://t.me/everdev';
 const FEEDBACK_URL = 'n';
-const GITHUB_URL = 'n';
+const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
 
 module.exports = {
   title: 'OctusBridge',
@@ -22,35 +22,64 @@ module.exports = {
       {
         text: 'Introduction',
         link: '/',
-        items: [
-          {
-            text: ' OctusBridge Integration Guide',
-            collapsable: false,
-            link: './Docs/Introduction.md',
-          },
-        ],
       },
       {
-        text: 'Guide',
+        text: 'Mechanics',
         collapsable: false,
 
         items: [
           {
-            text: 'Sample Page',
+            text: 'EVER to EVM',
             collapsable: false,
-            link: '/guides/sample-guide.md',
+            link: '/docs/EVER-to-EVM.md',
+          },
+          {
+            text: 'EVM to EVER',
+            collapsable: false,
+            link: '/docs/EVM-to-EVER.md',
           },
         ],
       },
       {
-        text: 'API Reference',
+        text: 'Work-Flow-Visuals',
         collapsable: false,
-
         items: [
           {
-            text: 'Sample Page',
+            text: 'EVER to EVM',
             collapsable: false,
-            link: '/api-reference/sample-page.md',
+            items: [
+              {
+                text: 'Transfer Everscale Native Coin EVER',
+                collapsable: false,
+                link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
+              },
+              {
+                text: 'Transfer Everscale Native Token BRIDGE',
+                collapsable: false,
+                link: '/docs/Visual-Guide/EVER-TO-EVM/2.md',
+              },
+              {
+                text: 'Transfer Everscale Alien Token USDT',
+                collapsable: false,
+                link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
+              },
+            ],
+          },
+          {
+            text: 'EVM to EVER',
+            collapsable: false,
+            items: [
+              {
+                text: 'Transfer Evm Native Coin BNB',
+                collapsable: false,
+                link: '/docs/Visual-Guide/EVM-TO-EVER/1.md',
+              },
+              {
+                text: 'Transfer Evm Alien Token USDT',
+                collapsable: false,
+                link: '/docs/Visual-Guide/EVM-TO-EVER/2.md',
+              },
+            ],
           },
         ],
       },
