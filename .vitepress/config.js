@@ -19,7 +19,17 @@ module.exports = {
       { text: 'Community', link: HELP_URL },
     ],
     sidebar: [
-      { text: 'Introduction', link: '/' },
+      {
+        text: 'Introduction',
+        link: '/',
+        items: [
+          {
+            text: ' OctusBridge Integration Guide',
+            collapsable: false,
+            link: './Docs/Introduction.md',
+          },
+        ],
+      },
       {
         text: 'Guide',
         collapsable: false,
