@@ -6,11 +6,14 @@
     </button>
     <button v-else @click="requestPermissions">Connect EverWallet</button>
   </div>
-  <!-- 
+
   <div class="walletControl">
     <button v-if="MetaMaskConnected">MetaMask Connected</button>
+    <button v-if="MetaMaskConnected" class="disconnectBtn" @click="disconnectMetamask">
+      <DisconnectIcon :size="16" />
+    </button>
     <button v-else @click="requestMetaMaskPermissions">Connect MetaMask</button>
-  </div> -->
+  </div>
 </template>
 <script lang="ts">
 /* eslint-disable */
