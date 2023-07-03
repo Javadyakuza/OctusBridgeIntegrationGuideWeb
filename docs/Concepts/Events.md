@@ -8,7 +8,7 @@ There is two types of event contracts at mentioned direction that will be deploy
 - `MultiVaultEVMEverscaleEventAlien`
 
 Deployer of these event contract's is [`EthereumEverscaleEventConfiguration`](#ethereumEverscaleeventconfiguration) contract,\
-which is deployed by [`EthereumEverscaleEventConfigurationFactory`](./addresses.md#contractaddresses).
+which is deployed by [`EthereumEverscaleEventConfigurationFactory`](../addresses.md#contractaddresses).
 
 ### EthereumEverscaleEventConfiguration
 
@@ -18,7 +18,7 @@ These contracts can be called by the user with `deployEvent` function or by the 
 
 `MultiVaultEVMEverscaleEventNative` is deployed when transferring a EVERSCALE native token and `MultiVaultEVMEverscaleEventAlien` are deployed when transferring EVERSCALE alien token.
 
-#### `EthereumEverscaleEventConfiguration` contract has two deployed version for each network, OctusBridge support's 6 network's except EVERSCALE right now, so we have 12 `EthereumEverscaleEventConfiguration` contract's, all these addresses can be found [here](./addresses.md).
+#### `EthereumEverscaleEventConfiguration` contract has two deployed version for each network, OctusBridge support's 6 network's except EVERSCALE right now, so we have 12 `EthereumEverscaleEventConfiguration` contract's, all these addresses can be found [here](../addresses.md).
 
 ## EVER TO EVM EVENTS
 
@@ -28,7 +28,7 @@ There is two types of event contracts at this direction that will be deployed on
 - `MultiVaultEverscaleEVMEventAlien`
 
 Deployer of these contract's is [`EverscaleEthereumEventConfiguration`](#EverscaleEthereumeventconfiguration) contract, \
- Which is deployed by [`EverscaleEthereumEventConfigurationFactory`](./addresses.md#contractaddresses).
+ Which is deployed by [`EverscaleEthereumEventConfigurationFactory`](../addresses.md#contractaddresses).
 
 ### EverscaleEthereumEventConfiguration
 

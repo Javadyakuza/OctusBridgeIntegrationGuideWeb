@@ -4,11 +4,11 @@
 
 ### Alien Tokens
 
-Tokens that are not originally from EVERSCALE are known as alien tokens. Examples include [WETH](./addresses.md#weth), [WBTC](./addresses.md#wbtc), [USDT](./addresses.md#usdt) and others.
+Tokens that are not originally from EVERSCALE are known as alien tokens. Examples include [WETH](../addresses.md#weth), [WBTC](../addresses.md#wbtc), [USDT](../addresses.md#usdt) and others.
 
 ### Native Tokens
 
-Tokens that are originally from EVERSCALE are known as native tokens. Examples include [WEVER](./addresses.md#wever). [BRIDGE](./addresses.md#bridge) and [QUBE](./addresses.md#qube).
+Tokens that are originally from EVERSCALE are known as native tokens. Examples include [WEVER](../addresses.md#wever). [BRIDGE](../addresses.md#bridge) and [QUBE](../addresses.md#qube).
 
 ## EVM TOKEN TYPES
 
