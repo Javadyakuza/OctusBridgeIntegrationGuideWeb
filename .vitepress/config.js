@@ -97,10 +97,12 @@ module.exports = {
       {
         text: 'Addresses',
         collapsable: true,
+        link: '/docs/addresses.md',
       },
       {
         text: 'FAQ',
         collapsable: true,
+        link: '/docs/FAQ.md',
       },
     ],
 

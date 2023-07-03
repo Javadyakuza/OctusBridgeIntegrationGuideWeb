@@ -39,20 +39,20 @@ n the EVM to EVER direction, the following operations are performed on EVERSCALE
   When transferring an evm alien and non-multivault token it will be locked on evm and minted on EVERSCALE network.
   When transferring an evm MultiVault Token (WEVER, BRIDGE and QUBE), it will be burnt on evm network and released on EVERSCALE network.
 
-### Manual Asset releasing
+## Manual Asset releasing
 
 - In the EVER to EVM direction, if the payment for the EVM network operations is in its native coin, the target assets need to be manually released or minted. Calling saveWithdrawNative will perform this operation for EVERSCALE native tokens/coins(MultiVault tokens), while calling saveWithdrawAlien will perform it for EVERSCALE alien tokens.
 
 - In the EVM to EVER direction, if the payment for EVERSCALE operations is in EVER, the assets on EVERSCALE need to be manually released or minted by deploying event contract. \
   see [Event contract deployment](../scripts/deployEvents/).
 
-### Automatic Asset releasing
+## Automatic Asset releasing
 
 - In EVER -> EVM direction assets will be released or minted on evm side by attaching enough EVER and proper [payload](./Payloads.md) to tx.
 
 - In EVM -> EVER direction assets will be released or minted on EVERSCALE by attaching enough evm native coin to tx and setting the expected_ever to event contract initial balance. see [how to set expected_evers](../FAQ.md#how-to-set-expected_evers)
 
-### Directions
+## Directions
 
 Following table contains operations that are done at each network to perform Cross Chain transfer
 
