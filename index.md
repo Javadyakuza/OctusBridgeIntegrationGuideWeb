@@ -26,11 +26,11 @@ To implement custom cross-chain data bridging, it is necessary to develop, propo
 
   - [EVER to EVM](./docs/EVER-to-EVM.md)
   - [EVM to EVER](./docs/EVM-to-EVER.md)
-  - [Visual Guide](./docs/Visual-Guide)
+  - [Visual Guide](./docs/Visual-Guide/README.md)
   - [Contracts](./docs/addresses.md)
-  - [Concepts](./docs/concepts.md)
+  - [Concepts](./docs/Concepts/ToC.md)
   - [FAQ](./docs/FAQ.md)
 
 - SCRIPTS
-  - [EVER to EVM](./EVER-TO-EVM/)
-  - [EVM to EVER](./EVM-TO-EVER/)
+  - [EVER to EVM](#)
+  - [EVM to EVER](#)

@@ -1,5 +1,4 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
-
 import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
 
 const MetamaskOptions: MetaMaskSDKOptions = {
@@ -21,28 +20,14 @@ const getAccounts = async (): Promise<string[] | undefined> => {
     params: [],
   });
 
-  if (accounts) {
-    if (Array.isArray(accounts)) {
-      // Handle the case when the accounts is definitely an array
-      return accounts;
-  } else {
-    // Handle the case when the accounts is null or undefined
-    return undefined;
-  }
+  return Array.isArray(accounts) ? accounts : undefined;
 };
 const HandleAccountChange = async (): Promise<boolean> => {
-  if ((await getAccounts) && (await getAccounts())!.length > 0) {
-
-    return true;
-
-  } else {
-
-    return false;
-    
-  }
+  return (await getAccounts()) && (await getAccounts())!.length > 0
+    ? true
+    : false;
 };
 const MetaMaskProvider = (): MetaMaskInpageProvider => {
-
   return MMSDK.getProvider()!;
 };
 

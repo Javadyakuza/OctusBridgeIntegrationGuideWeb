@@ -1,4 +1,4 @@
-# EVM to Ever Transfer Mechanics Overview
+# EVM to EVER Transfer Mechanics Overview
 
 1. Deposit desired amount of the target token that is going to be transferred to the EVERSCALE in a contract named `MultiVault` which is in the origin EVM network.
 
@@ -92,7 +92,7 @@ struct DepositNativeTokenParams {
 
 ### Function
 
-```tsolidity
+```solidity
 function deployEvent(IEthereumEverscaleEvent.EthereumEverscaleEventVoteData eventVoteData) external override;
 ```
 
@@ -110,7 +110,7 @@ struct EthereumEverscaleEventVoteData {
 }
 ```
 
-The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../scripts/deployEvents/).
+The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](#).
 
 | param            | description           |
 | ---------------- | --------------------- |
@@ -121,4 +121,4 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 | eventBlock       | eventBlock Hash       |
 
 3. After this step tokens must be deposited to recipient EverWallet.
-   > # All of the scripts related to examples above can be found [here](../scripts/EVM-TO-EVER/scripts/)
+   > # All of the scripts related to examples above can be found [here](#)

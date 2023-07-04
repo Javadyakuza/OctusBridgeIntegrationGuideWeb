@@ -21,7 +21,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```tsolidity
+```solidity
     function wrap(
         uint128 tokens,
         address owner_address,
@@ -71,7 +71,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```tsolidity
+```solidity
     function transfer(
         uint128 amount,
         address recipient,
@@ -125,7 +125,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```tsolidity
+```solidity
     function burn(
         uint128 amount,
         address remainingGasTo,
@@ -175,7 +175,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```tsolidity
+```solidity
     function burn(
         uint128 amount,
         address remainingGasTo,
@@ -217,4 +217,4 @@ Note that the native token will be released as its wrapped version.
 
 ---
 
-> # All of the scripts related to examples above can be found [here](../scripts/EVER-TO-EVM//scripts/)
+> # All of the scripts related to examples above can be found [here](#)

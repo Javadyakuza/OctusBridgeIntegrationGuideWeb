@@ -1,4 +1,4 @@
-import { getApiUrl, NodeEnv } from './../config';
+import { getApiUrl, NodeEnv } from "./../config";
 
 interface Pages {
   [id: string]: ApiRefPage;
@@ -18,26 +18,31 @@ export interface ApiReferenceResponse {
 export async function getApiReference(
   projectName: string,
   targetPageName: string,
-  nodeEnv: NodeEnv = 'prod'
+  nodeEnv: NodeEnv = "prod"
 ) {
-  const url = `${getApiUrl(nodeEnv)}?projectName=${encodeURIComponent(projectName)}`;
+  const url = `${getApiUrl(nodeEnv)}?projectName=${encodeURIComponent(
+    projectName
+  )}`;
 
   const findPageByName = (pages: ApiRefPage[], pageName: string) => {
-    return pages.find(page => page.name === pageName);
+    return pages.find((page) => page.name === pageName);
   };
 
   return await fetch(url)
-    .then(async response => {
+    .then(async (response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const data: ApiReferenceResponse = await response.json();
       const pages: ApiRefPage[] = Object.values(data.pagesHtml);
 
       return findPageByName(pages, targetPageName);
     })
-    .catch(error => {
+    .catch((error) => {
       // eslint-disable-next-line no-console
-      console.error('There has been a problem with your fetch operation:', error);
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     });
 }
