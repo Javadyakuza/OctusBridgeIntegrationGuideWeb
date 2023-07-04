@@ -121,3 +121,4 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 | eventBlock       | eventBlock Hash       |
 
 3. After this step tokens must be deposited to recipient EverWallet.
+   > # All of the scripts related to examples above can be found [here](../scripts/EVM-TO-EVER/scripts/)
