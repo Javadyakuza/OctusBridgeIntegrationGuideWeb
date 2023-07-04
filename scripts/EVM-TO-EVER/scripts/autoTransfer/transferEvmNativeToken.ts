@@ -22,7 +22,7 @@ async function TransferEVMEverNativeToken(): Promise<ContractTransactionResponse
   // attaching them to on-chain addresses
   MultiVault = await MultiVault.attach(deployedContracts.BSCMultiVault);
 
-  // deposititng
+  // depositing
   const MultiVaultNativeDeposit = await MultiVault.connect(evmSigner)[
     "depositByNativeToken(((int8,uint256),uint256,uint256,bytes))"
   ];
@@ -39,9 +39,12 @@ async function TransferEVMEverNativeToken(): Promise<ContractTransactionResponse
   const deposit_payload = "0x";
 
   try {
-    const res = await MultiVaultNativeDeposit([recipient, amount, deposit_expected_evers, deposit_payload], {
-      value: deposit_value + amount,
-    });
+    const res = await MultiVaultNativeDeposit(
+      [recipient, amount, deposit_expected_evers, deposit_payload],
+      {
+        value: deposit_value + amount,
+      }
+    );
     console.log("tx hash ; ", res?.hash);
     return res;
   } catch (e) {
@@ -50,10 +53,10 @@ async function TransferEVMEverNativeToken(): Promise<ContractTransactionResponse
   }
 }
 TransferEVMEverNativeToken()
-  .then(res => {
+  .then((res) => {
     console.log("successful , tx hash : ", res?.hash);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exitCode = 1;
   });

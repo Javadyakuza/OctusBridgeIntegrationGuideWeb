@@ -92,7 +92,7 @@ struct DepositNativeTokenParams {
 
 ### Function
 
-```solidity
+```tsolidity
 function deployEvent(IEthereumEverscaleEvent.EthereumEverscaleEventVoteData eventVoteData) external override;
 ```
 

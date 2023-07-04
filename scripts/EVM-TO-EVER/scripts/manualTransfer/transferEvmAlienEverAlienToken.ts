@@ -20,14 +20,20 @@ async function TransferEvmAlienEverAlienToken(): Promise<ContractTransactionResp
   MultiVault = await MultiVault.attach(deployedContracts.BSCMultiVault);
   AlienToken = AlienToken.attach(deployedContracts.BSCUSDT);
   // approving the MultiVault contract
-  await AlienToken.approve(await MultiVault.getAddress(), ethers.parseEther("0.01"));
+  await AlienToken.approve(
+    await MultiVault.getAddress(),
+    ethers.parseEther("0.01")
+  );
   // confirming that the contract is approved fro desired amount
   console.log(
     "this is the multiVault allowance : ",
-    await AlienToken.allowance(evmSigner.address, await MultiVault.getAddress()),
+    await AlienToken.allowance(evmSigner.address, await MultiVault.getAddress())
   );
   // depositing
-  const MultiVaultDeposit = MultiVault.connect(evmSigner)["deposit(((int8,uint256),address,uint256,uint256,bytes))"];
+  const MultiVaultDeposit =
+    MultiVault.connect(evmSigner)[
+      "deposit(((int8,uint256),address,uint256,uint256,bytes))"
+    ];
 
   const amount = ethers.parseEther("0.01");
 
@@ -41,10 +47,16 @@ async function TransferEvmAlienEverAlienToken(): Promise<ContractTransactionResp
   const deposit_payload = "0x";
   try {
     const res = await MultiVaultDeposit(
-      [recipient, await AlienToken.getAddress(), amount, deposit_expected_evers, deposit_payload],
+      [
+        recipient,
+        await AlienToken.getAddress(),
+        amount,
+        deposit_expected_evers,
+        deposit_payload,
+      ],
       {
         value: deposit_value,
-      },
+      }
     );
     console.log("successful , tx hash : ", res?.hash);
     return res;
@@ -54,10 +66,10 @@ async function TransferEvmAlienEverAlienToken(): Promise<ContractTransactionResp
 }
 
 TransferEvmAlienEverAlienToken()
-  .then(res => {
+  .then((res) => {
     console.log("successful , tx hash : ", res?.hash);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exitCode = 1;
   });

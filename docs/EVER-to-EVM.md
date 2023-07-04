@@ -21,7 +21,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```solidity
+```tsolidity
     function wrap(
         uint128 tokens,
         address owner_address,
@@ -71,14 +71,14 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```solidity
+```tsolidity
     function transfer(
         uint128 amount,
         address recipient,
         uint128 deployWalletValue,
         address remainingGasTo,
         bool notify,
-        TvmCell payload2
+        TvmCell payload
     ) external;
 ```
 
@@ -125,7 +125,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```solidity
+```tsolidity
     function burn(
         uint128 amount,
         address remainingGasTo,
@@ -175,7 +175,7 @@ Note that the native token will be released as its wrapped version.
 
 ### Function
 
-```solidity
+```tsolidity
     function burn(
         uint128 amount,
         address remainingGasTo,

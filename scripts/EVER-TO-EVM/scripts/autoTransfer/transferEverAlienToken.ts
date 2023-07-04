@@ -60,3 +60,7 @@ transferEverAlienToken()
     console.log(e);
     process.exit(1);
   });
+
+export async function myFunction() {
+  console.log("hi im from another mpdule ");
+}
