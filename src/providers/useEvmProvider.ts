@@ -1,5 +1,7 @@
-import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
 import { MetaMaskInpageProvider } from "@metamask/providers";
+
+import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
+
 const MetamaskOptions: MetaMaskSDKOptions = {
   dappMetadata: { name: "OctusIntegrationGuide", url: "localhost:5173" },
   checkInstallationImmediately: true,
@@ -23,10 +25,6 @@ const getAccounts = async (): Promise<string[] | undefined> => {
     if (Array.isArray(accounts)) {
       // Handle the case when the accounts is definitely an array
       return accounts;
-    } else {
-      // Handle the case when the accounts is partially defined or null/undefined
-      console.log("accounts is not an array");
-    }
   } else {
     // Handle the case when the accounts is null or undefined
     return undefined;
@@ -34,14 +32,17 @@ const getAccounts = async (): Promise<string[] | undefined> => {
 };
 const HandleAccountChange = async (): Promise<boolean> => {
   if ((await getAccounts) && (await getAccounts())!.length > 0) {
-    console.log(`account changed to ${await getAccounts()}`);
+
     return true;
+
   } else {
-    console.log("disconnected");
+
     return false;
+    
   }
 };
 const MetaMaskProvider = (): MetaMaskInpageProvider => {
+
   return MMSDK.getProvider()!;
 };
 
