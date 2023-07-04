@@ -49,19 +49,19 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Transfer Everscale Native Coin EVER',
+                text: 'Transfer Everscale Native Coin',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
               },
               {
-                text: 'Transfer Everscale Native Token BRIDGE',
+                text: 'Transfer Everscale Native Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/2.md',
               },
               {
-                text: 'Transfer Everscale Alien Token USDT',
+                text: 'Transfer Everscale Alien Token',
                 collapsable: false,
-                link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
+                link: '/docs/Visual-Guide/EVER-TO-EVM/3.md',
               },
             ],
           },
@@ -70,12 +70,12 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Transfer Evm Native Coin BNB',
+                text: 'Transfer Evm Native Coin',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/1.md',
               },
               {
-                text: 'Transfer Evm Alien Token USDT',
+                text: 'Transfer Evm Alien Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/2.md',
               },
