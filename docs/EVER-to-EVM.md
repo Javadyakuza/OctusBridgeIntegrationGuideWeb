@@ -15,7 +15,7 @@ Note that the native token will be released as its wrapped version.
 
 # EVER to EVM transfer integration step by step
 
-### Transferring EVER
+## Transferring EVER
 
 - 1 - Call the `wrap` method on the [`Vault`](./addresses.md#EVERSCALE-smart-contracts) contract and lock our newly minted WEVER in EVERSCALE:
 
@@ -63,9 +63,9 @@ Note that the native token will be released as its wrapped version.
 
 ---
 
-### Transferring [native token](./Concepts/TokenTypes.md#native-tokens)
+## Transferring [Native Token](./Concepts/TokenTypes.md#native-tokens)
 
-> ## `BRIDGE` is used in this example.
+> `BRIDGE` is used in this example.
 
 1 - Lock the the target token to `ProxyMultiVaultNative`'s `TokenWallet` contract by calling the `transfer` function on our `TokenWallet` contract :
 
@@ -117,9 +117,9 @@ Note that the native token will be released as its wrapped version.
 
 ---
 
-### Transferring Alien Token
+## Transferring Alien Token
 
-> ## `USDT` is used in this example.
+> `USDT` is used in this example.
 
 1 - Burn the token on EVERSCALE network by calling the `burn` function on our `tokenWallet` contract :
 
@@ -167,9 +167,9 @@ Note that the native token will be released as its wrapped version.
 
 ---
 
-### Transferring Alien Token
+## Transferring Alien Token
 
-> ## `WBNB` is used in this example.
+> `WBNB` is used in this example.
 
 1 - Burn the token on EVERSCALE network by calling the `burn` function on our `tokenWallet` contract :
 

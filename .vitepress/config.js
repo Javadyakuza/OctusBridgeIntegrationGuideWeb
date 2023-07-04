@@ -1,7 +1,7 @@
 import vue from '@vitejs/plugin-vue';
 
 const HELP_URL = 'https://t.me/everdev';
-const FEEDBACK_URL = 'n';
+const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
 
 module.exports = {

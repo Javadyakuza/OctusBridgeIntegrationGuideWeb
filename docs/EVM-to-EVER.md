@@ -17,9 +17,11 @@
 
 # EVM to EVER Transfer Integration Step-by-Step
 
+## Transfer Alien token
+
 1. Deposit the desired amount of target token to `MultiVault` contract, which has two ways:
 
-   ## Function
+   ### Function
 
 - 1.1: If target token was an ERC-20 token we must use the `deposit` function on `MultiVault` contract,
   but before that we must approve [MultiVault](./addresses.md#evm-smart-contracts) for desired token amount if token is not non-multiVault token, once approved deposit function can be called.
@@ -28,7 +30,7 @@
   function deposit(depositParams memory d) external payable override;
   ```
 
-  ## Parameters
+  ### Parameters
 
   ```solidity
   struct DepositParams {
@@ -48,17 +50,19 @@
   | expected_evers | see [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) |
   | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
+## Transfer Native Coin
+
 - 1.2: If target token was the EVM network native coin, we must use `depositByNativeToken` on `MultiVault` contract and attach the desired amount of the native coin equal to it's amount parameter to tx:
 
   > NOTE : In `MultiVault` the native coin will be converted to its wrapped version and then rest of the operation will be resumed.
 
-## Function
+### Function
 
 ```solidity
 function depositByNativeToken(DepositNativeTokenParams memory d) external payable override;
 ```
 
-## Parameters
+### Parameters
 
 ```solidity
 struct DepositNativeTokenParams {
@@ -78,19 +82,21 @@ struct DepositNativeTokenParams {
 
 ### NOTE : Continue if paying the EVERSCALE network operations with its native coin !!
 
+## Deploy Events
+
 2. Now it's time to deploy the event contract which has two ways:
 
 - 2.1: See {[EVM to Ever Transfer Mechanics Overview : 3.1](#31-if-the-user-at-the-time-of-deposit-accepted-to-pay-the-event-contract-deployment-fee-with-the-origin-evm-network-native-coin-the-relayers-will-automatically-swap-that-to-ever-which-is-the-everscale-native-coin-and-deploy-the-event-contract-themselves)}. at this step we just have to wait.
 
-- 2.2: Deploy event contract manually by calling `deployEvent` function:
+- 2.2: Deploy event contract manually by calling `deployEvent` function on `EthereumEverscaleEventConfiguration` contract:
 
-## Function
+### Function
 
 ```solidity
 function deployEvent(IEthereumEverscaleEvent.EthereumEverscaleEventVoteData eventVoteData) external override;
 ```
 
-## Parameters
+### Parameters
 
 - 2.2.1
 
