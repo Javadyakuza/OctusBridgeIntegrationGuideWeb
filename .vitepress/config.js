@@ -103,6 +103,105 @@ module.exports = {
           { text: 'Payloads', collapsable: false, link: '/docs/Concepts/Payloads.md' },
         ],
       },
+
+      {
+        text: 'Code Samples',
+        collapsable: true,
+        items: [
+          {
+            text: 'EVER to EVM',
+            collapsable: true,
+            link: '/CodeSamples/EVER-TO-EVM/scripts/webInteraction/md/workFlow.md',
+            items: [
+              {
+                text: 'Building Payloads',
+                collapsable: true,
+                link: '/docs/FAQ.md',
+              },
+              {
+                text: 'Transferring Tokens',
+                collapsable: true,
+                items: [
+                  {
+                    text: 'Ever Native Coin',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Ever Native Token',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Ever Alien Token',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                ],
+              },
+              {
+                text: 'Evm Asset Releasing',
+                collapsable: true,
+                items: [
+                  {
+                    text: 'Evm MultiVault Token',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Evm Native and Alien Token ',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            text: 'EVM to EVER',
+            collapsable: true,
+            items: [
+              {
+                text: 'Transferring Tokens',
+                collapsable: true,
+                items: [
+                  {
+                    text: 'Evm Native Coin',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Evm MultiVault Token',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Evm Alien Token',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                ],
+              },
+              {
+                text: 'Deploying Events',
+                collapsable: true,
+                items: [
+                  {
+                    text: 'Native Event',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Alien Event',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
       {
         text: 'Addresses',
         collapsable: true,

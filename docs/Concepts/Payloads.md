@@ -1,6 +1,6 @@
-## PAYLOADS
+# PAYLOADS
 
-#### OctusBridge provides a feature to attach payload to bridge transfer's in order to perform various operations such as swapping, arbitrage, and more.
+**OctusBridge provides a feature to attach payload to bridge transfer's in order to perform various operations such as swapping, arbitrage, and more.**
 
 For token transfers at EVM -> EVER direction payloads can be empty.
 
