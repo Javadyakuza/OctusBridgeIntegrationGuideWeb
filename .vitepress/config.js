@@ -49,17 +49,17 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Transfer Everscale Native Coin',
+                text: 'Ever Native Coin',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
               },
               {
-                text: 'Transfer Everscale Native Token',
+                text: 'Ever Native Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/2.md',
               },
               {
-                text: 'Transfer Everscale Alien Token',
+                text: 'Ever Alien Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/3.md',
               },
@@ -70,14 +70,19 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Transfer Evm Native Coin',
+                text: 'Evm Native Coin',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/1.md',
               },
               {
-                text: 'Transfer Evm Alien Token',
+                text: 'Evm MultiVault Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/2.md',
+              },
+              {
+                text: 'Evm Alien Token',
+                collapsable: false,
+                link: '/docs/Visual-Guide/EVM-TO-EVER/3.md',
               },
             ],
           },
@@ -90,7 +95,11 @@ module.exports = {
           { text: 'Token Types', collapsable: false, link: '/docs/Concepts/TokenTypes.md' },
           { text: 'Operations', collapsable: false, link: '/docs/Concepts/Operations.md' },
           { text: 'Events', collapsable: false, link: '/docs/Concepts/Events.md' },
-          { text: 'Credit Backend', collapsable: false, link: '/docs/Concepts/CreditBackend.md' },
+          {
+            text: 'Credit Backend',
+            collapsable: false,
+            link: '/docs/Concepts/CreditBackend.md',
+          },
           { text: 'Payloads', collapsable: false, link: '/docs/Concepts/Payloads.md' },
         ],
       },

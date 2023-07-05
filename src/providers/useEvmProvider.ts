@@ -3,7 +3,6 @@ import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
 
 const MetamaskOptions: MetaMaskSDKOptions = {
   dappMetadata: { name: "OctusIntegrationGuide", url: "localhost:5173" },
-  checkInstallationImmediately: true,
 };
 const MMSDK: MetaMaskSDK = new MetaMaskSDK(MetamaskOptions);
 
