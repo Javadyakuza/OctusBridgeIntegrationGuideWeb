@@ -1,6 +1,6 @@
 import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
 import { Address, Contract } from "locklift";
-import { ethers } from "hardhat";
+import { ethers } from "../../../scripts/helpers/node_modules/hardhat/src/internal/lib/hardhat-lib";
 import * as web3 from "web3";
 import { FactorySource } from "../../build/factorySource";
 export async function buildSaveWithdraw(EverEvmAlienEventContractAddress: Address): Promise<string> {

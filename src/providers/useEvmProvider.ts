@@ -21,6 +21,7 @@ const getAccounts = async (): Promise<string[] | undefined> => {
 
   return Array.isArray(accounts) ? accounts : undefined;
 };
+
 const HandleAccountChange = async (): Promise<boolean> => {
   return (await getAccounts()) && (await getAccounts())!.length > 0
     ? true

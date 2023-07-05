@@ -14,16 +14,17 @@
     "broxus-ton-tokens-contracts": "https://github.com/broxus/tip3.git",
     "chai": "^4.3.7",
     "everscale-standalone-client": "^2.1.19",
+    "hardhat": "^2.16.0",
     "locklift": "^2.5.7",
     "prettier": "^2.8.8",
     "ts-mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "hardhat": "^2.16.0"
+    "typescript": "^4.7.4"
   },
   "dependencies": {
-    "web3": "^4.0.2",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "dotenv": "^16.3.1",
     "eth-ton-abi-converter": "^0.5.2",
-    "@nomicfoundation/hardhat-toolbox": "^3.0.0"
+    "everscale-inpage-provider": "^0.3.61",
+    "web3": "^4.0.2"
   }
 }

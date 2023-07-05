@@ -1,5 +1,5 @@
-import * as EVER from "everscale-standalone-client";
-import { Contract, Signer, Transaction } from "locklift";
+import * as EVER from "../helpers/node_modules/everscale-standalone-client";
+import { Contract, Signer, Transaction } from "../helpers/node_modules/locklift";
 import { EverAbi } from "../../abi/WEVERVault";
 import { buildWrapPayload } from "../helpers/buildWrapPayload";
 import * as constants from "../../constants";

@@ -1,4 +1,4 @@
-import { Address } from "locklift";
+import { Address } from "./scripts/helpers/node_modules/locklift";
 
 export const EthereumEverscaleEventConfigurationA: Address = new Address(
   "0:54f2bc1064cbe7d9b057808b8578e9b2f3ff54d27ef472ffbdb16b2e4461292a",

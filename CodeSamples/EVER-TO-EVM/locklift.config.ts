@@ -1,8 +1,8 @@
-import { LockliftConfig } from "locklift";
+import { LockliftConfig } from "./scripts/helpers/node_modules/locklift";
 import { FactorySource } from "./build/factorySource";
 require("dotenv").config();
 declare global {
-  const locklift: import("locklift").Locklift<FactorySource>;
+  const locklift: import("./scripts/helpers/node_modules/locklift").Locklift<FactorySource>;
 }
 
 const LOCAL_NETWORK_ENDPOINT = process.env.NETWORK_ENDPOINT || "http://localhost/graphql";

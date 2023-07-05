@@ -1,5 +1,5 @@
-import * as EVER from "everscale-standalone-client";
-import { Contract, Signer, Transaction, Address } from "locklift";
+import * as EVER from "../helpers/node_modules/everscale-standalone-client";
+import { Contract, Signer, Transaction, Address } from "../helpers/node_modules/locklift";
 import { buildTransferPayload } from "../helpers/buildTransferPayload";
 import * as constants from "../../constants";
 import { FactorySource } from "../../build/factorySource";

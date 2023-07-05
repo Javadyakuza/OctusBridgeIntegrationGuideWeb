@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-RSJERJUL.js";
+} from "./chunk-CLC6CPQL.js";
 
 // node_modules/@metamask/sdk/dist/browser/umd/metamask-sdk.js
 var require_metamask_sdk = __commonJS({

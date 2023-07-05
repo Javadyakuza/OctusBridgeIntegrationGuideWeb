@@ -1,4 +1,4 @@
-import { Address, Contract, Signer } from "locklift";
+import { Address, Contract, Signer } from "../scripts/helpers/node_modules/locklift";
 import { FactorySource } from "../build/factorySource";
 
 export type EncodeMultiVaultAlienEVMEverscaleParam = Parameters<

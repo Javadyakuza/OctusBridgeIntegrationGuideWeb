@@ -1,6 +1,6 @@
-import * as EVER from "everscale-standalone-client";
-import { Contract, Signer, Transaction } from "locklift";
-import { ethers } from "hardhat";
+import * as EVER from "../helpers/node_modules/everscale-standalone-client";
+import { Contract, Signer, Transaction } from "../helpers/node_modules/locklift";
+import { ethers } from "../../../scripts/helpers/node_modules/hardhat/src/internal/lib/hardhat-lib";
 import { buildBurnPayloadForEvmAlienToken } from "../helpers/buildBurnPayload";
 import * as constants from "../../constants";
 import { FactorySource } from "../../build/factorySource";

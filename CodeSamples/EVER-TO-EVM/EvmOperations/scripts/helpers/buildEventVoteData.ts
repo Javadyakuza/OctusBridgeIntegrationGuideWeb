@@ -1,5 +1,5 @@
 import EventVoteData from "../../interfaces/voteData";
-import { ethers } from "hardhat";
+import { ethers } from "../../../../scripts/helpers/node_modules/hardhat/src/internal/lib/hardhat-lib";
 export async function buildNativeEventVoteData(txHash: string): Promise<any | null> {
   let abi = new ethers.Interface([
     `event NativeTransfer(

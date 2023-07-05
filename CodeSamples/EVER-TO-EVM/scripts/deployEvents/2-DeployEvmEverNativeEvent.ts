@@ -1,6 +1,6 @@
-import * as EVER from "everscale-standalone-client";
-import { Contract, Signer } from "locklift";
-import { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
+import * as EVER from "../helpers/node_modules/everscale-standalone-client";
+import { Contract, Signer } from "../helpers/node_modules/locklift";
+import { mapEthBytesIntoTonCell } from "../helpers/node_modules/eth-ton-abi-converter/eth_ton_abi_converter";
 import { buildNativeEventVoteData } from "../../EvmOperations/scripts/helpers/buildEventVoteData";
 import Event from "../../EvmOperations/interfaces/voteData";
 import { FactorySource } from "../../build/factorySource";

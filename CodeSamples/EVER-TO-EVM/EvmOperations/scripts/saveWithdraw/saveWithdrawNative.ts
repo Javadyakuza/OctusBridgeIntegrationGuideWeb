@@ -1,6 +1,6 @@
-import { ethers } from "hardhat";
-import BigNumber from "bignumber.js";
-import { ContractTransactionResponse } from "ethers/src.ts/ethers";
+import { ethers } from "../../../../scripts/helpers/node_modules/hardhat/src/internal/lib/hardhat-lib";
+import BigNumber from "../../../scripts/helpers/node_modules/bignumber.js/bignumber.js";
+import { ContractTransactionResponse } from "../../../scripts/helpers/node_modules/ethers/src.ts/ethers";
 import * as Contracts from "../../typechain-types/index";
 import { deployedContracts } from "../../constants";
 import {
@@ -9,7 +9,7 @@ import {
   SamplePayloadEverNativeEvmAlienToken,
   SampleSignaturesEverNativeEvmAlienToken,
 } from "./values";
-import * as web3 from "web3";
+import * as web3 from "../../../scripts/helpers/node_modules/web3/lib/commonjs";
 
 require("dotenv").config();
 

@@ -111,12 +111,12 @@ module.exports = {
           {
             text: 'EVER to EVM',
             collapsable: true,
-            link: '/CodeSamples/EVER-TO-EVM/scripts/webInteraction/md/workFlow.md',
+            link: '/src/webInteraction/md/workFlow.md',
             items: [
               {
                 text: 'Building Payloads',
                 collapsable: true,
-                link: '/docs/FAQ.md',
+                link: '/src/webInteraction/md/buildingPayloads/BuildingPayloads.md',
               },
               {
                 text: 'Transferring Tokens',
