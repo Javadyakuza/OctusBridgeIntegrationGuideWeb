@@ -9,7 +9,7 @@ The following payload is utilized when transferring [EVER](../../../../docs/addr
 <details>
 <summary>show code</summary>
 
-```TS
+```typescript
 /**
 * Encodes evm data into a cell
 * @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
@@ -104,12 +104,12 @@ const boc: string = compounderPayload.boc;
 
 ## Ever Native Token Payload
 
-The following payload is utilized when transferring an everscale native token such as [BRIDGE](../../../../docs/addresses.md#bridge) or [QUBE](../../../../docs/addresses.md#qube). It encompasses encoded operational data related to target EVM network and Evm recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring an everscale native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to target EVM network and Evm recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
 
-```TS
+```typescript
 /**
 * Encodes evm data into a cell
 * @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
@@ -181,7 +181,7 @@ The following payload is utilized when transferring an everscale Alien and non-n
 <details>
 <summary>show code</summary>
 
-```TS
+```typescript
 /**
  * Encodes evm data into a cell
  * @param addr {uint160} Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
@@ -271,9 +271,9 @@ The provided payload is utilized for transferring an EVM native coin (such as BN
 > ❗ this payload is only available on Binance Smart chain at the moment.
 
 <details>
-<summary>show code</summary>
+<summary>show code</summary>w
 
-```TS
+```typescript
   /**
    * Encodes data about unWrapper of wrapped version of the target Evm network native coin (BNB, ETH, ...).
    * @param addr {uint160} Wrapped coin unWrapper contract address. Example: "0x0000000000000000000000000000000000000000"
@@ -338,10 +338,10 @@ The provided payload is utilized for transferring an EVM native coin (such as BN
 </div>
 
 <script lang="ts" >
-import { usePayloadBuilders } from "../../hooks/usePayloadBuilders";
+import { usePayloadBuilders } from "../../../providers/usePayloadBuilders";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
-import * as constants from "../../hooks/helpers/constants";
+import * as constants from "../../../providers/helpers/constants";
 
 export default defineComponent({
   name: "buildPayload",

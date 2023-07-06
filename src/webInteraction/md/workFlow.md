@@ -10,4 +10,4 @@ The second step involved in transferring a token from Everscale to an EVM networ
 
 ## Asset Releasing
 
-The final step entails releasing the assets on the EVM side, which can be accomplished by minting or releasing the token based on the target [token type](../../../docs/Concepts/TokenTypes.md#evm-token-types). This step completes the process of transferring the token from Everscale to the EVM network.
+The final step entails releasing the assets on the EVM side, which can be accomplished by minting or releasing the token based on the target [token type](../../../../docs/Concepts/TokenTypes.md#evm-token-types). This step completes the process of transferring the token from Everscale to the EVM network.

@@ -124,7 +124,7 @@ module.exports = {
               {
                 text: 'Building Payloads',
                 collapsable: true,
-                link: '/src/webInteraction/md/buildingPayloads/BuildingPayloads.md',
+                link: '/src/webInteraction/md/EverToEvm/buildingPayloads/BuildingPayloads.md',
               },
               {
                 text: 'Transferring Tokens',
@@ -133,7 +133,7 @@ module.exports = {
                   {
                     text: 'Ever Native Coin',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EverToEvm/autoTransfer/transferEverNativeCoin.md',
                   },
                   {
                     text: 'Ever Native Token',
@@ -142,6 +142,11 @@ module.exports = {
                   },
                   {
                     text: 'Ever Alien Token',
+                    collapsable: true,
+                    link: '/docs/FAQ.md',
+                  },
+                  {
+                    text: 'Evm Native Coin',
                     collapsable: true,
                     link: '/docs/FAQ.md',
                   },

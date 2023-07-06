@@ -7,7 +7,6 @@ import * as web3 from "web3";
 async function setupAndGetProvidersDetails(): Promise<
   [ProviderRpcClient, Address, string, string] | undefined
 > {
-  console.log("entered initialer");
   const evmProvider = useEvmProvider();
   const provider = new ProviderRpcClient();
   // Make sure the provider is initialized.
@@ -24,11 +23,9 @@ async function setupAndGetProvidersDetails(): Promise<
   if ((await evmProvider.getAccounts())![0] != undefined) {
     evmRecipient = (await evmProvider.getAccounts())![0];
     chainId = await evmProvider.MetaMaskProvider().chainId!;
-    console.log(evmRecipient, Number(chainId));
     return [provider, everSender, evmRecipient, chainId];
   } else {
     await evmProvider.connectToMetamaskWallet();
-    console.log("tried");
     if ((await evmProvider.getAccounts())![0] != undefined) {
       evmRecipient = (await evmProvider.getAccounts())![0];
       chainId = await evmProvider.MetaMaskProvider().chainId!;
