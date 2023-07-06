@@ -51,7 +51,7 @@ const changeMetaMaskNetwork = async (chainName: string) => {
       method: "wallet_switchEthereumChain",
       params: [{ chainId: config[chainName].chainId }],
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error.code === 4902) {
       await provider.request({
         method: "wallet_addEthereumChain",

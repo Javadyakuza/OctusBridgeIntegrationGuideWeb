@@ -98,10 +98,9 @@ const boc: string = compounderPayload.boc;
 <input ref="everPay" type="checkbox"/>
 
 <br/>
-
 <button @click="HandleWrapPayload" style="{background-color : gray, border-radius: 100px}">Build wrap Payload</button>
 
-<p ref="wrapPayloadOutput"></p>
+<p class="output-p" ref="wrapPayloadOutput"></p>
 
 ## Ever Native Token Payload
 
@@ -173,7 +172,7 @@ The following payload is utilized when transferring an everscale native token su
 
 <button @click="HandleTransferPayload" style="{background-color : gray, border-radius: 100px}">Build transfer Payload</button>
 
-<p ref="transferPayloadOutput"></p>
+<p class="output-p" ref="transferPayloadOutput"></p>
 
 ## Ever Alien Token
 
@@ -253,6 +252,7 @@ const operationPayload = await provider.packIntoCell({
 ```
 
 </details>
+<br/>
 <label for="burnToken">select the token </label>
 <select ref="burnToken" >
   <option value="TargetTokenRootAlienEvmUSDT" selected >USDT</option>
@@ -262,7 +262,7 @@ const operationPayload = await provider.packIntoCell({
 
 <button @click="HandleBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn Payload</button>
 
-<p ref="burnPayloadOutput"></p>
+<p class="output-p" ref="burnPayloadOutput"></p>
 
 ## Evm Native Coin
 
@@ -333,7 +333,7 @@ The provided payload is utilized for transferring an EVM native coin (such as BN
 
 <button @click="HandleNativeBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn Payload </button>
 
-<p ref="burnNativePayloadOutput"></p>
+<p class="output-p" ref="burnNativePayloadOutput"></p>
 
 </div>
 
@@ -392,7 +392,7 @@ export default defineComponent({
 </script>
 
 <style>
-  button, input, summary, select{
+  button, input, details, select, .output-p{
   background-color: var(--vp-c-bg-mute);
   transition: background-color 0.1s;
   padding: 5px 12px;
@@ -401,6 +401,7 @@ export default defineComponent({
   font-size: 0.9em;
   font-weight: 600;
   margin-right: 0.5rem;
+  cursor : pointer;  
 }
 
 </style>

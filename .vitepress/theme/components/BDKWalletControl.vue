@@ -1,18 +1,28 @@
 <template>
   <div class="walletControl">
-    <button v-if="connected" @click="changeAccountWallet">Change Account</button>
+    <button class="flexButton" v-if="connected" @click="changeAccountWallet">Change
+      <EverscaleIcon class="ESSVG" />
+    </button>
     <button v-if="connected" class="disconnectBtn" @click="disconnectWallet">
       <DisconnectIcon :size="16" />
     </button>
-    <button v-else @click="requestPermissions">Connect EverWallet
+    <button class="flexButton" v-else @click="requestPermissions">
+      Connect
+      <EverscaleIcon class="ESSVG" />
     </button>
   </div>
   <div class="walletControl">
-    <button v-if="MetaMaskConnected">MetaMask Connected</button>
+    <button class="flexButton" v-if="MetaMaskConnected">
+      Connected
+      <MetaMaskIcon />
+    </button>
     <button v-if="MetaMaskConnected" class="disconnectBtn" @click="disconnectMetamask">
       <DisconnectIcon :size="16" />
     </button>
-    <button v-else @click="requestMetaMaskPermissions">Connect MetaMask</button>
+    <button class="flexButton" v-else @click="requestMetaMaskPermissions">
+      Connect
+      <MetaMaskIcon />
+    </button>
   </div>
 </template>
 
@@ -21,6 +31,8 @@
 import { defineComponent, ref, onMounted } from 'vue';
 
 import DisconnectIcon from './shared/BDKDisconnectIcon.vue';
+import EverscaleIcon from './shared/BKDEverWalletIcon.vue'
+import MetaMaskIcon from './shared/BKDMetaMaskIcon.vue'
 
 import { useProvider } from './../../../src/providers/useProvider';
 import { useEvmProvider } from './../../../src/providers/useEvmProvider';
@@ -29,6 +41,8 @@ export default defineComponent({
   name: 'WalletControl',
   components: {
     DisconnectIcon,
+    EverscaleIcon,
+    MetaMaskIcon
   },
   setup() {
     const { provider, connectToWallet, changeAccount, disconnect } = useProvider();
@@ -109,10 +123,20 @@ export default defineComponent({
 }
 
 .svg-icon {
-  width: 20px;
-  height: 20px;
+  /* viewbox: 0 0 5 5; */
+  /* width: 20%;
+  height: 90%; */
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.flexButton {
+  display: flex;
+  align-items: center;
+}
+
+.ESSVG {
+  margin: 0 0 0 5px;
 }
 </style>
 
