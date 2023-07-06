@@ -1,6 +1,9 @@
 import {
+  ens_normalize
+} from "./chunk-TOGJBQOX.js";
+import {
   require_crypto
-} from "./chunk-3W4F72EW.js";
+} from "./chunk-XJHKKHAZ.js";
 import {
   __export,
   __privateAdd,
@@ -10,7 +13,7 @@ import {
   __privateWrapper,
   __publicField,
   __toESM
-} from "./chunk-CLC6CPQL.js";
+} from "./chunk-YTWT43PM.js";
 
 // node_modules/ethers/lib.esm/ethers.js
 var ethers_exports = {};
@@ -1249,8 +1252,8 @@ var _FetchRequest = class {
   get processFunc() {
     return __privateGet(this, _process) || null;
   }
-  set processFunc(process2) {
-    __privateSet(this, _process, process2);
+  set processFunc(process) {
+    __privateSet(this, _process, process);
   }
   /**
    *  This function is called on each retry attempt.
@@ -1732,17 +1735,17 @@ function getFormat(value) {
   if (typeof value === "number") {
     value = `fixed128x${value}`;
   }
-  let signed2 = true;
+  let signed = true;
   let width = 128;
   let decimals = 18;
   if (typeof value === "string") {
     if (value === "fixed") {
     } else if (value === "ufixed") {
-      signed2 = false;
+      signed = false;
     } else {
       const match = value.match(/^(u?)fixed([0-9]+)x([0-9]+)$/);
       assertArgument(match, "invalid fixed format", "format", value);
-      signed2 = match[1] !== "u";
+      signed = match[1] !== "u";
       width = parseInt(match[2]);
       decimals = parseInt(match[3]);
     }
@@ -1755,14 +1758,14 @@ function getFormat(value) {
       assertArgument(typeof v[key] === type, "invalid fixed format (" + key + " not " + type + ")", "format." + key, v[key]);
       return v[key];
     };
-    signed2 = check("signed", "boolean", signed2);
+    signed = check("signed", "boolean", signed);
     width = check("width", "number", width);
     decimals = check("decimals", "number", decimals);
   }
   assertArgument(width % 8 === 0, "invalid FixedNumber width (not byte aligned)", "format.width", width);
   assertArgument(decimals <= 80, "invalid FixedNumber decimals (too large)", "format.decimals", decimals);
-  const name = (signed2 ? "" : "u") + "fixed" + String(width) + "x" + String(decimals);
-  return { signed: signed2, width, decimals, name };
+  const name = (signed ? "" : "u") + "fixed" + String(width) + "x" + String(decimals);
+  return { signed, width, decimals, name };
 }
 function toString(val, decimals) {
   let negative = "";
@@ -3169,17 +3172,17 @@ var SHA256 = class extends SHA2 {
     let { A, B, C, D, E, F, G, H } = this;
     for (let i = 0; i < 64; i++) {
       const sigma1 = rotr(E, 6) ^ rotr(E, 11) ^ rotr(E, 25);
-      const T13 = H + sigma1 + Chi(E, F, G) + SHA256_K[i] + SHA256_W[i] | 0;
+      const T12 = H + sigma1 + Chi(E, F, G) + SHA256_K[i] + SHA256_W[i] | 0;
       const sigma0 = rotr(A, 2) ^ rotr(A, 13) ^ rotr(A, 22);
       const T22 = sigma0 + Maj(A, B, C) | 0;
       H = G;
       G = F;
       F = E;
-      E = D + T13 | 0;
+      E = D + T12 | 0;
       D = C;
       C = B;
       B = A;
-      A = T13 + T22 | 0;
+      A = T12 + T22 | 0;
     }
     A = A + this.A | 0;
     B = B + this.B | 0;
@@ -3995,12 +3998,12 @@ function XorAndSalsa(prev, pi, input, ii, out, oi) {
   out[oi++] = y14 + x14 | 0;
   out[oi++] = y15 + x15 | 0;
 }
-function BlockMix(input, ii, out, oi, r2) {
+function BlockMix(input, ii, out, oi, r) {
   let head = oi + 0;
-  let tail = oi + 16 * r2;
+  let tail = oi + 16 * r;
   for (let i = 0; i < 16; i++)
-    out[tail + i] = input[ii + (2 * r2 - 1) * 16 + i];
-  for (let i = 0; i < r2; i++, head += 16, ii += 16) {
+    out[tail + i] = input[ii + (2 * r - 1) * 16 + i];
+  for (let i = 0; i < r; i++, head += 16, ii += 16) {
     XorAndSalsa(out, tail, input, ii, out, head);
     if (i > 0)
       tail += 16;
@@ -4013,16 +4016,16 @@ function scryptInit(password, salt, _opts) {
     asyncTick: 10,
     maxmem: 1024 ** 3 + 1024
   }, _opts);
-  const { N: N3, r: r2, p, dkLen, asyncTick, maxmem, onProgress } = opts;
+  const { N: N3, r, p, dkLen, asyncTick, maxmem, onProgress } = opts;
   assert_default.number(N3);
-  assert_default.number(r2);
+  assert_default.number(r);
   assert_default.number(p);
   assert_default.number(dkLen);
   assert_default.number(asyncTick);
   assert_default.number(maxmem);
   if (onProgress !== void 0 && typeof onProgress !== "function")
     throw new Error("progressCb should be function");
-  const blockSize = 128 * r2;
+  const blockSize = 128 * r;
   const blockSize32 = blockSize / 4;
   if (N3 <= 1 || (N3 & N3 - 1) !== 0 || N3 >= 2 ** (blockSize / 8) || N3 > 2 ** 32) {
     throw new Error("Scrypt: N must be larger than 1, a power of 2, less than 2^(128 * r / 8) and less than 2^32");
@@ -4053,7 +4056,7 @@ function scryptInit(password, salt, _opts) {
         onProgress(blockMixCnt / totalBlockMix);
     };
   }
-  return { N: N3, r: r2, p, dkLen, blockSize32, V, B32, B, tmp, blockMixCb, asyncTick };
+  return { N: N3, r, p, dkLen, blockSize32, V, B32, B, tmp, blockMixCb, asyncTick };
 }
 function scryptOutput(password, dkLen, B, V, tmp) {
   const res = pbkdf2(sha256, password, B, { c: 1, dkLen });
@@ -4063,45 +4066,45 @@ function scryptOutput(password, dkLen, B, V, tmp) {
   return res;
 }
 function scrypt(password, salt, opts) {
-  const { N: N3, r: r2, p, dkLen, blockSize32, V, B32, B, tmp, blockMixCb } = scryptInit(password, salt, opts);
+  const { N: N3, r, p, dkLen, blockSize32, V, B32, B, tmp, blockMixCb } = scryptInit(password, salt, opts);
   for (let pi = 0; pi < p; pi++) {
     const Pi2 = blockSize32 * pi;
     for (let i = 0; i < blockSize32; i++)
       V[i] = B32[Pi2 + i];
     for (let i = 0, pos = 0; i < N3 - 1; i++) {
-      BlockMix(V, pos, V, pos += blockSize32, r2);
+      BlockMix(V, pos, V, pos += blockSize32, r);
       blockMixCb();
     }
-    BlockMix(V, (N3 - 1) * blockSize32, B32, Pi2, r2);
+    BlockMix(V, (N3 - 1) * blockSize32, B32, Pi2, r);
     blockMixCb();
     for (let i = 0; i < N3; i++) {
       const j = B32[Pi2 + blockSize32 - 16] % N3;
       for (let k = 0; k < blockSize32; k++)
         tmp[k] = B32[Pi2 + k] ^ V[j * blockSize32 + k];
-      BlockMix(tmp, 0, B32, Pi2, r2);
+      BlockMix(tmp, 0, B32, Pi2, r);
       blockMixCb();
     }
   }
   return scryptOutput(password, dkLen, B, V, tmp);
 }
 async function scryptAsync(password, salt, opts) {
-  const { N: N3, r: r2, p, dkLen, blockSize32, V, B32, B, tmp, blockMixCb, asyncTick } = scryptInit(password, salt, opts);
+  const { N: N3, r, p, dkLen, blockSize32, V, B32, B, tmp, blockMixCb, asyncTick } = scryptInit(password, salt, opts);
   for (let pi = 0; pi < p; pi++) {
     const Pi2 = blockSize32 * pi;
     for (let i = 0; i < blockSize32; i++)
       V[i] = B32[Pi2 + i];
     let pos = 0;
     await asyncLoop(N3 - 1, asyncTick, (i) => {
-      BlockMix(V, pos, V, pos += blockSize32, r2);
+      BlockMix(V, pos, V, pos += blockSize32, r);
       blockMixCb();
     });
-    BlockMix(V, (N3 - 1) * blockSize32, B32, Pi2, r2);
+    BlockMix(V, (N3 - 1) * blockSize32, B32, Pi2, r);
     blockMixCb();
     await asyncLoop(N3, asyncTick, (i) => {
       const j = B32[Pi2 + blockSize32 - 16] % N3;
       for (let k = 0; k < blockSize32; k++)
         tmp[k] = B32[Pi2 + k] ^ V[j * blockSize32 + k];
-      BlockMix(tmp, 0, B32, Pi2, r2);
+      BlockMix(tmp, 0, B32, Pi2, r);
       blockMixCb();
     });
   }
@@ -4111,18 +4114,18 @@ async function scryptAsync(password, salt, opts) {
 // node_modules/ethers/lib.esm/crypto/scrypt.js
 var lockedSync = false;
 var lockedAsync = false;
-var _scryptAsync = async function(passwd, salt, N3, r2, p, dkLen, onProgress) {
-  return await scryptAsync(passwd, salt, { N: N3, r: r2, p, dkLen, onProgress });
+var _scryptAsync = async function(passwd, salt, N3, r, p, dkLen, onProgress) {
+  return await scryptAsync(passwd, salt, { N: N3, r, p, dkLen, onProgress });
 };
-var _scryptSync = function(passwd, salt, N3, r2, p, dkLen) {
-  return scrypt(passwd, salt, { N: N3, r: r2, p, dkLen });
+var _scryptSync = function(passwd, salt, N3, r, p, dkLen) {
+  return scrypt(passwd, salt, { N: N3, r, p, dkLen });
 };
 var __scryptAsync = _scryptAsync;
 var __scryptSync = _scryptSync;
-async function scrypt2(_passwd, _salt, N3, r2, p, dkLen, progress) {
+async function scrypt2(_passwd, _salt, N3, r, p, dkLen, progress) {
   const passwd = getBytes(_passwd, "passwd");
   const salt = getBytes(_salt, "salt");
-  return hexlify(await __scryptAsync(passwd, salt, N3, r2, p, dkLen, progress));
+  return hexlify(await __scryptAsync(passwd, salt, N3, r, p, dkLen, progress));
 }
 scrypt2._ = _scryptAsync;
 scrypt2.lock = function() {
@@ -4135,10 +4138,10 @@ scrypt2.register = function(func) {
   __scryptAsync = func;
 };
 Object.freeze(scrypt2);
-function scryptSync(_passwd, _salt, N3, r2, p, dkLen) {
+function scryptSync(_passwd, _salt, N3, r, p, dkLen) {
   const passwd = getBytes(_passwd, "passwd");
   const salt = getBytes(_salt, "salt");
-  return hexlify(__scryptSync(passwd, salt, N3, r2, p, dkLen));
+  return hexlify(__scryptSync(passwd, salt, N3, r, p, dkLen));
 }
 scryptSync._ = _scryptSync;
 scryptSync.lock = function() {
@@ -4287,9 +4290,9 @@ var JacobianPoint = class {
     const Z2Z2 = mod(Z2 * Z2);
     const U12 = mod(X1 * Z2Z2);
     const U22 = mod(X2 * Z1Z1);
-    const S12 = mod(mod(Y1 * Z2) * Z2Z2);
+    const S1 = mod(mod(Y1 * Z2) * Z2Z2);
     const S2 = mod(mod(Y2 * Z1) * Z1Z1);
-    return U12 === U22 && S12 === S2;
+    return U12 === U22 && S1 === S2;
   }
   negate() {
     return new JacobianPoint(this.x, mod(-this.y), this.z);
@@ -4320,12 +4323,12 @@ var JacobianPoint = class {
     const Z2Z2 = mod(Z2 * Z2);
     const U12 = mod(X1 * Z2Z2);
     const U22 = mod(X2 * Z1Z1);
-    const S12 = mod(mod(Y1 * Z2) * Z2Z2);
+    const S1 = mod(mod(Y1 * Z2) * Z2Z2);
     const S2 = mod(mod(Y2 * Z1) * Z1Z1);
     const H = mod(U22 - U12);
-    const r2 = mod(S2 - S12);
+    const r = mod(S2 - S1);
     if (H === _0n2) {
-      if (r2 === _0n2) {
+      if (r === _0n2) {
         return this.double();
       } else {
         return JacobianPoint.ZERO;
@@ -4334,8 +4337,8 @@ var JacobianPoint = class {
     const HH = mod(H * H);
     const HHH = mod(H * HH);
     const V = mod(U12 * HH);
-    const X3 = mod(r2 * r2 - HHH - _2n2 * V);
-    const Y3 = mod(r2 * (V - X3) - S12 * HHH);
+    const X3 = mod(r * r - HHH - _2n2 * V);
+    const Y3 = mod(r * (V - X3) - S1 * HHH);
     const Z3 = mod(Z1 * Z2 * H);
     return new JacobianPoint(X3, Y3, Z3);
   }
@@ -4539,12 +4542,12 @@ var Point = class {
     return Point.BASE.multiply(normalizePrivateKey(privateKey));
   }
   static fromSignature(msgHash, signature, recovery) {
-    const { r: r2, s } = normalizeSignature(signature);
+    const { r, s } = normalizeSignature(signature);
     if (![0, 1, 2, 3].includes(recovery))
       throw new Error("Cannot recover: invalid recovery bit");
     const h = truncateHash(ensureBytes(msgHash));
     const { n: n2 } = CURVE;
-    const radj = recovery === 2 || recovery === 3 ? r2 + n2 : r2;
+    const radj = recovery === 2 || recovery === 3 ? r + n2 : r;
     const rinv = invert(radj, n2);
     const u1 = mod(-h * rinv, n2);
     const u2 = mod(s * rinv, n2);
@@ -4636,16 +4639,16 @@ function parseDERSignature(data) {
   if (data[1] !== data.length - 2) {
     throw new Error("Invalid signature: incorrect length");
   }
-  const { data: r2, left: sBytes } = parseDERInt(data.subarray(2));
+  const { data: r, left: sBytes } = parseDERInt(data.subarray(2));
   const { data: s, left: rBytesLeft } = parseDERInt(sBytes);
   if (rBytesLeft.length) {
     throw new Error(`Invalid signature: left bytes after parsing: ${bytesToHex(rBytesLeft)}`);
   }
-  return { r: r2, s };
+  return { r, s };
 }
 var Signature = class {
-  constructor(r2, s) {
-    this.r = r2;
+  constructor(r, s) {
+    this.r = r;
     this.s = s;
     this.assertValidity();
   }
@@ -4663,15 +4666,15 @@ var Signature = class {
     const arr = hex instanceof Uint8Array;
     if (typeof hex !== "string" && !arr)
       throw new TypeError(`Signature.fromDER: Expected string or Uint8Array`);
-    const { r: r2, s } = parseDERSignature(arr ? hex : hexToBytes(hex));
-    return new Signature(r2, s);
+    const { r, s } = parseDERSignature(arr ? hex : hexToBytes(hex));
+    return new Signature(r, s);
   }
   static fromHex(hex) {
     return this.fromDER(hex);
   }
   assertValidity() {
-    const { r: r2, s } = this;
-    if (!isWithinCurveOrder(r2))
+    const { r, s } = this;
+    if (!isWithinCurveOrder(r))
       throw new Error("Invalid Signature: r must be 0 < r < n");
     if (!isWithinCurveOrder(s))
       throw new Error("Invalid Signature: s must be 0 < s < n");
@@ -4836,10 +4839,10 @@ function invert(number2, modulo = CURVE.P) {
   let x = _0n2, y = _1n2, u = _1n2, v = _0n2;
   while (a !== _0n2) {
     const q = b2 / a;
-    const r2 = b2 % a;
+    const r = b2 % a;
     const m = x - u * q;
     const n2 = y - v * q;
-    b2 = a, a = r2, x = u, y = v, u = m, v = n2;
+    b2 = a, a = r, x = u, y = v, u = m, v = n2;
   }
   const gcd = b2;
   if (gcd !== _1n2)
@@ -4960,13 +4963,13 @@ function kmdToSig(kBytes, m, d, lowS = true) {
     return;
   const kinv = invert(k, n2);
   const q = Point.BASE.multiply(k);
-  const r2 = mod(q.x, n2);
-  if (r2 === _0n2)
+  const r = mod(q.x, n2);
+  if (r === _0n2)
     return;
-  const s = mod(kinv * mod(m + d * r2, n2), n2);
+  const s = mod(kinv * mod(m + d * r, n2), n2);
   if (s === _0n2)
     return;
-  let sig = new Signature(r2, s);
+  let sig = new Signature(r, s);
   let recovery = (q.x === sig.r ? 0 : 2) | Number(q.y & _1n2);
   if (lowS && sig.hasHighS()) {
     sig = sig.normalizeS();
@@ -5242,13 +5245,13 @@ var _Signature = class {
   /**
    *  @private
    */
-  constructor(guard, r2, s, v) {
+  constructor(guard, r, s, v) {
     __privateAdd(this, _r, void 0);
     __privateAdd(this, _s, void 0);
     __privateAdd(this, _v, void 0);
     __privateAdd(this, _networkV, void 0);
     assertPrivate(guard, _guard3, "Signature");
-    __privateSet(this, _r, r2);
+    __privateSet(this, _r, r);
     __privateSet(this, _s, s);
     __privateSet(this, _v, v);
     __privateSet(this, _networkV, null);
@@ -5457,18 +5460,18 @@ var _Signature = class {
     if (typeof sig === "string") {
       const bytes2 = getBytes(sig, "signature");
       if (bytes2.length === 64) {
-        const r3 = hexlify(bytes2.slice(0, 32));
+        const r2 = hexlify(bytes2.slice(0, 32));
         const s2 = bytes2.slice(32, 64);
         const v2 = s2[0] & 128 ? 28 : 27;
         s2[0] &= 127;
-        return new _Signature(_guard3, r3, hexlify(s2), v2);
+        return new _Signature(_guard3, r2, hexlify(s2), v2);
       }
       if (bytes2.length === 65) {
-        const r3 = hexlify(bytes2.slice(0, 32));
+        const r2 = hexlify(bytes2.slice(0, 32));
         const s2 = bytes2.slice(32, 64);
         assertError((s2[0] & 128) === 0, "non-canonical s");
         const v2 = _Signature.getNormalizedV(bytes2[64]);
-        return new _Signature(_guard3, r3, hexlify(s2), v2);
+        return new _Signature(_guard3, r2, hexlify(s2), v2);
       }
       assertError(false, "invalid raw signature length");
     }
@@ -5477,7 +5480,7 @@ var _Signature = class {
     }
     const _r2 = sig.r;
     assertError(_r2 != null, "missing r");
-    const r2 = toUint256(_r2);
+    const r = toUint256(_r2);
     const s = function(s2, yParityAndS) {
       if (s2 != null) {
         return toUint256(s2);
@@ -5514,7 +5517,7 @@ var _Signature = class {
       }
       assertError(false, "missing v");
     }(sig.v, sig.yParityAndS, sig.yParity);
-    const result = new _Signature(_guard3, r2, s, v);
+    const result = new _Signature(_guard3, r, s, v);
     if (networkV) {
       __privateSet(result, _networkV, networkV);
     }
@@ -5860,12 +5863,12 @@ function resolveAddress(target, resolver) {
 // node_modules/ethers/lib.esm/abi/typed.js
 var _gaurd = {};
 function n(value, width) {
-  let signed2 = false;
+  let signed = false;
   if (width < 0) {
-    signed2 = true;
+    signed = true;
     width *= -1;
   }
-  return new Typed(_gaurd, `${signed2 ? "" : "u"}int${width}`, value, { signed: signed2, width });
+  return new Typed(_gaurd, `${signed ? "" : "u"}int${width}`, value, { signed, width });
 }
 function b(value, size) {
   return new Typed(_gaurd, `bytes${size ? size : ""}`, value, { size });
@@ -6904,12 +6907,12 @@ var BN_06 = BigInt(0);
 var BN_14 = BigInt(1);
 var BN_MAX_UINT256 = BigInt("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 var NumberCoder = class extends Coder {
-  constructor(size, signed2, localName) {
-    const name = (signed2 ? "int" : "uint") + size * 8;
+  constructor(size, signed, localName) {
+    const name = (signed ? "int" : "uint") + size * 8;
     super(name, name, localName, false);
     __publicField(this, "size");
     __publicField(this, "signed");
-    defineProperties(this, { size, signed: signed2 }, { size: "number", signed: "boolean" });
+    defineProperties(this, { size, signed }, { size: "number", signed: "boolean" });
   }
   defaultValue() {
     return 0;
@@ -7011,772 +7014,6 @@ var TupleCoder = class extends Coder {
 // node_modules/ethers/lib.esm/hash/id.js
 function id(value) {
   return keccak256(toUtf8Bytes(value));
-}
-
-// node_modules/@adraffy/ens-normalize/dist/index.mjs
-function decode_arithmetic(bytes2) {
-  let pos = 0;
-  function u16() {
-    return bytes2[pos++] << 8 | bytes2[pos++];
-  }
-  let symbol_count = u16();
-  let total = 1;
-  let acc = [0, 1];
-  for (let i = 1; i < symbol_count; i++) {
-    acc.push(total += u16());
-  }
-  let skip = u16();
-  let pos_payload = pos;
-  pos += skip;
-  let read_width = 0;
-  let read_buffer = 0;
-  function read_bit() {
-    if (read_width == 0) {
-      read_buffer = read_buffer << 8 | bytes2[pos++];
-      read_width = 8;
-    }
-    return read_buffer >> --read_width & 1;
-  }
-  const N3 = 31;
-  const FULL = 2 ** N3;
-  const HALF = FULL >>> 1;
-  const QRTR = HALF >> 1;
-  const MASK = FULL - 1;
-  let register = 0;
-  for (let i = 0; i < N3; i++)
-    register = register << 1 | read_bit();
-  let symbols = [];
-  let low = 0;
-  let range = FULL;
-  while (true) {
-    let value = Math.floor(((register - low + 1) * total - 1) / range);
-    let start = 0;
-    let end = symbol_count;
-    while (end - start > 1) {
-      let mid = start + end >>> 1;
-      if (value < acc[mid]) {
-        end = mid;
-      } else {
-        start = mid;
-      }
-    }
-    if (start == 0)
-      break;
-    symbols.push(start);
-    let a = low + Math.floor(range * acc[start] / total);
-    let b2 = low + Math.floor(range * acc[start + 1] / total) - 1;
-    while (((a ^ b2) & HALF) == 0) {
-      register = register << 1 & MASK | read_bit();
-      a = a << 1 & MASK;
-      b2 = b2 << 1 & MASK | 1;
-    }
-    while (a & ~b2 & QRTR) {
-      register = register & HALF | register << 1 & MASK >>> 1 | read_bit();
-      a = a << 1 ^ HALF;
-      b2 = (b2 ^ HALF) << 1 | HALF | 1;
-    }
-    low = a;
-    range = 1 + b2 - a;
-  }
-  let offset = symbol_count - 4;
-  return symbols.map((x) => {
-    switch (x - offset) {
-      case 3:
-        return offset + 65792 + (bytes2[pos_payload++] << 16 | bytes2[pos_payload++] << 8 | bytes2[pos_payload++]);
-      case 2:
-        return offset + 256 + (bytes2[pos_payload++] << 8 | bytes2[pos_payload++]);
-      case 1:
-        return offset + bytes2[pos_payload++];
-      default:
-        return x - 1;
-    }
-  });
-}
-function read_payload(v) {
-  let pos = 0;
-  return () => v[pos++];
-}
-function read_compressed_payload(s) {
-  return read_payload(decode_arithmetic(unsafe_atob(s)));
-}
-function unsafe_atob(s) {
-  let lookup = [];
-  [..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"].forEach((c, i) => lookup[c.charCodeAt(0)] = i);
-  let n2 = s.length;
-  let ret = new Uint8Array(6 * n2 >> 3);
-  for (let i = 0, pos = 0, width = 0, carry = 0; i < n2; i++) {
-    carry = carry << 6 | lookup[s.charCodeAt(i)];
-    width += 6;
-    if (width >= 8) {
-      ret[pos++] = carry >> (width -= 8);
-    }
-  }
-  return ret;
-}
-function signed(i) {
-  return i & 1 ? ~i >> 1 : i >> 1;
-}
-function read_deltas(n2, next) {
-  let v = Array(n2);
-  for (let i = 0, x = 0; i < n2; i++)
-    v[i] = x += signed(next());
-  return v;
-}
-function read_sorted(next, prev = 0) {
-  let ret = [];
-  while (true) {
-    let x = next();
-    let n2 = next();
-    if (!n2)
-      break;
-    prev += x;
-    for (let i = 0; i < n2; i++) {
-      ret.push(prev + i);
-    }
-    prev += n2 + 1;
-  }
-  return ret;
-}
-function read_sorted_arrays(next) {
-  return read_array_while(() => {
-    let v = read_sorted(next);
-    if (v.length)
-      return v;
-  });
-}
-function read_mapped(next) {
-  let ret = [];
-  while (true) {
-    let w = next();
-    if (w == 0)
-      break;
-    ret.push(read_linear_table(w, next));
-  }
-  while (true) {
-    let w = next() - 1;
-    if (w < 0)
-      break;
-    ret.push(read_replacement_table(w, next));
-  }
-  return ret.flat();
-}
-function read_array_while(next) {
-  let v = [];
-  while (true) {
-    let x = next(v.length);
-    if (!x)
-      break;
-    v.push(x);
-  }
-  return v;
-}
-function read_transposed(n2, w, next) {
-  let m = Array(n2).fill().map(() => []);
-  for (let i = 0; i < w; i++) {
-    read_deltas(n2, next).forEach((x, j) => m[j].push(x));
-  }
-  return m;
-}
-function read_linear_table(w, next) {
-  let dx = 1 + next();
-  let dy = next();
-  let vN = read_array_while(next);
-  let m = read_transposed(vN.length, 1 + w, next);
-  return m.flatMap((v, i) => {
-    let [x, ...ys] = v;
-    return Array(vN[i]).fill().map((_, j) => {
-      let j_dy = j * dy;
-      return [x + j * dx, ys.map((y) => y + j_dy)];
-    });
-  });
-}
-function read_replacement_table(w, next) {
-  let n2 = 1 + next();
-  let m = read_transposed(n2, 1 + w, next);
-  return m.map((v) => [v[0], v.slice(1)]);
-}
-var r$1 = read_compressed_payload("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");
-var FENCED = /* @__PURE__ */ new Map([[8217, "apostrophe"], [8260, "fraction slash"], [12539, "middle dot"]]);
-var NSM_MAX = 4;
-function hex_cp(cp) {
-  return cp.toString(16).toUpperCase().padStart(2, "0");
-}
-function quote_cp(cp) {
-  return `{${hex_cp(cp)}}`;
-}
-function explode_cp(s) {
-  let cps = [];
-  for (let pos = 0, len = s.length; pos < len; ) {
-    let cp = s.codePointAt(pos);
-    pos += cp < 65536 ? 1 : 2;
-    cps.push(cp);
-  }
-  return cps;
-}
-function str_from_cps(cps) {
-  const chunk = 4096;
-  let len = cps.length;
-  if (len < chunk)
-    return String.fromCodePoint(...cps);
-  let buf = [];
-  for (let i = 0; i < len; ) {
-    buf.push(String.fromCodePoint(...cps.slice(i, i += chunk)));
-  }
-  return buf.join("");
-}
-var r = read_compressed_payload("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");
-function unpack_cc(packed) {
-  return packed >> 24 & 255;
-}
-function unpack_cp(packed) {
-  return packed & 16777215;
-}
-var SHIFTED_RANK = new Map(read_sorted_arrays(r).flatMap((v, i) => v.map((x) => [x, i + 1 << 24])));
-var EXCLUSIONS = new Set(read_sorted(r));
-var DECOMP = /* @__PURE__ */ new Map();
-var RECOMP = /* @__PURE__ */ new Map();
-for (let [cp, cps] of read_mapped(r)) {
-  if (!EXCLUSIONS.has(cp) && cps.length == 2) {
-    let [a, b2] = cps;
-    let bucket = RECOMP.get(a);
-    if (!bucket) {
-      bucket = /* @__PURE__ */ new Map();
-      RECOMP.set(a, bucket);
-    }
-    bucket.set(b2, cp);
-  }
-  DECOMP.set(cp, cps.reverse());
-}
-var S0 = 44032;
-var L0 = 4352;
-var V0 = 4449;
-var T0 = 4519;
-var L_COUNT = 19;
-var V_COUNT = 21;
-var T_COUNT = 28;
-var N_COUNT = V_COUNT * T_COUNT;
-var S_COUNT = L_COUNT * N_COUNT;
-var S1 = S0 + S_COUNT;
-var L1 = L0 + L_COUNT;
-var V1 = V0 + V_COUNT;
-var T1 = T0 + T_COUNT;
-function is_hangul(cp) {
-  return cp >= S0 && cp < S1;
-}
-function compose_pair(a, b2) {
-  if (a >= L0 && a < L1 && b2 >= V0 && b2 < V1) {
-    return S0 + (a - L0) * N_COUNT + (b2 - V0) * T_COUNT;
-  } else if (is_hangul(a) && b2 > T0 && b2 < T1 && (a - S0) % T_COUNT == 0) {
-    return a + (b2 - T0);
-  } else {
-    let recomp = RECOMP.get(a);
-    if (recomp) {
-      recomp = recomp.get(b2);
-      if (recomp) {
-        return recomp;
-      }
-    }
-    return -1;
-  }
-}
-function decomposed(cps) {
-  let ret = [];
-  let buf = [];
-  let check_order = false;
-  function add2(cp) {
-    let cc = SHIFTED_RANK.get(cp);
-    if (cc) {
-      check_order = true;
-      cp |= cc;
-    }
-    ret.push(cp);
-  }
-  for (let cp of cps) {
-    while (true) {
-      if (cp < 128) {
-        ret.push(cp);
-      } else if (is_hangul(cp)) {
-        let s_index = cp - S0;
-        let l_index = s_index / N_COUNT | 0;
-        let v_index = s_index % N_COUNT / T_COUNT | 0;
-        let t_index = s_index % T_COUNT;
-        add2(L0 + l_index);
-        add2(V0 + v_index);
-        if (t_index > 0)
-          add2(T0 + t_index);
-      } else {
-        let mapped = DECOMP.get(cp);
-        if (mapped) {
-          buf.push(...mapped);
-        } else {
-          add2(cp);
-        }
-      }
-      if (!buf.length)
-        break;
-      cp = buf.pop();
-    }
-  }
-  if (check_order && ret.length > 1) {
-    let prev_cc = unpack_cc(ret[0]);
-    for (let i = 1; i < ret.length; i++) {
-      let cc = unpack_cc(ret[i]);
-      if (cc == 0 || prev_cc <= cc) {
-        prev_cc = cc;
-        continue;
-      }
-      let j = i - 1;
-      while (true) {
-        let tmp = ret[j + 1];
-        ret[j + 1] = ret[j];
-        ret[j] = tmp;
-        if (!j)
-          break;
-        prev_cc = unpack_cc(ret[--j]);
-        if (prev_cc <= cc)
-          break;
-      }
-      prev_cc = unpack_cc(ret[i]);
-    }
-  }
-  return ret;
-}
-function composed_from_decomposed(v) {
-  let ret = [];
-  let stack = [];
-  let prev_cp = -1;
-  let prev_cc = 0;
-  for (let packed of v) {
-    let cc = unpack_cc(packed);
-    let cp = unpack_cp(packed);
-    if (prev_cp == -1) {
-      if (cc == 0) {
-        prev_cp = cp;
-      } else {
-        ret.push(cp);
-      }
-    } else if (prev_cc > 0 && prev_cc >= cc) {
-      if (cc == 0) {
-        ret.push(prev_cp, ...stack);
-        stack.length = 0;
-        prev_cp = cp;
-      } else {
-        stack.push(cp);
-      }
-      prev_cc = cc;
-    } else {
-      let composed = compose_pair(prev_cp, cp);
-      if (composed >= 0) {
-        prev_cp = composed;
-      } else if (prev_cc == 0 && cc == 0) {
-        ret.push(prev_cp);
-        prev_cp = cp;
-      } else {
-        stack.push(cp);
-        prev_cc = cc;
-      }
-    }
-  }
-  if (prev_cp >= 0) {
-    ret.push(prev_cp, ...stack);
-  }
-  return ret;
-}
-function nfd(cps) {
-  return decomposed(cps).map(unpack_cp);
-}
-function nfc(cps) {
-  return composed_from_decomposed(decomposed(cps));
-}
-var FE0F = 65039;
-var STOP_CH = ".";
-var UNIQUE_PH = 1;
-var HYPHEN = 45;
-function read_set() {
-  return new Set(read_sorted(r$1));
-}
-var MAPPED = new Map(read_mapped(r$1));
-var IGNORED = read_set();
-var CM = read_set();
-var NSM = new Set(read_sorted(r$1).map(function(i) {
-  return this[i];
-}, [...CM]));
-var ESCAPE = read_set();
-var NFC_CHECK = read_set();
-var CHUNKS = read_sorted_arrays(r$1);
-function read_chunked() {
-  return new Set([read_sorted(r$1).map((i) => CHUNKS[i]), read_sorted(r$1)].flat(2));
-}
-var UNRESTRICTED = r$1();
-var GROUPS = read_array_while((i) => {
-  let N3 = read_array_while(r$1).map((x) => x + 96);
-  if (N3.length) {
-    let R = i >= UNRESTRICTED;
-    N3[0] -= 32;
-    N3 = str_from_cps(N3);
-    if (R)
-      N3 = `Restricted[${N3}]`;
-    let P = read_chunked();
-    let Q = read_chunked();
-    let V = [...P, ...Q].sort((a, b2) => a - b2);
-    let M = !r$1();
-    return { N: N3, P, M, R, V: new Set(V) };
-  }
-});
-var WHOLE_VALID = read_set();
-var WHOLE_MAP = /* @__PURE__ */ new Map();
-[...WHOLE_VALID, ...read_set()].sort((a, b2) => a - b2).map((cp, i, v) => {
-  let d = r$1();
-  let w = v[i] = d ? v[i - d] : { V: [], M: /* @__PURE__ */ new Map() };
-  w.V.push(cp);
-  if (!WHOLE_VALID.has(cp)) {
-    WHOLE_MAP.set(cp, w);
-  }
-});
-for (let { V, M } of new Set(WHOLE_MAP.values())) {
-  let recs = [];
-  for (let cp of V) {
-    let gs = GROUPS.filter((g) => g.V.has(cp));
-    let rec = recs.find(({ G }) => gs.some((g) => G.has(g)));
-    if (!rec) {
-      rec = { G: /* @__PURE__ */ new Set(), V: [] };
-      recs.push(rec);
-    }
-    rec.V.push(cp);
-    gs.forEach((g) => rec.G.add(g));
-  }
-  let union2 = recs.flatMap(({ G }) => [...G]);
-  for (let { G, V: V2 } of recs) {
-    let complement = new Set(union2.filter((g) => !G.has(g)));
-    for (let cp of V2) {
-      M.set(cp, complement);
-    }
-  }
-}
-var union = /* @__PURE__ */ new Set();
-var multi = /* @__PURE__ */ new Set();
-for (let g of GROUPS) {
-  for (let cp of g.V) {
-    (union.has(cp) ? multi : union).add(cp);
-  }
-}
-for (let cp of union) {
-  if (!WHOLE_MAP.has(cp) && !multi.has(cp)) {
-    WHOLE_MAP.set(cp, UNIQUE_PH);
-  }
-}
-var VALID = /* @__PURE__ */ new Set([...union, ...nfd(union)]);
-var EMOJI_SORTED = read_sorted(r$1);
-var EMOJI_ROOT = read_emoji_trie([]);
-function read_emoji_trie(cps) {
-  let B = read_array_while(() => {
-    let keys = read_sorted(r$1).map((i) => EMOJI_SORTED[i]);
-    if (keys.length)
-      return read_emoji_trie(keys);
-  }).sort((a, b2) => b2.Q.size - a.Q.size);
-  let temp = r$1();
-  let V = temp % 3;
-  temp = temp / 3 | 0;
-  let F = temp & 1;
-  temp >>= 1;
-  let S2 = temp & 1;
-  let C = temp & 2;
-  return { B, V, F, S: S2, C, Q: new Set(cps) };
-}
-var Emoji = class extends Array {
-  get is_emoji() {
-    return true;
-  }
-};
-function safe_str_from_cps(cps, quoter = quote_cp) {
-  let buf = [];
-  if (is_combining_mark(cps[0]))
-    buf.push("◌");
-  let prev = 0;
-  let n2 = cps.length;
-  for (let i = 0; i < n2; i++) {
-    let cp = cps[i];
-    if (should_escape(cp)) {
-      buf.push(str_from_cps(cps.slice(prev, i)));
-      buf.push(quoter(cp));
-      prev = i + 1;
-    }
-  }
-  buf.push(str_from_cps(cps.slice(prev, n2)));
-  return buf.join("");
-}
-function quoted_cp(cp) {
-  return (should_escape(cp) ? "" : `${bidi_qq(safe_str_from_cps([cp]))} `) + quote_cp(cp);
-}
-function bidi_qq(s) {
-  return `"${s}"‎`;
-}
-function check_label_extension(cps) {
-  if (cps.length >= 4 && cps[2] == HYPHEN && cps[3] == HYPHEN) {
-    throw new Error("invalid label extension");
-  }
-}
-function check_leading_underscore(cps) {
-  const UNDERSCORE = 95;
-  for (let i = cps.lastIndexOf(UNDERSCORE); i > 0; ) {
-    if (cps[--i] !== UNDERSCORE) {
-      throw new Error("underscore allowed only at start");
-    }
-  }
-}
-function check_fenced(cps) {
-  let cp = cps[0];
-  let prev = FENCED.get(cp);
-  if (prev)
-    throw error_placement(`leading ${prev}`);
-  let n2 = cps.length;
-  let last = -1;
-  for (let i = 1; i < n2; i++) {
-    cp = cps[i];
-    let match = FENCED.get(cp);
-    if (match) {
-      if (last == i)
-        throw error_placement(`${prev} + ${match}`);
-      last = i + 1;
-      prev = match;
-    }
-  }
-  if (last == n2)
-    throw error_placement(`trailing ${prev}`);
-}
-function is_combining_mark(cp) {
-  return CM.has(cp);
-}
-function should_escape(cp) {
-  return ESCAPE.has(cp);
-}
-function ens_normalize(name) {
-  return flatten(ens_split(name));
-}
-function ens_split(name, preserve_emoji) {
-  let offset = 0;
-  return name.split(STOP_CH).map((label) => {
-    let input = explode_cp(label);
-    let info = {
-      input,
-      offset
-      // codepoint, not substring!
-    };
-    offset += input.length + 1;
-    let norm;
-    try {
-      let tokens = info.tokens = process(input, nfc);
-      let token_count = tokens.length;
-      let type;
-      if (!token_count) {
-        throw new Error(`empty label`);
-      } else {
-        let chars = tokens[0];
-        let emoji = token_count > 1 || chars.is_emoji;
-        if (!emoji && chars.every((cp) => cp < 128)) {
-          norm = chars;
-          check_leading_underscore(norm);
-          check_label_extension(norm);
-          type = "ASCII";
-        } else {
-          if (emoji) {
-            info.emoji = true;
-            chars = tokens.flatMap((x) => x.is_emoji ? [] : x);
-          }
-          norm = tokens.flatMap((x) => !preserve_emoji && x.is_emoji ? filter_fe0f(x) : x);
-          check_leading_underscore(norm);
-          if (!chars.length) {
-            type = "Emoji";
-          } else {
-            if (CM.has(norm[0]))
-              throw error_placement("leading combining mark");
-            for (let i = 1; i < token_count; i++) {
-              let cps = tokens[i];
-              if (!cps.is_emoji && CM.has(cps[0])) {
-                throw error_placement(`emoji + combining mark: "${str_from_cps(tokens[i - 1])} + ${safe_str_from_cps([cps[0]])}"`);
-              }
-            }
-            check_fenced(norm);
-            let unique = [...new Set(chars)];
-            let [g] = determine_group(unique);
-            check_group(g, chars);
-            check_whole(g, unique);
-            type = g.N;
-          }
-        }
-      }
-      info.type = type;
-    } catch (err) {
-      info.error = err;
-    }
-    info.output = norm;
-    return info;
-  });
-}
-function check_whole(group, unique) {
-  let maker;
-  let shared = [];
-  for (let cp of unique) {
-    let whole = WHOLE_MAP.get(cp);
-    if (whole === UNIQUE_PH)
-      return;
-    if (whole) {
-      let set = whole.M.get(cp);
-      maker = maker ? maker.filter((g) => set.has(g)) : [...set];
-      if (!maker.length)
-        return;
-    } else {
-      shared.push(cp);
-    }
-  }
-  if (maker) {
-    for (let g of maker) {
-      if (shared.every((cp) => g.V.has(cp))) {
-        throw new Error(`whole-script confusable: ${group.N}/${g.N}`);
-      }
-    }
-  }
-}
-function determine_group(unique) {
-  let groups = GROUPS;
-  for (let cp of unique) {
-    let gs = groups.filter((g) => g.V.has(cp));
-    if (!gs.length) {
-      if (groups === GROUPS) {
-        throw error_disallowed(cp);
-      } else {
-        throw error_group_member(groups[0], cp);
-      }
-    }
-    groups = gs;
-    if (gs.length == 1)
-      break;
-  }
-  return groups;
-}
-function flatten(split2) {
-  return split2.map(({ input, error, output: output2 }) => {
-    if (error) {
-      let msg = error.message;
-      throw new Error(split2.length == 1 ? msg : `Invalid label ${bidi_qq(safe_str_from_cps(input))}: ${msg}`);
-    }
-    return str_from_cps(output2);
-  }).join(STOP_CH);
-}
-function error_disallowed(cp) {
-  return new Error(`disallowed character: ${quoted_cp(cp)}`);
-}
-function error_group_member(g, cp) {
-  let quoted = quoted_cp(cp);
-  let gg = GROUPS.find((g2) => g2.P.has(cp));
-  if (gg) {
-    quoted = `${gg.N} ${quoted}`;
-  }
-  return new Error(`illegal mixture: ${g.N} + ${quoted}`);
-}
-function error_placement(where) {
-  return new Error(`illegal placement: ${where}`);
-}
-function check_group(g, cps) {
-  let { V, M } = g;
-  for (let cp of cps) {
-    if (!V.has(cp)) {
-      throw error_group_member(g, cp);
-    }
-  }
-  if (M) {
-    let decomposed2 = nfd(cps);
-    for (let i = 1, e = decomposed2.length; i < e; i++) {
-      if (NSM.has(decomposed2[i])) {
-        let j = i + 1;
-        for (let cp; j < e && NSM.has(cp = decomposed2[j]); j++) {
-          for (let k = i; k < j; k++) {
-            if (decomposed2[k] == cp) {
-              throw new Error(`non-spacing marks: repeated ${quoted_cp(cp)}`);
-            }
-          }
-        }
-        if (j - i > NSM_MAX) {
-          throw new Error(`non-spacing marks: too many ${bidi_qq(safe_str_from_cps(decomposed2.slice(i - 1, j)))} (${j - i}/${NSM_MAX})`);
-        }
-        i = j;
-      }
-    }
-  }
-}
-function process(input, nf) {
-  let ret = [];
-  let chars = [];
-  input = input.slice().reverse();
-  while (input.length) {
-    let emoji = consume_emoji_reversed(input);
-    if (emoji) {
-      if (chars.length) {
-        ret.push(nf(chars));
-        chars = [];
-      }
-      ret.push(emoji);
-    } else {
-      let cp = input.pop();
-      if (VALID.has(cp)) {
-        chars.push(cp);
-      } else {
-        let cps = MAPPED.get(cp);
-        if (cps) {
-          chars.push(...cps);
-        } else if (!IGNORED.has(cp)) {
-          throw error_disallowed(cp);
-        }
-      }
-    }
-  }
-  if (chars.length) {
-    ret.push(nf(chars));
-  }
-  return ret;
-}
-function filter_fe0f(cps) {
-  return cps.filter((cp) => cp != FE0F);
-}
-function consume_emoji_reversed(cps, eaten) {
-  let node = EMOJI_ROOT;
-  let emoji;
-  let saved;
-  let stack = [];
-  let pos = cps.length;
-  if (eaten)
-    eaten.length = 0;
-  while (pos) {
-    let cp = cps[--pos];
-    node = node.B.find((x) => x.Q.has(cp));
-    if (!node)
-      break;
-    if (node.S) {
-      saved = cp;
-    } else if (node.C) {
-      if (cp === saved)
-        break;
-    }
-    stack.push(cp);
-    if (node.F) {
-      stack.push(FE0F);
-      if (pos > 0 && cps[pos - 1] == FE0F)
-        pos--;
-    }
-    if (node.V) {
-      emoji = conform_emoji_copy(stack, node);
-      if (eaten)
-        eaten.push(...cps.slice(pos).reverse());
-      cps.length = pos;
-    }
-  }
-  return emoji;
-}
-function conform_emoji_copy(cps, node) {
-  let copy4 = Emoji.from(cps);
-  if (node.V == 2)
-    copy4.splice(1, 1);
-  return copy4;
 }
 
 // node_modules/ethers/lib.esm/hash/namehash.js
@@ -7946,9 +7183,9 @@ function _parseLegacy(data) {
     return tx;
   }
   const v = handleUint(fields[6], "v");
-  const r2 = handleUint(fields[7], "r");
+  const r = handleUint(fields[7], "r");
   const s = handleUint(fields[8], "s");
-  if (r2 === BN_07 && s === BN_07) {
+  if (r === BN_07 && s === BN_07) {
     tx.chainId = v;
   } else {
     let chainId = (v - BN_352) / BN_22;
@@ -8014,9 +7251,9 @@ function _parseEipSignature(tx, fields) {
   } catch (error) {
     assertArgument(false, "invalid yParity", "yParity", fields[0]);
   }
-  const r2 = zeroPadValue(fields[1], 32);
+  const r = zeroPadValue(fields[1], 32);
   const s = zeroPadValue(fields[2], 32);
-  const signature = Signature2.from({ r: r2, s, yParity });
+  const signature = Signature2.from({ r, s, yParity });
   tx.signature = signature;
 }
 function _parseEip1559(data) {
@@ -8621,13 +7858,13 @@ function _pack(type, value, isArray) {
   }
   let match = type.match(regexNumber);
   if (match) {
-    let signed2 = match[1] === "int";
+    let signed = match[1] === "int";
     let size = parseInt(match[2] || "256");
     assertArgument((!match[2] || match[2] === String(size)) && size % 8 === 0 && size !== 0 && size <= 256, "invalid number type", "type", type);
     if (isArray) {
       size = 256;
     }
-    if (signed2) {
+    if (signed) {
       value = toTwos(value, size);
     }
     return getBytes(zeroPadValue(toBeArray(value), size / 8));
@@ -8735,15 +7972,15 @@ function getBaseEncoder(type) {
   {
     const match = type.match(/^(u?)int(\d*)$/);
     if (match) {
-      const signed2 = match[1] === "";
+      const signed = match[1] === "";
       const width = parseInt(match[2] || "256");
       assertArgument(width % 8 === 0 && width !== 0 && width <= 256 && (match[2] == null || match[2] === String(width)), "invalid numeric width", "type", type);
-      const boundsUpper = mask(BN_MAX_UINT2562, signed2 ? width - 1 : width);
-      const boundsLower = signed2 ? (boundsUpper + BN_15) * BN__1 : BN_08;
+      const boundsUpper = mask(BN_MAX_UINT2562, signed ? width - 1 : width);
+      const boundsLower = signed ? (boundsUpper + BN_15) * BN__1 : BN_08;
       return function(_value2) {
         const value = getBigInt(_value2, "value");
         assertArgument(value >= boundsLower && value <= boundsUpper, `value out-of-bounds for ${type}`, "value", value);
-        return toBeHex(signed2 ? toTwos(value, 256) : value, 32);
+        return toBeHex(signed ? toTwos(value, 256) : value, 32);
       };
     }
   }
@@ -9597,7 +8834,7 @@ var _ParamType = class {
    *  Walks the **ParamType** with %%value%%, calling %%process%%
    *  on each type, destructing the %%value%% recursively.
    */
-  walk(value, process2) {
+  walk(value, process) {
     if (this.isArray()) {
       if (!Array.isArray(value)) {
         throw new Error("invalid array value");
@@ -9606,7 +8843,7 @@ var _ParamType = class {
         throw new Error("array is wrong length");
       }
       const _this = this;
-      return value.map((v) => _this.arrayChildren.walk(v, process2));
+      return value.map((v) => _this.arrayChildren.walk(v, process));
     }
     if (this.isTuple()) {
       if (!Array.isArray(value)) {
@@ -9616,9 +8853,9 @@ var _ParamType = class {
         throw new Error("array is wrong length");
       }
       const _this = this;
-      return value.map((v, i) => _this.components[i].walk(v, process2));
+      return value.map((v, i) => _this.components[i].walk(v, process));
     }
-    return process2(this.type, value);
+    return process(this.type, value);
   }
   /**
    *  Walks the **ParamType** with %%value%%, asynchronously calling
@@ -9627,10 +8864,10 @@ var _ParamType = class {
    *  This can be used to resolve ENS naes by walking and resolving each
    *  ``"address"`` type.
    */
-  async walkAsync(value, process2) {
+  async walkAsync(value, process) {
     const promises = [];
     const result = [value];
-    __privateMethod(this, _walkAsync, walkAsync_fn).call(this, promises, value, process2, (value2) => {
+    __privateMethod(this, _walkAsync, walkAsync_fn).call(this, promises, value, process, (value2) => {
       result[0] = value2;
     });
     if (promises.length) {
@@ -9725,7 +8962,7 @@ var _ParamType = class {
 };
 var ParamType = _ParamType;
 _walkAsync = new WeakSet();
-walkAsync_fn = function(promises, value, process2, setValue) {
+walkAsync_fn = function(promises, value, process, setValue) {
   if (this.isArray()) {
     if (!Array.isArray(value)) {
       throw new Error("invalid array value");
@@ -9737,7 +8974,7 @@ walkAsync_fn = function(promises, value, process2, setValue) {
     const result2 = value.slice();
     result2.forEach((value2, index) => {
       var _a2;
-      __privateMethod(_a2 = childType, _walkAsync, walkAsync_fn).call(_a2, promises, value2, process2, (value3) => {
+      __privateMethod(_a2 = childType, _walkAsync, walkAsync_fn).call(_a2, promises, value2, process, (value3) => {
         result2[index] = value3;
       });
     });
@@ -9768,14 +9005,14 @@ walkAsync_fn = function(promises, value, process2, setValue) {
     }
     result2.forEach((value2, index) => {
       var _a2;
-      __privateMethod(_a2 = components[index], _walkAsync, walkAsync_fn).call(_a2, promises, value2, process2, (value3) => {
+      __privateMethod(_a2 = components[index], _walkAsync, walkAsync_fn).call(_a2, promises, value2, process, (value3) => {
         result2[index] = value3;
       });
     });
     setValue(result2);
     return;
   }
-  const result = process2(this.type, value);
+  const result = process(this.type, value);
   if (result.then) {
     promises.push(async function() {
       setValue(await result);
@@ -17403,7 +16640,7 @@ scheduleDrain_fn = function() {
               reject(makeError("provider destroyed; cancelled request", "UNSUPPORTED_OPERATION", { operation: payload2.method }));
               continue;
             }
-            const resp = result.filter((r2) => r2.id === payload2.id)[0];
+            const resp = result.filter((r) => r.id === payload2.id)[0];
             if (resp == null) {
               const error = makeError("missing response for request", "BAD_DATA", {
                 value: result,
@@ -18772,9 +18009,9 @@ function checkQuorum(quorum, results) {
     tally.set(tag, t);
   }
   let best = null;
-  for (const r2 of tally.values()) {
-    if (r2.weight >= quorum && (!best || r2.weight > best.weight)) {
-      best = r2;
+  for (const r of tally.values()) {
+    if (r.weight >= quorum && (!best || r.weight > best.weight)) {
+      best = r;
     }
   }
   if (best) {
@@ -18818,9 +18055,9 @@ function getAnyResult(quorum, results) {
   if (result !== void 0) {
     return result;
   }
-  for (const r2 of results) {
-    if (r2.value) {
-      return r2.value;
+  for (const r of results) {
+    if (r.value) {
+      return r.value;
     }
   }
   return void 0;
@@ -18836,10 +18073,10 @@ function getFuzzyMode(quorum, results) {
     tally.set(result, t);
   };
   for (const { weight, value } of results) {
-    const r2 = getNumber(value);
-    add2(r2 - 1, weight);
-    add2(r2, weight);
-    add2(r2 + 1, weight);
+    const r = getNumber(value);
+    add2(r - 1, weight);
+    add2(r, weight);
+    add2(r + 1, weight);
   }
   let bestWeight = 0;
   let bestResult = void 0;
@@ -19004,7 +18241,7 @@ _height = new WeakMap();
 _initialSyncPromise = new WeakMap();
 _getNextConfig = new WeakSet();
 getNextConfig_fn = function(running) {
-  const configs = Array.from(running).map((r2) => r2.config);
+  const configs = Array.from(running).map((r) => r.config);
   const allConfigs = __privateGet(this, _configs).slice();
   shuffle(allConfigs);
   allConfigs.sort((a, b2) => b2.priority - a.priority);
@@ -19095,7 +18332,7 @@ checkQuorum_fn = async function(running, req) {
       results.push({ tag, value, weight: runner.config.weight });
     }
   }
-  if (results.reduce((a, r2) => a + r2.weight, 0) < this.quorum) {
+  if (results.reduce((a, r) => a + r.weight, 0) < this.quorum) {
     return void 0;
   }
   switch (req.method) {
@@ -19174,7 +18411,7 @@ waitForQuorum_fn = async function(running, req) {
   }
   assert(interesting.length > 0, "quorum not met", "SERVER_ERROR", {
     request: "%sub-requests",
-    info: { request: req, results: Array.from(running).map((r2) => stringify2(r2.result)) }
+    info: { request: req, results: Array.from(running).map((r) => stringify2(r.result)) }
   });
   await Promise.race(interesting);
   return await __privateMethod(this, _waitForQuorum, waitForQuorum_fn).call(this, running, req);
@@ -19911,7 +19148,7 @@ var numberOfRounds = { 16: 10, 24: 12, 32: 14 };
 var rcon = [1, 2, 4, 8, 16, 32, 64, 128, 27, 54, 108, 216, 171, 77, 154, 47, 94, 188, 99, 198, 151, 53, 106, 212, 179, 125, 250, 239, 197, 145];
 var S = [99, 124, 119, 123, 242, 107, 111, 197, 48, 1, 103, 43, 254, 215, 171, 118, 202, 130, 201, 125, 250, 89, 71, 240, 173, 212, 162, 175, 156, 164, 114, 192, 183, 253, 147, 38, 54, 63, 247, 204, 52, 165, 229, 241, 113, 216, 49, 21, 4, 199, 35, 195, 24, 150, 5, 154, 7, 18, 128, 226, 235, 39, 178, 117, 9, 131, 44, 26, 27, 110, 90, 160, 82, 59, 214, 179, 41, 227, 47, 132, 83, 209, 0, 237, 32, 252, 177, 91, 106, 203, 190, 57, 74, 76, 88, 207, 208, 239, 170, 251, 67, 77, 51, 133, 69, 249, 2, 127, 80, 60, 159, 168, 81, 163, 64, 143, 146, 157, 56, 245, 188, 182, 218, 33, 16, 255, 243, 210, 205, 12, 19, 236, 95, 151, 68, 23, 196, 167, 126, 61, 100, 93, 25, 115, 96, 129, 79, 220, 34, 42, 144, 136, 70, 238, 184, 20, 222, 94, 11, 219, 224, 50, 58, 10, 73, 6, 36, 92, 194, 211, 172, 98, 145, 149, 228, 121, 231, 200, 55, 109, 141, 213, 78, 169, 108, 86, 244, 234, 101, 122, 174, 8, 186, 120, 37, 46, 28, 166, 180, 198, 232, 221, 116, 31, 75, 189, 139, 138, 112, 62, 181, 102, 72, 3, 246, 14, 97, 53, 87, 185, 134, 193, 29, 158, 225, 248, 152, 17, 105, 217, 142, 148, 155, 30, 135, 233, 206, 85, 40, 223, 140, 161, 137, 13, 191, 230, 66, 104, 65, 153, 45, 15, 176, 84, 187, 22];
 var Si = [82, 9, 106, 213, 48, 54, 165, 56, 191, 64, 163, 158, 129, 243, 215, 251, 124, 227, 57, 130, 155, 47, 255, 135, 52, 142, 67, 68, 196, 222, 233, 203, 84, 123, 148, 50, 166, 194, 35, 61, 238, 76, 149, 11, 66, 250, 195, 78, 8, 46, 161, 102, 40, 217, 36, 178, 118, 91, 162, 73, 109, 139, 209, 37, 114, 248, 246, 100, 134, 104, 152, 22, 212, 164, 92, 204, 93, 101, 182, 146, 108, 112, 72, 80, 253, 237, 185, 218, 94, 21, 70, 87, 167, 141, 157, 132, 144, 216, 171, 0, 140, 188, 211, 10, 247, 228, 88, 5, 184, 179, 69, 6, 208, 44, 30, 143, 202, 63, 15, 2, 193, 175, 189, 3, 1, 19, 138, 107, 58, 145, 17, 65, 79, 103, 220, 234, 151, 242, 207, 206, 240, 180, 230, 115, 150, 172, 116, 34, 231, 173, 53, 133, 226, 249, 55, 232, 28, 117, 223, 110, 71, 241, 26, 113, 29, 41, 197, 137, 111, 183, 98, 14, 170, 24, 190, 27, 252, 86, 62, 75, 198, 210, 121, 32, 154, 219, 192, 254, 120, 205, 90, 244, 31, 221, 168, 51, 136, 7, 199, 49, 177, 18, 16, 89, 39, 128, 236, 95, 96, 81, 127, 169, 25, 181, 74, 13, 45, 229, 122, 159, 147, 201, 156, 239, 160, 224, 59, 77, 174, 42, 245, 176, 200, 235, 187, 60, 131, 83, 153, 97, 23, 43, 4, 126, 186, 119, 214, 38, 225, 105, 20, 99, 85, 33, 12, 125];
-var T12 = [3328402341, 4168907908, 4000806809, 4135287693, 4294111757, 3597364157, 3731845041, 2445657428, 1613770832, 33620227, 3462883241, 1445669757, 3892248089, 3050821474, 1303096294, 3967186586, 2412431941, 528646813, 2311702848, 4202528135, 4026202645, 2992200171, 2387036105, 4226871307, 1101901292, 3017069671, 1604494077, 1169141738, 597466303, 1403299063, 3832705686, 2613100635, 1974974402, 3791519004, 1033081774, 1277568618, 1815492186, 2118074177, 4126668546, 2211236943, 1748251740, 1369810420, 3521504564, 4193382664, 3799085459, 2883115123, 1647391059, 706024767, 134480908, 2512897874, 1176707941, 2646852446, 806885416, 932615841, 168101135, 798661301, 235341577, 605164086, 461406363, 3756188221, 3454790438, 1311188841, 2142417613, 3933566367, 302582043, 495158174, 1479289972, 874125870, 907746093, 3698224818, 3025820398, 1537253627, 2756858614, 1983593293, 3084310113, 2108928974, 1378429307, 3722699582, 1580150641, 327451799, 2790478837, 3117535592, 0, 3253595436, 1075847264, 3825007647, 2041688520, 3059440621, 3563743934, 2378943302, 1740553945, 1916352843, 2487896798, 2555137236, 2958579944, 2244988746, 3151024235, 3320835882, 1336584933, 3992714006, 2252555205, 2588757463, 1714631509, 293963156, 2319795663, 3925473552, 67240454, 4269768577, 2689618160, 2017213508, 631218106, 1269344483, 2723238387, 1571005438, 2151694528, 93294474, 1066570413, 563977660, 1882732616, 4059428100, 1673313503, 2008463041, 2950355573, 1109467491, 537923632, 3858759450, 4260623118, 3218264685, 2177748300, 403442708, 638784309, 3287084079, 3193921505, 899127202, 2286175436, 773265209, 2479146071, 1437050866, 4236148354, 2050833735, 3362022572, 3126681063, 840505643, 3866325909, 3227541664, 427917720, 2655997905, 2749160575, 1143087718, 1412049534, 999329963, 193497219, 2353415882, 3354324521, 1807268051, 672404540, 2816401017, 3160301282, 369822493, 2916866934, 3688947771, 1681011286, 1949973070, 336202270, 2454276571, 201721354, 1210328172, 3093060836, 2680341085, 3184776046, 1135389935, 3294782118, 965841320, 831886756, 3554993207, 4068047243, 3588745010, 2345191491, 1849112409, 3664604599, 26054028, 2983581028, 2622377682, 1235855840, 3630984372, 2891339514, 4092916743, 3488279077, 3395642799, 4101667470, 1202630377, 268961816, 1874508501, 4034427016, 1243948399, 1546530418, 941366308, 1470539505, 1941222599, 2546386513, 3421038627, 2715671932, 3899946140, 1042226977, 2521517021, 1639824860, 227249030, 260737669, 3765465232, 2084453954, 1907733956, 3429263018, 2420656344, 100860677, 4160157185, 470683154, 3261161891, 1781871967, 2924959737, 1773779408, 394692241, 2579611992, 974986535, 664706745, 3655459128, 3958962195, 731420851, 571543859, 3530123707, 2849626480, 126783113, 865375399, 765172662, 1008606754, 361203602, 3387549984, 2278477385, 2857719295, 1344809080, 2782912378, 59542671, 1503764984, 160008576, 437062935, 1707065306, 3622233649, 2218934982, 3496503480, 2185314755, 697932208, 1512910199, 504303377, 2075177163, 2824099068, 1841019862, 739644986];
+var T1 = [3328402341, 4168907908, 4000806809, 4135287693, 4294111757, 3597364157, 3731845041, 2445657428, 1613770832, 33620227, 3462883241, 1445669757, 3892248089, 3050821474, 1303096294, 3967186586, 2412431941, 528646813, 2311702848, 4202528135, 4026202645, 2992200171, 2387036105, 4226871307, 1101901292, 3017069671, 1604494077, 1169141738, 597466303, 1403299063, 3832705686, 2613100635, 1974974402, 3791519004, 1033081774, 1277568618, 1815492186, 2118074177, 4126668546, 2211236943, 1748251740, 1369810420, 3521504564, 4193382664, 3799085459, 2883115123, 1647391059, 706024767, 134480908, 2512897874, 1176707941, 2646852446, 806885416, 932615841, 168101135, 798661301, 235341577, 605164086, 461406363, 3756188221, 3454790438, 1311188841, 2142417613, 3933566367, 302582043, 495158174, 1479289972, 874125870, 907746093, 3698224818, 3025820398, 1537253627, 2756858614, 1983593293, 3084310113, 2108928974, 1378429307, 3722699582, 1580150641, 327451799, 2790478837, 3117535592, 0, 3253595436, 1075847264, 3825007647, 2041688520, 3059440621, 3563743934, 2378943302, 1740553945, 1916352843, 2487896798, 2555137236, 2958579944, 2244988746, 3151024235, 3320835882, 1336584933, 3992714006, 2252555205, 2588757463, 1714631509, 293963156, 2319795663, 3925473552, 67240454, 4269768577, 2689618160, 2017213508, 631218106, 1269344483, 2723238387, 1571005438, 2151694528, 93294474, 1066570413, 563977660, 1882732616, 4059428100, 1673313503, 2008463041, 2950355573, 1109467491, 537923632, 3858759450, 4260623118, 3218264685, 2177748300, 403442708, 638784309, 3287084079, 3193921505, 899127202, 2286175436, 773265209, 2479146071, 1437050866, 4236148354, 2050833735, 3362022572, 3126681063, 840505643, 3866325909, 3227541664, 427917720, 2655997905, 2749160575, 1143087718, 1412049534, 999329963, 193497219, 2353415882, 3354324521, 1807268051, 672404540, 2816401017, 3160301282, 369822493, 2916866934, 3688947771, 1681011286, 1949973070, 336202270, 2454276571, 201721354, 1210328172, 3093060836, 2680341085, 3184776046, 1135389935, 3294782118, 965841320, 831886756, 3554993207, 4068047243, 3588745010, 2345191491, 1849112409, 3664604599, 26054028, 2983581028, 2622377682, 1235855840, 3630984372, 2891339514, 4092916743, 3488279077, 3395642799, 4101667470, 1202630377, 268961816, 1874508501, 4034427016, 1243948399, 1546530418, 941366308, 1470539505, 1941222599, 2546386513, 3421038627, 2715671932, 3899946140, 1042226977, 2521517021, 1639824860, 227249030, 260737669, 3765465232, 2084453954, 1907733956, 3429263018, 2420656344, 100860677, 4160157185, 470683154, 3261161891, 1781871967, 2924959737, 1773779408, 394692241, 2579611992, 974986535, 664706745, 3655459128, 3958962195, 731420851, 571543859, 3530123707, 2849626480, 126783113, 865375399, 765172662, 1008606754, 361203602, 3387549984, 2278477385, 2857719295, 1344809080, 2782912378, 59542671, 1503764984, 160008576, 437062935, 1707065306, 3622233649, 2218934982, 3496503480, 2185314755, 697932208, 1512910199, 504303377, 2075177163, 2824099068, 1841019862, 739644986];
 var T2 = [2781242211, 2230877308, 2582542199, 2381740923, 234877682, 3184946027, 2984144751, 1418839493, 1348481072, 50462977, 2848876391, 2102799147, 434634494, 1656084439, 3863849899, 2599188086, 1167051466, 2636087938, 1082771913, 2281340285, 368048890, 3954334041, 3381544775, 201060592, 3963727277, 1739838676, 4250903202, 3930435503, 3206782108, 4149453988, 2531553906, 1536934080, 3262494647, 484572669, 2923271059, 1783375398, 1517041206, 1098792767, 49674231, 1334037708, 1550332980, 4098991525, 886171109, 150598129, 2481090929, 1940642008, 1398944049, 1059722517, 201851908, 1385547719, 1699095331, 1587397571, 674240536, 2704774806, 252314885, 3039795866, 151914247, 908333586, 2602270848, 1038082786, 651029483, 1766729511, 3447698098, 2682942837, 454166793, 2652734339, 1951935532, 775166490, 758520603, 3000790638, 4004797018, 4217086112, 4137964114, 1299594043, 1639438038, 3464344499, 2068982057, 1054729187, 1901997871, 2534638724, 4121318227, 1757008337, 0, 750906861, 1614815264, 535035132, 3363418545, 3988151131, 3201591914, 1183697867, 3647454910, 1265776953, 3734260298, 3566750796, 3903871064, 1250283471, 1807470800, 717615087, 3847203498, 384695291, 3313910595, 3617213773, 1432761139, 2484176261, 3481945413, 283769337, 100925954, 2180939647, 4037038160, 1148730428, 3123027871, 3813386408, 4087501137, 4267549603, 3229630528, 2315620239, 2906624658, 3156319645, 1215313976, 82966005, 3747855548, 3245848246, 1974459098, 1665278241, 807407632, 451280895, 251524083, 1841287890, 1283575245, 337120268, 891687699, 801369324, 3787349855, 2721421207, 3431482436, 959321879, 1469301956, 4065699751, 2197585534, 1199193405, 2898814052, 3887750493, 724703513, 2514908019, 2696962144, 2551808385, 3516813135, 2141445340, 1715741218, 2119445034, 2872807568, 2198571144, 3398190662, 700968686, 3547052216, 1009259540, 2041044702, 3803995742, 487983883, 1991105499, 1004265696, 1449407026, 1316239930, 504629770, 3683797321, 168560134, 1816667172, 3837287516, 1570751170, 1857934291, 4014189740, 2797888098, 2822345105, 2754712981, 936633572, 2347923833, 852879335, 1133234376, 1500395319, 3084545389, 2348912013, 1689376213, 3533459022, 3762923945, 3034082412, 4205598294, 133428468, 634383082, 2949277029, 2398386810, 3913789102, 403703816, 3580869306, 2297460856, 1867130149, 1918643758, 607656988, 4049053350, 3346248884, 1368901318, 600565992, 2090982877, 2632479860, 557719327, 3717614411, 3697393085, 2249034635, 2232388234, 2430627952, 1115438654, 3295786421, 2865522278, 3633334344, 84280067, 33027830, 303828494, 2747425121, 1600795957, 4188952407, 3496589753, 2434238086, 1486471617, 658119965, 3106381470, 953803233, 334231800, 3005978776, 857870609, 3151128937, 1890179545, 2298973838, 2805175444, 3056442267, 574365214, 2450884487, 550103529, 1233637070, 4289353045, 2018519080, 2057691103, 2399374476, 4166623649, 2148108681, 387583245, 3664101311, 836232934, 3330556482, 3100665960, 3280093505, 2955516313, 2002398509, 287182607, 3413881008, 4238890068, 3597515707, 975967766];
 var T3 = [1671808611, 2089089148, 2006576759, 2072901243, 4061003762, 1807603307, 1873927791, 3310653893, 810573872, 16974337, 1739181671, 729634347, 4263110654, 3613570519, 2883997099, 1989864566, 3393556426, 2191335298, 3376449993, 2106063485, 4195741690, 1508618841, 1204391495, 4027317232, 2917941677, 3563566036, 2734514082, 2951366063, 2629772188, 2767672228, 1922491506, 3227229120, 3082974647, 4246528509, 2477669779, 644500518, 911895606, 1061256767, 4144166391, 3427763148, 878471220, 2784252325, 3845444069, 4043897329, 1905517169, 3631459288, 827548209, 356461077, 67897348, 3344078279, 593839651, 3277757891, 405286936, 2527147926, 84871685, 2595565466, 118033927, 305538066, 2157648768, 3795705826, 3945188843, 661212711, 2999812018, 1973414517, 152769033, 2208177539, 745822252, 439235610, 455947803, 1857215598, 1525593178, 2700827552, 1391895634, 994932283, 3596728278, 3016654259, 695947817, 3812548067, 795958831, 2224493444, 1408607827, 3513301457, 0, 3979133421, 543178784, 4229948412, 2982705585, 1542305371, 1790891114, 3410398667, 3201918910, 961245753, 1256100938, 1289001036, 1491644504, 3477767631, 3496721360, 4012557807, 2867154858, 4212583931, 1137018435, 1305975373, 861234739, 2241073541, 1171229253, 4178635257, 33948674, 2139225727, 1357946960, 1011120188, 2679776671, 2833468328, 1374921297, 2751356323, 1086357568, 2408187279, 2460827538, 2646352285, 944271416, 4110742005, 3168756668, 3066132406, 3665145818, 560153121, 271589392, 4279952895, 4077846003, 3530407890, 3444343245, 202643468, 322250259, 3962553324, 1608629855, 2543990167, 1154254916, 389623319, 3294073796, 2817676711, 2122513534, 1028094525, 1689045092, 1575467613, 422261273, 1939203699, 1621147744, 2174228865, 1339137615, 3699352540, 577127458, 712922154, 2427141008, 2290289544, 1187679302, 3995715566, 3100863416, 339486740, 3732514782, 1591917662, 186455563, 3681988059, 3762019296, 844522546, 978220090, 169743370, 1239126601, 101321734, 611076132, 1558493276, 3260915650, 3547250131, 2901361580, 1655096418, 2443721105, 2510565781, 3828863972, 2039214713, 3878868455, 3359869896, 928607799, 1840765549, 2374762893, 3580146133, 1322425422, 2850048425, 1823791212, 1459268694, 4094161908, 3928346602, 1706019429, 2056189050, 2934523822, 135794696, 3134549946, 2022240376, 628050469, 779246638, 472135708, 2800834470, 3032970164, 3327236038, 3894660072, 3715932637, 1956440180, 522272287, 1272813131, 3185336765, 2340818315, 2323976074, 1888542832, 1044544574, 3049550261, 1722469478, 1222152264, 50660867, 4127324150, 236067854, 1638122081, 895445557, 1475980887, 3117443513, 2257655686, 3243809217, 489110045, 2662934430, 3778599393, 4162055160, 2561878936, 288563729, 1773916777, 3648039385, 2391345038, 2493985684, 2612407707, 505560094, 2274497927, 3911240169, 3460925390, 1442818645, 678973480, 3749357023, 2358182796, 2717407649, 2306869641, 219617805, 3218761151, 3862026214, 1120306242, 1756942440, 1103331905, 2578459033, 762796589, 252780047, 2966125488, 1425844308, 3151392187, 372911126];
 var T4 = [1667474886, 2088535288, 2004326894, 2071694838, 4075949567, 1802223062, 1869591006, 3318043793, 808472672, 16843522, 1734846926, 724270422, 4278065639, 3621216949, 2880169549, 1987484396, 3402253711, 2189597983, 3385409673, 2105378810, 4210693615, 1499065266, 1195886990, 4042263547, 2913856577, 3570689971, 2728590687, 2947541573, 2627518243, 2762274643, 1920112356, 3233831835, 3082273397, 4261223649, 2475929149, 640051788, 909531756, 1061110142, 4160160501, 3435941763, 875846760, 2779116625, 3857003729, 4059105529, 1903268834, 3638064043, 825316194, 353713962, 67374088, 3351728789, 589522246, 3284360861, 404236336, 2526454071, 84217610, 2593830191, 117901582, 303183396, 2155911963, 3806477791, 3958056653, 656894286, 2998062463, 1970642922, 151591698, 2206440989, 741110872, 437923380, 454765878, 1852748508, 1515908788, 2694904667, 1381168804, 993742198, 3604373943, 3014905469, 690584402, 3823320797, 791638366, 2223281939, 1398011302, 3520161977, 0, 3991743681, 538992704, 4244381667, 2981218425, 1532751286, 1785380564, 3419096717, 3200178535, 960056178, 1246420628, 1280103576, 1482221744, 3486468741, 3503319995, 4025428677, 2863326543, 4227536621, 1128514950, 1296947098, 859002214, 2240123921, 1162203018, 4193849577, 33687044, 2139062782, 1347481760, 1010582648, 2678045221, 2829640523, 1364325282, 2745433693, 1077985408, 2408548869, 2459086143, 2644360225, 943212656, 4126475505, 3166494563, 3065430391, 3671750063, 555836226, 269496352, 4294908645, 4092792573, 3537006015, 3452783745, 202118168, 320025894, 3974901699, 1600119230, 2543297077, 1145359496, 387397934, 3301201811, 2812801621, 2122220284, 1027426170, 1684319432, 1566435258, 421079858, 1936954854, 1616945344, 2172753945, 1330631070, 3705438115, 572679748, 707427924, 2425400123, 2290647819, 1179044492, 4008585671, 3099120491, 336870440, 3739122087, 1583276732, 185277718, 3688593069, 3772791771, 842159716, 976899700, 168435220, 1229577106, 101059084, 606366792, 1549591736, 3267517855, 3553849021, 2897014595, 1650632388, 2442242105, 2509612081, 3840161747, 2038008818, 3890688725, 3368567691, 926374254, 1835907034, 2374863873, 3587531953, 1313788572, 2846482505, 1819063512, 1448540844, 4109633523, 3941213647, 1701162954, 2054852340, 2930698567, 134748176, 3132806511, 2021165296, 623210314, 774795868, 471606328, 2795958615, 3031746419, 3334885783, 3907527627, 3722280097, 1953799400, 522133822, 1263263126, 3183336545, 2341176845, 2324333839, 1886425312, 1044267644, 3048588401, 1718004428, 1212733584, 50529542, 4143317495, 235803164, 1633788866, 892690282, 1465383342, 3115962473, 2256965911, 3250673817, 488449850, 2661202215, 3789633753, 4177007595, 2560144171, 286339874, 1768537042, 3654906025, 2391705863, 2492770099, 2610673197, 505291324, 2273808917, 3924369609, 3469625735, 1431699370, 673740880, 3755965093, 2358021891, 2711746649, 2307489801, 218961690, 3217021541, 3873845719, 1111672452, 1751693520, 1094828930, 2576986153, 757954394, 252645662, 2964376443, 1414855848, 3149649517, 370555436];
@@ -19981,19 +19218,19 @@ var AES = class {
           tk[i2] ^= tk[i2 - 1];
         }
       }
-      let i = 0, r2, c;
+      let i = 0, r, c;
       while (i < KC && t < roundKeyCount) {
-        r2 = t >> 2;
+        r = t >> 2;
         c = t % 4;
-        __classPrivateFieldGet(this, _AES_Ke, "f")[r2][c] = tk[i];
-        __classPrivateFieldGet(this, _AES_Kd, "f")[rounds - r2][c] = tk[i++];
+        __classPrivateFieldGet(this, _AES_Ke, "f")[r][c] = tk[i];
+        __classPrivateFieldGet(this, _AES_Kd, "f")[rounds - r][c] = tk[i++];
         t++;
       }
     }
-    for (let r2 = 1; r2 < rounds; r2++) {
+    for (let r = 1; r < rounds; r++) {
       for (let c = 0; c < 4; c++) {
-        tt = __classPrivateFieldGet(this, _AES_Kd, "f")[r2][c];
-        __classPrivateFieldGet(this, _AES_Kd, "f")[r2][c] = U1[tt >> 24 & 255] ^ U2[tt >> 16 & 255] ^ U3[tt >> 8 & 255] ^ U4[tt & 255];
+        tt = __classPrivateFieldGet(this, _AES_Kd, "f")[r][c];
+        __classPrivateFieldGet(this, _AES_Kd, "f")[r][c] = U1[tt >> 24 & 255] ^ U2[tt >> 16 & 255] ^ U3[tt >> 8 & 255] ^ U4[tt & 255];
       }
     }
   }
@@ -20007,9 +19244,9 @@ var AES = class {
     for (let i = 0; i < 4; i++) {
       t[i] ^= __classPrivateFieldGet(this, _AES_Ke, "f")[0][i];
     }
-    for (let r2 = 1; r2 < rounds; r2++) {
+    for (let r = 1; r < rounds; r++) {
       for (let i = 0; i < 4; i++) {
-        a[i] = T12[t[i] >> 24 & 255] ^ T2[t[(i + 1) % 4] >> 16 & 255] ^ T3[t[(i + 2) % 4] >> 8 & 255] ^ T4[t[(i + 3) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Ke, "f")[r2][i];
+        a[i] = T1[t[i] >> 24 & 255] ^ T2[t[(i + 1) % 4] >> 16 & 255] ^ T3[t[(i + 2) % 4] >> 8 & 255] ^ T4[t[(i + 3) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Ke, "f")[r][i];
       }
       t = a.slice();
     }
@@ -20034,9 +19271,9 @@ var AES = class {
     for (let i = 0; i < 4; i++) {
       t[i] ^= __classPrivateFieldGet(this, _AES_Kd, "f")[0][i];
     }
-    for (let r2 = 1; r2 < rounds; r2++) {
+    for (let r = 1; r < rounds; r++) {
       for (let i = 0; i < 4; i++) {
-        a[i] = T5[t[i] >> 24 & 255] ^ T6[t[(i + 3) % 4] >> 16 & 255] ^ T7[t[(i + 2) % 4] >> 8 & 255] ^ T8[t[(i + 1) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Kd, "f")[r2][i];
+        a[i] = T5[t[i] >> 24 & 255] ^ T6[t[(i + 3) % 4] >> 16 & 255] ^ T7[t[(i + 2) % 4] >> 8 & 255] ^ T8[t[(i + 1) % 4] & 255] ^ __classPrivateFieldGet(this, _AES_Kd, "f")[r][i];
       }
       t = a.slice();
     }
@@ -20401,13 +19638,13 @@ function getDecryptKdfParams(data) {
     if (kdf.toLowerCase() === "scrypt") {
       const salt = spelunk(data, "crypto.kdfparams.salt:data!");
       const N3 = spelunk(data, "crypto.kdfparams.n:int!");
-      const r2 = spelunk(data, "crypto.kdfparams.r:int!");
+      const r = spelunk(data, "crypto.kdfparams.r:int!");
       const p = spelunk(data, "crypto.kdfparams.p:int!");
       assertArgument(N3 > 0 && (N3 & N3 - 1) === 0, "invalid kdf.N", "kdf.N", N3);
-      assertArgument(r2 > 0 && p > 0, "invalid kdf", "kdf", kdf);
+      assertArgument(r > 0 && p > 0, "invalid kdf", "kdf", kdf);
       const dkLen = spelunk(data, "crypto.kdfparams.dklen:int!");
       assertArgument(dkLen === 32, "invalid kdf.dklen", "kdf.dflen", dkLen);
-      return { name: "scrypt", salt, N: N3, r: r2, p, dkLen: 64 };
+      return { name: "scrypt", salt, N: N3, r, p, dkLen: 64 };
     } else if (kdf.toLowerCase() === "pbkdf2") {
       const salt = spelunk(data, "crypto.kdfparams.salt:data!");
       const prf = spelunk(data, "crypto.kdfparams.prf:string!");
@@ -20431,8 +19668,8 @@ function decryptKeystoreJsonSync(json, _password) {
     return getAccount(data, key2);
   }
   assert(params.name === "scrypt", "cannot be reached", "UNKNOWN_ERROR", { params });
-  const { salt, N: N3, r: r2, p, dkLen } = params;
-  const key = scryptSync(password, salt, N3, r2, p, dkLen);
+  const { salt, N: N3, r, p, dkLen } = params;
+  const key = scryptSync(password, salt, N3, r, p, dkLen);
   return getAccount(data, key);
 }
 function stall3(duration) {
@@ -20460,28 +19697,28 @@ async function decryptKeystoreJson(json, _password, progress) {
     return getAccount(data, key2);
   }
   assert(params.name === "scrypt", "cannot be reached", "UNKNOWN_ERROR", { params });
-  const { salt, N: N3, r: r2, p, dkLen } = params;
-  const key = await scrypt2(password, salt, N3, r2, p, dkLen, progress);
+  const { salt, N: N3, r, p, dkLen } = params;
+  const key = await scrypt2(password, salt, N3, r, p, dkLen, progress);
   return getAccount(data, key);
 }
 function getEncryptKdfParams(options) {
   const salt = options.salt != null ? getBytes(options.salt, "options.salt") : randomBytes2(32);
-  let N3 = 1 << 17, r2 = 8, p = 1;
+  let N3 = 1 << 17, r = 8, p = 1;
   if (options.scrypt) {
     if (options.scrypt.N) {
       N3 = options.scrypt.N;
     }
     if (options.scrypt.r) {
-      r2 = options.scrypt.r;
+      r = options.scrypt.r;
     }
     if (options.scrypt.p) {
       p = options.scrypt.p;
     }
   }
   assertArgument(typeof N3 === "number" && N3 > 0 && Number.isSafeInteger(N3) && (BigInt(N3) & BigInt(N3 - 1)) === BigInt(0), "invalid scrypt N parameter", "options.N", N3);
-  assertArgument(typeof r2 === "number" && r2 > 0 && Number.isSafeInteger(r2), "invalid scrypt r parameter", "options.r", r2);
+  assertArgument(typeof r === "number" && r > 0 && Number.isSafeInteger(r), "invalid scrypt r parameter", "options.r", r);
   assertArgument(typeof p === "number" && p > 0 && Number.isSafeInteger(p), "invalid scrypt p parameter", "options.p", p);
-  return { name: "scrypt", dkLen: 32, salt, N: N3, r: r2, p };
+  return { name: "scrypt", dkLen: 32, salt, N: N3, r, p };
 }
 function _encryptKeystore(key, kdf, account, options) {
   const privateKey = getBytes(account.privateKey, "privateKey");

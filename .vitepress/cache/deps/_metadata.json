@@ -1,56 +1,74 @@
 {
-  "hash": "e3eb996c",
-  "browserHash": "f97887dc",
+  "hash": "5b9a509e",
+  "browserHash": "85f96490",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "16b239d8",
+      "fileHash": "b29a8470",
       "needsInterop": false
     },
     "@metamask/sdk": {
       "src": "../../../node_modules/@metamask/sdk/dist/browser/umd/metamask-sdk.js",
       "file": "@metamask_sdk.js",
-      "fileHash": "f630f479",
+      "fileHash": "664cc6f6",
       "needsInterop": true
     },
     "everscale-inpage-provider": {
       "src": "../../../node_modules/everscale-inpage-provider/dist/index.js",
       "file": "everscale-inpage-provider.js",
-      "fileHash": "4d6c0a44",
+      "fileHash": "09b04f30",
       "needsInterop": true
     },
     "dotenv": {
       "src": "../../../node_modules/dotenv/lib/main.js",
       "file": "dotenv.js",
-      "fileHash": "b63dc9a7",
+      "fileHash": "792b160f",
       "needsInterop": true
     },
-    "locklift": {
-      "src": "../../../node_modules/locklift/index.js",
-      "file": "locklift.js",
-      "fileHash": "35c8b236",
+    "process": {
+      "src": "../../../node_modules/process/browser.js",
+      "file": "process.js",
+      "fileHash": "8a9dd1e2",
+      "needsInterop": true
+    },
+    "buffer": {
+      "src": "../../../node_modules/buffer/index.js",
+      "file": "buffer.js",
+      "fileHash": "51308415",
+      "needsInterop": true
+    },
+    "events": {
+      "src": "../../../node_modules/events/events.js",
+      "file": "events.js",
+      "fileHash": "2c713013",
       "needsInterop": true
     },
     "ethers": {
       "src": "../../../node_modules/ethers/lib.esm/index.js",
       "file": "ethers.js",
-      "fileHash": "7c70917a",
+      "fileHash": "f442c13f",
+      "needsInterop": false
+    },
+    "web3": {
+      "src": "../../../node_modules/web3/lib/esm/index.js",
+      "file": "web3.js",
+      "fileHash": "f8559391",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-3W4F72EW": {
-      "file": "chunk-3W4F72EW.js"
+    "chunk-YER6ETFZ": {
+      "file": "chunk-YER6ETFZ.js"
     },
-    "chunk-JIZ3BDTC": {
-      "file": "chunk-JIZ3BDTC.js"
+    "chunk-TOGJBQOX": {
+      "file": "chunk-TOGJBQOX.js"
     },
-    "chunk-MTTKNCJ6": {
-      "file": "chunk-MTTKNCJ6.js"
+    "chunk-XJHKKHAZ": {
+      "file": "chunk-XJHKKHAZ.js"
     },
-    "chunk-CLC6CPQL": {
-      "file": "chunk-CLC6CPQL.js"
+    "chunk-YTWT43PM": {
+      "file": "chunk-YTWT43PM.js"
     }
   }
 }

@@ -4,9 +4,9 @@
     <button v-if="connected" class="disconnectBtn" @click="disconnectWallet">
       <DisconnectIcon :size="16" />
     </button>
-    <button v-else @click="requestPermissions">Connect EverWallet</button>
+    <button v-else @click="requestPermissions">Connect EverWallet
+    </button>
   </div>
-
   <div class="walletControl">
     <button v-if="MetaMaskConnected">MetaMask Connected</button>
     <button v-if="MetaMaskConnected" class="disconnectBtn" @click="disconnectMetamask">
@@ -15,6 +15,7 @@
     <button v-else @click="requestMetaMaskPermissions">Connect MetaMask</button>
   </div>
 </template>
+
 <script lang="ts">
 /* eslint-disable */
 import { defineComponent, ref, onMounted } from 'vue';
@@ -23,7 +24,6 @@ import DisconnectIcon from './shared/BDKDisconnectIcon.vue';
 
 import { useProvider } from './../../../src/providers/useProvider';
 import { useEvmProvider } from './../../../src/providers/useEvmProvider';
-
 
 export default defineComponent({
   name: 'WalletControl',
@@ -34,10 +34,8 @@ export default defineComponent({
     const { provider, connectToWallet, changeAccount, disconnect } = useProvider();
     const { connectToMetamaskWallet,
       getAccounts, MetaMaskProvider, HandleAccountChange } = useEvmProvider()
-
     const connected = ref(false);
     const MetaMaskConnected = ref(false);
-
     const requestMetaMaskPermissions = async () => {
       await connectToMetamaskWallet();
       MetaMaskConnected.value = true;
@@ -50,15 +48,17 @@ export default defineComponent({
       MetaMaskProvider().on('accountsChanged', async () => { MetaMaskConnected.value = await HandleAccountChange() });
       const subscription = await provider.subscribe('permissionsChanged');
       subscription.on('data', (permissions: any) => {
-        connected.value = !!providerState.permissions.accountInteraction;
+        connected.value = !!permissions.permissions.accountInteraction;
       });
 
       const providerState = await provider.getProviderState();
+
       connected.value = !!providerState.permissions.accountInteraction;
     });
 
     const requestPermissions = async () => {
       await connectToWallet();
+
       connected.value = true;
     };
 
@@ -107,4 +107,12 @@ export default defineComponent({
   transition: color 0.25s;
   background-color: rgba(var(--vp-c-bg-mute), 0.8);
 }
+
+.svg-icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 </style>
+

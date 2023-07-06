@@ -8,8 +8,16 @@ module.exports = {
   title: 'OctusBridge',
   base: '/',
   description: 'OctusBridgeInegrationGuide',
-
+  resolve: {
+    alias: {
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      zlib: 'browserify-zlib',
+      util: 'util',
+    },
+  },
   plugins: [vue()],
+
   themeConfig: {
     search: {
       provider: 'local',
