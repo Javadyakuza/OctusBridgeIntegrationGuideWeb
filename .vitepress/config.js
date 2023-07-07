@@ -133,7 +133,7 @@ module.exports = {
                   {
                     text: 'Ever Native Coin',
                     collapsable: true,
-                    link: '/src/webInteraction/md/EverToEvm/autoTransfer/transferEverNativeCoin.md',
+                    link: '/src/webInteraction/md/EverToEvm/transfers/transferEverNativeCoin.md',
                   },
                   {
                     text: 'Ever Native Token',

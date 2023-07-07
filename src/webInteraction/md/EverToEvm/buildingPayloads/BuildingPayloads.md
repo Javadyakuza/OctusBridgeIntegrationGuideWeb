@@ -398,7 +398,6 @@ export default defineComponent({
   padding: 5px 12px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
-  font-size: 0.9em;
   font-weight: 600;
   margin-right: 0.5rem;
   cursor : pointer;  

@@ -3,39 +3,9 @@ import * as constants from "./helpers/constants";
 import { ProviderRpcClient, Address } from "everscale-inpage-provider";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 import { encodeBase64, ethers } from "ethers";
+import { setupAndGetProvidersDetails } from "./useWalletsData";
 import * as web3 from "web3";
-async function setupAndGetProvidersDetails(): Promise<
-  [ProviderRpcClient, Address, string, string] | undefined
-> {
-  const evmProvider = useEvmProvider();
-  const provider = new ProviderRpcClient();
-  // Make sure the provider is initialized.
-  await provider.ensureInitialized();
-  // Request permissions from the user to execute API
-  // methods using the provider.
-  await provider.requestPermissions({
-    permissions: ["basic", "accountInteraction"],
-  });
-  const everSender: Address = (await provider.getProviderState()).permissions
-    .accountInteraction?.address!;
-  var evmRecipient: string;
-  var chainId: string;
-  if ((await evmProvider.getAccounts())![0] != undefined) {
-    evmRecipient = (await evmProvider.getAccounts())![0];
-    chainId = await evmProvider.MetaMaskProvider().chainId!;
-    return [provider, everSender, evmRecipient, chainId];
-  } else {
-    await evmProvider.connectToMetamaskWallet();
-    if ((await evmProvider.getAccounts())![0] != undefined) {
-      evmRecipient = (await evmProvider.getAccounts())![0];
-      chainId = await evmProvider.MetaMaskProvider().chainId!;
-      return [provider, everSender, evmRecipient, chainId];
-    } else {
-      // means rejection by user
-      return undefined;
-    }
-  }
-}
+
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
  * @param everSender sender ever account wallet address
@@ -49,7 +19,10 @@ async function buildWrapPayload(
   amount: string | number,
   releaseByEver: boolean
 ): Promise<[string, string]> {
-  let provider, everSender, evmRecipient, chainId;
+  let provider: ProviderRpcClient,
+    everSender: Address,
+    evmRecipient: string,
+    chainId: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
@@ -123,7 +96,10 @@ async function buildWrapPayload(
  * @returns wrap payload string and rand nonce
  */
 async function buildTransferPayload(): Promise<[string, string]> {
-  let provider, everSender, evmRecipient, chainId;
+  let provider: ProviderRpcClient,
+    everSender: Address,
+    evmRecipient: string,
+    chainId: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
@@ -184,7 +160,10 @@ async function buildTransferPayload(): Promise<[string, string]> {
 async function buildBurnPayloadForEvmAlienToken(
   TargetTokenRootAlienEvm: Address
 ): Promise<[string, string]> {
-  let provider, everSender, evmRecipient, chainId;
+  let provider: ProviderRpcClient,
+    everSender: Address,
+    evmRecipient: string,
+    chainId: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
@@ -253,7 +232,10 @@ async function buildBurnPayloadForEvmAlienToken(
  * @returns burn payload string
  */
 async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
-  let provider, everSender, evmRecipient, chainId;
+  let provider: ProviderRpcClient,
+    everSender: Address,
+    evmRecipient: string,
+    chainId: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
