@@ -5,18 +5,20 @@ import { defineConfig } from 'vite';
 const HELP_URL = 'https://t.me/everdev';
 const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
-export default defineConfig({
-  plugins: [
+module.exports = defineConfig({
+  test: /\.wasm$/,
+  type: 'javascript/auto',
+  use: [
     {
-      name: 'wasm-loader',
-      enforce: 'pre',
-      configure: wasmLoaders => {
-        wasmLoaders.set('.wasm', 'wasm-loader');
+      loader: 'file-loader',
+      options: {
+        name: '[name].[hash].[ext]',
+        outputPath: 'wasm/',
+        esModule: false,
       },
     },
-    wasm(),
-    topLevelAwait(),
   ],
+  plugins: [wasm(), topLevelAwait()],
   worker: {
     // Not needed with vite-plugin-top-level-await >= 1.3.0
     // format: "es",
@@ -27,6 +29,18 @@ module.exports = {
   title: 'OctusBridge',
   base: '/',
   description: 'OctusBridgeInegrationGuide',
+  test: /\.wasm$/,
+  type: 'application/wasm',
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        name: '[name].[hash].[ext]',
+        outputPath: 'wasm/',
+        esModule: false,
+      },
+    },
+  ],
 
   plugins: [vue(), wasm(), topLevelAwait()],
   worker: {
@@ -154,7 +168,7 @@ module.exports = {
                   {
                     text: 'Ever Native Token',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EverToEvm/transfers/transferEverNativeToken.md',
                   },
                   {
                     text: 'Ever Alien Token',

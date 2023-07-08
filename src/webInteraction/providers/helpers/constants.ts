@@ -54,6 +54,9 @@ export const EVERWBNB: Address = new Address(
 export const EVERBRIDGE: Address = new Address(
   "0:f2679d80b682974e065e03bf42bbee285ce7c587eb153b41d761ebfd954c45e1"
 );
+export const EVERQUBE: Address = new Address(
+  "0:9f20666ce123602fd7a995508aeaa0ece4f92133503c0dfbd609b3239f3901e2"
+);
 // ever BRIDGE
 export const EvmReceiver = "0xF1B7B971Da6715ecDF24F0c38352618a059309d7";
 // sample evm receiver

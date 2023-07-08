@@ -3139,9 +3139,8 @@ const EverEvmAlienEventConf = new provider.Contract(
 
 const [eventConfigDetails, flags] = await Promise.all([
   await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
-  (
-    await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({})
-  )._flags,
+  (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
+    ._flags,
 ]);
 
 // preparing the payload
@@ -3279,13 +3278,13 @@ await MultiVault.saveWithdrawNative(
 
 </details>
 
-<label for="eventAddr">event address </label>
+<!-- <label for="eventAddr">event address </label>
 <input ref="eventAddr" type="text"/>
 
 <br/>
 <button @click="HandleSaveWithdrawNative" style="{background-color : gray, border-radius: 100px}">saveWithdrawNative</button>
 
-<p class="output-p" ref="saveWithdrawNativeOutput"></p>
+<p class="output-p" ref="saveWithdrawNativeOutput"></p> -->
 
 </div>
 
@@ -3293,10 +3292,13 @@ await MultiVault.saveWithdrawNative(
 import { useSaveWithdraws } from "../../../providers/useSaveWithdraws";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address} from "everscale-inpage-provider";
+import wasm from "vite-plugin-wasm";
 
 export default defineComponent({
   name: "saveWithdrawNative",
+
   setup() {
+    wasm();
     const { saveWithdrawAlien, saveWithdrawNative } = useSaveWithdraws();
     async function HandleSaveWithdrawNative() {
       let output = await saveWithdrawNative(new Address(this.$refs.eventAddr.value));

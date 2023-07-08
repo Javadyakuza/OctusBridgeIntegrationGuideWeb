@@ -8,7 +8,7 @@ import {
 import { useEvmProvider } from "../../providers/useEvmProvider";
 import { encodeBase64, ethers } from "ethers";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
-import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
+import init, { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import * as web3 from "web3";
 /**
@@ -357,11 +357,10 @@ export async function buildSaveWithdraw(
   );
   const [eventConfigDetails, flags] = await Promise.all([
     await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
-    (
-      await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({})
-    )._flags,
+    (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
+      ._flags,
   ]);
-  // preparing the payload
+
   const eventDataEncoded = mapTonCellIntoEthBytes(
     Buffer.from(
       (await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}))
@@ -371,6 +370,7 @@ export async function buildSaveWithdraw(
     eventDetails._eventInitData.voteData.eventData,
     flags
   );
+
   const roundNumber = (
     await EverEvmEventContract.methods.round_number({}).call({})
   ).round_number;

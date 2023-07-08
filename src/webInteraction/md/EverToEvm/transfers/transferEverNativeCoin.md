@@ -188,36 +188,43 @@ const WEVERVaultContract: =
   await new provider.Contract(WeverVaultAbi, WEVERVaultAddress);
 
 /**
- * prepares an payload for transferring EVER to Evm
  * @param amount ever amount top be transferred
  * @param payWithEver determines if paying the evm operations with ever or its native coin
- * @notice to find out how buildWrapPayload works, check out building payloads part
+
+ * @param auto_value value to attach to transaction if paying evm fees with ever
+ * @param manual_value value to attach to transaction if paying evm fees with it native coin
  */
 const amount : number = 1;
 const payWithEver : boolean = true;
+const auto_value : number = 13
+const manual_value : number = 6
+// preparing payload. see payload building section
 const wrapPayload: [string, string] = await buildWrapPayload(
   amount,
   payWithEver
 );
 
 /**
- * * calls the wrap function on WEVERVaultContract and after wrapping Evers will deploy an Event contract.
+ * calls the wrap function on WEVERVaultContract and after wrapping Evers will deploy an Event contract.
  * @param tokens amount of EVER to transfer
- * @param owner_address always will compounder address,
+ * @param owner_address always compounder address,
  * @param gas_back_address address to return the remained gas from tx, will be user if paying Evm operations with Evm native coin or EventCloser if paying with Ever
  * @param payload operational payload
+ * @param from sender address
+ * @notice @param amount this parameter is important when asset releasing is done automatically on evm side, must be set to certain amounts
+ * @param bounce return remaining gas ? always true
  * @notice compounder and EventCLoser addresses can be found in addresses section.
  */
   await WEVERVaultContract.methods
     .wrap({
-      tokens: amount,
-      owner_address: constants.Compounder,
-      gas_back_address: constants.EventCloser, // user address if payWithEver = false
+      tokens: ethers.parseUnits(amount.toString(), 9).toString(),
+      owner_address: Compounder,
+      gas_back_address: payWithEver ? constants.EventCloser : everSender,
       payload: wrapPayload[0],
     })
     .send({
       from: everSender,
-      amount: constants.transfer_fees.EverToEvmAutoRelease.toString(),
+      amount: ethers.parseUnits((payWithEver ? auto_value : manual_value ).toString(), 9).toString(),
       bounce: true,
     });
 ```
@@ -231,7 +238,7 @@ const wrapPayload: [string, string] = await buildWrapPayload(
 <input ref="everPay" type="checkbox"/>
 
 <br/>
-<button @click="HandleTransferEverNAtiveCoin" style="{background-color : gray, border-radius: 100px}">Transfer EVER</button>
+<button @click="HandleTransferEverNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer EVER</button>
 
 <p class="output-p" ref="EverNativeCoinOutput"></p>
 
@@ -248,7 +255,7 @@ export default defineComponent({
   name: "EverNativeCoinTransfer",
   setup() {
     const { transferEverNativeCoin } = useEverToEvmTransfers();
-    async function HandleTransferEverNAtiveCoin() {
+    async function HandleTransferEverNativeCoin() {
       if (Number(this.$refs.amount.value) <= 0) {
         this.$refs.EverNativeCoinOutput.innerHTML = "ERROR: please enter valid number !!"
         return;
@@ -260,7 +267,7 @@ export default defineComponent({
       this.$refs.EverNativeCoinOutput.innerHTML = EverNativeCoinOutput;
     }
     return {
-      HandleTransferEverNAtiveCoin,
+      HandleTransferEverNativeCoin,
     };
   },
 });

@@ -136,7 +136,7 @@ export default defineComponent({
 }
 
 .ESSVG {
-  margin: 0 0 0 5px;
+  margin: 0 0 0 2px;
 }
 </style>
 

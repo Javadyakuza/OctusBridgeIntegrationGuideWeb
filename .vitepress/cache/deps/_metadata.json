@@ -1,63 +1,72 @@
 {
   "hash": "07ae5e6d",
-  "browserHash": "ad5b42d0",
+  "browserHash": "bf5cdb17",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "7bd01e25",
+      "fileHash": "23ad2bd5",
       "needsInterop": false
     },
     "@metamask/sdk": {
       "src": "../../../node_modules/@metamask/sdk/dist/browser/umd/metamask-sdk.js",
       "file": "@metamask_sdk.js",
-      "fileHash": "0b02b850",
+      "fileHash": "961918b1",
       "needsInterop": true
     },
     "web3": {
       "src": "../../../node_modules/web3/lib/esm/index.js",
       "file": "web3.js",
-      "fileHash": "62a87427",
+      "fileHash": "8a0139db",
       "needsInterop": false
     },
     "everscale-inpage-provider": {
       "src": "../../../node_modules/everscale-inpage-provider/dist/index.js",
       "file": "everscale-inpage-provider.js",
-      "fileHash": "204e40fc",
+      "fileHash": "a4016730",
       "needsInterop": true
     },
     "dotenv": {
       "src": "../../../node_modules/dotenv/lib/main.js",
       "file": "dotenv.js",
-      "fileHash": "26308f8f",
+      "fileHash": "492e502b",
       "needsInterop": true
     },
     "process": {
       "src": "../../../node_modules/process/browser.js",
       "file": "process.js",
-      "fileHash": "59b53825",
+      "fileHash": "aa360e08",
       "needsInterop": true
     },
     "ethers": {
       "src": "../../../node_modules/ethers/lib.esm/index.js",
       "file": "ethers.js",
-      "fileHash": "90cc3eb0",
+      "fileHash": "1a3767ed",
       "needsInterop": false
     },
     "bignumber.js": {
       "src": "../../../node_modules/bignumber.js/bignumber.mjs",
       "file": "bignumber__js.js",
-      "fileHash": "3d1be96c",
+      "fileHash": "83580a02",
       "needsInterop": false
     },
     "eth-ton-abi-converter": {
       "src": "../../../node_modules/eth-ton-abi-converter/eth_ton_abi_converter.js",
       "file": "eth-ton-abi-converter.js",
-      "fileHash": "4334d263",
+      "fileHash": "46436434",
+      "needsInterop": false
+    },
+    "vite-plugin-wasm": {
+      "src": "../../../node_modules/vite-plugin-wasm/exports/import.mjs",
+      "file": "vite-plugin-wasm.js",
+      "fileHash": "8c8a673a",
       "needsInterop": false
     }
   },
   "chunks": {
+    "chunk-4YDDAD4M": {
+      "file": "chunk-4YDDAD4M.js"
+    },
     "chunk-QPXRUELP": {
       "file": "chunk-QPXRUELP.js"
     },
