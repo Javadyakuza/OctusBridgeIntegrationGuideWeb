@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-YTWT43PM.js";
+} from "./chunk-QY3AG7D4.js";
 
 // node_modules/@metamask/sdk/dist/browser/umd/metamask-sdk.js
 var require_metamask_sdk = __commonJS({
@@ -18898,9 +18898,9 @@ var require_metamask_sdk = __commonJS({
             var r2 = /* @__PURE__ */ Object.create(null);
             if (n2.r(r2), Object.defineProperty(r2, "default", { enumerable: true, value: e4 }), 2 & t4 && "string" != typeof e4)
               for (var i2 in e4)
-                n2.d(r2, i2, function(t5) {
+                n2.d(r2, i2, (function(t5) {
                   return e4[t5];
-                }.bind(null, i2));
+                }).bind(null, i2));
             return r2;
           }, n2.n = function(e4) {
             var t4 = e4 && e4.__esModule ? function() {
@@ -42668,7 +42668,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
               return f2.createElement("style", ((o3 = {})["data-emotion"] = t4.key + " " + a3, o3.dangerouslySetInnerHTML = { __html: i3 }, o3.nonce = t4.sheet.nonce, o3));
             }
             return null;
-          }, Tn2 = function e4(t4, n3) {
+          }, Tn2 = (function e4(t4, n3) {
             if ("production" !== Vb.env.NODE_ENV && void 0 === t4)
               throw new Error("You are trying to create a styled element with an undefined component.\nYou may have forgotten to import it.");
             var r3, i3, o3 = t4.__emotion_real === t4, a3 = o3 && t4.__emotion_base || t4;
@@ -42724,7 +42724,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
                 return e4(t5, j2({}, n3, r4, { shouldForwardProp: En2(m3, r4, true) })).apply(void 0, h3);
               }, m3;
             };
-          }.bind();
+          }).bind();
           ["a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "u", "ul", "var", "video", "wbr", "circle", "clipPath", "defs", "ellipse", "foreignObject", "g", "image", "line", "linearGradient", "mask", "path", "pattern", "polygon", "polyline", "radialGradient", "rect", "stop", "svg", "text", "tspan"].forEach(function(e4) {
             Tn2[e4] = Tn2(e4);
           });

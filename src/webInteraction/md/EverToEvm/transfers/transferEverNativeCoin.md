@@ -3,6 +3,9 @@
 # Transfer Everscale native coin
 
 The native coin of Everscale, known as EVER, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+
+In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
+
 to perform such a operation we need WEVERVaultContract Abi which is as follows :
 
 <details>

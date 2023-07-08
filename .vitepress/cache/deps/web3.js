@@ -1,14 +1,11 @@
 import {
-  require_events
-} from "./chunk-YER6ETFZ.js";
-import {
   ens_normalize
-} from "./chunk-TOGJBQOX.js";
+} from "./chunk-QPXRUELP.js";
 import {
   __commonJS,
   __export,
   __toESM
-} from "./chunk-YTWT43PM.js";
+} from "./chunk-QY3AG7D4.js";
 
 // node_modules/@noble/hashes/_assert.js
 var require_assert = __commonJS({
@@ -361,7 +358,7 @@ var require_sha3 = __commonJS({
       B.fill(0);
     }
     exports.keccakP = keccakP;
-    var Keccak = class extends utils_js_1.Hash {
+    var Keccak = class _Keccak extends utils_js_1.Hash {
       // NOTE: we accept arguments in bytes instead of bits here.
       constructor(blockLen, suffix, outputLen, enableXOF = false, rounds = 24) {
         super();
@@ -452,7 +449,7 @@ var require_sha3 = __commonJS({
       }
       _cloneInto(to) {
         const { blockLen, suffix, outputLen, rounds, enableXOF } = this;
-        to || (to = new Keccak(blockLen, suffix, outputLen, enableXOF, rounds));
+        to || (to = new _Keccak(blockLen, suffix, outputLen, enableXOF, rounds));
         to.state32.set(this.state32);
         to.pos = this.pos;
         to.posOut = this.posOut;
@@ -3870,6 +3867,378 @@ var require_random = __commonJS({
       return (0, utils_1.randomBytes)(bytes);
     }
     exports.getRandomBytes = getRandomBytes;
+  }
+});
+
+// node_modules/events/events.js
+var require_events = __commonJS({
+  "node_modules/events/events.js"(exports, module) {
+    "use strict";
+    var R = typeof Reflect === "object" ? Reflect : null;
+    var ReflectApply = R && typeof R.apply === "function" ? R.apply : function ReflectApply2(target, receiver, args) {
+      return Function.prototype.apply.call(target, receiver, args);
+    };
+    var ReflectOwnKeys;
+    if (R && typeof R.ownKeys === "function") {
+      ReflectOwnKeys = R.ownKeys;
+    } else if (Object.getOwnPropertySymbols) {
+      ReflectOwnKeys = function ReflectOwnKeys2(target) {
+        return Object.getOwnPropertyNames(target).concat(Object.getOwnPropertySymbols(target));
+      };
+    } else {
+      ReflectOwnKeys = function ReflectOwnKeys2(target) {
+        return Object.getOwnPropertyNames(target);
+      };
+    }
+    function ProcessEmitWarning(warning) {
+      if (console && console.warn)
+        console.warn(warning);
+    }
+    var NumberIsNaN = Number.isNaN || function NumberIsNaN2(value) {
+      return value !== value;
+    };
+    function EventEmitter4() {
+      EventEmitter4.init.call(this);
+    }
+    module.exports = EventEmitter4;
+    module.exports.once = once;
+    EventEmitter4.EventEmitter = EventEmitter4;
+    EventEmitter4.prototype._events = void 0;
+    EventEmitter4.prototype._eventsCount = 0;
+    EventEmitter4.prototype._maxListeners = void 0;
+    var defaultMaxListeners = 10;
+    function checkListener(listener) {
+      if (typeof listener !== "function") {
+        throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
+      }
+    }
+    Object.defineProperty(EventEmitter4, "defaultMaxListeners", {
+      enumerable: true,
+      get: function() {
+        return defaultMaxListeners;
+      },
+      set: function(arg) {
+        if (typeof arg !== "number" || arg < 0 || NumberIsNaN(arg)) {
+          throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + arg + ".");
+        }
+        defaultMaxListeners = arg;
+      }
+    });
+    EventEmitter4.init = function() {
+      if (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) {
+        this._events = /* @__PURE__ */ Object.create(null);
+        this._eventsCount = 0;
+      }
+      this._maxListeners = this._maxListeners || void 0;
+    };
+    EventEmitter4.prototype.setMaxListeners = function setMaxListeners(n) {
+      if (typeof n !== "number" || n < 0 || NumberIsNaN(n)) {
+        throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n + ".");
+      }
+      this._maxListeners = n;
+      return this;
+    };
+    function _getMaxListeners(that) {
+      if (that._maxListeners === void 0)
+        return EventEmitter4.defaultMaxListeners;
+      return that._maxListeners;
+    }
+    EventEmitter4.prototype.getMaxListeners = function getMaxListeners() {
+      return _getMaxListeners(this);
+    };
+    EventEmitter4.prototype.emit = function emit(type) {
+      var args = [];
+      for (var i = 1; i < arguments.length; i++)
+        args.push(arguments[i]);
+      var doError = type === "error";
+      var events = this._events;
+      if (events !== void 0)
+        doError = doError && events.error === void 0;
+      else if (!doError)
+        return false;
+      if (doError) {
+        var er;
+        if (args.length > 0)
+          er = args[0];
+        if (er instanceof Error) {
+          throw er;
+        }
+        var err = new Error("Unhandled error." + (er ? " (" + er.message + ")" : ""));
+        err.context = er;
+        throw err;
+      }
+      var handler = events[type];
+      if (handler === void 0)
+        return false;
+      if (typeof handler === "function") {
+        ReflectApply(handler, this, args);
+      } else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i)
+          ReflectApply(listeners[i], this, args);
+      }
+      return true;
+    };
+    function _addListener(target, type, listener, prepend) {
+      var m;
+      var events;
+      var existing;
+      checkListener(listener);
+      events = target._events;
+      if (events === void 0) {
+        events = target._events = /* @__PURE__ */ Object.create(null);
+        target._eventsCount = 0;
+      } else {
+        if (events.newListener !== void 0) {
+          target.emit(
+            "newListener",
+            type,
+            listener.listener ? listener.listener : listener
+          );
+          events = target._events;
+        }
+        existing = events[type];
+      }
+      if (existing === void 0) {
+        existing = events[type] = listener;
+        ++target._eventsCount;
+      } else {
+        if (typeof existing === "function") {
+          existing = events[type] = prepend ? [listener, existing] : [existing, listener];
+        } else if (prepend) {
+          existing.unshift(listener);
+        } else {
+          existing.push(listener);
+        }
+        m = _getMaxListeners(target);
+        if (m > 0 && existing.length > m && !existing.warned) {
+          existing.warned = true;
+          var w = new Error("Possible EventEmitter memory leak detected. " + existing.length + " " + String(type) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+          w.name = "MaxListenersExceededWarning";
+          w.emitter = target;
+          w.type = type;
+          w.count = existing.length;
+          ProcessEmitWarning(w);
+        }
+      }
+      return target;
+    }
+    EventEmitter4.prototype.addListener = function addListener(type, listener) {
+      return _addListener(this, type, listener, false);
+    };
+    EventEmitter4.prototype.on = EventEmitter4.prototype.addListener;
+    EventEmitter4.prototype.prependListener = function prependListener(type, listener) {
+      return _addListener(this, type, listener, true);
+    };
+    function onceWrapper() {
+      if (!this.fired) {
+        this.target.removeListener(this.type, this.wrapFn);
+        this.fired = true;
+        if (arguments.length === 0)
+          return this.listener.call(this.target);
+        return this.listener.apply(this.target, arguments);
+      }
+    }
+    function _onceWrap(target, type, listener) {
+      var state = { fired: false, wrapFn: void 0, target, type, listener };
+      var wrapped = onceWrapper.bind(state);
+      wrapped.listener = listener;
+      state.wrapFn = wrapped;
+      return wrapped;
+    }
+    EventEmitter4.prototype.once = function once2(type, listener) {
+      checkListener(listener);
+      this.on(type, _onceWrap(this, type, listener));
+      return this;
+    };
+    EventEmitter4.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+      checkListener(listener);
+      this.prependListener(type, _onceWrap(this, type, listener));
+      return this;
+    };
+    EventEmitter4.prototype.removeListener = function removeListener(type, listener) {
+      var list, events, position, i, originalListener;
+      checkListener(listener);
+      events = this._events;
+      if (events === void 0)
+        return this;
+      list = events[type];
+      if (list === void 0)
+        return this;
+      if (list === listener || list.listener === listener) {
+        if (--this._eventsCount === 0)
+          this._events = /* @__PURE__ */ Object.create(null);
+        else {
+          delete events[type];
+          if (events.removeListener)
+            this.emit("removeListener", type, list.listener || listener);
+        }
+      } else if (typeof list !== "function") {
+        position = -1;
+        for (i = list.length - 1; i >= 0; i--) {
+          if (list[i] === listener || list[i].listener === listener) {
+            originalListener = list[i].listener;
+            position = i;
+            break;
+          }
+        }
+        if (position < 0)
+          return this;
+        if (position === 0)
+          list.shift();
+        else {
+          spliceOne(list, position);
+        }
+        if (list.length === 1)
+          events[type] = list[0];
+        if (events.removeListener !== void 0)
+          this.emit("removeListener", type, originalListener || listener);
+      }
+      return this;
+    };
+    EventEmitter4.prototype.off = EventEmitter4.prototype.removeListener;
+    EventEmitter4.prototype.removeAllListeners = function removeAllListeners(type) {
+      var listeners, events, i;
+      events = this._events;
+      if (events === void 0)
+        return this;
+      if (events.removeListener === void 0) {
+        if (arguments.length === 0) {
+          this._events = /* @__PURE__ */ Object.create(null);
+          this._eventsCount = 0;
+        } else if (events[type] !== void 0) {
+          if (--this._eventsCount === 0)
+            this._events = /* @__PURE__ */ Object.create(null);
+          else
+            delete events[type];
+        }
+        return this;
+      }
+      if (arguments.length === 0) {
+        var keys = Object.keys(events);
+        var key;
+        for (i = 0; i < keys.length; ++i) {
+          key = keys[i];
+          if (key === "removeListener")
+            continue;
+          this.removeAllListeners(key);
+        }
+        this.removeAllListeners("removeListener");
+        this._events = /* @__PURE__ */ Object.create(null);
+        this._eventsCount = 0;
+        return this;
+      }
+      listeners = events[type];
+      if (typeof listeners === "function") {
+        this.removeListener(type, listeners);
+      } else if (listeners !== void 0) {
+        for (i = listeners.length - 1; i >= 0; i--) {
+          this.removeListener(type, listeners[i]);
+        }
+      }
+      return this;
+    };
+    function _listeners(target, type, unwrap) {
+      var events = target._events;
+      if (events === void 0)
+        return [];
+      var evlistener = events[type];
+      if (evlistener === void 0)
+        return [];
+      if (typeof evlistener === "function")
+        return unwrap ? [evlistener.listener || evlistener] : [evlistener];
+      return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
+    }
+    EventEmitter4.prototype.listeners = function listeners(type) {
+      return _listeners(this, type, true);
+    };
+    EventEmitter4.prototype.rawListeners = function rawListeners(type) {
+      return _listeners(this, type, false);
+    };
+    EventEmitter4.listenerCount = function(emitter, type) {
+      if (typeof emitter.listenerCount === "function") {
+        return emitter.listenerCount(type);
+      } else {
+        return listenerCount.call(emitter, type);
+      }
+    };
+    EventEmitter4.prototype.listenerCount = listenerCount;
+    function listenerCount(type) {
+      var events = this._events;
+      if (events !== void 0) {
+        var evlistener = events[type];
+        if (typeof evlistener === "function") {
+          return 1;
+        } else if (evlistener !== void 0) {
+          return evlistener.length;
+        }
+      }
+      return 0;
+    }
+    EventEmitter4.prototype.eventNames = function eventNames() {
+      return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+    };
+    function arrayClone(arr, n) {
+      var copy = new Array(n);
+      for (var i = 0; i < n; ++i)
+        copy[i] = arr[i];
+      return copy;
+    }
+    function spliceOne(list, index) {
+      for (; index + 1 < list.length; index++)
+        list[index] = list[index + 1];
+      list.pop();
+    }
+    function unwrapListeners(arr) {
+      var ret = new Array(arr.length);
+      for (var i = 0; i < ret.length; ++i) {
+        ret[i] = arr[i].listener || arr[i];
+      }
+      return ret;
+    }
+    function once(emitter, name) {
+      return new Promise(function(resolve, reject) {
+        function errorListener(err) {
+          emitter.removeListener(name, resolver);
+          reject(err);
+        }
+        function resolver() {
+          if (typeof emitter.removeListener === "function") {
+            emitter.removeListener("error", errorListener);
+          }
+          resolve([].slice.call(arguments));
+        }
+        ;
+        eventTargetAgnosticAddListener(emitter, name, resolver, { once: true });
+        if (name !== "error") {
+          addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
+        }
+      });
+    }
+    function addErrorHandlerIfEventEmitter(emitter, handler, flags) {
+      if (typeof emitter.on === "function") {
+        eventTargetAgnosticAddListener(emitter, "error", handler, flags);
+      }
+    }
+    function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
+      if (typeof emitter.on === "function") {
+        if (flags.once) {
+          emitter.once(name, listener);
+        } else {
+          emitter.on(name, listener);
+        }
+      } else if (typeof emitter.addEventListener === "function") {
+        emitter.addEventListener(name, function wrapListener(arg) {
+          if (flags.once) {
+            emitter.removeEventListener(name, wrapListener);
+          }
+          listener(arg);
+        });
+      } else {
+        throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
+      }
+    }
   }
 });
 
@@ -12086,7 +12455,7 @@ var ContractInstantiationError = class extends BaseWeb3Error {
     this.code = ERR_CONTRACT_INSTANTIATION;
   }
 };
-var Eip838ExecutionError = class extends Web3ContractError {
+var Eip838ExecutionError = class _Eip838ExecutionError extends Web3ContractError {
   constructor(error) {
     super(error.message || "Error");
     this.name = "name" in error && error.name || this.constructor.name;
@@ -12100,7 +12469,7 @@ var Eip838ExecutionError = class extends Web3ContractError {
         originalError = error.data;
       }
       this.data = originalError.data;
-      this.innerError = new Eip838ExecutionError(originalError);
+      this.innerError = new _Eip838ExecutionError(originalError);
     } else {
       this.data = error.data;
     }
@@ -13088,9 +13457,9 @@ var __awaiter = function(thisArg, _arguments, P, generator) {
   });
 };
 var symbol = Symbol.for("web3/base-provider");
-var Web3BaseProvider = class {
+var Web3BaseProvider = class _Web3BaseProvider {
   static isWeb3Provider(provider) {
-    return provider instanceof Web3BaseProvider || Boolean(provider && provider[symbol]);
+    return provider instanceof _Web3BaseProvider || Boolean(provider && provider[symbol]);
   }
   // To match an object "instanceof" does not work if
   // matcher class and object is using different package versions
@@ -13761,16 +14130,16 @@ for (let size = 1; size <= 32; size += 1) {
 var formats_default = formats;
 
 // node_modules/web3-validator/lib/esm/validator.js
-var Validator = class {
+var Validator = class _Validator {
   // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
   constructor() {
     this._schemas = /* @__PURE__ */ new Map();
   }
   static factory() {
-    if (!Validator.validatorInstance) {
-      Validator.validatorInstance = new Validator();
+    if (!_Validator.validatorInstance) {
+      _Validator.validatorInstance = new _Validator();
     }
-    return Validator.validatorInstance;
+    return _Validator.validatorInstance;
   }
   getSchema(key) {
     return this._schemas.get(key);
@@ -13848,7 +14217,7 @@ var Validator = class {
     return void 0;
   }
   getOrCreateValidator(schema) {
-    const key = Validator.getKey(schema);
+    const key = _Validator.getKey(schema);
     let _validator = this.getSchema(key);
     if (!_validator) {
       this.addSchema(key, schema);
@@ -15802,10 +16171,10 @@ var __awaiter6 = function(thisArg, _arguments, P, generator) {
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-var HttpProvider = class extends Web3BaseProvider {
+var HttpProvider = class _HttpProvider extends Web3BaseProvider {
   constructor(clientUrl, httpProviderOptions) {
     super();
-    if (!HttpProvider.validateClientUrl(clientUrl))
+    if (!_HttpProvider.validateClientUrl(clientUrl))
       throw new InvalidClientError(clientUrl);
     this.clientUrl = clientUrl;
     this.httpProviderOptions = httpProviderOptions;
@@ -16017,7 +16386,7 @@ var availableProviders = {
   HttpProvider,
   WebsocketProvider: WebSocketProvider
 };
-var Web3RequestManager = class extends Web3EventEmitter {
+var Web3RequestManager = class _Web3RequestManager extends Web3EventEmitter {
   constructor(provider, useRpcCallSpecification) {
     super();
     if (!isNullish2(provider)) {
@@ -16196,7 +16565,7 @@ var Web3RequestManager = class extends Web3EventEmitter {
         } else {
           throw new RpcError(rpcErrorResponse);
         }
-      } else if (!Web3RequestManager._isReverted(response)) {
+      } else if (!_Web3RequestManager._isReverted(response)) {
         throw new InvalidResponseError(response, payload);
       }
     }
@@ -16204,7 +16573,7 @@ var Web3RequestManager = class extends Web3EventEmitter {
       return response;
     }
     if (response instanceof Error) {
-      Web3RequestManager._isReverted(response);
+      _Web3RequestManager._isReverted(response);
       throw response;
     }
     if (!legacy && json_rpc_exports.isBatchRequest(payload) && json_rpc_exports.isBatchResponse(response)) {
@@ -16650,7 +17019,7 @@ var Web3BatchRequest = class {
 };
 
 // node_modules/web3-core/lib/esm/web3_context.js
-var Web3Context = class extends Web3Config {
+var Web3Context = class _Web3Context extends Web3Config {
   constructor(providerOrContext) {
     var _a4;
     super();
@@ -16827,7 +17196,7 @@ var Web3Context = class extends Web3Config {
    */
   // eslint-disable-next-line class-methods-use-this
   get givenProvider() {
-    return Web3Context.givenProvider;
+    return _Web3Context.givenProvider;
   }
   /**
    * Will set the provider.
@@ -16884,7 +17253,7 @@ __export(esm_exports7, {
 });
 
 // node_modules/web3-eth-iban/lib/esm/iban.js
-var Iban = class {
+var Iban = class _Iban {
   /**
    * Construct a direct or indirect IBAN that has conversion methods and validity checks.
    * If the provided string was not of either the length of a direct IBAN (34 or 35),
@@ -16903,13 +17272,13 @@ var Iban = class {
     this.toAddress = () => {
       if (this.isDirect()) {
         const base36 = this._iban.slice(4);
-        const parsedBigInt = Iban._parseInt(base36, 36);
+        const parsedBigInt = _Iban._parseInt(base36, 36);
         const paddedBigInt = leftPad(parsedBigInt, 40);
         return toChecksumAddress(paddedBigInt);
       }
       throw new Error("Iban is indirect and cannot be converted. Must be length of 34 or 35");
     };
-    if (Iban.isIndirect(iban) || Iban.isDirect(iban)) {
+    if (_Iban.isIndirect(iban) || _Iban.isDirect(iban)) {
       this._iban = iban;
     } else {
       throw new Error("Invalid IBAN was provided");
@@ -16946,7 +17315,7 @@ var Iban = class {
    * ```
    */
   isDirect() {
-    return Iban.isDirect(this._iban);
+    return _Iban.isDirect(this._iban);
   }
   /**
    * A static method that checks if an IBAN is Indirect.
@@ -16979,7 +17348,7 @@ var Iban = class {
    * ```
    */
   isIndirect() {
-    return Iban.isIndirect(this._iban);
+    return _Iban.isIndirect(this._iban);
   }
   /**
    * This method could be used to check if a given string is valid IBAN object.
@@ -16998,7 +17367,7 @@ var Iban = class {
    * ```
    */
   static isValid(iban) {
-    return /^XE[0-9]{2}(ETH[0-9A-Z]{13}|[0-9A-Z]{30,31})$/.test(iban) && Iban._mod9710(Iban._iso13616Prepare(iban)) === 1;
+    return /^XE[0-9]{2}(ETH[0-9A-Z]{13}|[0-9A-Z]{30,31})$/.test(iban) && _Iban._mod9710(_Iban._iso13616Prepare(iban)) === 1;
   }
   /**
    * Should be called to check if the early provided IBAN is correct.
@@ -17016,7 +17385,7 @@ var Iban = class {
    * ```
    */
   isValid() {
-    return Iban.isValid(this._iban);
+    return _Iban.isValid(this._iban);
   }
   /**
    * Convert the passed BBAN to an IBAN for this country specification.
@@ -17036,7 +17405,7 @@ var Iban = class {
     const countryCode = "XE";
     const remainder = this._mod9710(this._iso13616Prepare(`${countryCode}00${bban}`));
     const checkDigit = `0${(98 - remainder).toString()}`.slice(-2);
-    return new Iban(`${countryCode}${checkDigit}${bban}`);
+    return new _Iban(`${countryCode}${checkDigit}${bban}`);
   }
   /**
    * Should be used to create IBAN object for given institution and identifier
@@ -17054,7 +17423,7 @@ var Iban = class {
    * ```
    */
   static createIndirect(options) {
-    return Iban.fromBban(`ETH${options.institution}${options.identifier}`);
+    return _Iban.fromBban(`ETH${options.institution}${options.identifier}`);
   }
   /**
    * This method should be used to create iban object from an Ethereum address.
@@ -17075,7 +17444,7 @@ var Iban = class {
     const num = BigInt(hexToNumber2(address));
     const base36 = num.toString(36);
     const padded = leftPad(base36, 15);
-    return Iban.fromBban(padded.toUpperCase());
+    return _Iban.fromBban(padded.toUpperCase());
   }
   /**
    * This method should be used to create IBAN address from an Ethereum address
@@ -17090,7 +17459,7 @@ var Iban = class {
    * ```
    */
   static toIban(address) {
-    return Iban.fromAddress(address).toString();
+    return _Iban.fromAddress(address).toString();
   }
   /**
    * Should be called to get client identifier within institution
@@ -18283,7 +18652,7 @@ var __awaiter15 = function(thisArg, _arguments, P, generator) {
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
 };
-var Wallet = class extends Web3BaseWallet {
+var Wallet = class _Wallet extends Web3BaseWallet {
   constructor() {
     super(...arguments);
     this._addressMap = /* @__PURE__ */ new Map();
@@ -18599,7 +18968,7 @@ var Wallet = class extends Web3BaseWallet {
    */
   save(password, keyName) {
     return __awaiter15(this, void 0, void 0, function* () {
-      const storage = Wallet.getStorage();
+      const storage = _Wallet.getStorage();
       if (!storage) {
         throw new Error("Local storage not available.");
       }
@@ -18628,7 +18997,7 @@ var Wallet = class extends Web3BaseWallet {
    */
   load(password, keyName) {
     return __awaiter15(this, void 0, void 0, function* () {
-      const storage = Wallet.getStorage();
+      const storage = _Wallet.getStorage();
       if (!storage) {
         throw new Error("Local storage not available.");
       }
@@ -20981,7 +21350,7 @@ var hardforks = {
 
 // node_modules/web3-eth-accounts/lib/esm/common/common.js
 var { buf: crc32Uint8Array } = import_crc_32.default;
-var Common = class extends import_events3.EventEmitter {
+var Common = class _Common extends import_events3.EventEmitter {
   constructor(opts) {
     var _a4, _b;
     super();
@@ -21028,55 +21397,55 @@ var Common = class extends import_events3.EventEmitter {
   static custom(chainParamsOrName, opts = {}) {
     var _a4;
     const baseChain = (_a4 = opts.baseChain) !== null && _a4 !== void 0 ? _a4 : "mainnet";
-    const standardChainParams = Object.assign({}, Common._getChainParams(baseChain));
+    const standardChainParams = Object.assign({}, _Common._getChainParams(baseChain));
     standardChainParams.name = "custom-chain";
     if (typeof chainParamsOrName !== "string") {
-      return new Common(Object.assign({ chain: Object.assign(Object.assign({}, standardChainParams), chainParamsOrName) }, opts));
+      return new _Common(Object.assign({ chain: Object.assign(Object.assign({}, standardChainParams), chainParamsOrName) }, opts));
     }
     if (chainParamsOrName === CustomChain.PolygonMainnet) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.PolygonMainnet,
         chainId: 137,
         networkId: 137
       }, opts);
     }
     if (chainParamsOrName === CustomChain.PolygonMumbai) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.PolygonMumbai,
         chainId: 80001,
         networkId: 80001
       }, opts);
     }
     if (chainParamsOrName === CustomChain.ArbitrumRinkebyTestnet) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.ArbitrumRinkebyTestnet,
         chainId: 421611,
         networkId: 421611
       }, opts);
     }
     if (chainParamsOrName === CustomChain.ArbitrumOne) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.ArbitrumOne,
         chainId: 42161,
         networkId: 42161
       }, opts);
     }
     if (chainParamsOrName === CustomChain.xDaiChain) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.xDaiChain,
         chainId: 100,
         networkId: 100
       }, opts);
     }
     if (chainParamsOrName === CustomChain.OptimisticKovan) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.OptimisticKovan,
         chainId: 69,
         networkId: 69
       }, Object.assign({ hardfork: Hardfork.Berlin }, opts));
     }
     if (chainParamsOrName === CustomChain.OptimisticEthereum) {
-      return Common.custom({
+      return _Common.custom({
         name: CustomChain.OptimisticEthereum,
         chainId: 10,
         networkId: 10
@@ -21093,7 +21462,7 @@ var Common = class extends import_events3.EventEmitter {
   static fromGethGenesis(genesisJson, { chain, eips, genesisHash, hardfork, mergeForkIdPostMerge }) {
     var _a4;
     const genesisParams = parseGethGenesis(genesisJson, chain, mergeForkIdPostMerge);
-    const common = new Common({
+    const common = new _Common({
       chain: (_a4 = genesisParams.name) !== null && _a4 !== void 0 ? _a4 : "custom",
       customChains: [genesisParams],
       eips,
@@ -21137,7 +21506,7 @@ var Common = class extends import_events3.EventEmitter {
    */
   setChain(chain) {
     if (typeof chain === "number" || typeof chain === "bigint" || typeof chain === "string") {
-      this._chainParams = Common._getChainParams(chain, this._customChains);
+      this._chainParams = _Common._getChainParams(chain, this._customChains);
     } else if (typeof chain === "object") {
       if (this._customChains.length > 0) {
         throw new Error("Chain must be a string, number, or bigint when initialized with customChains passed in");
@@ -21886,7 +22255,7 @@ function isAccessList(input) {
 
 // node_modules/web3-eth-accounts/lib/esm/tx/address.js
 var import_keccak5 = __toESM(require_keccak(), 1);
-var Address = class {
+var Address = class _Address {
   constructor(buf) {
     if (buf.length !== 20) {
       throw new Error("Invalid address length");
@@ -21897,7 +22266,7 @@ var Address = class {
    * Returns the zero address.
    */
   static zero() {
-    return new Address(zeros(20));
+    return new _Address(zeros(20));
   }
   /**
    * Is address equal to another.
@@ -21909,7 +22278,7 @@ var Address = class {
    * Is address zero.
    */
   isZero() {
-    return this.equals(Address.zero());
+    return this.equals(_Address.zero());
   }
   /**
    * Returns hex encoding of address.
@@ -22353,7 +22722,7 @@ var BaseTransaction = class {
 // node_modules/web3-eth-accounts/lib/esm/tx/eip1559Transaction.js
 var TRANSACTION_TYPE = 2;
 var TRANSACTION_TYPE_UINT8ARRAY = hexToBytes(TRANSACTION_TYPE.toString(16).padStart(2, "0"));
-var FeeMarketEIP1559Transaction = class extends BaseTransaction {
+var FeeMarketEIP1559Transaction = class _FeeMarketEIP1559Transaction extends BaseTransaction {
   /**
    * This constructor takes the values, validates them, assigns them and freezes the object.
    *
@@ -22409,7 +22778,7 @@ var FeeMarketEIP1559Transaction = class extends BaseTransaction {
    * - All parameters are optional and have some basic default values
    */
   static fromTxData(txData, opts = {}) {
-    return new FeeMarketEIP1559Transaction(txData, opts);
+    return new _FeeMarketEIP1559Transaction(txData, opts);
   }
   /**
    * Instantiate a transaction from the serialized tx.
@@ -22425,7 +22794,7 @@ var FeeMarketEIP1559Transaction = class extends BaseTransaction {
     if (!Array.isArray(values)) {
       throw new Error("Invalid serialized tx input: must be array");
     }
-    return FeeMarketEIP1559Transaction.fromValuesArray(values, opts);
+    return _FeeMarketEIP1559Transaction.fromValuesArray(values, opts);
   }
   /**
    * Create a transaction from a values array.
@@ -22449,7 +22818,7 @@ var FeeMarketEIP1559Transaction = class extends BaseTransaction {
       r: r2,
       s
     });
-    return new FeeMarketEIP1559Transaction({
+    return new _FeeMarketEIP1559Transaction({
       chainId: uint8ArrayToBigInt(chainId),
       nonce,
       maxPriorityFeePerGas,
@@ -22607,7 +22976,7 @@ var FeeMarketEIP1559Transaction = class extends BaseTransaction {
   }
   _processSignature(v, r2, s) {
     const opts = Object.assign(Object.assign({}, this.txOptions), { common: this.common });
-    return FeeMarketEIP1559Transaction.fromTxData({
+    return _FeeMarketEIP1559Transaction.fromTxData({
       chainId: this.chainId,
       nonce: this.nonce,
       maxPriorityFeePerGas: this.maxPriorityFeePerGas,
@@ -22666,7 +23035,7 @@ var import_keccak7 = __toESM(require_keccak(), 1);
 var import_rlp2 = __toESM(require_dist(), 1);
 var TRANSACTION_TYPE2 = 1;
 var TRANSACTION_TYPE_UINT8ARRAY2 = hexToBytes(TRANSACTION_TYPE2.toString(16).padStart(2, "0"));
-var AccessListEIP2930Transaction = class extends BaseTransaction {
+var AccessListEIP2930Transaction = class _AccessListEIP2930Transaction extends BaseTransaction {
   /**
    * This constructor takes the values, validates them, assigns them and freezes the object.
    *
@@ -22716,7 +23085,7 @@ var AccessListEIP2930Transaction = class extends BaseTransaction {
    * - All parameters are optional and have some basic default values
    */
   static fromTxData(txData, opts = {}) {
-    return new AccessListEIP2930Transaction(txData, opts);
+    return new _AccessListEIP2930Transaction(txData, opts);
   }
   /**
    * Instantiate a transaction from the serialized tx.
@@ -22732,7 +23101,7 @@ var AccessListEIP2930Transaction = class extends BaseTransaction {
     if (!Array.isArray(values)) {
       throw new Error("Invalid serialized tx input: must be array");
     }
-    return AccessListEIP2930Transaction.fromValuesArray(values, opts);
+    return _AccessListEIP2930Transaction.fromValuesArray(values, opts);
   }
   /**
    * Create a transaction from a values array.
@@ -22748,7 +23117,7 @@ var AccessListEIP2930Transaction = class extends BaseTransaction {
     this._validateNotArray({ chainId, v });
     validateNoLeadingZeroes({ nonce, gasPrice, gasLimit, value, v, r: r2, s });
     const emptyAccessList = [];
-    return new AccessListEIP2930Transaction({
+    return new _AccessListEIP2930Transaction({
       chainId: uint8ArrayToBigInt(chainId),
       nonce,
       gasPrice,
@@ -22899,7 +23268,7 @@ var AccessListEIP2930Transaction = class extends BaseTransaction {
   }
   _processSignature(v, r2, s) {
     const opts = Object.assign(Object.assign({}, this.txOptions), { common: this.common });
-    return AccessListEIP2930Transaction.fromTxData({
+    return _AccessListEIP2930Transaction.fromTxData({
       chainId: this.chainId,
       nonce: this.nonce,
       gasPrice: this.gasPrice,
@@ -22961,7 +23330,7 @@ function meetsEIP155(_v, chainId) {
   const chainIdDoubled = Number(chainId) * 2;
   return v === chainIdDoubled + 35 || v === chainIdDoubled + 36;
 }
-var Transaction = class extends BaseTransaction {
+var Transaction = class _Transaction extends BaseTransaction {
   /**
    * This constructor takes the values, validates them, assigns them and freezes the object.
    *
@@ -23003,7 +23372,7 @@ var Transaction = class extends BaseTransaction {
    * - All parameters are optional and have some basic default values
    */
   static fromTxData(txData, opts = {}) {
-    return new Transaction(txData, opts);
+    return new _Transaction(txData, opts);
   }
   /**
    * Instantiate a transaction from the serialized tx.
@@ -23028,7 +23397,7 @@ var Transaction = class extends BaseTransaction {
     }
     const [nonce, gasPrice, gasLimit, to, value, data, v, r2, s] = values;
     validateNoLeadingZeroes({ nonce, gasPrice, gasLimit, value, v, r: r2, s });
-    return new Transaction({
+    return new _Transaction({
       nonce,
       gasPrice,
       gasLimit,
@@ -23175,7 +23544,7 @@ var Transaction = class extends BaseTransaction {
       v += this.common.chainId() * BigInt(2) + BigInt(8);
     }
     const opts = Object.assign(Object.assign({}, this.txOptions), { common: this.common });
-    return Transaction.fromTxData({
+    return _Transaction.fromTxData({
       nonce: this.nonce,
       gasPrice: this.gasPrice,
       gasLimit: this.gasLimit,
@@ -25058,7 +25427,7 @@ var ErrorCode;
   ErrorCode2["ACTION_REJECTED"] = "ACTION_REJECTED";
 })(ErrorCode || (ErrorCode = {}));
 var HEX = "0123456789abcdef";
-var Logger = class {
+var Logger = class _Logger {
   constructor(version10) {
     Object.defineProperty(this, "version", {
       enumerable: true,
@@ -25077,20 +25446,20 @@ var Logger = class {
     console.log.apply(console, args);
   }
   debug(...args) {
-    this._log(Logger.levels.DEBUG, args);
+    this._log(_Logger.levels.DEBUG, args);
   }
   info(...args) {
-    this._log(Logger.levels.INFO, args);
+    this._log(_Logger.levels.INFO, args);
   }
   warn(...args) {
-    this._log(Logger.levels.WARNING, args);
+    this._log(_Logger.levels.WARNING, args);
   }
   makeError(message, code, params) {
     if (_censorErrors) {
       return this.makeError("censored error", code, {});
     }
     if (!code) {
-      code = Logger.errors.UNKNOWN_ERROR;
+      code = _Logger.errors.UNKNOWN_ERROR;
     }
     if (!params) {
       params = {};
@@ -25165,7 +25534,7 @@ var Logger = class {
     throw this.makeError(message, code, params);
   }
   throwArgumentError(message, name, value) {
-    return this.throwError(message, Logger.errors.INVALID_ARGUMENT, {
+    return this.throwError(message, _Logger.errors.INVALID_ARGUMENT, {
       argument: name,
       value
     });
@@ -25187,7 +25556,7 @@ var Logger = class {
       message = "platform missing String.prototype.normalize";
     }
     if (_normalizeError) {
-      this.throwError("platform missing String.prototype.normalize", Logger.errors.UNSUPPORTED_OPERATION, {
+      this.throwError("platform missing String.prototype.normalize", _Logger.errors.UNSUPPORTED_OPERATION, {
         operation: "String.prototype.normalize",
         form: _normalizeError
       });
@@ -25201,14 +25570,14 @@ var Logger = class {
       message = "value not safe";
     }
     if (value < 0 || value >= 9007199254740991) {
-      this.throwError(message, Logger.errors.NUMERIC_FAULT, {
+      this.throwError(message, _Logger.errors.NUMERIC_FAULT, {
         operation: "checkSafeInteger",
         fault: "out-of-safe-range",
         value
       });
     }
     if (value % 1) {
-      this.throwError(message, Logger.errors.NUMERIC_FAULT, {
+      this.throwError(message, _Logger.errors.NUMERIC_FAULT, {
         operation: "checkSafeInteger",
         fault: "non-integer",
         value
@@ -25222,13 +25591,13 @@ var Logger = class {
       message = "";
     }
     if (count < expectedCount) {
-      this.throwError("missing argument" + message, Logger.errors.MISSING_ARGUMENT, {
+      this.throwError("missing argument" + message, _Logger.errors.MISSING_ARGUMENT, {
         count,
         expectedCount
       });
     }
     if (count > expectedCount) {
-      this.throwError("too many arguments" + message, Logger.errors.UNEXPECTED_ARGUMENT, {
+      this.throwError("too many arguments" + message, _Logger.errors.UNEXPECTED_ARGUMENT, {
         count,
         expectedCount
       });
@@ -25236,25 +25605,25 @@ var Logger = class {
   }
   checkNew(target, kind) {
     if (target === Object || target == null) {
-      this.throwError("missing new", Logger.errors.MISSING_NEW, { name: kind.name });
+      this.throwError("missing new", _Logger.errors.MISSING_NEW, { name: kind.name });
     }
   }
   checkAbstract(target, kind) {
     if (target === kind) {
-      this.throwError("cannot instantiate abstract class " + JSON.stringify(kind.name) + " directly; use a sub-class", Logger.errors.UNSUPPORTED_OPERATION, { name: target.name, operation: "new" });
+      this.throwError("cannot instantiate abstract class " + JSON.stringify(kind.name) + " directly; use a sub-class", _Logger.errors.UNSUPPORTED_OPERATION, { name: target.name, operation: "new" });
     } else if (target === Object || target == null) {
-      this.throwError("missing new", Logger.errors.MISSING_NEW, { name: kind.name });
+      this.throwError("missing new", _Logger.errors.MISSING_NEW, { name: kind.name });
     }
   }
   static globalLogger() {
     if (!_globalLogger) {
-      _globalLogger = new Logger(version);
+      _globalLogger = new _Logger(version);
     }
     return _globalLogger;
   }
   static setCensorship(censorship, permanent) {
     if (!censorship && permanent) {
-      this.globalLogger().throwError("cannot permanently disable censorship", Logger.errors.UNSUPPORTED_OPERATION, {
+      this.globalLogger().throwError("cannot permanently disable censorship", _Logger.errors.UNSUPPORTED_OPERATION, {
         operation: "setCensorship"
       });
     }
@@ -25262,7 +25631,7 @@ var Logger = class {
       if (!censorship) {
         return;
       }
-      this.globalLogger().throwError("error censorship permanent", Logger.errors.UNSUPPORTED_OPERATION, {
+      this.globalLogger().throwError("error censorship permanent", _Logger.errors.UNSUPPORTED_OPERATION, {
         operation: "setCensorship"
       });
     }
@@ -25272,13 +25641,13 @@ var Logger = class {
   static setLogLevel(logLevel) {
     const level = LogLevels[logLevel.toLowerCase()];
     if (level == null) {
-      Logger.globalLogger().warn("invalid log level - " + logLevel);
+      _Logger.globalLogger().warn("invalid log level - " + logLevel);
       return;
     }
     _logLevel = level;
   }
   static from(version10) {
-    return new Logger(version10);
+    return new _Logger(version10);
   }
 };
 Logger.errors = ErrorCode;
@@ -25478,7 +25847,7 @@ function isBigNumberish(value) {
   return value != null && (BigNumber.isBigNumber(value) || typeof value === "number" && value % 1 === 0 || typeof value === "string" && !!value.match(/^-?[0-9]+$/) || isHexString2(value) || typeof value === "bigint" || isBytes2(value));
 }
 var _warnedToStringRadix = false;
-var BigNumber = class {
+var BigNumber = class _BigNumber {
   constructor(constructorGuard, hex) {
     if (constructorGuard !== _constructorGuard) {
       logger2.throwError("cannot call constructor directly; use BigNumber.from", Logger.errors.UNSUPPORTED_OPERATION, {
@@ -25497,7 +25866,7 @@ var BigNumber = class {
   }
   abs() {
     if (this._hex[0] === "-") {
-      return BigNumber.from(this._hex.substring(1));
+      return _BigNumber.from(this._hex.substring(1));
     }
     return this;
   }
@@ -25508,7 +25877,7 @@ var BigNumber = class {
     return toBigNumber(toBN(this).sub(toBN(other)));
   }
   div(other) {
-    const o = BigNumber.from(other);
+    const o = _BigNumber.from(other);
     if (o.isZero()) {
       throwFault("division-by-zero", "div");
     }
@@ -25630,15 +25999,15 @@ var BigNumber = class {
     return { type: "BigNumber", hex: this.toHexString() };
   }
   static from(value) {
-    if (value instanceof BigNumber) {
+    if (value instanceof _BigNumber) {
       return value;
     }
     if (typeof value === "string") {
       if (value.match(/^-?0x[0-9a-f]+$/i)) {
-        return new BigNumber(_constructorGuard, toHex3(value));
+        return new _BigNumber(_constructorGuard, toHex3(value));
       }
       if (value.match(/^-?[0-9]+$/)) {
-        return new BigNumber(_constructorGuard, toHex3(new BN(value)));
+        return new _BigNumber(_constructorGuard, toHex3(new BN(value)));
       }
       return logger2.throwArgumentError("invalid BigNumber string", "value", value);
     }
@@ -25649,20 +26018,20 @@ var BigNumber = class {
       if (value >= MAX_SAFE || value <= -MAX_SAFE) {
         throwFault("overflow", "BigNumber.from", value);
       }
-      return BigNumber.from(String(value));
+      return _BigNumber.from(String(value));
     }
     const anyValue = value;
     if (typeof anyValue === "bigint") {
-      return BigNumber.from(anyValue.toString());
+      return _BigNumber.from(anyValue.toString());
     }
     if (isBytes2(anyValue)) {
-      return BigNumber.from(hexlify(anyValue));
+      return _BigNumber.from(hexlify(anyValue));
     }
     if (anyValue) {
       if (anyValue.toHexString) {
         const hex = anyValue.toHexString();
         if (typeof hex === "string") {
-          return BigNumber.from(hex);
+          return _BigNumber.from(hex);
         }
       } else {
         let hex = anyValue._hex;
@@ -25671,7 +26040,7 @@ var BigNumber = class {
         }
         if (typeof hex === "string") {
           if (isHexString2(hex) || hex[0] === "-" && isHexString2(hex.substring(1))) {
-            return BigNumber.from(hex);
+            return _BigNumber.from(hex);
           }
         }
       }
@@ -25832,7 +26201,7 @@ function parseFixed(value, decimals) {
   }
   return wei;
 }
-var FixedFormat = class {
+var FixedFormat = class _FixedFormat {
   constructor(constructorGuard, signed2, width, decimals) {
     if (constructorGuard !== _constructorGuard2) {
       logger3.throwError("cannot use FixedFormat constructor; use FixedFormat.from", Logger.errors.UNSUPPORTED_OPERATION, {
@@ -25847,7 +26216,7 @@ var FixedFormat = class {
     Object.freeze(this);
   }
   static from(value) {
-    if (value instanceof FixedFormat) {
+    if (value instanceof _FixedFormat) {
       return value;
     }
     if (typeof value === "number") {
@@ -25889,10 +26258,10 @@ var FixedFormat = class {
     if (decimals > 80) {
       logger3.throwArgumentError("invalid fixed format (decimals too large)", "format.decimals", decimals);
     }
-    return new FixedFormat(_constructorGuard2, signed2, width, decimals);
+    return new _FixedFormat(_constructorGuard2, signed2, width, decimals);
   }
 };
-var FixedNumber = class {
+var FixedNumber = class _FixedNumber {
   constructor(constructorGuard, hex, value, format2) {
     if (constructorGuard !== _constructorGuard2) {
       logger3.throwError("cannot use FixedNumber constructor; use FixedNumber.from", Logger.errors.UNSUPPORTED_OPERATION, {
@@ -25914,32 +26283,32 @@ var FixedNumber = class {
     this._checkFormat(other);
     const a = parseFixed(this._value, this.format.decimals);
     const b = parseFixed(other._value, other.format.decimals);
-    return FixedNumber.fromValue(a.add(b), this.format.decimals, this.format);
+    return _FixedNumber.fromValue(a.add(b), this.format.decimals, this.format);
   }
   subUnsafe(other) {
     this._checkFormat(other);
     const a = parseFixed(this._value, this.format.decimals);
     const b = parseFixed(other._value, other.format.decimals);
-    return FixedNumber.fromValue(a.sub(b), this.format.decimals, this.format);
+    return _FixedNumber.fromValue(a.sub(b), this.format.decimals, this.format);
   }
   mulUnsafe(other) {
     this._checkFormat(other);
     const a = parseFixed(this._value, this.format.decimals);
     const b = parseFixed(other._value, other.format.decimals);
-    return FixedNumber.fromValue(a.mul(b).div(this.format._multiplier), this.format.decimals, this.format);
+    return _FixedNumber.fromValue(a.mul(b).div(this.format._multiplier), this.format.decimals, this.format);
   }
   divUnsafe(other) {
     this._checkFormat(other);
     const a = parseFixed(this._value, this.format.decimals);
     const b = parseFixed(other._value, other.format.decimals);
-    return FixedNumber.fromValue(a.mul(this.format._multiplier).div(b), this.format.decimals, this.format);
+    return _FixedNumber.fromValue(a.mul(this.format._multiplier).div(b), this.format.decimals, this.format);
   }
   floor() {
     const comps = this.toString().split(".");
     if (comps.length === 1) {
       comps.push("0");
     }
-    let result = FixedNumber.from(comps[0], this.format);
+    let result = _FixedNumber.from(comps[0], this.format);
     const hasFraction = !comps[1].match(/^(0*)$/);
     if (this.isNegative() && hasFraction) {
       result = result.subUnsafe(ONE.toFormat(result.format));
@@ -25951,7 +26320,7 @@ var FixedNumber = class {
     if (comps.length === 1) {
       comps.push("0");
     }
-    let result = FixedNumber.from(comps[0], this.format);
+    let result = _FixedNumber.from(comps[0], this.format);
     const hasFraction = !comps[1].match(/^(0*)$/);
     if (!this.isNegative() && hasFraction) {
       result = result.addUnsafe(ONE.toFormat(result.format));
@@ -25973,7 +26342,7 @@ var FixedNumber = class {
     if (comps[1].length <= decimals) {
       return this;
     }
-    const factor = FixedNumber.from("1" + zeros2.substring(0, decimals), this.format);
+    const factor = _FixedNumber.from("1" + zeros2.substring(0, decimals), this.format);
     const bump = BUMP.toFormat(this.format);
     return this.mulUnsafe(factor).addUnsafe(bump).floor().divUnsafe(factor);
   }
@@ -26000,7 +26369,7 @@ var FixedNumber = class {
     return parseFloat(this.toString());
   }
   toFormat(format2) {
-    return FixedNumber.fromString(this._value, format2);
+    return _FixedNumber.fromString(this._value, format2);
   }
   static fromValue(value, decimals, format2) {
     if (format2 == null && decimals != null && !isBigNumberish(decimals)) {
@@ -26013,7 +26382,7 @@ var FixedNumber = class {
     if (format2 == null) {
       format2 = "fixed";
     }
-    return FixedNumber.fromString(formatFixed(value, decimals), FixedFormat.from(format2));
+    return _FixedNumber.fromString(formatFixed(value, decimals), FixedFormat.from(format2));
   }
   static fromString(value, format2) {
     if (format2 == null) {
@@ -26032,7 +26401,7 @@ var FixedNumber = class {
       hex = hexZeroPad(hex, fixedFormat.width / 8);
     }
     const decimal = formatFixed(numeric, fixedFormat.decimals);
-    return new FixedNumber(_constructorGuard2, hex, decimal, fixedFormat);
+    return new _FixedNumber(_constructorGuard2, hex, decimal, fixedFormat);
   }
   static fromBytes(value, format2) {
     if (format2 == null) {
@@ -26048,17 +26417,17 @@ var FixedNumber = class {
     }
     const hex = numeric.toTwos((fixedFormat.signed ? 0 : 1) + fixedFormat.width).toHexString();
     const decimal = formatFixed(numeric, fixedFormat.decimals);
-    return new FixedNumber(_constructorGuard2, hex, decimal, fixedFormat);
+    return new _FixedNumber(_constructorGuard2, hex, decimal, fixedFormat);
   }
   static from(value, format2) {
     if (typeof value === "string") {
-      return FixedNumber.fromString(value, format2);
+      return _FixedNumber.fromString(value, format2);
     }
     if (isBytes2(value)) {
-      return FixedNumber.fromBytes(value, format2);
+      return _FixedNumber.fromBytes(value, format2);
     }
     try {
-      return FixedNumber.fromValue(value, 0, format2);
+      return _FixedNumber.fromValue(value, 0, format2);
     } catch (error) {
       if (error.code !== Logger.errors.INVALID_ARGUMENT) {
         throw error;
@@ -26279,7 +26648,7 @@ var FormatTypes = Object.freeze({
   json: "json"
 });
 var paramTypeArray = new RegExp(/^(.*)\[([0-9]*)\]$/);
-var ParamType = class {
+var ParamType = class _ParamType {
   constructor(constructorGuard, params) {
     if (constructorGuard !== _constructorGuard3) {
       logger5.throwError("use fromString", Logger.errors.UNSUPPORTED_OPERATION, {
@@ -26291,7 +26660,7 @@ var ParamType = class {
     if (match) {
       populate(this, {
         arrayLength: parseInt(match[2] || "-1"),
-        arrayChildren: ParamType.fromObject({
+        arrayChildren: _ParamType.fromObject({
           type: match[1],
           components: this.components
         }),
@@ -26357,24 +26726,24 @@ var ParamType = class {
   }
   static from(value, allowIndexed) {
     if (typeof value === "string") {
-      return ParamType.fromString(value, allowIndexed);
+      return _ParamType.fromString(value, allowIndexed);
     }
-    return ParamType.fromObject(value);
+    return _ParamType.fromObject(value);
   }
   static fromObject(value) {
-    if (ParamType.isParamType(value)) {
+    if (_ParamType.isParamType(value)) {
       return value;
     }
-    return new ParamType(_constructorGuard3, {
+    return new _ParamType(_constructorGuard3, {
       name: value.name || null,
       type: verifyType(value.type),
       indexed: value.indexed == null ? null : !!value.indexed,
-      components: value.components ? value.components.map(ParamType.fromObject) : null
+      components: value.components ? value.components.map(_ParamType.fromObject) : null
     });
   }
   static fromString(value, allowIndexed) {
     function ParamTypify(node) {
-      return ParamType.fromObject({
+      return _ParamType.fromObject({
         name: node.name,
         type: node.type,
         indexed: node.indexed,
@@ -26467,7 +26836,7 @@ var Writer = class {
     };
   }
 };
-var Reader = class {
+var Reader = class _Reader {
   constructor(data, wordSize, coerceFunc, allowLoose) {
     defineReadOnly(this, "_data", arrayify(data));
     defineReadOnly(this, "wordSize", wordSize || 32);
@@ -26493,7 +26862,7 @@ var Reader = class {
     if (this._coerceFunc) {
       return this._coerceFunc(name, value);
     }
-    return Reader.coerce(name, value);
+    return _Reader.coerce(name, value);
   }
   _peekBytes(offset, length, loose) {
     let alignedLength = Math.ceil(length / this.wordSize) * this.wordSize;
@@ -26510,7 +26879,7 @@ var Reader = class {
     return this._data.slice(this._offset, this._offset + alignedLength);
   }
   subReader(offset) {
-    return new Reader(this._data.slice(this._offset + offset), this.wordSize, this._coerceFunc, this.allowLoose);
+    return new _Reader(this._data.slice(this._offset + offset), this.wordSize, this._coerceFunc, this.allowLoose);
   }
   readBytes(length, loose) {
     let bytes = this._peekBytes(0, length, !!loose);
@@ -28576,7 +28945,7 @@ var registeredSubscriptions = {
   newBlockHeaders: NewHeadsSubscription
   // the same as newHeads. just for support API like in version 1.x
 };
-var Web3Eth = class extends Web3Context {
+var Web3Eth = class _Web3Eth extends Web3Context {
   constructor(providerOrContext) {
     if (typeof providerOrContext === "string" || isSupportedProvider(providerOrContext)) {
       super({
@@ -30012,7 +30381,7 @@ var Web3Eth = class extends Web3Context {
     var _a4;
     return (_a4 = this.subscriptionManager) === null || _a4 === void 0 ? void 0 : _a4.unsubscribe(
       // eslint-disable-next-line
-      notClearSyncing ? Web3Eth.shouldClearSubscription : void 0
+      notClearSyncing ? _Web3Eth.shouldClearSubscription : void 0
     );
   }
 };
@@ -30603,7 +30972,7 @@ var contractSubscriptions = {
   newHeads: NewHeadsSubscription,
   newBlockHeaders: NewHeadsSubscription
 };
-var Contract = class extends Web3Context {
+var Contract = class _Contract extends Web3Context {
   constructor(jsonInterface, addressOrOptionsOrContext, optionsOrContextOrReturnFormat, contextOrReturnFormat, returnFormat) {
     var _a4, _b, _c;
     const options = isContractInitOptions(addressOrOptionsOrContext) ? addressOrOptionsOrContext : isContractInitOptions(optionsOrContextOrReturnFormat) ? optionsOrContextOrReturnFormat : void 0;
@@ -30628,7 +30997,7 @@ var Contract = class extends Web3Context {
     } else if (typeof contextOrReturnFormat === "object" && "provider" in contextOrReturnFormat) {
       provider = contextOrReturnFormat.provider;
     } else {
-      provider = Contract.givenProvider;
+      provider = _Contract.givenProvider;
     }
     super(Object.assign(Object.assign({}, contractContext), { provider, registeredSubscriptions: contractSubscriptions }));
     this.syncWithContext = false;
@@ -30738,7 +31107,7 @@ var Contract = class extends Web3Context {
   clone() {
     let newContract;
     if (this.options.address) {
-      newContract = new Contract([...this._jsonInterface, ...this._errorsInterface], this.options.address, {
+      newContract = new _Contract([...this._jsonInterface, ...this._errorsInterface], this.options.address, {
         gas: this.options.gas,
         gasPrice: this.options.gasPrice,
         from: this.options.from,
@@ -30747,7 +31116,7 @@ var Contract = class extends Web3Context {
         syncWithContext: this.syncWithContext
       }, this.getContextObject());
     } else {
-      newContract = new Contract([...this._jsonInterface, ...this._errorsInterface], {
+      newContract = new _Contract([...this._jsonInterface, ...this._errorsInterface], {
         gas: this.options.gas,
         gasPrice: this.options.gasPrice,
         from: this.options.from,

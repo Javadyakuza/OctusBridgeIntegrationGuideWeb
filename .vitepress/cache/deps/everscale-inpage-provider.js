@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-YTWT43PM.js";
+} from "./chunk-QY3AG7D4.js";
 
 // node_modules/everscale-inpage-provider/dist/utils.js
 var require_utils = __commonJS({
@@ -565,7 +565,7 @@ var require_stream = __commonJS({
     async function identity(item, handler) {
       return handler(item);
     }
-    var StreamImpl = class {
+    var StreamImpl = class _StreamImpl {
       constructor(makeProducer, stopProducer, extractor, isFinite) {
         this.makeProducer = makeProducer;
         this.stopProducer = stopProducer;
@@ -680,7 +680,7 @@ var require_stream = __commonJS({
         }
       }
       merge(other) {
-        return new StreamImpl((onData, onEnd) => {
+        return new _StreamImpl((onData, onEnd) => {
           const state = {
             stopped: false,
             counter: 0
@@ -708,7 +708,7 @@ var require_stream = __commonJS({
         const state = {
           index: 0
         };
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           return handler({
             index: state.index++,
             item
@@ -716,13 +716,13 @@ var require_stream = __commonJS({
         }), this.isFinite);
       }
       tap(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           await f(item);
           return handler(item);
         }), this.isFinite);
       }
       filter(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           if (await f(item)) {
             return handler(item);
           } else {
@@ -731,7 +731,7 @@ var require_stream = __commonJS({
         }), this.isFinite);
       }
       filterMap(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           const newItem = await f(item);
           if (newItem !== void 0) {
             return handler(newItem);
@@ -741,13 +741,13 @@ var require_stream = __commonJS({
         }), this.isFinite);
       }
       map(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           const newItem = await f(item);
           return handler(newItem);
         }), this.isFinite);
       }
       flatMap(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           const items = await f(item);
           for (const newItem of items) {
             if (!await handler(newItem)) {
@@ -761,7 +761,7 @@ var require_stream = __commonJS({
         const state = {
           index: 0
         };
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, (item) => {
           if (state.index >= n) {
             return handler(item);
           } else {
@@ -774,7 +774,7 @@ var require_stream = __commonJS({
         const state = {
           shouldSkip: true
         };
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           if (!state.shouldSkip || !await f(item)) {
             state.shouldSkip = false;
             return handler(item);
@@ -787,7 +787,7 @@ var require_stream = __commonJS({
         const state = {
           index: 0
         };
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, (item) => {
           if (state.index < n) {
             ++state.index;
             return handler(item);
@@ -797,7 +797,7 @@ var require_stream = __commonJS({
         }), true);
       }
       takeWhile(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           if (await f(item)) {
             return handler(item);
           } else {
@@ -806,7 +806,7 @@ var require_stream = __commonJS({
         }), true);
       }
       takeWhileMap(f) {
-        return new StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
+        return new _StreamImpl(this.makeProducer, this.stopProducer, (event, handler) => this.extractor(event, async (item) => {
           const newItem = await f(item);
           if (newItem !== void 0) {
             return handler(newItem);

@@ -1,74 +1,71 @@
 {
-  "hash": "5b9a509e",
-  "browserHash": "85f96490",
+  "hash": "07ae5e6d",
+  "browserHash": "ad5b42d0",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "b29a8470",
+      "fileHash": "7bd01e25",
       "needsInterop": false
     },
     "@metamask/sdk": {
       "src": "../../../node_modules/@metamask/sdk/dist/browser/umd/metamask-sdk.js",
       "file": "@metamask_sdk.js",
-      "fileHash": "664cc6f6",
+      "fileHash": "0b02b850",
       "needsInterop": true
+    },
+    "web3": {
+      "src": "../../../node_modules/web3/lib/esm/index.js",
+      "file": "web3.js",
+      "fileHash": "62a87427",
+      "needsInterop": false
     },
     "everscale-inpage-provider": {
       "src": "../../../node_modules/everscale-inpage-provider/dist/index.js",
       "file": "everscale-inpage-provider.js",
-      "fileHash": "09b04f30",
+      "fileHash": "204e40fc",
       "needsInterop": true
     },
     "dotenv": {
       "src": "../../../node_modules/dotenv/lib/main.js",
       "file": "dotenv.js",
-      "fileHash": "792b160f",
+      "fileHash": "26308f8f",
       "needsInterop": true
     },
     "process": {
       "src": "../../../node_modules/process/browser.js",
       "file": "process.js",
-      "fileHash": "8a9dd1e2",
-      "needsInterop": true
-    },
-    "buffer": {
-      "src": "../../../node_modules/buffer/index.js",
-      "file": "buffer.js",
-      "fileHash": "51308415",
-      "needsInterop": true
-    },
-    "events": {
-      "src": "../../../node_modules/events/events.js",
-      "file": "events.js",
-      "fileHash": "2c713013",
+      "fileHash": "59b53825",
       "needsInterop": true
     },
     "ethers": {
       "src": "../../../node_modules/ethers/lib.esm/index.js",
       "file": "ethers.js",
-      "fileHash": "f442c13f",
+      "fileHash": "90cc3eb0",
       "needsInterop": false
     },
-    "web3": {
-      "src": "../../../node_modules/web3/lib/esm/index.js",
-      "file": "web3.js",
-      "fileHash": "f8559391",
+    "bignumber.js": {
+      "src": "../../../node_modules/bignumber.js/bignumber.mjs",
+      "file": "bignumber__js.js",
+      "fileHash": "3d1be96c",
+      "needsInterop": false
+    },
+    "eth-ton-abi-converter": {
+      "src": "../../../node_modules/eth-ton-abi-converter/eth_ton_abi_converter.js",
+      "file": "eth-ton-abi-converter.js",
+      "fileHash": "4334d263",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-YER6ETFZ": {
-      "file": "chunk-YER6ETFZ.js"
+    "chunk-QPXRUELP": {
+      "file": "chunk-QPXRUELP.js"
     },
-    "chunk-TOGJBQOX": {
-      "file": "chunk-TOGJBQOX.js"
+    "chunk-OFSTXAYP": {
+      "file": "chunk-OFSTXAYP.js"
     },
-    "chunk-XJHKKHAZ": {
-      "file": "chunk-XJHKKHAZ.js"
-    },
-    "chunk-YTWT43PM": {
-      "file": "chunk-YTWT43PM.js"
+    "chunk-QY3AG7D4": {
+      "file": "chunk-QY3AG7D4.js"
     }
   }
 }

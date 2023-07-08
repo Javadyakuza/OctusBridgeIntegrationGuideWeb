@@ -1,11 +1,16 @@
 import { getRandomUint } from "./helpers/randuint";
 import * as constants from "./helpers/constants";
-import { ProviderRpcClient, Address } from "everscale-inpage-provider";
+import {
+  ProviderRpcClient,
+  Address,
+  Contract,
+} from "everscale-inpage-provider";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 import { encodeBase64, ethers } from "ethers";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
+import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
+import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import * as web3 from "web3";
-
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
  * @param everSender sender ever account wallet address
@@ -299,6 +304,121 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
 
   return [data.boc, randomNonce];
 }
+/**
+ * prepares the payload to be used in withdraw function on MV contracts on Evm sides
+ * @param EverEvmAlienEventContractAddress address of the relevant deployed event contract on everscale
+ * @returns {bytes} payload string to be used in saveWithdraw Functions
+ */
+export async function buildSaveWithdraw(
+  EverEvmAlienEventContractAddress: Address
+) {
+  // Promise<string | [string, string]>
+  let provider: ProviderRpcClient,
+    everSender: Address,
+    evmRecipient: string,
+    chainId: string;
+  try {
+    const returnedValues = await setupAndGetProvidersDetails();
+    if (returnedValues) {
+      [provider, everSender, evmRecipient, chainId] = returnedValues;
+      Number(chainId) != 56
+        ? useEvmProvider().changeMetaMaskNetwork("BSC")
+        : undefined;
+      Number(chainId) != 56
+        ? [
+            "ERROR",
+            "rejection by user !, only BNB chain is available for this payload at the moment",
+          ]
+        : undefined;
+    } else {
+      // Handle the case where the function returns undefined
+      return ["ERROR", "rejection by user !"];
+    }
+  } catch (error) {
+    // Handle any errors that occur during function execution
+    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  }
+  // fetching the contracts
+  const EverEvmEventContract: Contract<
+    FactorySource["EverscaleEthereumBaseEvent"]
+  > = new provider.Contract(
+    factorySource["EverscaleEthereumBaseEvent"],
+    EverEvmAlienEventContractAddress
+  );
+  const eventDetails = await EverEvmEventContract.methods
+    .getDetails({ answerId: 0 })
+    .call({});
+  console.log(" details fetched !", eventDetails);
+  const EverEvmAlienEventConf: Contract<
+    FactorySource["EverscaleEthereumEventConfiguration"]
+  > = new provider.Contract(
+    factorySource["EverscaleEthereumEventConfiguration"],
+    eventDetails._eventInitData.configuration
+  );
+  const [eventConfigDetails, flags] = await Promise.all([
+    await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
+    (
+      await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({})
+    )._flags,
+  ]);
+  // preparing the payload
+  const eventDataEncoded = mapTonCellIntoEthBytes(
+    Buffer.from(
+      (await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}))
+        ._basicConfiguration.eventABI,
+      "base64"
+    ).toString(),
+    eventDetails._eventInitData.voteData.eventData,
+    flags
+  );
+  const roundNumber = (
+    await EverEvmEventContract.methods.round_number({}).call({})
+  ).round_number;
+
+  const encodedEvent = web3.eth.abi.encodeParameters(
+    [
+      {
+        EverscaleEvent: {
+          eventTransactionLt: "uint64",
+          eventTimestamp: "uint32",
+          eventData: "bytes",
+          configurationWid: "int8",
+          configurationAddress: "uint256",
+          eventContractWid: "int8",
+          eventContractAddress: "uint256",
+          proxy: "address",
+          round: "uint32",
+        },
+      },
+    ],
+    [
+      {
+        eventTransactionLt:
+          eventDetails._eventInitData.voteData.eventTransactionLt,
+        eventTimestamp: eventDetails._eventInitData.voteData.eventTimestamp,
+        eventData: eventDataEncoded,
+        configurationWid: eventDetails._eventInitData.configuration
+          .toString()
+          .split(":")[0],
+        configurationAddress: `0x${
+          eventDetails._eventInitData.configuration.toString().split(":")[1]
+        }`,
+        eventContractWid:
+          EverEvmAlienEventContractAddress.toString().split(":")[0],
+        eventContractAddress: `0x${
+          EverEvmAlienEventContractAddress.toString().split(":")[1]
+        }`,
+        proxy: `0x${ethers
+          .toBigInt(eventConfigDetails._networkConfiguration.proxy)
+          .toString(16)
+          .padStart(40, "0")}`,
+        round: roundNumber,
+      },
+    ]
+  );
+  return encodedEvent;
+}
+
 const format = (data: string[]): string => {
   return `payload : ${data[0]} <br/>
   random nonce : ${data[1]}
@@ -312,5 +432,6 @@ export function usePayloadBuilders() {
     buildBurnPayloadForEvmAlienToken,
     buildBurnPayloadForEvmNativeToken,
     format,
+    buildSaveWithdraw,
   };
 }

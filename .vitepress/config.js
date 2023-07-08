@@ -1,23 +1,39 @@
 import vue from '@vitejs/plugin-vue';
-
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
+import { defineConfig } from 'vite';
 const HELP_URL = 'https://t.me/everdev';
 const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
-
+export default defineConfig({
+  plugins: [
+    {
+      name: 'wasm-loader',
+      enforce: 'pre',
+      configure: wasmLoaders => {
+        wasmLoaders.set('.wasm', 'wasm-loader');
+      },
+    },
+    wasm(),
+    topLevelAwait(),
+  ],
+  worker: {
+    // Not needed with vite-plugin-top-level-await >= 1.3.0
+    // format: "es",
+    plugins: [wasm(), topLevelAwait()],
+  },
+});
 module.exports = {
   title: 'OctusBridge',
   base: '/',
   description: 'OctusBridgeInegrationGuide',
-  resolve: {
-    alias: {
-      process: 'process/browser',
-      stream: 'stream-browserify',
-      zlib: 'browserify-zlib',
-      util: 'util',
-    },
-  },
-  plugins: [vue()],
 
+  plugins: [vue(), wasm(), topLevelAwait()],
+  worker: {
+    // Not needed with vite-plugin-top-level-await >= 1.3.0
+    // format: "es",
+    plugins: [wasm(), topLevelAwait()],
+  },
   themeConfig: {
     search: {
       provider: 'local',
@@ -159,7 +175,7 @@ module.exports = {
                   {
                     text: 'Evm MultiVault Token',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawNative.md',
                   },
                   {
                     text: 'Evm Native and Alien Token ',

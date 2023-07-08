@@ -18,15 +18,16 @@ export async function saveWithdrawNative(): Promise<ContractTransactionResponse 
   const evmSigner = await ethers.provider.getSigner(0);
   console.log("user wallet address : ", evmSigner.address);
   // getting the contracts
-  let MultiVault: Contracts.MultiVault__factory = await ethers.getContractFactory("MultiVault");
+  let MultiVault: Contracts.MultiVault__factory =
+    await ethers.getContractFactory("MultiVault");
   // attaching them to on-chain addresses
   MultiVault = await MultiVault.attach(deployedContracts.BSCMultiVault);
 
-  const signatures = SampleSignaturesEverNativeEvmAlienToken.map(sign => {
+  const signatures = SampleSignaturesEverNativeEvmAlienToken.map((sign) => {
     const signature = `0x${Buffer.from(sign, "base64").toString("hex")}`;
     const address = web3.eth.accounts.recover(
       web3.utils.sha3(SamplePayloadEverNativeEvmAlienToken as string) as string,
-      signature,
+      signature
     );
     return {
       address,
@@ -51,7 +52,7 @@ export async function saveWithdrawNative(): Promise<ContractTransactionResponse 
   try {
     const res = await MultiVault.saveWithdrawNative(
       SamplePayloadEverNativeEvmAlienToken,
-      signatures.map(({ signature }) => signature),
+      signatures.map(({ signature }) => signature)
     );
     console.log("tx hash ; ", res?.hash);
     return res;
@@ -61,10 +62,10 @@ export async function saveWithdrawNative(): Promise<ContractTransactionResponse 
   }
 }
 saveWithdrawNative()
-  .then(res => {
+  .then((res) => {
     console.log("successful , tx hash : ", res?.hash);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error(error);
     process.exitCode = 1;
   });
