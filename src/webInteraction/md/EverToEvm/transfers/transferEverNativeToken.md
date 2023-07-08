@@ -2,7 +2,7 @@
 
 # Transfer Everscale Native Token
 
-Same as EVER which is everscale native coin , everscale native tokens such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+Same as EVER which is everscale native coin , everscale native tokens such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases or mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
 
 In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 
@@ -483,7 +483,7 @@ await AlienTokenWalletUpgradable.methods
     notify: true,
     payload: transferPayload[0],
     recipient: ProxyMultiVaultNativeV_4,
-    remainingGasTo: payWithEver ? constants.EventCloser : everSender,
+    remainingGasTo: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
   })
   .send({
     from: everSender,
@@ -509,7 +509,7 @@ await AlienTokenWalletUpgradable.methods
 <input ref="amount" type="number"/>
 <br/>
 
-<label for="amount">pay with EVER </label>
+<label for="everPay">pay with EVER </label>
 <input ref="everPay" type="checkbox"/>
 
 <br/>

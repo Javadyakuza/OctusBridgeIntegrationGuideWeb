@@ -1,8 +1,8 @@
 <div class="EverNativeCoinTransfer">
 
-# Transfer Everscale native coin
+# Transfer Everscale Native Coin
 
-The native coin of Everscale, known as EVER, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+The native coin of Everscale, known as EVER, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases or mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
 
 In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 
@@ -219,7 +219,7 @@ const wrapPayload: [string, string] = await buildWrapPayload(
     .wrap({
       tokens: ethers.parseUnits(amount.toString(), 9).toString(),
       owner_address: Compounder,
-      gas_back_address: payWithEver ? constants.EventCloser : everSender,
+      gas_back_address: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
       payload: wrapPayload[0],
     })
     .send({
@@ -234,7 +234,7 @@ const wrapPayload: [string, string] = await buildWrapPayload(
 <label for="amount">amount </label>
 <input ref="amount" type="number"/>
 <br/>
-<label for="amount">pay with EVER </label>
+<label for="everPay">pay with EVER </label>
 <input ref="everPay" type="checkbox"/>
 
 <br/>
@@ -249,7 +249,6 @@ import { usePayloadBuilders } from "../../../providers/usePayloadBuilders";
 import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
-import * as constants from "../../../providers/helpers/constants";
 
 export default defineComponent({
   name: "EverNativeCoinTransfer",

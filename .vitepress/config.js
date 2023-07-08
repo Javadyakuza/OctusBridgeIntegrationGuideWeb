@@ -173,7 +173,7 @@ module.exports = {
                   {
                     text: 'Ever Alien Token',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EverToEvm/transfers/transferEverAlienToken.md',
                   },
                   {
                     text: 'Evm Native Coin',
