@@ -4,14 +4,14 @@ The mentioned operation is utilized when a bridging process is initiated from Ev
 
 This operation is specifically used for transferring EVER native tokens or coins, which are considered as MultiVault tokens on the EVM side. At this stage, assets are minted and to execute this operation, the `saveWithdrawNative` function needs to be called with a payload that includes encoded data related to the deployed event contract on Everscale, as well as all the relayers' signatures that have confirmed the event contract.
 
-In order to execute transaction at this page you need to initial a transaction and get your event address from [Transfer Ever Native coin](../transfers/transferEverNativeCoin.md) or [Transfer Ever Native token](#)section.
+In order to execute transaction at this page you need to initial a transaction and get your event address from [Transfer Ever Native coin](../transfers/transferEverNativeCoin.md) or [Transfer Ever Native token](../transfers/transferEverNativeToken.md) section.
 
-The following code samples demonstrate how to perform such operations.
+In this example, interaction takes place with three contracts, following ABI's are used to interact with those:
 
 <div class="saveWithdrawNative">
 
 <details>
-<summary>Event contract ABI</summary>
+<summary>EverscaleEthereumBaseEvent Contract Abi</summary>
 
 ```typescript
 const EverscaleEthereumBaseEventABI = {
@@ -281,7 +281,7 @@ const EverscaleEthereumBaseEventABI = {
 <br/>
 
 <details>
-<summary>Event Config contract ABI</summary>
+<summary>EverscaleEthereumEventConfiguration Contract Abi</summary>
 
 ```typescript
 const EverscaleEthereumEventConfigurationABI = {
@@ -517,7 +517,7 @@ const EverscaleEthereumEventConfigurationABI = {
 
 <br/>
 <details>
-<summary>MultiVault contract ABI</summary>
+<summary>MultiVault Contract Abi</summary>
 
 ```typescript
 const MultiVaultAbi = {
@@ -3113,9 +3113,16 @@ const MultiVaultAbi = {
 <br/>
 
 <details>
-<summary>Encoding payload</summary>
+<summary>Encoding Payload</summary>
 
 ```typescript
+// Import the required libraries
+import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
+import * as web3 from "web3";
+import { ethers } from "ethers";
+
+//initial the Tvm provider as mentioned in prerequisites section
+
 /**
  * @param EverscaleEthereumBaseEventABI event contract abi
  * @param EverEvmAlienEventContractAddress relevant deployed event contract address
@@ -3206,9 +3213,14 @@ const payload = web3.eth.abi.encodeParameters(
 <br/>
 
 <details>
-<summary>getting signatures</summary>
+<summary>Encoding Signatures</summary>
 
 ```typescript
+// Import the required libraries
+import * as web3 from "web3";
+
+//initial the Tvm provider as mentioned in prerequisites section
+
 /**
  * @param EverscaleEthereumBaseEventABI ABI of event contract
  * @param EverscaleEthereumBaseEventAddr address of the relevant deployed event contract
@@ -3259,16 +3271,19 @@ signatures.sort((a, b) => {
 <summary>Mint tokens</summary>
 
 ```typescript
+// Import the required libraries
+import { ethers } from "ethers";
+
+//initial the Evm provider as mentioned in prerequisites section
+
 /**
  * @param MultiVaultAddress contract address of MultiVault contract on target Evm network, can be found in addresses section
  * @param MultiVaultAbi MultiVault contract ABI
- * @param evmProvider evm provider
+ * @param signer signer of the transaction which is metamask
+ * @dev use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
  */
-let MultiVault = new ethers.Contract(
-  MultiVaultAddress,
-  MultiVaultAbi,
-  evmProvider
-);
+let MultiVault = new ethers.Contract(MultiVaultAddress, MultiVaultAbi, signer);
+
 // mints token with prepared values
 await MultiVault.saveWithdrawNative(
   Payload,
@@ -3277,14 +3292,17 @@ await MultiVault.saveWithdrawNative(
 ```
 
 </details>
+<br/>
 
-<!-- <label for="eventAddr">event address </label>
+> **❗Only native event contract addresses from unfinished bridging processes can be used**
+
+<label for="eventAddr">Everscale Native Event Address </label>
 <input ref="eventAddr" type="text"/>
 
 <br/>
 <button @click="HandleSaveWithdrawNative" style="{background-color : gray, border-radius: 100px}">saveWithdrawNative</button>
 
-<p class="output-p" ref="saveWithdrawNativeOutput"></p> -->
+<p class="output-p" ref="saveWithdrawNativeOutput"></p>
 
 </div>
 
@@ -3292,14 +3310,12 @@ await MultiVault.saveWithdrawNative(
 import { useSaveWithdraws } from "../../../providers/useSaveWithdraws";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address} from "everscale-inpage-provider";
-import wasm from "vite-plugin-wasm";
 
 export default defineComponent({
   name: "saveWithdrawNative",
 
   setup() {
-    wasm();
-    const { saveWithdrawAlien, saveWithdrawNative } = useSaveWithdraws();
+    const { saveWithdrawNative } = useSaveWithdraws();
     async function HandleSaveWithdrawNative() {
       let output = await saveWithdrawNative(new Address(this.$refs.eventAddr.value));
       this.$refs.saveWithdrawNativeOutput.innerHTML = output;

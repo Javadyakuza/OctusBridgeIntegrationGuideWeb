@@ -2,14 +2,14 @@
 
 # Transfer Everscale Native Coin
 
-The native coin of Everscale, known as EVER, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases or mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+The native coin of Everscale, known as EVER, can be transferred to another EVM chain through two methods. The first method involves manual asset minting on Evm side, while the second method automatically mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
 
 In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 
 to perform such a operation we need WEVERVaultContract Abi which is as follows :
 
 <details>
-<summary>show ABI</summary>
+<summary>WEVERVault Contract Abi</summary>
 
 ```typescript
 abstract class EverAbi {
@@ -175,9 +175,13 @@ abstract class EverAbi {
 </details>
 <br/>
 <details>
-<summary>show code</summary>
+<summary>Transfer EVER</summary>
 
 ```typescript
+// Import the required libraries
+import { ethers } from "ethers";
+
+//initial the Tvm provider as mentioned in prerequisites section
 
 /**
  * fetches the contract to interact with
@@ -234,6 +238,7 @@ const wrapPayload: [string, string] = await buildWrapPayload(
 <label for="amount">amount </label>
 <input ref="amount" type="number"/>
 <br/>
+
 <label for="everPay">pay with EVER </label>
 <input ref="everPay" type="checkbox"/>
 

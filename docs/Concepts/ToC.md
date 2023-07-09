@@ -1,4 +1,6 @@
-# Table of Contents
+# Concepts
+
+## Table of Contents
 
 - [Token Types](./TokenTypes.md)
 - [Operations](./Operations.md)

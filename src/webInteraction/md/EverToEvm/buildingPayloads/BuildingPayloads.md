@@ -10,6 +10,8 @@ The following payload is utilized when transferring [EVER](../../../../docs/addr
 <summary>show code</summary>
 
 ```typescript
+//initial the Tvm provider as mentioned in prerequisites section
+
 /**
 * Encodes evm data into a cell
 * @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
@@ -70,7 +72,7 @@ const remainingGasTo = releaseByEver ? constants.EventCloser : everSender;
 * @param amount {uint128} : Ever amount. Example: "1000000000".
 * @param remainingGasTo {address} : remaining gas receiver Ever address. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
 */
-const compounderPayload = await locklift.provider.packIntoCell({
+const compounderPayload = await provider.packIntoCell({
 data: {
 to: constants.ProxyMultiVaultNativeV_4,
 amount: locklift.utils.toNano(amount),
@@ -94,6 +96,7 @@ const boc: string = compounderPayload.boc;
 <label for="amount">amount </label>
 <input ref="amount" type="number"/>
 <br/>
+
 <label for="amount">pay with EVER </label>
 <input ref="everPay" type="checkbox"/>
 
@@ -110,6 +113,8 @@ The following payload is utilized when transferring an everscale native token su
 <summary>show code</summary>
 
 ```typescript
+//initial the Tvm provider as mentioned in prerequisites section
+
 /**
 * Encodes evm data into a cell
 * @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
@@ -182,6 +187,8 @@ The following payload is utilized when transferring an everscale Alien and non-n
 <summary>show code</summary>
 
 ```typescript
+//initial the Tvm provider as mentioned in prerequisites section
+
 /**
  * Encodes evm data into a cell
  * @param addr {uint160} Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
@@ -266,7 +273,7 @@ const operationPayload = await provider.packIntoCell({
 
 ## Evm Native Coin
 
-The provided payload is utilized for transferring an EVM native coin (such as BNB, ETH, FTM, etc.) within the context of everscale. These native coins are considered alien tokens in everscale. The payload contains encoded operational data that is relevant to the target Evm recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the target EVM network native coin back to its original form. The code sample below illustrates how to construct such a payload in a professional manner.
+The provided payload is utilized for transferring an Evm native coin (such as BNB, ETH, FTM, etc.), from everscale to an Evm network. These native coins are considered alien tokens in everscale. The payload contains encoded operational data that is relevant to the target Evm recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the target EVM network native coin back to its original form. The code sample below illustrates how to construct such a payload.
 
 > ❗ this payload is only available on Binance Smart chain at the moment.
 
@@ -274,6 +281,8 @@ The provided payload is utilized for transferring an EVM native coin (such as BN
 <summary>show code</summary>w
 
 ```typescript
+//initial the Tvm provider as mentioned in prerequisites section
+
   /**
    * Encodes data about unWrapper of wrapped version of the target Evm network native coin (BNB, ETH, ...).
    * @param addr {uint160} Wrapped coin unWrapper contract address. Example: "0x0000000000000000000000000000000000000000"

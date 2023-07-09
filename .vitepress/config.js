@@ -1,53 +1,14 @@
 import vue from '@vitejs/plugin-vue';
 import wasm from 'vite-plugin-wasm';
-import topLevelAwait from 'vite-plugin-top-level-await';
-import { defineConfig } from 'vite';
 const HELP_URL = 'https://t.me/everdev';
 const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
-module.exports = defineConfig({
-  test: /\.wasm$/,
-  type: 'javascript/auto',
-  use: [
-    {
-      loader: 'file-loader',
-      options: {
-        name: '[name].[hash].[ext]',
-        outputPath: 'wasm/',
-        esModule: false,
-      },
-    },
-  ],
-  plugins: [wasm(), topLevelAwait()],
-  worker: {
-    // Not needed with vite-plugin-top-level-await >= 1.3.0
-    // format: "es",
-    plugins: [wasm(), topLevelAwait()],
-  },
-});
+
 module.exports = {
   title: 'OctusBridge',
   base: '/',
-  description: 'OctusBridgeInegrationGuide',
-  test: /\.wasm$/,
-  type: 'application/wasm',
-  use: [
-    {
-      loader: 'file-loader',
-      options: {
-        name: '[name].[hash].[ext]',
-        outputPath: 'wasm/',
-        esModule: false,
-      },
-    },
-  ],
-
-  plugins: [vue(), wasm(), topLevelAwait()],
-  worker: {
-    // Not needed with vite-plugin-top-level-await >= 1.3.0
-    // format: "es",
-    plugins: [wasm(), topLevelAwait()],
-  },
+  description: 'OctusBridgeIntegrationGuide',
+  plugins: [vue(), wasm()],
   themeConfig: {
     search: {
       provider: 'local',
@@ -152,6 +113,11 @@ module.exports = {
             link: '/src/webInteraction/md/workFlow.md',
             items: [
               {
+                text: 'Prerequisites',
+                collapsable: true,
+                link: '/src/webInteraction/md/EverToEvm/prerequisites.md',
+              },
+              {
                 text: 'Building Payloads',
                 collapsable: true,
                 link: '/src/webInteraction/md/EverToEvm/buildingPayloads/BuildingPayloads.md',
@@ -178,7 +144,7 @@ module.exports = {
                   {
                     text: 'Evm Native Coin',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EverToEvm/transfers/transferEvmNativeCoin.md',
                   },
                 ],
               },
@@ -194,7 +160,7 @@ module.exports = {
                   {
                     text: 'Evm Native and Alien Token ',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md',
                   },
                 ],
               },
@@ -211,17 +177,17 @@ module.exports = {
                   {
                     text: 'Evm Native Coin',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EvmToEver/transfers/transferEvmNativeCoin.md',
                   },
                   {
                     text: 'Evm MultiVault Token',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EvmToEver/transfers/transferEvmMultiVaultToken.md',
                   },
                   {
                     text: 'Evm Alien Token',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EvmToEver/transfers/transferEvmAlienToken.md',
                   },
                 ],
               },
@@ -232,12 +198,12 @@ module.exports = {
                   {
                     text: 'Native Event',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EvmToEver/DeployEvents/deployNativeEvent.md',
                   },
                   {
                     text: 'Alien Event',
                     collapsable: true,
-                    link: '/docs/FAQ.md',
+                    link: '/src/webInteraction/md/EvmToEver/DeployEvents/deployAlienEvent.md',
                   },
                 ],
               },

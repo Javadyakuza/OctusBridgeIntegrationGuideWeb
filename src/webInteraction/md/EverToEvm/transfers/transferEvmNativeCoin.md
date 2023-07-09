@@ -1,12 +1,12 @@
-<div class="EverNativeTokenTransfer">
+# Transfer Evm Native coin
 
-# Transfer Everscale Native Token
+<div class="EvmNativeCoinTransfer">
 
-Same as EVER which is everscale native coin , everscale native tokens such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) can be transferred to another EVM chain through two methods. The first method involves manual asset minting on Evm side, while the second method automatically mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+The target Evm network native coins such as **BNB**, **ETH**, **FTM**, **MATIC** and others, which are known as alien tokens in everscale as well as ERC-20 tokens, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing on Evm side, while the second method automatically releases the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
 
-In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
+In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
-to perform such a operation we need Tip3 TokenRoot and TokenWalletUpgradable Abi's which are as follows :
+To perform such a operation Tip3 Token Root and wallet upgradable Abi's are required which are as follows :
 
 <details>
 <summary>TokenRoot Contract Abi</summary>
@@ -426,9 +426,10 @@ const TokenWalletUpgradableAbi{
 ```
 
 </details>
+
 <br/>
 <details>
-<summary>Transfer Native Token</summary>
+<summary>Transfer Evm Native Coin</summary>
 
 ```typescript
 // Import the required libraries
@@ -440,7 +441,7 @@ import { ethers } from "ethers";
  * @param TokenRootAbi abi of the token root
  * @param tokenAddress address of the token root, some token root addresses can be found in addresses section
  */
-const NativeTokenRoot = new provider.Contract(TokenRootAbi, tokenAddress);
+const AlienTokenRoot = new provider.Contract(TokenRootAbi, tokenAddress);
 
 /**
  * @param TokenWalletUpgradableAbi abi of the token wallet upgradable
@@ -449,7 +450,7 @@ const NativeTokenRoot = new provider.Contract(TokenRootAbi, tokenAddress);
 const AlienTokenWalletUpgradable = new provider.Contract(
   TokenWalletUpgradableAbi,
   (
-    await NativeTokenRoot.methods
+    await AlienTokenRoot.methods
       .walletOf({ answerId: 0, walletOwner: everSender })
       .call({})
   ).value0
@@ -466,27 +467,23 @@ const payWithEver: boolean = true;
 const auto_value: number = 13;
 const manual_value: number = 6;
 
-// preparing the payloads. see building payloads section
-const transferPayload: [string, string] = await buildTransferPayload();
+// preparing the payload. see building payloads section
+const burnPayload: [string, string] = await buildBurnPayloadForEvmNativeToken();
 
 /**
- *  @param amount amount os target token to transfer
- *  @param deployWalletValue value to deploy the token wallet if not deployed already
- *  @param notify let recipient know that token are received
+ *  @param amount amount of target token to transfer
+ *  @param callbackTo who should get the fallback message after its burned. can be found in addresses section
  *  @param payload operational payload
- *  @param recipient always ProxyMultiVaultNativeV_4, can be found in addresses section
  *  @param remainingGasTo who to send the remaining tx gas. will be event closer if releasing assets are done automatically on evm side and users address if manual
  *  @param from sender address
  *  @notice @param amount this parameter is important when asset releasing is done automatically on evm side, must be set to certain amounts
  *  @param bounce return remaining gas ? always true
  */
 await AlienTokenWalletUpgradable.methods
-  .transfer({
-    amount: ethers.parseUnits(amount.toString(), 9).toString(),
-    deployWalletValue: "200000000",
-    notify: true,
-    payload: transferPayload[0],
-    recipient: ProxyMultiVaultNativeV_4,
+  .burn({
+    amount: ethers.parseEther(amount.toString()).toString(),
+    callbackTo: ProxyMultiVaultAlienV_7,
+    payload: burnPayload[0],
     remainingGasTo: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
   })
   .send({
@@ -494,19 +491,12 @@ await AlienTokenWalletUpgradable.methods
     amount: ethers
       .parseUnits((payWithEver ? auto_value : manual_value).toString(), 9)
       .toString(),
-
     bounce: true,
   });
 ```
 
 </details>
-<br/>
-<label for="NativeToken">select the token </label>
-<select ref="NativeToken" @change="HandleSelectionChange">
 
-  <option value="EVERBRIDGE" selected >BRIDGE</option>
-  <option value="EVERQUBE"  >QUBE</option>
-</select>
 <br/>
 
 <label for="amount">amount </label>
@@ -514,12 +504,12 @@ await AlienTokenWalletUpgradable.methods
 <br/>
 
 <label for="everPay">pay with EVER </label>
-<input ref="everPay" type="checkbox"/>
+<input class="everPayCheck" ref="everPay" type="checkbox"/>
 
 <br/>
-<button ref="transferNativeTokenButton" @click="HandleTransferEverNativeToken" style="{background-color : gray, border-radius: 100px}">Transfer BRIDGE</button>
+<button @click="HandleTransferEvmNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer Evm Native Coin</button>
 
-<p class="output-p" ref="EverNativeTokenOutput"></p>
+<p class="output-p" ref="EvmNativeCoinOutput"></p>
 
 </div>
 
@@ -531,27 +521,19 @@ import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
 
 export default defineComponent({
-  name: "EverNativeTokenTransfer",
+  name: "EvmNativeCoinTransfer",
   setup() {
-    const { transferEverNativeToken } = useEverToEvmTransfers();
-    async function HandleSelectionChange(){
-    this.$refs.transferNativeTokenButton.innerHTML = `transfer ${this.$refs.NativeToken.value.split("EVER")[1]}`;
-    }
-    async function HandleTransferEverNativeToken() {
-      if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.EverNativeTokenOutput.innerHTML = "ERROR: please enter valid number !!"
-        return;
-      }
-      var EverNativeTokenOutput = await transferEverNativeToken(
-        constants[this.$refs.NativeToken.value],
-        this.$refs.amount.value.toString(),
-        this.$refs.everPay.checked
-      );
-      this.$refs.EverNativeTokenOutput.innerHTML = EverNativeTokenOutput;
+    const { transferEverAlienEvmNativeCoin } = useEverToEvmTransfers();
+    async function HandleTransferEvmNativeCoin(){
+        const EvmNativeCoinOutput = await transferEverAlienEvmNativeCoin(
+            constants.EVERWBNB,
+            this.$refs.amount.value,
+            this.$refs.everPay.checked 
+        );
+        this.$refs.EvmNativeCoinOutput.innerHTML = EvmNativeCoinOutput;
     }
     return {
-      HandleTransferEverNativeToken,
-      HandleSelectionChange
+      HandleTransferEvmNativeCoin,
     };
   },
 });
@@ -570,8 +552,5 @@ export default defineComponent({
   cursor : pointer;
 }
 
+
 </style>
-
-```
-
-```

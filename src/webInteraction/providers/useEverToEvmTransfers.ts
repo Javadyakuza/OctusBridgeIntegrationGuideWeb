@@ -17,14 +17,14 @@ import { ethers } from "ethers";
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 /**
  * this module performs transferring an ever native, evm alien token from everscale network to an evm network using transferEverNativeCoin function.
- * EVER is used as token and receiver evm nework is BSC at this reticular example.
+ * EVER is used as token and receiver evm network is BSC at this reticular example.
  * @notice releasing assets on evm network is done automatically by attaching enough ever to tx.{see ../../constants.ts:32}
  * @returns ContractTransactionResponse returned data about the tx
  */
 async function transferEverNativeCoin(
   amount: number,
   payWithEver: boolean
-): Promise<[string, string]> {
+): Promise<[string, string[]] | unknown> {
   let provider: ProviderRpcClient,
     everSender: Address,
     evmRecipient: string,
@@ -75,14 +75,19 @@ async function transferEverNativeCoin(
           : constants.transfer_fees.EverToEvmManualRelease.toString(),
         bounce: true,
       });
-    const EventAddress: Address | undefined =
+    const eventAddress: Address | undefined =
       await fetchNativeEventAddressFromOriginTxHash(provider, res.id.hash);
-    return EventAddress
-      ? ["Event address : ", EventAddress.toString()]
-      : ["ERROR :", "couldn't find Event address !!"];
-  } catch (error: any) {
-    console.log("an error accrued while wrapping : ", error);
-    return ["ERROR : ", error.message];
+    if (!payWithEver) {
+      return eventAddress
+        ? ["Event address : ", eventAddress.toString()]
+        : ["ERROR :", "couldn't find Event address !!"];
+    } else {
+      res?.aborted
+        ? ["ERROR :", "transaction aborted"]
+        : ["successful, tx hash: ", res?.id.hash];
+    }
+  } catch (e: any) {
+    return ["an error accrued : ", e.message];
   }
 }
 
@@ -163,13 +168,17 @@ async function transferEverNativeToken(
     const eventAddress: Address | undefined =
       await fetchNativeEventAddressFromOriginTxHash(provider, res?.id.hash);
 
-    return eventAddress
-      ? ["Event address : ", eventAddress.toString()]
-      : ["ERROR :", "couldn't find Event address !!"];
-    // preparing payload for `saveWithdrawAlien`
-  } catch (e) {
-    console.log("an error accrued while transferring : ", e);
-    return e;
+    if (!payWithEver) {
+      return eventAddress
+        ? ["Event address : ", eventAddress.toString()]
+        : ["ERROR :", "couldn't find Event address !!"];
+    } else {
+      res?.aborted
+        ? ["ERROR :", "transaction aborted"]
+        : ["successful, tx hash: ", res?.id.hash];
+    }
+  } catch (e: any) {
+    return ["an error accrued : ", e.message];
   }
 }
 
@@ -255,12 +264,108 @@ async function transferEverAlienToken(
     const eventAddress: Address | undefined =
       await fetchAlienEventAddressFromOriginTxHash(provider, res?.id.hash)!;
 
-    return eventAddress
-      ? ["Event address : ", eventAddress.toString()]
-      : ["ERROR :", "couldn't find Event address !!"];
-  } catch (e) {
-    console.log("an error accrued while wrapping : ", e);
-    return e;
+    if (!payWithEver) {
+      return eventAddress
+        ? ["Event address : ", eventAddress.toString()]
+        : ["ERROR :", "couldn't find Event address !!"];
+    } else {
+      res?.aborted
+        ? ["ERROR :", "transaction aborted"]
+        : ["successful, tx hash: ", res?.id.hash];
+    }
+  } catch (e: any) {
+    return ["an error accrued : ", e.message];
+  }
+}
+
+/**
+ * this module performs transferring an ever alien, evm native token from everscale network to an evm network using transferEverAlienToken function.
+ * WBNB is used as token and receiver evm network is BSC at this particular example.
+ * @notice releasing assets on evm network is done manually by calling saveWithdrawAlien on MV contract at BSC.
+ * @returns ContractTransactionResponse returned data about the tx
+ */
+async function transferEverAlienEvmNativeCoin(
+  tokenAddress: Address,
+  amount: number,
+  payWithEver: boolean
+): Promise<[string, string[]] | unknown> {
+  let provider: ProviderRpcClient,
+    everSender: Address,
+    evmRecipient: string,
+    chainId: string;
+  try {
+    const returnedValues = await setupAndGetProvidersDetails();
+    if (returnedValues) {
+      [provider, everSender, evmRecipient, chainId] = returnedValues;
+      Number(chainId) != 56
+        ? useEvmProvider().changeMetaMaskNetwork("BSC")
+        : undefined;
+      Number(chainId) != 56
+        ? [
+            "ERROR",
+            "rejection by user !, only BNB chain is available for this payload at the moment",
+          ]
+        : undefined;
+    } else {
+      // Handle the case where the function returns undefined
+      return ["ERROR", "rejection by user !"];
+    }
+  } catch (error) {
+    // Handle any errors that occur during function execution
+    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  }
+  // fetching the contracts
+
+  const AlienTokenRoot: Contract<FactorySource["TokenRoot"]> =
+    new provider.Contract(factorySource["TokenRoot"], tokenAddress);
+
+  const AlienTokenWalletUpgradable: Contract<
+    FactorySource["AlienTokenWalletUpgradeable"]
+  > = new provider.Contract(
+    factorySource["AlienTokenWalletUpgradeable"],
+    (
+      await AlienTokenRoot.methods
+        .walletOf({ answerId: 0, walletOwner: everSender })
+        .call({})
+    ).value0
+  );
+  const { buildBurnPayloadForEvmNativeToken } = usePayloadBuilders();
+
+  const burnPayload: [string, string] =
+    await buildBurnPayloadForEvmNativeToken();
+  // burning
+  try {
+    const res: Transaction = await AlienTokenWalletUpgradable.methods
+      .burn({
+        callbackTo: constants.ProxyMultivaultAlienV_7,
+        payload: burnPayload[0],
+        remainingGasTo: payWithEver ? constants.EventCloser : everSender,
+        amount: ethers.parseEther(amount.toString()).toString(),
+      })
+      .send({
+        from: everSender,
+        amount: payWithEver
+          ? constants.transfer_fees.EverToEvmAutoRelease.toString()
+          : constants.transfer_fees.EverToEvmManualRelease.toString(),
+        bounce: true,
+      });
+
+    console.log("successful, tx hash: ", res?.id.hash);
+    // getting the event contract address
+    const eventAddress: Address | undefined =
+      await fetchAlienEventAddressFromOriginTxHash(provider, res?.id.hash);
+
+    if (!payWithEver) {
+      return eventAddress
+        ? ["Event address : ", eventAddress.toString()]
+        : ["ERROR :", "couldn't find Event address !!"];
+    } else {
+      res?.aborted
+        ? ["ERROR :", "transaction aborted"]
+        : ["successful, tx hash: ", res?.id.hash];
+    }
+  } catch (e: any) {
+    return ["an error accrued : ", e.message];
   }
 }
 
@@ -269,5 +374,6 @@ export function useEverToEvmTransfers() {
     transferEverNativeCoin,
     transferEverNativeToken,
     transferEverAlienToken,
+    transferEverAlienEvmNativeCoin,
   };
 }

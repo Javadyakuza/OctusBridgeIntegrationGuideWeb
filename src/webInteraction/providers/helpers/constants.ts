@@ -66,3 +66,9 @@ export const transfer_fees = {
   EverToEvmAutoRelease: ethers.parseUnits("13", 9),
   EverToEvmManualRelease: ethers.parseUnits("6", 9),
 };
+
+//-- misc
+
+export const UnfinishedEverscaleEthereumNativeEventForEVER = new Address(
+  "0:204145012c9fbfc97cd013ffcaa8e93829b5cf760edcb413c96671c1bae0868f"
+);

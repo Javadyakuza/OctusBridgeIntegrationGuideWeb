@@ -311,8 +311,7 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
  */
 export async function buildSaveWithdraw(
   EverEvmAlienEventContractAddress: Address
-) {
-  // Promise<string | [string, string]>
+): Promise<[string, string]> {
   let provider: ProviderRpcClient,
     everSender: Address,
     evmRecipient: string,
@@ -360,7 +359,7 @@ export async function buildSaveWithdraw(
     (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
       ._flags,
   ]);
-
+  await init();
   const eventDataEncoded = mapTonCellIntoEthBytes(
     Buffer.from(
       (await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}))
@@ -416,7 +415,7 @@ export async function buildSaveWithdraw(
       },
     ]
   );
-  return encodedEvent;
+  return ["payload", encodedEvent];
 }
 
 const format = (data: string[]): string => {

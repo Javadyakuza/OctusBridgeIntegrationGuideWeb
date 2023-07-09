@@ -2,14 +2,14 @@
 
 # Transfer Everscale Alien Token
 
-Same as two last examples, everscale Alien tokens such as [USDT](../../../../../docs/addresses.md#usdt) or others, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing or minting on Evm side, while the second method automatically releases or mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+Same as two last examples, everscale Alien tokens such as [USDT](../../../../../docs/addresses.md#usdt) or others which are not native coins such as **WBNB** or **WETH** at the target Evm network, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing on Evm side, while the second method automatically releases the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
 
-In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md.md) section.
+In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
-to perform such a operation we need Tip3 Token Root and wallet upgradable Abi's which are as follows :
+to perform such a operation we need Tip3 TokenRoot and TokenWalletUpgradable Abi's which are as follows :
 
 <details>
-<summary>Token Root Abi</summary>
+<summary>TokenRoot Contract Abi</summary>
 
 ```typescript
 const TokenRootAbi = {
@@ -207,7 +207,7 @@ const TokenRootAbi = {
 </details>
 <br/>
 <details>
-<summary>Token Wallet upgradable Abi</summary>
+<summary>TokenWalletUpgradable Contract Abi</summary>
 
 ```typescript
 const TokenWalletUpgradableAbi{
@@ -429,9 +429,14 @@ const TokenWalletUpgradableAbi{
 
 <br/>
 <details>
-<summary>transfer Alien Tokens</summary>
+<summary>Transfer Alien Token</summary>
 
 ```typescript
+// Import the required libraries
+import { ethers } from "ethers";
+
+//initial the Tvm provider as mentioned in prerequisites section
+
 /**
  * @param TokenRootAbi abi of the token root
  * @param tokenAddress address of the token root, some token root addresses can be found in addresses section
@@ -463,9 +468,8 @@ const auto_value: number = 13;
 const manual_value: number = 6;
 
 // preparing the payload. see building payloads section
-const { buildBurnPayloadForEvmAlienToken } = usePayloadBuilders();
 const burnPayload: [string, string] = await buildBurnPayloadForEvmAlienToken(
-  tokenAddressEvmAlien
+  tokenAddressEvmAlien // different version of the the target token, it's address can be found in addresses section
 );
 
 /**
@@ -480,7 +484,7 @@ const burnPayload: [string, string] = await buildBurnPayloadForEvmAlienToken(
 await AlienTokenWalletUpgradable.methods
   .burn({
     amount: ethers.parseUnits(amount.toString(), 6).toString(),
-    callbackTo: constants.MergePool_V4,
+    callbackTo: MergePool_V4,
     payload: burnPayload[0],
     remainingGasTo: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
   })
@@ -521,7 +525,6 @@ import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers"
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
-
 export default defineComponent({
   name: "EverAlienTokenTransfer",
   setup() {

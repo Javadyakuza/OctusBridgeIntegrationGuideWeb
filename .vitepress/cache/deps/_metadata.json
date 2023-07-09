@@ -1,74 +1,74 @@
 {
-  "hash": "07ae5e6d",
-  "browserHash": "bf5cdb17",
+  "hash": "bff1ba07",
+  "browserHash": "607d181f",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "23ad2bd5",
+      "fileHash": "e1895254",
       "needsInterop": false
     },
     "@metamask/sdk": {
       "src": "../../../node_modules/@metamask/sdk/dist/browser/umd/metamask-sdk.js",
       "file": "@metamask_sdk.js",
-      "fileHash": "961918b1",
+      "fileHash": "37746a85",
       "needsInterop": true
     },
     "web3": {
       "src": "../../../node_modules/web3/lib/esm/index.js",
       "file": "web3.js",
-      "fileHash": "8a0139db",
+      "fileHash": "c83b4c76",
       "needsInterop": false
     },
     "everscale-inpage-provider": {
       "src": "../../../node_modules/everscale-inpage-provider/dist/index.js",
       "file": "everscale-inpage-provider.js",
-      "fileHash": "a4016730",
+      "fileHash": "5973468e",
       "needsInterop": true
     },
     "dotenv": {
       "src": "../../../node_modules/dotenv/lib/main.js",
       "file": "dotenv.js",
-      "fileHash": "492e502b",
+      "fileHash": "05b6955a",
       "needsInterop": true
     },
     "process": {
       "src": "../../../node_modules/process/browser.js",
       "file": "process.js",
-      "fileHash": "aa360e08",
+      "fileHash": "1c1bd659",
       "needsInterop": true
+    },
+    "vite-plugin-wasm": {
+      "src": "../../../node_modules/vite-plugin-wasm/exports/import.mjs",
+      "file": "vite-plugin-wasm.js",
+      "fileHash": "f5da6299",
+      "needsInterop": false
     },
     "ethers": {
       "src": "../../../node_modules/ethers/lib.esm/index.js",
       "file": "ethers.js",
-      "fileHash": "1a3767ed",
+      "fileHash": "f193a0d3",
       "needsInterop": false
     },
     "bignumber.js": {
       "src": "../../../node_modules/bignumber.js/bignumber.mjs",
       "file": "bignumber__js.js",
-      "fileHash": "83580a02",
+      "fileHash": "637c8a2a",
       "needsInterop": false
     },
     "eth-ton-abi-converter": {
       "src": "../../../node_modules/eth-ton-abi-converter/eth_ton_abi_converter.js",
       "file": "eth-ton-abi-converter.js",
-      "fileHash": "46436434",
-      "needsInterop": false
-    },
-    "vite-plugin-wasm": {
-      "src": "../../../node_modules/vite-plugin-wasm/exports/import.mjs",
-      "file": "vite-plugin-wasm.js",
-      "fileHash": "8c8a673a",
+      "fileHash": "bb93cc83",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-4YDDAD4M": {
-      "file": "chunk-4YDDAD4M.js"
-    },
     "chunk-QPXRUELP": {
       "file": "chunk-QPXRUELP.js"
+    },
+    "chunk-4YDDAD4M": {
+      "file": "chunk-4YDDAD4M.js"
     },
     "chunk-OFSTXAYP": {
       "file": "chunk-OFSTXAYP.js"

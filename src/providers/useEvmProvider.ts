@@ -72,6 +72,7 @@ const getAccounts = async (): Promise<string[] | undefined> => {
 };
 
 const HandleAccountChange = async (): Promise<boolean> => {
+  console.log("handling", await provider.networkVersion);
   return (await getAccounts()) && (await getAccounts())!.length > 0
     ? true
     : false;
