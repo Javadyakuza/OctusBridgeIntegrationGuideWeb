@@ -1,16 +1,17 @@
-import { getRandomUint } from "./helpers/randuint";
-import * as constants from "./helpers/constants";
+import init, { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
+import { encodeBase64, ethers } from "ethers";
 import {
   ProviderRpcClient,
   Address,
   Contract,
 } from "everscale-inpage-provider";
-import { useEvmProvider } from "../../providers/useEvmProvider";
-import { encodeBase64, ethers } from "ethers";
-import { setupAndGetProvidersDetails } from "./useWalletsData";
-import init, { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
-import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import * as web3 from "web3";
+
+import { FactorySource, factorySource } from "./artifacts/build/factorySource";
+import * as constants from "./helpers/constants";
+import { getRandomUint } from "./helpers/randuint";
+import { setupAndGetProvidersDetails } from "./useWalletsData";
+
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
  * @param everSender sender ever account wallet address
@@ -18,7 +19,8 @@ import * as web3 from "web3";
  * @param amount target token amount without decimals
  * @param chainId target evm network chainId
  * @param releaseByEver this parameter specifies if the credit backend should release the assets in the target evm network(true), or user must release them manually(false)
- * @returns wrap payload string and rand nonce
+ * @
+ * returns wrap payload string and rand nonce
  */
 async function buildWrapPayload(
   amount: string | number,
@@ -33,11 +35,11 @@ async function buildWrapPayload(
     if (returnedValues) {
       [provider, everSender, evmRecipient, chainId] = returnedValues;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
   } catch (error) {
     // Handle any errors that occur during function execution
+
     return ["ERROR", "unknown error accrued while fetching wallet's data !"];
   }
   const transferPayload = await provider.packIntoCell({
@@ -64,7 +66,7 @@ async function buildWrapPayload(
       },
     ] as const,
   });
-  let randomNonce: string = getRandomUint();
+  const randomNonce: string = getRandomUint();
   const data = await provider.packIntoCell({
     data: {
       nonce: randomNonce,
@@ -94,28 +96,29 @@ async function buildWrapPayload(
       { name: "payload", type: "cell" },
     ] as const,
   });
+
   return [compounderPayload.boc, randomNonce];
 }
 /**
  * buildTransferPayload prepares the payload to transfer a everscale native token such as BRIDGE or QUBE from everscale to an evm network
- * @returns wrap payload string and rand nonce
+ * @
+ * returns wrap payload string and rand nonce
  */
 async function buildTransferPayload(): Promise<[string, string]> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, evmRecipient: string, chainId: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
+      [provider, , evmRecipient, chainId] = returnedValues;
       // Use the returned values as needed
     } else {
       // Handle the case where the function returns undefined
+
       return ["ERROR", "rejection by user !"];
     }
   } catch (error) {
     // Handle any errors that occur during function execution
+
     return ["ERROR", "unknown error accrued while fetching wallet's data !"];
   }
   const transferPayload = await provider.packIntoCell({
@@ -142,7 +145,7 @@ async function buildTransferPayload(): Promise<[string, string]> {
       },
     ] as const,
   });
-  let randomNonce = getRandomUint();
+  const randomNonce = getRandomUint();
   const data = await provider.packIntoCell({
     data: {
       nonce: randomNonce,
@@ -155,30 +158,29 @@ async function buildTransferPayload(): Promise<[string, string]> {
       { name: "transferPayload", type: "cell" },
     ] as const,
   });
+
   return [data.boc, randomNonce];
 }
 /**
  * buildBurnPayloadForEvmAlienToken function prepares the payload to be used in TokenWalletUpgradable.burn in order to transfer a token from everscale and to an evm network.
  * @param evmRecipient receiver EvmAddress
- * @returns burn payload string
+ * @
+ * returns burn payload string
  */
 async function buildBurnPayloadForEvmAlienToken(
   TargetTokenRootAlienEvm: Address
 ): Promise<[string, string]> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, evmRecipient: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
+      [provider, , evmRecipient] = returnedValues;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
   } catch (error) {
     // Handle any errors that occur during function execution
+
     return ["ERROR", "unknown error accrued while fetching wallet's data !"];
   }
   const operationPayload = await provider.packIntoCell({
@@ -214,7 +216,7 @@ async function buildBurnPayloadForEvmAlienToken(
       { name: "withdrawPayload", type: "cell" },
     ] as const,
   });
-  let randNonce = getRandomUint();
+  const randNonce = getRandomUint();
   const data = await provider.packIntoCell({
     data: {
       nonce: randNonce,
@@ -229,37 +231,27 @@ async function buildBurnPayloadForEvmAlienToken(
       { name: "operationPayload", type: "cell" },
     ] as const,
   });
+
   return [data.boc, randNonce];
 }
 /**
  * buildBurnPayloadForEvmNativeToken function prepares the payload to be used in TokenWalletUpgradable.burn in order to transfer a token from everscale and to an evm network.
  * @param evmRecipient receiver EvmAddress
- * @returns burn payload string
+ * @
+ * returns burn payload string
  */
 async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, evmRecipient: string;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
-      Number(chainId) != 56
-        ? useEvmProvider().changeMetaMaskNetwork("BSC")
-        : undefined;
-      Number(chainId) != 56
-        ? [
-            "ERROR",
-            "rejection by user !, only BNB chain is available for this payload at the moment",
-          ]
-        : undefined;
+      [provider, , evmRecipient] = returnedValues;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
   } catch (error) {
     // Handle any errors that occur during function execution
+
     return ["ERROR", "unknown error accrued while fetching wallet's data !"];
   }
   const burnPayload = await provider.packIntoCell({
@@ -288,12 +280,12 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
     ] as const,
   });
 
-  let randomNonce: string = getRandomUint();
+  const randomNonce: string = getRandomUint();
   const data = await provider.packIntoCell({
     data: {
       nonce: randomNonce,
       network: 1,
-      burnPayload: burnPayload!.boc,
+      burnPayload: burnPayload.boc,
     },
     structure: [
       { name: "nonce", type: "uint32" },
@@ -307,34 +299,23 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
 /**
  * prepares the payload to be used in withdraw function on MV contracts on Evm sides
  * @param EverEvmAlienEventContractAddress address of the relevant deployed event contract on everscale
- * @returns {bytes} payload string to be used in saveWithdraw Functions
+ * @
+ * returns {bytes} payload string to be used in saveWithdraw Functions
  */
 export async function buildSaveWithdraw(
   EverEvmAlienEventContractAddress: Address
 ): Promise<[string, string]> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
-      Number(chainId) != 56
-        ? useEvmProvider().changeMetaMaskNetwork("BSC")
-        : undefined;
-      Number(chainId) != 56
-        ? [
-            "ERROR",
-            "rejection by user !, only BNB chain is available for this payload at the moment",
-          ]
-        : undefined;
+      [provider, , ,] = returnedValues;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
   } catch (error) {
     // Handle any errors that occur during function execution
+
     return ["ERROR", "unknown error accrued while fetching wallet's data !"];
   }
   // fetching the contracts
@@ -347,7 +328,6 @@ export async function buildSaveWithdraw(
   const eventDetails = await EverEvmEventContract.methods
     .getDetails({ answerId: 0 })
     .call({});
-  console.log(" details fetched !", eventDetails);
   const EverEvmAlienEventConf: Contract<
     FactorySource["EverscaleEthereumEventConfiguration"]
   > = new provider.Contract(
@@ -415,6 +395,7 @@ export async function buildSaveWithdraw(
       },
     ]
   );
+
   return ["payload", encodedEvent];
 }
 

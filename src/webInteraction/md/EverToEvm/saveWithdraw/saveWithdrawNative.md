@@ -3317,6 +3317,7 @@ export default defineComponent({
   setup() {
     const { saveWithdrawNative } = useSaveWithdraws();
     async function HandleSaveWithdrawNative() {
+      this.$refs.saveWithdrawNativeOutput.innerHTML = "processing ...";
       let output = await saveWithdrawNative(new Address(this.$refs.eventAddr.value));
       this.$refs.saveWithdrawNativeOutput.innerHTML = output;
     }

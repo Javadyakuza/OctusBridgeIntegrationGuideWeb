@@ -35,7 +35,8 @@
   },
   "rules": {
     "import/no-named-as-default": 0,
-    "prettier/prettier": "error",
+    // "prettier/prettier": "error",
+
     "import/order": [
       "error",
       {
@@ -65,9 +66,10 @@
     "curly": "error",
     "no-console": "error",
     "no-shadow": "off",
+    "sonarjs/no-duplicate-string" : "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/promise-function-async": "error",
     "@typescript-eslint/prefer-for-of": "error",

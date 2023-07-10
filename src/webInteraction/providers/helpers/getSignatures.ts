@@ -3,7 +3,9 @@ import {
   Address,
   ProviderRpcClient,
 } from "everscale-inpage-provider";
+
 import { FactorySource, factorySource } from "../artifacts/build/factorySource";
+
 export async function getSignatures(
   eventAddress: Address,
   provider: ProviderRpcClient
@@ -13,6 +15,7 @@ export async function getSignatures(
       factorySource["EverscaleEthereumBaseEvent"],
       eventAddress
     );
+
   return new Promise((resolve) => {
     let signatures: string[];
     setTimeout(async () => {

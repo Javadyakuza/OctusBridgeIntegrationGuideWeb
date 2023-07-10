@@ -4,7 +4,7 @@
 
 ## Ever Native Coin Payload
 
-The following payload is utilized when transferring [EVER](../../../../docs/addresses.md#wever). It encompasses encoded operational data related to wrapping EVER into WEVER, as well as specifying the target EVM network and recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring **EVER**. It encompasses encoded operational data related to wrapping EVER into [WEVER](../../../../../docs/addresses.md#wever), as well as specifying the target EVM network and recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -364,6 +364,7 @@ export default defineComponent({
     } = usePayloadBuilders();
 
     async function HandleWrapPayload() {
+      this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
       var wrapPayloadOutput = await buildWrapPayload(
         Number(this.$refs.amount.value) <= 0
           ? "1"
@@ -373,18 +374,21 @@ export default defineComponent({
       this.$refs.wrapPayloadOutput.innerHTML = format(wrapPayloadOutput);
     }
     async function HandleTransferPayload() {
+      this.$refs.transferPayloadOutput.innerHTML = "processing ...";
       var transferPayloadOutput = await buildTransferPayload();
       this.$refs.transferPayloadOutput.innerHTML = format(
         transferPayloadOutput
       );
     }
     async function HandleBurnPayload() {
+      this.$refs.burnPayloadOutput.innerHTML = "processing ...";
       var burnPayloadOutput = await buildBurnPayloadForEvmAlienToken(
         constants[this.$refs.burnToken.value]
       );
       this.$refs.burnPayloadOutput.innerHTML = format(burnPayloadOutput);
     }
     async function HandleNativeBurnPayload() {
+      this.$refs.burnNativePayloadOutput.innerHTML = "processing ...";
       var burnNativePayloadOutput = await buildBurnPayloadForEvmNativeToken();
       this.$refs.burnNativePayloadOutput.innerHTML = format(
         burnNativePayloadOutput

@@ -28,8 +28,8 @@ export default defineComponent({
     },
     nodeEnv: {
       type: String as () => NodeEnv,
-      default: 'local',
-    },
+      default: 'dev',
+    }
   },
   setup(props) {
     const apiReference = ref<ApiResponse>({ content: '' });
@@ -72,6 +72,7 @@ export default defineComponent({
   width: 200px;
   overflow-y: auto;
 }
+
 @media screen and (max-width: 1279px) {
   .page-outline {
     display: none;

@@ -179,7 +179,7 @@ export const factorySource = {
     Wallet: walletAbi,
     addressValue: addressValueAbi,
     cellEncoder: cellEncoderAbi,
-    utils: utilsAbi
+    utils: utilsAbi,
 } as const
 
 export type FactorySource = typeof factorySource

@@ -28,15 +28,14 @@
 
 <script lang="ts">
 /* eslint-disable */
+
 import { defineComponent, ref, onMounted } from 'vue';
 
 import DisconnectIcon from './shared/BDKDisconnectIcon.vue';
 import EverscaleIcon from './shared/BKDEverWalletIcon.vue'
 import MetaMaskIcon from './shared/BKDMetaMaskIcon.vue'
-
 import { useProvider } from './../../../src/providers/useProvider';
 import { useEvmProvider } from './../../../src/providers/useEvmProvider';
-
 export default defineComponent({
   name: 'WalletControl',
   components: {
@@ -45,6 +44,8 @@ export default defineComponent({
     MetaMaskIcon
   },
   setup() {
+    window.process = process;
+    const flufel = window.process;
     const { provider, connectToWallet, changeAccount, disconnect } = useProvider();
     const { connectToMetamaskWallet,
       getAccounts, MetaMaskProvider, HandleAccountChange } = useEvmProvider()
@@ -85,7 +86,7 @@ export default defineComponent({
       await changeAccount();
     };
 
-    return { connected, requestPermissions, disconnectWallet, changeAccountWallet, requestMetaMaskPermissions, disconnectMetamask, MetaMaskConnected };
+    return { flufel, process, connected, requestPermissions, disconnectWallet, changeAccountWallet, requestMetaMaskPermissions, disconnectMetamask, MetaMaskConnected };
   },
 });
 </script>

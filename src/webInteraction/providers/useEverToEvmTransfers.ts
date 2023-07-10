@@ -1,47 +1,30 @@
-import * as constants from "./helpers/constants";
+import { ethers } from "ethers";
 import {
   ProviderRpcClient,
   Address,
   Contract,
   Transaction,
 } from "everscale-inpage-provider";
+
+import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import { EverAbi } from "./artifacts/WEVERVault";
-import { useEvmProvider } from "../../providers/useEvmProvider";
-import { setupAndGetProvidersDetails } from "./useWalletsData";
-import { usePayloadBuilders } from "./usePayloadBuilders";
+import * as constants from "./helpers/constants";
 import {
   fetchNativeEventAddressFromOriginTxHash,
   fetchAlienEventAddressFromOriginTxHash,
 } from "./helpers/deriveEventAddressFromOriginHash";
-import { ethers } from "ethers";
-import { FactorySource, factorySource } from "./artifacts/build/factorySource";
-/**
- * this module performs transferring an ever native, evm alien token from everscale network to an evm network using transferEverNativeCoin function.
- * EVER is used as token and receiver evm network is BSC at this reticular example.
- * @notice releasing assets on evm network is done automatically by attaching enough ever to tx.{see ../../constants.ts:32}
- * @returns ContractTransactionResponse returned data about the tx
- */
+import { usePayloadBuilders } from "./usePayloadBuilders";
+import { setupAndGetProvidersDetails } from "./useWalletsData";
+
 async function transferEverNativeCoin(
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string[]] | unknown> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, everSender: Address;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
-      Number(chainId) != 56
-        ? useEvmProvider().changeMetaMaskNetwork("BSC")
-        : undefined;
-      Number(chainId) != 56
-        ? [
-            "ERROR",
-            "rejection by user !, only BNB chain is available for this payload at the moment",
-          ]
-        : undefined;
+      [provider, everSender, ,] = returnedValues;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -50,10 +33,10 @@ async function transferEverNativeCoin(
     // Handle any errors that occur during function execution
     return ["ERROR", "unknown error accrued while fetching wallet's data !"];
   }
-  const { buildWrapPayload } = await usePayloadBuilders();
+  const { buildWrapPayload } = usePayloadBuilders();
 
   const WEVERVaultContract: Contract<typeof EverAbi.WeverVault> =
-    await new provider.Contract(EverAbi.WeverVault, constants.WEVERVault);
+    new provider.Contract(EverAbi.WeverVault, constants.WEVERVault);
   // getting the payload
   const wrapPayload: [string, string] = await buildWrapPayload(
     amount,
@@ -91,35 +74,17 @@ async function transferEverNativeCoin(
   }
 }
 
-/**
- * this module performs transferring an ever native, evm alien token from everscale network to an evm network using transferEverNativeToken function.
- * BRIDGE is used as token and receiver evm network is BSC at this particular example.
- * @notice releasing assets on evm network is done automatically by attaching enough ever to tx.{see ../../constants.ts:32}
- * @returns ContractTransactionResponse returned data about the tx
- */
 async function transferEverNativeToken(
   tokenAddress: Address,
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string[]] | unknown> {
   // setting ever wallet
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, everSender: Address;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
-      Number(chainId) != 56
-        ? useEvmProvider().changeMetaMaskNetwork("BSC")
-        : undefined;
-      Number(chainId) != 56
-        ? [
-            "ERROR",
-            "rejection by user !, only BNB chain is available for this payload at the moment",
-          ]
-        : undefined;
+      [provider, everSender, ,] = returnedValues;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -150,7 +115,7 @@ async function transferEverNativeToken(
   try {
     const res: Transaction = await AlienTokenWalletUpgradable.methods
       .transfer({
-        amount: ethers.parseUnits(amount.toString(), 18).toString(),
+        amount: ethers.parseUnits(amount.toString(), 9).toString(),
         deployWalletValue: "200000000",
         notify: true,
         payload: transferPayload[0],
@@ -164,7 +129,6 @@ async function transferEverNativeToken(
           : constants.transfer_fees.EverToEvmManualRelease.toString(),
         bounce: true,
       });
-    console.log("successful, tx hash : ", res.id.hash);
     const eventAddress: Address | undefined =
       await fetchNativeEventAddressFromOriginTxHash(provider, res?.id.hash);
 
@@ -182,36 +146,17 @@ async function transferEverNativeToken(
   }
 }
 
-/**
- * this module performs transferring an ever alien, evm alien token from everscale network to an evm network using transferEverAlienToken function.
- * USDT is used as token and receiver evm network is BSC at this particular example.
- * @notice releasing assets on evm network is done manually by calling saveWithdrawAlien on MV contract at BSC.
- * @returns ContractTransactionResponse returned data about the tx
- */
-
 async function transferEverAlienToken(
   tokenAddress: Address,
   tokenAddressEvmAlien: Address,
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string[]] | unknown> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, everSender: Address;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
-      Number(chainId) != 56
-        ? useEvmProvider().changeMetaMaskNetwork("BSC")
-        : undefined;
-      Number(chainId) != 56
-        ? [
-            "ERROR",
-            "rejection by user !, only BNB chain is available for this payload at the moment",
-          ]
-        : undefined;
+      [provider, everSender, ,] = returnedValues;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -259,7 +204,6 @@ async function transferEverAlienToken(
         bounce: true,
       });
 
-    console.log("successful, tx hash: ", res?.id.hash);
     // getting the event contract address
     const eventAddress: Address | undefined =
       await fetchAlienEventAddressFromOriginTxHash(provider, res?.id.hash)!;
@@ -278,34 +222,16 @@ async function transferEverAlienToken(
   }
 }
 
-/**
- * this module performs transferring an ever alien, evm native token from everscale network to an evm network using transferEverAlienToken function.
- * WBNB is used as token and receiver evm network is BSC at this particular example.
- * @notice releasing assets on evm network is done manually by calling saveWithdrawAlien on MV contract at BSC.
- * @returns ContractTransactionResponse returned data about the tx
- */
 async function transferEverAlienEvmNativeCoin(
   tokenAddress: Address,
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string[]] | unknown> {
-  let provider: ProviderRpcClient,
-    everSender: Address,
-    evmRecipient: string,
-    chainId: string;
+  let provider: ProviderRpcClient, everSender: Address;
   try {
     const returnedValues = await setupAndGetProvidersDetails();
     if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
-      Number(chainId) != 56
-        ? useEvmProvider().changeMetaMaskNetwork("BSC")
-        : undefined;
-      Number(chainId) != 56
-        ? [
-            "ERROR",
-            "rejection by user !, only BNB chain is available for this payload at the moment",
-          ]
-        : undefined;
+      [provider, everSender, ,] = returnedValues;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -350,7 +276,6 @@ async function transferEverAlienEvmNativeCoin(
         bounce: true,
       });
 
-    console.log("successful, tx hash: ", res?.id.hash);
     // getting the event contract address
     const eventAddress: Address | undefined =
       await fetchAlienEventAddressFromOriginTxHash(provider, res?.id.hash);

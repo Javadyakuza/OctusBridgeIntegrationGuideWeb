@@ -6,7 +6,8 @@ const MetamaskOptions: MetaMaskSDKOptions = {
 };
 const MMSDK: MetaMaskSDK = new MetaMaskSDK(MetamaskOptions);
 
-const provider: MetaMaskInpageProvider = MMSDK.getProvider()!;
+const provider: MetaMaskInpageProvider | undefined = MMSDK.getProvider();
+
 const networksConfig = () => {
   return {
     BSC: {
@@ -42,18 +43,18 @@ const networksConfig = () => {
   };
 };
 const connectToMetamaskWallet = async () => {
-  await provider.request({ method: "eth_requestAccounts", params: [] });
+  await provider?.request({ method: "eth_requestAccounts", params: [] });
 };
 const changeMetaMaskNetwork = async (chainName: string) => {
   const config = networksConfig() as { [key: string]: any };
   try {
-    await provider.request({
+    await provider?.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: config[chainName].chainId }],
     });
   } catch (error: any) {
     if (error.code === 4902) {
-      await provider.request({
+      await provider?.request({
         method: "wallet_addEthereumChain",
         params: [config[chainName]],
       });
@@ -63,7 +64,7 @@ const changeMetaMaskNetwork = async (chainName: string) => {
 
 const getAccounts = async (): Promise<string[] | undefined> => {
   // provider
-  const accounts = await provider.request({
+  const accounts = await provider?.request({
     method: "eth_accounts",
     params: [],
   });
@@ -72,11 +73,11 @@ const getAccounts = async (): Promise<string[] | undefined> => {
 };
 
 const HandleAccountChange = async (): Promise<boolean> => {
-  console.log("handling", await provider.networkVersion);
   return (await getAccounts()) && (await getAccounts())!.length > 0
     ? true
     : false;
 };
+
 const MetaMaskProvider = (): MetaMaskInpageProvider => {
   return MMSDK.getProvider()!;
 };

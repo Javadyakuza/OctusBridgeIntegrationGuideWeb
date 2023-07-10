@@ -260,6 +260,7 @@ export default defineComponent({
   setup() {
     const { transferEverNativeCoin } = useEverToEvmTransfers();
     async function HandleTransferEverNativeCoin() {
+      this.$refs.EverNativeCoinOutput.innerHTML = "processing ...";
       if (Number(this.$refs.amount.value) <= 0) {
         this.$refs.EverNativeCoinOutput.innerHTML = "ERROR: please enter valid number !!"
         return;

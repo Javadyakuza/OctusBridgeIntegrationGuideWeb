@@ -530,6 +530,7 @@ export default defineComponent({
   setup() {
     const { transferEverAlienToken } = useEverToEvmTransfers();
     async function HandleTransferEverAlienToken(){
+        this.$refs.EverAlienTokenOutput.innerHTML = "processing ...";
         const transferAlienTokenOutput = await transferEverAlienToken(
             constants.EVERUSDT,
             constants[this.$refs.AlienToken.value],

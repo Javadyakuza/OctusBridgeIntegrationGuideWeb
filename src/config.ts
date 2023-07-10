@@ -7,4 +7,10 @@ export function getApiUrl(nodeEnv: NodeEnv) {
 
   return process.env.API_URL;
 }
-export default window.process = process;
+
+function setProcess() {
+  if (typeof window != "undefined") {
+    return (window.process = process);
+  }
+}
+export default setProcess();

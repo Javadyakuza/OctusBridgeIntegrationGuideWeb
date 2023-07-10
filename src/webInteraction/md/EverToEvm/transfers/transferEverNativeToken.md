@@ -538,6 +538,7 @@ export default defineComponent({
     this.$refs.transferNativeTokenButton.innerHTML = `transfer ${this.$refs.NativeToken.value.split("EVER")[1]}`;
     }
     async function HandleTransferEverNativeToken() {
+      this.$refs.EverNativeTokenOutput.innerHTML = "processing ...";
       if (Number(this.$refs.amount.value) <= 0) {
         this.$refs.EverNativeTokenOutput.innerHTML = "ERROR: please enter valid number !!"
         return;
@@ -571,7 +572,3 @@ export default defineComponent({
 }
 
 </style>
-
-```
-
-```

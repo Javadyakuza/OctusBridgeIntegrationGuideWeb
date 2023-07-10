@@ -525,6 +525,7 @@ export default defineComponent({
   setup() {
     const { transferEverAlienEvmNativeCoin } = useEverToEvmTransfers();
     async function HandleTransferEvmNativeCoin(){
+        this.$refs.EvmNativeCoinOutput.innerHTML = "processing ...";
         const EvmNativeCoinOutput = await transferEverAlienEvmNativeCoin(
             constants.EVERWBNB,
             this.$refs.amount.value,

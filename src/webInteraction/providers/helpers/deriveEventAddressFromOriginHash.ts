@@ -4,8 +4,10 @@ import {
   EventsBatch,
   ProviderRpcClient,
 } from "everscale-inpage-provider";
+
 import * as constants from "./constants";
 import { FactorySource, factorySource } from "../artifacts/build/factorySource";
+
 export async function fetchAlienEventAddressFromOriginTxHash(
   provider: ProviderRpcClient,
   txHash: string
@@ -30,15 +32,13 @@ export async function fetchAlienEventAddressFromOriginTxHash(
     filter: (event: any) => event.event === "NewEventContract",
     // limit: 100,
   });
-  for (const event in pastEvents.events) {
-    if (
-      pastEvents.events[event].transaction.createdAt ==
-      originTxReceipt?.createdAt
-    ) {
-      console.log(pastEvents.events[event].data.eventContract);
-      return pastEvents.events[event].data.eventContract;
+  pastEvents.events.forEach((event) => {
+    if (event.transaction.createdAt == originTxReceipt?.createdAt) {
+      return event.data.eventContract;
     }
-  }
+  });
+
+  return undefined;
 }
 //--//
 export async function fetchNativeEventAddressFromOriginTxHash(
@@ -66,13 +66,11 @@ export async function fetchNativeEventAddressFromOriginTxHash(
     // limit: 100,
   });
 
-  for (const event in pastEvents.events) {
-    if (
-      pastEvents.events[event].transaction.createdAt ==
-      originTxReceipt?.createdAt
-    ) {
-      console.log(pastEvents.events[event].data.eventContract);
-      return pastEvents.events[event].data.eventContract;
+  pastEvents.events.forEach((event) => {
+    if (event.transaction.createdAt == originTxReceipt?.createdAt) {
+      return event.data.eventContract;
     }
-  }
+  });
+
+  return undefined;
 }

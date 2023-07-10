@@ -3319,6 +3319,7 @@ export default defineComponent({
   setup() {
     const { saveWithdrawAlien } = useSaveWithdraws();
     async function HandleSaveWithdrawAlien() {
+      this.$refs.saveWithdrawAlienOutput.innerHTML = "processing ...";
       let output = await saveWithdrawAlien(new Address(this.$refs.eventAddr.value));
       this.$refs.saveWithdrawAlienOutput.innerHTML = output;
     }
