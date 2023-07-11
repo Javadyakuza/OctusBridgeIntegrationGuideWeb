@@ -1,8 +1,8 @@
 # Save Withdraw Native
 
-The mentioned operation is utilized when a bridging process is initiated from Everscale to a Evm network. In this scenario, an event contract is deployed on Everscale, but the user prefers to pay the operation fees on the EVM side using the native coin of the EVM network, rather than EVER. If the fees were paid with EVER, assets would be minted automatically.
+The mentioned operation is utilized when a bridging process is initiated from Everscale to a Evm network. In this scenario, an event contract is deployed on Everscale, but the user prefers to pay the Evm network operation fees with its gas token, rather than EVER. If the fees were paid with EVER, assets would be minted automatically.
 
-This operation is specifically used for transferring EVER native tokens or coins, which are considered as MultiVault tokens on the EVM side. At this stage, assets are minted and to execute this operation, the `saveWithdrawNative` function needs to be called with a payload that includes encoded data related to the deployed event contract on Everscale, as well as all the relayers' signatures that have confirmed the event contract.
+This operation is specifically used for transferring native tokens. At this stage, assets are minted and to execute this operation, the `saveWithdrawNative` function needs to be called with a payload that includes encoded data related to the deployed event contract on Everscale, as well as all the relayers' signatures that have confirmed the event contract.
 
 In order to execute transaction at this page you need to initial a transaction and get your event address from [Transfer Ever Native coin](../transfers/transferEverNativeCoin.md) or [Transfer Ever Native token](../transfers/transferEverNativeToken.md) section.
 
@@ -3294,7 +3294,7 @@ await MultiVault.saveWithdrawNative(
 </details>
 <br/>
 
-> **❗Only native event contract addresses from unfinished bridging processes can be used**
+> **❗Only EverscaleEthereumNativeEvent contract addresses from unfinished bridging processes can be used**
 
 <label for="eventAddr">Everscale Native Event Address </label>
 <input ref="eventAddr" type="text"/>

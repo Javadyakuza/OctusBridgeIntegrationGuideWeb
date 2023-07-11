@@ -1,23 +1,23 @@
-# EVER to EVM transfer mechanics overview
+# Ever to Evm Transfer Mechanics Overview
 
-1 - Locking the target token in EVERSCALE if EVERSCALE native token and burning it if EVERSCALE alien token. see [EVERSCALE token types](./Concepts/TokenTypes.md#EVERSCALE-token-types).
+1 - Locking the target token in Everscale if native token and burning it if alien token. see [token types](./Concepts/TokenTypes.md#token-types).
 
-2 - Through previous transaction the event contract is deployed on EVERSCALE and after few second the relayers will confirm it by voting on the event contract.
+2 - Through previous transaction the event contract is deployed on Everscale and after few second the relayers will confirm it by voting on the event contract.
 
-3.1 : If paying the [operations](./Concepts/Operations.md#evm-operations) gas fees in target evm network with EVER, the [credit backend](./Concepts/CreditBackend.md#credit-backend) will equalizes balances on both sides and mints token if evm MultiVault token or release it if evm alien or native token, so all we can do at this point is to wait. \
+3.1 : If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with Ever, the [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the related function on the MultiVault contract, and then MultiVault contract handles minting or releasing the token based on its type. \
 Note that the native token will be released as its wrapped version.
 
-3.2 : If paying the [operations](./Concepts/Operations.md#evm-operations) gas fees in target evm network with its native coin, its time to mint tokens if evm MultiVault token by calling `saveWithdrawNative` or release it by calling `saveWithdrawAlien` on `MultiVault` contract if the token was an alien or native evm token.
+3.2 : If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with is gas tokens, its time to mint the tokens if they are native tokens by calling `saveWithdrawNative` or release them by calling `saveWithdrawAlien` on `MultiVault` contract.
 
-4 - At this point desired amount of target token most be deposited to recipient EVM address.
+4 - At this point desired amount of target token must be deposited to recipient Evm address.
 
 > NOTICE : All of the referenced contracts addresses can be found at [addresses.md](./addresses.md).
 
-# EVER to EVM transfer integration step by step
+## Step-by-Step Guide: Ever to EVM Transfer
 
-## Transferring EVER
+## Transferring Native Coin
 
-- 1 - Call the `wrap` method on the [`Vault`](./addresses.md#EVERSCALE-smart-contracts) contract and lock our newly minted WEVER in EVERSCALE:
+- 1 - Call the `wrap` method on the [`WEVERVault`](./addresses.md#Everscale-smart-contracts) contract and mint WEVER token :
 
 ### Function
 
@@ -35,19 +35,19 @@ Note that the native token will be released as its wrapped version.
 | param            | description                                                                                  |
 | ---------------- | -------------------------------------------------------------------------------------------- |
 | tokens           | amount of the target transferable token                                                      |
-| owner_address    | [Compounder](./addresses.md#EVERSCALE-smart-contracts)                                       |
+| owner_address    | [Compounder](./addresses.md#Everscale-smart-contracts)                                       |
 | gas_back_address | addresses to send the change back                                                            |
-| payload          | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-ever--wrap-payload). |
+| payload          | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
 
-> NOTE : gas_back_address will be our address if we were paying the [operations](./Concepts/Operations.md#evm-operations) gas fees in target evm network with its native coin and will be [EventCloser](./addresses.md#EVERSCALE-smart-contracts) if paying with ever.
-
----
-
-#### :exclamation: Next step is only necessary if paying Evm network operations fees with its native coin
+> NOTE : gas_back_address will be user's address if we were paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 ---
 
-- 2 - Mint `WEVER` in the evm network by calling the `saveWithdrawNative` :
+#### :exclamation: Next step is only necessary if paying Evm network fess with it gas token
+
+---
+
+- 2 - Mint `WEVER` in the Evm network by calling the `saveWithdrawNative` :
 
 ### Function
 
@@ -91,21 +91,21 @@ Note that the native token will be released as its wrapped version.
 | param             | description                                                                                                  |
 | ----------------- | ------------------------------------------------------------------------------------------------------------ |
 | amount            | amount of the target transferable token                                                                      |
-| recipient         | recipient address which is [proxyMVnative](./addresses.md#EVERSCALE-smart-contracts)                         |
+| recipient         | recipient address which is [proxyMultivaultNativeV_4](./addresses.md#Everscale-smart-contracts)              |
 | deployWalletValue | Token Wallet deploy value if not deployed before                                                             |
 | remainingGasTo    | Remaining gas receiver                                                                                       |
 | notify            | Notify receiver on incoming transfer                                                                         |
 | payload           | Notification payload, see [transfer payload](./Concepts/Payloads.md#transfer-native-token--transer-payload). |
 
-> NOTE : remainingGasTo will be our address if we were paying the [operations](./Concepts/Operations.md#evm-operations) gas fees in target evm network with its native coin and will be [EventCloser](./addresses.md#EVERSCALE-smart-contracts) if paying with ever.
+> NOTE : remainingGasTo will be user's address if we were paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 ---
 
-#### :exclamation: Next step is only necessary if paying Evm network operations fees with its native coin
+#### :exclamation: Next step is only necessary if paying Evm network fess with it gas token
 
 ---
 
-- 2 - Mint `BRIDGE` in the evm network by calling the `saveWithdrawNative` :
+- 2 - Mint `BRIDGE` in the Evm network by calling the `saveWithdrawNative` :
 
 ### Function
 
@@ -129,7 +129,7 @@ Note that the native token will be released as its wrapped version.
 
 > `USDT` is used in this example.
 
-1 - Burn the token on EVERSCALE network by calling the `burn` function on our `tokenWallet` contract :
+1 - Burn the token on Everscale network by calling the `burn` function on our `tokenWallet` contract :
 
 ### Function
 
@@ -147,19 +147,19 @@ Note that the native token will be released as its wrapped version.
 | param          | description                                                                                         |
 | -------------- | --------------------------------------------------------------------------------------------------- |
 | amount         | amount of the target token token                                                                    |
-| callBackTo     | callback Receiver contract.[MergePoolV_4](./addresses.md#EVERSCALE-smart-contracts) in this case    |
+| callBackTo     | callback Receiver contract.[MergePoolV_4](./addresses.md#Everscale-smart-contracts) in this case    |
 | remainingGasTo | Remaining gas receiver                                                                              |
 | payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload). |
 
-> NOTE : remainingGasTo will be our address if we were paying the [operations](./Concepts/Operations.md#evm-operations) gas fees in target evm network with its native coin and will be [EventCloser](./addresses.md#EVERSCALE-smart-contracts) if paying with ever.
+> NOTE : remainingGasTo will be user's address if we were paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 ---
 
-#### :exclamation: Next step is only necessary if paying Evm network operations fees with its native coin
+#### :exclamation: Next step is only necessary if paying Evm network fess with it gas token
 
 ---
 
-- 2 - Release `USDT` in the evm network by calling the `saveWithdrawAlien` :
+- 2 - Release `USDT` in the Evm network by calling the `saveWithdrawAlien` :
 
 ### Function
 
@@ -183,7 +183,7 @@ Note that the native token will be released as its wrapped version.
 
 > `WBNB` is used in this example.
 
-1 - Burn the token on EVERSCALE network by calling the `burn` function on our `tokenWallet` contract :
+1 - Burn the token on Everscale network by calling the `burn` function on our `tokenWallet` contract :
 
 ### Function
 
@@ -198,22 +198,22 @@ Note that the native token will be released as its wrapped version.
 
 ### Parameters
 
-| param          | description                                                                                         |
-| -------------- | --------------------------------------------------------------------------------------------------- |
-| amount         | amount of the target transferable token                                                             |
-| callBackTo     | callback Receiver contract.[ProxyMVAlienV_7](./addresses.md#EVERSCALE-smart-contracts) in this case |
-| remainingGasTo | Remaining gas receiver                                                                              |
-| payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload). |
+| param          | description                                                                                                 |
+| -------------- | ----------------------------------------------------------------------------------------------------------- |
+| amount         | amount of the target transferable token                                                                     |
+| callBackTo     | callback Receiver contract.[ProxyMultiVaultAlienV_7](./addresses.md#Everscale-smart-contracts) in this case |
+| remainingGasTo | Remaining gas receiver                                                                                      |
+| payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).         |
 
-> NOTE : remainingGasTo will be our address if we were paying the [operations](./Concepts/Operations.md#evm-operations) gas fees in target evm network with its native coin and will be [EventCloser](./addresses.md#EVERSCALE-smart-contracts) if paying with ever.
-
----
-
-#### :exclamation: Next step is only necessary if paying Evm network operations fees with its native coin
+> NOTE : remainingGasTo will be user's address if we were paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 ---
 
-- 2 - Release `BNB` in its wrapped version in evm network by calling the `saveWithdrawAlien` :
+#### :exclamation: Next step is only necessary if paying Evm network fess with it gas token
+
+---
+
+- 2 - Release `BNB` in Evm network by calling the `saveWithdrawAlien` :
 
 ### Function
 
@@ -233,4 +233,4 @@ Note that the native token will be released as its wrapped version.
 
 ---
 
-> All of the scripts related to examples above can be found [here](#)
+> All of the scripts related to examples above can be found [here](../src/webInteraction/md/EverToEvm/workFlow.md)

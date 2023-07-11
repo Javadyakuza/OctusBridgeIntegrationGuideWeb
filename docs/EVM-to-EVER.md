@@ -1,21 +1,22 @@
-# EVM to EVER Transfer Mechanics Overview
+# Evm to Ever Transfer Mechanics Overview
 
-1. Deposit desired amount of the target token that is going to be transferred to the EVERSCALE in a contract named `MultiVault` which is in the origin EVM network.
+1. Deposit desired amount of the target token that is going to be transferred to the Everscale in a contract named [`MultiVault`](./addresses.md#contractaddresses) which is in the Evm network.
 
-2. Through the previous operation, two events will be emitted. one of them is always `Deposit` and another one depended on the situation is either `AlienTransfer` or `NativeTransfer`.\
-   see [alien ERC-20 token approve ](./Concepts/Operations.md#approving-alien-erc-20-tokens).
+2. Through the previous operation, two events will be emitted. one of them is always `Deposit` and another one depended on the token type is either `AlienTransfer` or `NativeTransfer`.\
+   see [alien token approve ](./Concepts/Operations.md#approving-erc-20-tokens).
 3. Once depositing the target token to MultiVault is done, it's time for deploying an event Contract on the Everscale network.\
-   relayers will vote on event contract and confirm the deposit in evm network.\
+   relayers will vote on event contract and confirm the deposit in Evm network.\
    Now the event contract is confirmed, following steps can be performed based on the situation :
 
-   - 3.1: If the user at the time of deposit wanted to pay the EVERSCALE [operations](./Concepts/Operations.md#ever-network-operations) gas fees with the origin EVM network native coin, user must attach enough evm native coin to tx, the [credit backend](./Concepts/CreditBackend.md#credit-backend) will equalizes balances on both sides and deploys the event contract.
-     In order to perform such a operation, besides attaching sufficient value to tx, we must set [expexte_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) to a [certain amount](FAQ.md#how-to-set-expected_evers).
+   - 3.1: If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed with the Evm gas tokens, user must attach enough gas tokens to the transaction, the [credit Modules](./Concepts/CreditModules.md) will equalizes balances on both sides and deploys the event contract on Everscale and after that tokens will be minted or released on Everscale automatically.
 
-   - 3.2: If the user has chosen to pay the EVERSCALE [operations](./Concepts/Operations.md#ever-network-operations) gas fee with ever, which is operable by not attaching enough evm native coin and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers the token will be released if ever native Token and minted if ever alien token.
+   In order to perform such a operation, besides attaching sufficient Evm gas tokens to transaction, [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) parameter must be set to a [certain amount](FAQ.md#how-to-set-expected_Evers).
+
+   - 3.2: If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native Token and minted if alien token.
 
 > NOTICE : All of the referenced contracts addresses can be found at [addresses.md](./addresses.md).
 
-# EVM to EVER Transfer Integration Step-by-Step
+## Step-by-Step Guide: Evm to Ever Transfer
 
 ## Transfer Alien token
 
@@ -24,7 +25,7 @@
    ### Function
 
 - 1.1: If target token was an ERC-20 token we must use the `deposit` function on `MultiVault` contract,
-  but before that we must approve [MultiVault](./addresses.md#evm-smart-contracts) for desired token amount if token is not non-multiVault token, once approved deposit function can be called.
+  but before that we must approve [MultiVault](./addresses.md#Evm-smart-contracts) for desired token amount, once approved deposit function can be called.
 
   ```solidity
   function deposit(depositParams memory d) external payable override;
@@ -37,24 +38,24 @@
       IEverscale.EverscaleAddress recipient;
       address token;
       uint amount;
-      uint expected_evers;
+      uint expected_Evers;
       bytes payload;
   }
   ```
 
   | param          | description                                                                               |
   | -------------- | ----------------------------------------------------------------------------------------- |
-  | recipient      | ever address of recipient                                                                 |
+  | recipient      | Ever address of recipient                                                                 |
   | token          | target token                                                                              |
   | amount         | amount of the target token                                                                |
-  | expected_evers | see [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) |
+  | expected_Evers | see [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
   | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
-## Transfer Native Coin
+## Transfer Evm Gas Tokens
 
-- 1.2: If target token was the EVM network native coin, we must use `depositByNativeToken` on `MultiVault` contract and attach the desired amount of the native coin equal to it's amount parameter to tx:
+- 1.2: If target token was the Evm network gas token, we must use `depositByNativeToken` on `MultiVault` contract and attach the desired amount of the gas token equal to the amount value parameter to transaction:
 
-  > NOTE : In `MultiVault` the native coin will be converted to its wrapped version and then rest of the operation will be resumed.
+  > NOTE : In `MultiVault` the Evm gas token will be converted to its wrapped version and then rest of the operation will be resumed.
 
 ### Function
 
@@ -68,27 +69,27 @@ function depositByNativeToken(DepositNativeTokenParams memory d) external payabl
 struct DepositNativeTokenParams {
     IEverscale.EverscaleAddress recipient;
     uint amount;
-    uint expected_evers;
+    uint expected_Evers;
     bytes payload;
 }
 ```
 
 | param          | description                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------- |
-| recipient      | ever address of recipient                                                                 |
+| recipient      | Ever address of recipient                                                                 |
 | amount         | amount of native coin                                                                     |
-| expected_evers | see [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) |
+| expected_Evers | see [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
 | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
 ---
 
-#### :exclamation: Next step is only necessary if paying Everscale operations fees with EVER
+#### :exclamation: Next step is only necessary if paying Everscale operations fees with Ever
 
 ## Deploy Events
 
 2. Now it's time to deploy the event contract which has two ways:
 
-- 2.1: See {[EVM to Ever Transfer Mechanics Overview : 3.1](#31-if-the-user-at-the-time-of-deposit-accepted-to-pay-the-event-contract-deployment-fee-with-the-origin-evm-network-native-coin-the-relayers-will-automatically-swap-that-to-ever-which-is-the-everscale-native-coin-and-deploy-the-event-contract-themselves)}. at this step we just have to wait.
+- 2.1: See {[Evm to Ever Transfer Mechanics Overview : 3.1](#31-if-the-user-at-the-time-of-deposit-accepted-to-pay-the-event-contract-deployment-fee-with-the-origin-Evm-network-native-coin-the-relayers-will-automatically-swap-that-to-Ever-which-is-the-Everscale-native-coin-and-deploy-the-event-contract-themselves)}.
 
 - 2.2: Deploy event contract manually by calling `deployEvent` function on `EthereumEverscaleEventConfiguration` contract:
 
@@ -112,7 +113,7 @@ struct EthereumEverscaleEventVoteData {
 }
 ```
 
-The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](#).
+The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../src/webInteraction/md/EvmToEver/DeployEvents/Toc.md).
 
 | param            | description           |
 | ---------------- | --------------------- |
@@ -126,4 +127,4 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 
 ---
 
-> All of the scripts related to examples above can be found [here](#)
+> All of the scripts related to examples above can be found [here](../src/webInteraction/md/EvmToEver/workFlow.md)

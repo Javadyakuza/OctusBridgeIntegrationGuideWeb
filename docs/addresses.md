@@ -1,10 +1,10 @@
 # ContractAddresses
 
-## EVM smart contracts
+## Evm Smart Contracts
 
-This table contains the EVM smart contracts mentioned in the EVER-to-EVM.md and EVM-to-EVER.md files.
+This table contains the Evm smart contracts mentioned in the Ever-to-Evm.md and Evm-to-Ever.md files.
 
-| ---       | contract name | MultiVault                                 |
+| ---       | Contract Name | MultiVault                                 |
 | --------- | ------------- | ------------------------------------------ |
 | network   | ---           | ---                                        |
 | Ethereum  | ---           | 0x0                                        |
@@ -14,11 +14,11 @@ This table contains the EVM smart contracts mentioned in the EVER-to-EVM.md and 
 | Solana    | ---           | 0x0                                        |
 | Avalanche | ---           | 0x0                                        |
 
-## EVERSCALE Smart Contracts
+## Everscale Smart Contracts
 
-This table contains the EVERSCALE Smart Contracts mentioned in the EVER-to-EVM.md and EVM-to-EVER.md files.
+This table contains the Everscale Smart Contracts mentioned in the Ever-to-Evm.md and Evm-to-Ever.md files.
 
-| contract name    | ever address                                                       |
+| contract name    | Ever address                                                       |
 | ---------------- | ------------------------------------------------------------------ |
 | vault            | 0:557957cba74ab1dc544b4081be81f1208ad73997d74ab3b72d95864a41b779a4 |
 | Compounder       | 0:8707c99c2e4a98642ba29a9d389656e804bd5b3cbe11a426ca12335792168d8a |
@@ -29,9 +29,9 @@ This table contains the EVERSCALE Smart Contracts mentioned in the EVER-to-EVM.m
 
 ## Event Configurations
 
-This table contains EthereumEverscaleEventConfiguration contract addresses for EVERSCALE native/alien token transferring events and each network.
+This table contains EthereumEverscaleEventConfiguration contract addresses for each usage and network.
 
-| ---       | contract name | EthereumEverscaleEventConfiguration(native event)                  | EthereumEverscaleEventConfiguration(alien event)                   |
+| ---       | contract name | EthereumEverscaleEventConfiguration(Native Event)                  | EthereumEverscaleEventConfiguration(Alien Event)                   |
 | --------- | ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | network   | ---           | ---                                                                | ---                                                                |
 | Ethereum  | ---           | 0:e9b0c8700d7ddc3ce3c5f1c35ad337cbc2f88e8abb5afadc9fa09a270cbed0e2 | 0:55ec14a1513eb4570d5933e0fbe5c0b3341d2dfaccfeecfcc9c7c2f4d668ed45 |
@@ -40,22 +40,22 @@ This table contains EthereumEverscaleEventConfiguration contract addresses for E
 | Ftm       | ---           | 0:399627ec06dd8075370850aafbfbf99d05752df16b3459b448a7d0b4b9a083d1 | 0:12861a3fd38d48086343b67d1a17509736d068e807a783f29b558339f0da421a |
 | Avalanche | ---           | 0:f07e44eb5507527c7527b4399d9cef220c0fcf50c6a4db71b3517bd763fdc528 | 0:124457db37ea02f2b7c5575b86f759e51f02adc11cbf36b36fd1da6c36fc82f6 |
 
-This table contains EthereumEverscaleEventConfiguration contract addresses for EVERSCALE native/alien token transferring events and each network.
+This table contains EthereumEverscaleEventConfiguration contract addresses for each usage and network.
 
-| ---     | contract name | EverscaleEthereumEventConfiguration(native event)                  | EverscaleEthereumEventConfiguration(alien event)                   |
+| ---     | contract name | EverscaleEthereumEventConfiguration(Native Event)                  | EverscaleEthereumEventConfiguration(Alien Event)                   |
 | ------- | ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
 | network | ---           | ---                                                                | ---                                                                |
 | global  | ---           | 0:a8698f1a9bd48201b1eafcb6975b90b60867063ffff3cc7114a480f924999b75 | 0:6b7e3255de478ff6b5d441235e6ea6c43764f897dd761d56c2fdf7199d80cf86 |
 
-Opposite of the ethereumEverscaleEventConfigurations, the EverscaleEthereumEventConfigurations are having just two addresses on EVERSCALE which supports all evm networks.
+Opposite of the ethereumEverscaleEventConfigurations, the EverscaleEthereumEventConfigurations are having just two addresses on Everscale which supports all Evm networks.
 
 ## TokensAddress
 
-This table contains addresses of token in EVERSCALE network
+This table contains Everscale network mentioned tokens.
 
 | Token name | Ever Address                                                       |
 | ---------- | ------------------------------------------------------------------ |
-| WEVER      | 0:ba1d79499624b1f998a82e951cf2ffd000d17c8f2e14779fcf8cddedb1b90a13 |
+| WEver      | 0:ba1d79499624b1f998a82e951cf2ffd000d17c8f2e14779fcf8cddedb1b90a13 |
 | WBTC       | 0:89534ea68ec2e6bcf5eb51d62592cda08c3c2a45a362be97cd340683f5d0a5f6 |
 | WETH       | 0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d |
 | USDT       | 0:1b62e528d0c2d0ee20c4aef5294214295998465b58d947405ee757cecfb47148 |
@@ -64,28 +64,28 @@ This table contains addresses of token in EVERSCALE network
 
 ---
 
-## LINKS
+## Links
 
 #### WETH
 
-> https://everscan.io/accounts/0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d
+> https://Everscan.io/accounts/0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d
 
 #### WBTC
 
-> https://everscan.io/accounts/0:89534ea68ec2e6bcf5eb51d62592cda08c3c2a45a362be97cd340683f5d0a5f6
+> https://Everscan.io/accounts/0:89534ea68ec2e6bcf5eb51d62592cda08c3c2a45a362be97cd340683f5d0a5f6
 
 #### WEVER
 
-> https://everscan.io/accounts/0:ba1d79499624b1f998a82e951cf2ffd000d17c8f2e14779fcf8cddedb1b90a13
+> https://Everscan.io/accounts/0:ba1d79499624b1f998a82e951cf2ffd000d17c8f2e14779fcf8cddedb1b90a13
 
 #### QUBE
 
-> https://everscan.io/accounts/0:9f20666ce123602fd7a995508aeaa0ece4f92133503c0dfbd609b3239f3901e2
+> https://Everscan.io/accounts/0:9f20666ce123602fd7a995508aeaa0ece4f92133503c0dfbd609b3239f3901e2
 
 #### BRIDGE
 
-> https://everscan.io/accounts/0:f2679d80b682974e065e03bf42bbee285ce7c587eb153b41d761ebfd954c45e1
+> https://Everscan.io/accounts/0:f2679d80b682974e065e03bf42bbee285ce7c587eb153b41d761ebfd954c45e1
 
 #### USDT
 
-> https://everscan.io/accounts/0:1b62e528d0c2d0ee20c4aef5294214295998465b58d947405ee757cecfb47148
+> https://Everscan.io/accounts/0:1b62e528d0c2d0ee20c4aef5294214295998465b58d947405ee757cecfb47148

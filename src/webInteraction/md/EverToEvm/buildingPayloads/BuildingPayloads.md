@@ -4,7 +4,7 @@
 
 ## Ever Native Coin Payload
 
-The following payload is utilized when transferring **EVER**. It encompasses encoded operational data related to wrapping EVER into [WEVER](../../../../../docs/addresses.md#wever), as well as specifying the target EVM network and recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring **EVER**. It encompasses encoded operational data related to wrapping EVER into [WEVER](../../../../../docs/addresses.md#wever), as well as specifying the Evm network and recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -105,9 +105,9 @@ const boc: string = compounderPayload.boc;
 
 <p class="output-p" ref="wrapPayloadOutput"></p>
 
-## Ever Native Token Payload
+## Native Token Payload
 
-The following payload is utilized when transferring an everscale native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to target EVM network and Evm recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring an native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to Evm network and Evm recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -179,9 +179,9 @@ The following payload is utilized when transferring an everscale native token su
 
 <p class="output-p" ref="transferPayloadOutput"></p>
 
-## Ever Alien Token
+## Alien Token Payload
 
-The following payload is utilized when transferring an everscale Alien and non-native token in target evm network, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to target EVM network, Evm recipient and target alienEvm token on everscale. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring an Alien token which is not an Evm gas token, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to EVM network, Evm recipient and target alien Evm token on Everscale. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -243,7 +243,7 @@ const operationPayload = await provider.packIntoCell({
     data: {
       nonce: randNonce,
       type: 0,
-      targetToken: TargetTokenRootAlienEvm, // TokenRootAlienEvm, different with normal tip3 tokens in everscale
+      targetToken: TargetTokenRootAlienEvm, // TokenRootAlienEvm, different with normal tip3 tokens in Everscale
       operationPayload: payload.boc,
     },
     structure: [
@@ -271,9 +271,9 @@ const operationPayload = await provider.packIntoCell({
 
 <p class="output-p" ref="burnPayloadOutput"></p>
 
-## Evm Native Coin
+## Evm Gas token Payload
 
-The provided payload is utilized for transferring an Evm native coin (such as BNB, ETH, FTM, etc.), from everscale to an Evm network. These native coins are considered alien tokens in everscale. The payload contains encoded operational data that is relevant to the target Evm recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the target EVM network native coin back to its original form. The code sample below illustrates how to construct such a payload.
+The provided payload is utilized for transferring an Evm gas token (such as BNB, ETH, FTM, etc.), from Everscale to an Evm network. The payload contains encoded operational data that is relevant to the Evm recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the EVM network gas token back to its original form. The code sample below illustrates how to construct such a payload.
 
 > ❗ this payload is only available on Binance Smart chain at the moment.
 
@@ -349,7 +349,7 @@ The provided payload is utilized for transferring an Evm native coin (such as BN
 <script lang="ts" >
 import { usePayloadBuilders } from "../../../providers/usePayloadBuilders";
 import { defineComponent, ref, onMounted } from "vue";
-import { Address } from "everscale-inpage-provider";
+import { Address } from "Everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
 
 export default defineComponent({

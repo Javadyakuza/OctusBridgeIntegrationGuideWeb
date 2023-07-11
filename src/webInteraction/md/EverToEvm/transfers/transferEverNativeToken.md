@@ -1,8 +1,8 @@
 <div class="EverNativeTokenTransfer">
 
-# Transfer Everscale Native Token
+# Transfer Native Token
 
-Same as EVER which is everscale native coin , everscale native tokens such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) can be transferred to another EVM chain through two methods. The first method involves manual asset minting on Evm side, while the second method automatically mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+Everscale native tokens such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) can be transferred to another EVM network through two methods. The first method involves manual asset minting on Evm network, while the second method automatically mints the assets on the target EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
 
 In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 

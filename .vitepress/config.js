@@ -108,15 +108,15 @@ module.exports = {
         collapsable: true,
         items: [
           {
+            text: 'Prerequisites',
+            collapsable: true,
+            link: '/src/webInteraction/md/prerequisites.md',
+          },
+          {
             text: 'EVER to EVM',
             collapsable: true,
-            link: '/src/webInteraction/md/workFlow.md',
+            link: '/src/webInteraction/md/EverToEvm/workFlow.md',
             items: [
-              {
-                text: 'Prerequisites',
-                collapsable: true,
-                link: '/src/webInteraction/md/EverToEvm/prerequisites.md',
-              },
               {
                 text: 'Building Payloads',
                 collapsable: true,
@@ -169,6 +169,7 @@ module.exports = {
           {
             text: 'EVM to EVER',
             collapsable: true,
+            link: '/src/webInteraction/md/EvmToEver/workFlow.md',
             items: [
               {
                 text: 'Transferring Tokens',

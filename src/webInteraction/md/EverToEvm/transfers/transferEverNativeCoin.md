@@ -1,8 +1,8 @@
 <div class="EverNativeCoinTransfer">
 
-# Transfer Everscale Native Coin
+# Transfer Ever
 
-The native coin of Everscale, known as EVER, can be transferred to another EVM chain through two methods. The first method involves manual asset minting on Evm side, while the second method automatically mints the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+The native coin of Everscale, known as EVER, can be transferred to another EVM network through two methods. The first method involves manual asset minting on Evm network, while the second method automatically mints the assets on the target Evm network. The code sample provided below demonstrates the implementation of your preferred approach.
 
 In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 

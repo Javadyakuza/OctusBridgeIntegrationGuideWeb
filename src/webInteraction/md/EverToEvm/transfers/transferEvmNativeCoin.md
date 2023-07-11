@@ -2,7 +2,7 @@
 
 <div class="EvmNativeCoinTransfer">
 
-The target Evm network native coins such as **BNB**, **ETH**, **FTM**, **MATIC** and others, which are known as alien tokens in everscale as well as ERC-20 tokens, can be transferred to another EVM chain through two methods. The first method involves manual asset releasing on Evm side, while the second method automatically releases the assets on the target EVM chain. The code sample provided below demonstrates the implementation of your preferred approach.
+The target Evm network gas tokens such as **BNB**, **ETH**, **FTM**, **MATIC** and others, which are known as alien tokens as well as ERC-20 tokens, can be transferred to another EVM network through two methods. The first method involves manual asset releasing on Evm network, while the second method automatically releases the assets on the target EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
 
 In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
