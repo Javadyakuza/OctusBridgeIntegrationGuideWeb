@@ -2,7 +2,6 @@ import BigNumber from "bignumber.js";
 import { ethers, TransactionResponse } from "ethers";
 import { ProviderRpcClient, Address } from "everscale-inpage-provider";
 import { eth, utils } from "web3";
-
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
 import * as constants from "./helpers/EvmConstants";
 import { getSignatures } from "./helpers/getSignatures";
