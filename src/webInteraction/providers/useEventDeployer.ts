@@ -1,10 +1,10 @@
-import * as EVER from "everscale-standalone-client";
 import {
   Contract,
   ProviderRpcClient,
   Address,
+  Transaction,
 } from "everscale-inpage-provider";
-import { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
+import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
 import { usePayloadBuilders } from "./usePayloadBuilders";
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import {
@@ -13,6 +13,10 @@ import {
 } from "./helpers/constants";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { ethers } from "ethers";
+import {
+  fetchAlienEventAddressFromOriginTxHash,
+  fetchNativeEventAddressFromOriginTxHash,
+} from "./helpers/deriveEventAddressFromOriginHash";
 
 interface EventVoteData {
   eventTransaction: string;
@@ -28,7 +32,7 @@ type EventVoteDataParam = Parameters<
   >["methods"]["deployEvent"]
 >[0]["eventVoteData"];
 
-async function deployAlienEvent(evmTxHash: string) {
+async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
   // setting ever wallet
   let provider: ProviderRpcClient, everSender: Address;
   try {
@@ -50,14 +54,13 @@ async function deployAlienEvent(evmTxHash: string) {
     factorySource["EthereumEverscaleEventConfiguration"],
     EthereumEverscaleEventConfigurationA
   );
-  console.log(
-    "conf details : ",
-    (await EvmEverEventConf.methods.getDetails({ answerId: 0 }).call({}))
-      ._basicConfiguration
-  );
+
   // deploying the event contract
   const { buildAlienEventVoteData } = usePayloadBuilders();
-  let eventLog: EventVoteData = await buildAlienEventVoteData(evmTxHash);
+  let eventLog: [string, string] | EventVoteData =
+    await buildAlienEventVoteData(evmTxHash);
+  if (Array.isArray(eventLog)) return eventLog;
+
   let eventVoteData: EventVoteDataParam;
 
   let eventData: string | undefined;
@@ -68,8 +71,8 @@ async function deployAlienEvent(evmTxHash: string) {
   const flags = (
     await EvmEverEventConf.methods.getFlags({ answerId: 0 }).call({})
   )._flags;
-
-  eventData = await mapEthBytesIntoTonCell(
+  await init();
+  eventData = mapEthBytesIntoTonCell(
     Buffer.from(
       ethConfigDetails._basicConfiguration.eventABI,
       "base64"
@@ -84,19 +87,24 @@ async function deployAlienEvent(evmTxHash: string) {
     eventBlockNumber: eventLog.eventBlockNumber,
     eventBlock: eventLog.eventBlock,
   };
-
-  await EvmEverEventConf.methods
-    .deployEvent({ eventVoteData: eventVoteData })
-    .send({
-      from: await everSender,
-      amount: ethers.parseUnits("6", 9).toString(),
-      bounce: true,
-    })
-    .then((res) => {
-      console.log("successful, tx hash : ", res.id.hash);
-    });
+  try {
+    const res: Transaction = await EvmEverEventConf.methods
+      .deployEvent({ eventVoteData: eventVoteData })
+      .send({
+        from: everSender,
+        amount: ethers.parseUnits("6", 9).toString(),
+        bounce: true,
+      });
+    const eventAddress: Address = (await fetchAlienEventAddressFromOriginTxHash(
+      provider,
+      res?.id.hash
+    ))!;
+    return ["event address : ", eventAddress.toString()];
+  } catch (error: any) {
+    return ["ERROR: ", error.message];
+  }
 }
-async function deployNativeEvent(evmTxHash: string) {
+async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
   // setting ever wallet
   let provider: ProviderRpcClient, everSender: Address;
   try {
@@ -120,7 +128,10 @@ async function deployNativeEvent(evmTxHash: string) {
   );
   // deploying the event contract
   const { buildNativeEventVoteData } = usePayloadBuilders();
-  let eventLog: EventVoteData = await buildNativeEventVoteData(evmTxHash);
+  let eventLog: [string, string] | EventVoteData =
+    await buildNativeEventVoteData(evmTxHash);
+  if (Array.isArray(eventLog)) return eventLog;
+  console.log(Array.isArray(eventLog));
   let eventVoteData: EventVoteDataParam;
 
   let eventData: string | undefined;
@@ -131,8 +142,8 @@ async function deployNativeEvent(evmTxHash: string) {
   const flags = (
     await EvmEverEventConf.methods.getFlags({ answerId: 0 }).call({})
   )._flags;
-
-  eventData = await mapEthBytesIntoTonCell(
+  await init();
+  eventData = mapEthBytesIntoTonCell(
     Buffer.from(
       ethConfigDetails._basicConfiguration.eventABI,
       "base64"
@@ -148,19 +159,25 @@ async function deployNativeEvent(evmTxHash: string) {
     eventBlock: eventLog.eventBlock,
   };
 
-  await EvmEverEventConf.methods
-    .deployEvent({ eventVoteData: eventVoteData })
-    .send({
-      from: await everSender,
-      amount: ethers.parseUnits("6", 9).toString(),
-      bounce: true,
-    })
-    .then((res) => {
-      console.log("successful, tx hash : ", res.id.hash);
-    });
+  try {
+    const res: Transaction = await EvmEverEventConf.methods
+      .deployEvent({ eventVoteData: eventVoteData })
+      .send({
+        from: everSender,
+        amount: ethers.parseUnits("6", 9).toString(),
+        bounce: true,
+      });
+    const eventAddress: Address = (await fetchAlienEventAddressFromOriginTxHash(
+      provider,
+      res?.id.hash
+    ))!;
+    return ["event address : ", eventAddress.toString()];
+  } catch (error: any) {
+    return ["ERROR: ", error.message];
+  }
 }
 
-export async function useEventsDeployer() {
+export function useEventDeployer() {
   return {
     deployAlienEvent,
     deployNativeEvent,

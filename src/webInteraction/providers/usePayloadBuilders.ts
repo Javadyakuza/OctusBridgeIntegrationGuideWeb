@@ -408,7 +408,7 @@ export async function buildSaveWithdraw(
 }
 export async function buildNativeEventVoteData(
   txHash: string
-): Promise<any | null> {
+): Promise<[string, string] | EventVoteData> {
   let abi = new ethers.Interface([
     `event NativeTransfer(
         int8 native_wid,
@@ -449,6 +449,7 @@ export async function buildNativeEventVoteData(
     }[];
     console.log(logs);
     const log = logs.find((log) => log.parsedLog.name === "NativeTransfer");
+    if (!log) return ["ERROR", "couldn't find NativeTransfer Event "];
     const eventVoteData: EventVoteData = {
       eventTransaction: txReceipt.hash,
       eventIndex: log?.index!,
@@ -457,13 +458,13 @@ export async function buildNativeEventVoteData(
       eventBlock: txReceipt.blockHash,
     };
     return eventVoteData;
-  } catch (e) {
-    throw e;
+  } catch (e: any) {
+    return ["ERROR", e.message];
   }
 }
 export async function buildAlienEventVoteData(
   txHash: string
-): Promise<any | null> {
+): Promise<[string, string] | EventVoteData> {
   const provider = new ethers.JsonRpcProvider(
     "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
   );
@@ -505,8 +506,8 @@ export async function buildAlienEventVoteData(
       data: string;
       parsedLog: any;
     }[];
-    console.log(logs);
     const log = logs.find((log) => log.parsedLog.name === "AlienTransfer");
+    if (!log) return ["ERROR", "couldn't find AlienTransfer Event "];
     const eventVoteData: EventVoteData = {
       eventTransaction: txReceipt.hash,
       eventIndex: log?.index!,
@@ -515,9 +516,8 @@ export async function buildAlienEventVoteData(
       eventBlock: txReceipt.blockHash,
     };
     return eventVoteData;
-  } catch (e) {
-    console.error(`Error fetching AlienTransfer event: ${e}`);
-    throw e;
+  } catch (e: any) {
+    return ["ERROR", e.message];
   }
 }
 

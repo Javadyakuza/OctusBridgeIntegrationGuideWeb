@@ -1,275 +1,278 @@
-<div class="DeployAlienEvents">
+<div class="DeployNativeEvent">
 
 # Deploy Native Events
 
-An [Ethereum Everscale Native Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [native token](../../../..//../docs/Concepts/TokenTypes.md#everscale-token-types), such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) or when transferring it's native coin which is [WEVER](../../../../../docs/addresses.md#wever) from an Evm network to Everscale.\
-When a user wants to transfer a token from an Evm network to Everscale and chooses to pay for the event contract deployment with the Evm gas token, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the Evm gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
+An [Ethereum Everscale Native Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [native token](../../../..//../docs/Concepts/TokenTypes.md#everscale-token-types), such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) or when transferring Everscale native coin which is [WEVER](../../../../../docs/addresses.md#wever) from an Evm network to Everscale.\
+When a user wants to transfer a token from an Evm network to Everscale and chooses to pay for the event contract deployment with the Evm gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the Evm gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
 
 <details>
-<summary>WEVERVault Contract Abi</summary>
+<summary>EthereumEverscaleEventConfiguration Contract Abi</summary>
 
 ```typescript
-abstract class EverAbi {
-  static WeverVault = {
-    "ABI version": 2,
-    version: "2.2",
-    header: ["pubkey", "time", "expire"],
-    functions: [
-      {
-        name: "constructor",
-        inputs: [
-          { name: "owner_", type: "address" },
-          { name: "root", type: "address" },
-          { name: "root_tunnel", type: "address" },
-          { name: "receive_safe_fee", type: "uint128" },
-          { name: "settings_deploy_wallet_grams", type: "uint128" },
-          { name: "initial_balance", type: "uint128" },
-        ],
-        outputs: [],
-      },
-      {
-        name: "receiveTokenWalletAddress",
-        inputs: [{ name: "wallet", type: "address" }],
-        outputs: [],
-      },
-      {
-        name: "drain",
-        inputs: [{ name: "receiver", type: "address" }],
-        outputs: [],
-      },
-      {
-        name: "setConfiguration",
-        inputs: [
-          {
-            components: [
-              { name: "root_tunnel", type: "address" },
-              { name: "root", type: "address" },
-              { name: "receive_safe_fee", type: "uint128" },
-              { name: "settings_deploy_wallet_grams", type: "uint128" },
-              { name: "initial_balance", type: "uint128" },
-            ],
-            name: "_configuration",
-            type: "tuple",
-          },
-        ],
-        outputs: [],
-      },
-      {
-        name: "withdraw",
-        inputs: [{ name: "amount", type: "uint128" }],
-        outputs: [],
-      },
-      {
-        name: "grant",
-        inputs: [{ name: "amount", type: "uint128" }],
-        outputs: [],
-      },
-      {
-        name: "wrap",
-        inputs: [
-          { name: "tokens", type: "uint128" },
-          { name: "owner_address", type: "address" },
-          { name: "gas_back_address", type: "address" },
-          { name: "payload", type: "cell" },
-        ],
-        outputs: [],
-      },
-      {
-        name: "onAcceptTokensTransfer",
-        inputs: [
-          { name: "tokenRoot", type: "address" },
-          { name: "amount", type: "uint128" },
-          { name: "sender", type: "address" },
-          { name: "senderWallet", type: "address" },
-          { name: "remainingGasTo", type: "address" },
-          { name: "payload", type: "cell" },
-        ],
-        outputs: [],
-      },
-      {
-        name: "transferOwnership",
-        inputs: [{ name: "newOwner", type: "address" }],
-        outputs: [],
-      },
-      {
-        name: "renounceOwnership",
-        inputs: [],
-        outputs: [],
-      },
-      {
-        name: "_randomNonce",
-        inputs: [],
-        outputs: [{ name: "_randomNonce", type: "uint256" }],
-      },
-      {
-        name: "owner",
-        inputs: [],
-        outputs: [{ name: "owner", type: "address" }],
-      },
-      {
-        name: "configuration",
-        inputs: [],
-        outputs: [
-          {
-            components: [
-              { name: "root_tunnel", type: "address" },
-              { name: "root", type: "address" },
-              { name: "receive_safe_fee", type: "uint128" },
-              { name: "settings_deploy_wallet_grams", type: "uint128" },
-              { name: "initial_balance", type: "uint128" },
-            ],
-            name: "configuration",
-            type: "tuple",
-          },
-        ],
-      },
-      {
-        name: "token_wallet",
-        inputs: [],
-        outputs: [{ name: "token_wallet", type: "address" }],
-      },
-      {
-        name: "total_wrapped",
-        inputs: [],
-        outputs: [{ name: "total_wrapped", type: "uint128" }],
-      },
-    ],
-    data: [{ key: 1, name: "_randomNonce", type: "uint256" }],
-    events: [
-      {
-        name: "OwnershipTransferred",
-        inputs: [
-          { name: "previousOwner", type: "address" },
-          { name: "newOwner", type: "address" },
-        ],
-        outputs: [],
-      },
-    ],
-    fields: [
-      { name: "_pubkey", type: "uint256" },
-      { name: "_timestamp", type: "uint64" },
-      { name: "_constructorFlag", type: "bool" },
-      { name: "_randomNonce", type: "uint256" },
-      { name: "owner", type: "address" },
-      {
-        components: [
-          { name: "root_tunnel", type: "address" },
-          { name: "root", type: "address" },
-          { name: "receive_safe_fee", type: "uint128" },
-          { name: "settings_deploy_wallet_grams", type: "uint128" },
-          { name: "initial_balance", type: "uint128" },
-        ],
-        name: "configuration",
-        type: "tuple",
-      },
-      { name: "token_wallet", type: "address" },
-      { name: "total_wrapped", type: "uint128" },
-    ],
-  } as const;
-}
+const EthereumEverscaleEventConfAbi = {
+  "ABI version": 2,
+  version: "2.2",
+  header: ["time"],
+  functions: [
+    {
+      name: "constructor",
+      inputs: [{ name: "_configurationCode", type: "cell" }],
+      outputs: [],
+    },
+    {
+      name: "deploy",
+      inputs: [
+        { name: "_owner", type: "address" },
+        {
+          components: [
+            { name: "eventABI", type: "bytes" },
+            { name: "staking", type: "address" },
+            { name: "eventInitialBalance", type: "uint64" },
+            { name: "eventCode", type: "cell" },
+          ],
+          name: "basicConfiguration",
+          type: "tuple",
+        },
+        {
+          components: [
+            { name: "chainId", type: "uint32" },
+            { name: "eventEmitter", type: "uint160" },
+            { name: "eventBlocksToConfirm", type: "uint16" },
+            { name: "proxy", type: "address" },
+            { name: "startBlockNumber", type: "uint32" },
+            { name: "endBlockNumber", type: "uint32" },
+          ],
+          name: "networkConfiguration",
+          type: "tuple",
+        },
+      ],
+      outputs: [],
+    },
+    {
+      name: "deriveConfigurationAddress",
+      inputs: [
+        {
+          components: [
+            { name: "eventABI", type: "bytes" },
+            { name: "staking", type: "address" },
+            { name: "eventInitialBalance", type: "uint64" },
+            { name: "eventCode", type: "cell" },
+          ],
+          name: "basicConfiguration",
+          type: "tuple",
+        },
+        {
+          components: [
+            { name: "chainId", type: "uint32" },
+            { name: "eventEmitter", type: "uint160" },
+            { name: "eventBlocksToConfirm", type: "uint16" },
+            { name: "proxy", type: "address" },
+            { name: "startBlockNumber", type: "uint32" },
+            { name: "endBlockNumber", type: "uint32" },
+          ],
+          name: "networkConfiguration",
+          type: "tuple",
+        },
+      ],
+      outputs: [{ name: "value0", type: "address" }],
+    },
+    {
+      name: "_randomNonce",
+      inputs: [],
+      outputs: [{ name: "_randomNonce", type: "uint256" }],
+    },
+    {
+      name: "configurationCode",
+      inputs: [],
+      outputs: [{ name: "configurationCode", type: "cell" }],
+    },
+  ],
+  data: [{ key: 1, name: "_randomNonce", type: "uint256" }],
+  events: [],
+  fields: [
+    { name: "_pubkey", type: "uint256" },
+    { name: "_timestamp", type: "uint64" },
+    { name: "_constructorFlag", type: "bool" },
+    { name: "_randomNonce", type: "uint256" },
+    { name: "configurationCode", type: "cell" },
+  ],
+} as const;
 ```
 
 </details>
 <br/>
 <details>
-<summary>Transfer EVER</summary>
+<summary>Building Native Event Vote Data</summary>
 
 ```typescript
-// Import the required libraries
+//Import following libraries
 import { ethers } from "ethers";
+
+//initial the Evm provider as mentioned in prerequisites section
+
+// NativeTransfer event Abi interface
+let abi = new ethers.Interface([
+  `event NativeTransfer(
+        int8 native_wid,
+        uint256 native_addr,
+        uint128 amount,
+        int8 recipient_wid,
+        uint256 recipient_addr,
+        uint value,
+        uint expected_evers,
+        bytes payload
+    )`,
+]);
+/**
+ * @param txHash The initializer transaction hash which called one of the deposit functions on MultiVault contract
+ * fetches the transaction receipt from tx hash to extract the logs and use them to build event vote data to be used when deploying an Native event contract on Everscale
+ */
+const txReceipt = await provider.getTransactionReceipt(txHash);
+if (!txReceipt) {
+  return ["ERROR: ", "Transaction receipt not found"];
+}
+// fetching the logs from that receipt
+const logs = txReceipt.logs
+  .map((log) => {
+    try {
+      let abiArgs = { topics: [log.topics[0]], data: log.data };
+      return {
+        index: log.index,
+        data: log.data,
+        parsedLog: abi.parseLog(abiArgs),
+      };
+    } catch (e) {
+      return null;
+    }
+  })
+  .filter((log) => log?.parsedLog !== null) as {
+  index: number;
+  data: string;
+  parsedLog: any;
+}[];
+// finding the NativeTransfer event from fetched logs
+const log = logs.find((log) => log.parsedLog.name === "NativeTransfer");
+
+// building the event vote data
+const eventVoteData: EventVoteData = {
+  eventTransaction: txReceipt.hash,
+  eventIndex: log?.index!,
+  eventData: log?.data!,
+  eventBlockNumber: txReceipt.blockNumber,
+  eventBlock: txReceipt.blockHash,
+};
+```
+
+</details>
+
+<br/>
+<details>
+<summary>Deploy Native Event</summary>
+
+```typescript
+//Import following libraries
+import { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
 
 //initial the Tvm provider as mentioned in prerequisites section
 
 /**
- * fetches the contract to interact with
- * @param WeverVaultAbi WEVER contract Abi
- * @param WEVERVaultAddress address of the WEVERVault contract, WEVERVault address can be found in addresses section
+ * @param EthereumEverscaleEventConfAbi The event config contract Abi
+ * @param EthereumEverscaleNativeEventConfigurationAddr The Native event config contract address. can be found in addresses section
  */
-const WEVERVaultContract: =
-  await new provider.Contract(WeverVaultAbi, WEVERVaultAddress);
-
-/**
- * @param amount ever amount top be transferred
- * @param payWithEver determines if paying the evm operations with ever or its native coin
-
- * @param auto_value value to attach to transaction if paying evm fees with ever
- * @param manual_value value to attach to transaction if paying evm fees with it native coin
- */
-const amount : number = 1;
-const payWithEver : boolean = true;
-const auto_value : number = 13
-const manual_value : number = 6
-// preparing payload. see payload building section
-const wrapPayload: [string, string] = await buildWrapPayload(
-  amount,
-  payWithEver
+const EvmEverEventConf = new provider.Contract(
+  EthereumEverscaleEventConfAbi,
+  EthereumEverscaleNativeEventConfigurationAddr
 );
 
+// event vote data interface
+interface EventVoteData {
+  eventTransaction: string;
+  eventIndex: number;
+  eventData: string;
+  eventBlockNumber: number;
+  eventBlock: string;
+}
+
+//  building the event vote data. see Building Native event Vote Data in previous accordion
+let eventLog: EventVoteData = await buildNativeEventVoteData();
+
+// getting the details from config contract to extract the event contract Abi and use it when encoding event data
+const ethConfigDetails = await EvmEverEventConf.methods
+  .getDetails({ answerId: 0 })
+  .call({});
+// fetching the flags from the config contract to use when encoding the event data
+const flags = (
+  await EvmEverEventConf.methods.getFlags({ answerId: 0 }).call({})
+)._flags;
+
+// encoding the event data
+const eventData: string = await mapEthBytesIntoTonCell(
+  Buffer.from(
+    ethConfigDetails._basicConfiguration.eventABI,
+    "base64"
+  ).toString(),
+  eventLog.eventData,
+  flags
+);
+// preparing the parameter
+
+const eventVoteData = {
+  eventTransaction: eventLog.eventTransaction,
+  eventIndex: eventLog.eventIndex,
+  eventData: eventData,
+  eventBlockNumber: eventLog.eventBlockNumber,
+  eventBlock: eventLog.eventBlock,
+};
+
 /**
- * calls the wrap function on WEVERVaultContract and after wrapping Evers will deploy an Event contract.
- * @param tokens amount of EVER to transfer
- * @param owner_address always compounder address,
- * @param gas_back_address address to return the remained gas from tx, will be user if paying Evm operations with Evm native coin or EventCloser if paying with Ever
- * @param payload operational payload
- * @param from sender address
- * @notice @param amount this parameter is important when asset releasing is done automatically on evm side, must be set to certain amounts
- * @param bounce return remaining gas ? always true
- * @notice compounder and EventCLoser addresses can be found in addresses section.
+ * @param eventVoteData prepared event vote data
+ * @param from user Ever address
+ * @param amount event initial value
+ * @param bounce should return remained gas ?
  */
-  await WEVERVaultContract.methods
-    .wrap({
-      tokens: ethers.parseUnits(amount.toString(), 9).toString(),
-      owner_address: Compounder,
-      gas_back_address: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
-      payload: wrapPayload[0],
-    })
-    .send({
-      from: everSender,
-      amount: ethers.parseUnits((payWithEver ? auto_value : manual_value ).toString(), 9).toString(),
-      bounce: true,
-    });
+await EvmEverEventConf.methods
+  .deployEvent({ eventVoteData: eventVoteData })
+  .send({
+    from: await everSender,
+    amount: ethers.parseUnits("6", 9).toString(),
+    bounce: true,
+  });
 ```
 
 </details>
 
-<label for="amount">amount </label>
-<input ref="amount" type="number"/>
-<br/>
-
-<label for="everPay">pay with EVER </label>
-<input ref="everPay" type="checkbox"/>
+<label for="txHash">Evm Transaction Hash </label>
+<input ref="txHash" type="text"/>
 
 <br/>
-<button @click="HandleTransferEverNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer EVER</button>
+<button @click="HandleDeployNativeEvent" style="{background-color : gray, border-radius: 100px}">Deploy Native Event</button>
 
-<p class="output-p" ref="EverNativeCoinOutput"></p>
+<p class="output-p" ref="deployNativeEventOutput"></p>
 
 </div>
 
 <script lang="ts" >
-import { usePayloadBuilders } from "../../../providers/usePayloadBuilders";
-import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
+import { useEventDeployer } from "../../../providers/useEventDeployer"
+const { deployNativeEvent } = useEventDeployer();
 
 export default defineComponent({
-  name: "DeployAlienEvents",
+  name: "DeployNativeEvent",
   setup() {
-    const { transferEverNativeCoin } = useEverToEvmTransfers();
-    async function HandleTransferEverNativeCoin() {
-      this.$refs.EverNativeCoinOutput.innerHTML = "processing ...";
-      if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.EverNativeCoinOutput.innerHTML = "ERROR: please enter valid number !!"
+    async function HandleDeployNativeEvent() {
+      this.$refs.deployNativeEventOutput.innerHTML = "processing ...";
+      if (this.$refs.txHash.value == "") {
+        this.$refs.deployNativeEventOutput.innerHTML = "ERROR: please enter valid transaction hash  !!"
         return;
       }
-      var EverNativeCoinOutput = await transferEverNativeCoin(
-        this.$refs.amount.value.toString(),
-        this.$refs.everPay.checked
+      var deployNativeEventOutput = await deployNativeEvent(
+        this.$refs.txHash.value.toString(),
       );
-      this.$refs.EverNativeCoinOutput.innerHTML = EverNativeCoinOutput;
+      this.$refs.deployNativeEventOutput.innerHTML = deployNativeEventOutput;
     }
     return {
-      HandleTransferEverNativeCoin,
+      HandleDeployNativeEvent,
     };
   },
 });

@@ -216,7 +216,7 @@ async function TransferEvmAlienToken(
   }
 }
 
-export async function useEvmToEverTransfers() {
+export function useEvmToEverTransfers() {
   return {
     TransferEvmNativeToken,
     TransferEvmMultiVaultToken,
