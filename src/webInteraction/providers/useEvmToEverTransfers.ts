@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, toBigInt } from "ethers";
 import { deployedContracts } from "./helpers/EvmConstants";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
@@ -32,7 +32,7 @@ async function TransferEvmGasToken(
     deployedContracts.BSCMultiVault,
     MultiVaultAbi.abi,
     signer
-  ); //["depositByNativeToken(((int8,uint256),uint256,uint256,bytes))"];
+  );
 
   const recipient = {
     wid: everSender.toString().split(":")[0],
@@ -43,7 +43,7 @@ async function TransferEvmGasToken(
     ? ethers.parseEther("0.0016").toString()
     : "0";
   const deposit_expected_evers = payWithGasToken
-    ? ethers.parseUnits("5", 9)
+    ? ethers.parseUnits("6", 9)
     : "0";
   const deposit_payload = "0x";
 
@@ -56,7 +56,7 @@ async function TransferEvmGasToken(
         deposit_payload,
       ],
       {
-        value: deposit_value + ethers.parseEther(amount.toString()),
+        value: toBigInt(deposit_value) + ethers.parseEther(amount.toString()),
       }
     );
     return ["successful, tx hash: ", res?.hash];
@@ -108,7 +108,7 @@ async function TransferEvmMultiVaultToken(
     ? ethers.parseEther("0.0016").toString()
     : "0";
   const deposit_expected_evers = payWithGasToken
-    ? ethers.parseUnits("5", 9)
+    ? ethers.parseUnits("6", 9)
     : "0";
   const deposit_payload = "0x";
   try {
@@ -188,7 +188,7 @@ async function TransferEvmAlienToken(
     ? ethers.parseEther("0.0016").toString()
     : "0";
   const deposit_expected_evers = payWithGasToken
-    ? ethers.parseUnits("5", 9)
+    ? ethers.parseUnits("6", 9)
     : "0";
   const deposit_payload = "0x";
   try {

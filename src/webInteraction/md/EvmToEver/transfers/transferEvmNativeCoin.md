@@ -2762,7 +2762,7 @@ const MultiVaultAbi = {
 
 ```typescript
 //Import following libraries
-import { ethers } from "ethers";
+import { ethers, toBigInt } from "ethers";
 
 //initial the Evm provider as mentioned in prerequisites section
 
@@ -2801,7 +2801,7 @@ import { ethers } from "ethers";
     : "0";
 
   const deposit_expected_evers = payWithGasToken
-    ? ethers.parseUnits("5", 9)
+    ? ethers.parseUnits("6", 9)
     : "0";
 
   const deposit_payload = "0x";
@@ -2815,7 +2815,7 @@ import { ethers } from "ethers";
         deposit_payload,
       ],
       {
-        value: deposit_value + ethers.parseEther(amount.toString()),
+        value: toBigInt(deposit_value) + ethers.parseEther(amount.toString()),
       };
  )
 ```
@@ -2857,7 +2857,7 @@ export default defineComponent({
       }
       let output = await TransferEvmGasToken(
         this.$refs.amount.value, 
-        this.$refs.gasTokenPay.value
+        this.$refs.gasTokenPay.checked
         );
       this.$refs.TransferEvmGasToken.innerHTML = output;
     }

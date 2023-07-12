@@ -3043,7 +3043,7 @@ import { ethers } from "ethers";
     : "0";
 
   const deposit_expected_evers = payWithGasToken
-    ? ethers.parseUnits("5", 9)
+    ? ethers.parseUnits("6", 9)
     : "0";
 
   const deposit_payload = "0x";
@@ -3120,7 +3120,7 @@ export default defineComponent({
       let output = await TransferEvmMultiVaultToken(
         deployedContracts[this.$refs.NativeToken.value],
         this.$refs.amount.value, 
-        this.$refs.gasTokenPay.value
+        this.$refs.gasTokenPay.checked
         );
       this.$refs.TransferNativeToken.innerHTML = output;
     }
