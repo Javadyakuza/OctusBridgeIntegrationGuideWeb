@@ -6,4 +6,4 @@ The process of transferring tokens from an Evm network to the Everscale network 
 
 ## Deploying Events on Everscale
 
-The second step in transferring a token from an Evm network to the Everscale network is to deploy an event contract on Everscale that is related to the token depositing data on Evm network. This can be done either by user or by Credit Modules as described in the [credit modules documentation](../../../../docs/Concepts/CreditModules.md). Once the event contract is successfully deployed, the tokens will be automatically minted or released on the Everscale network.
+The second step in transferring a token from an Evm network to the Everscale network is to deploy an event contract on Everscale that is related to the token depositing data on Evm network. This can be done either by user or by Credit Modules as described in the [Credit Modules documentation](../../../../docs/Concepts/CreditModules.md). Once the event contract is successfully deployed, the tokens will be automatically minted or released on the Everscale network.

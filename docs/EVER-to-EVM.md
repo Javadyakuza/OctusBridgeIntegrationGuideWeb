@@ -11,7 +11,7 @@ Note that the native token will be released as its wrapped version.
 
 4 - At this point desired amount of target token must be deposited to recipient Evm address.
 
-> NOTICE : All of the referenced contracts addresses can be found at [addresses.md](./addresses.md).
+> NOTICE : All of the referenced contracts addresses can be found at [addresses](./addresses.md).
 
 ## Step-by-Step Guide: Ever to EVM Transfer
 

@@ -2,7 +2,7 @@
 
 # Deploy Native Events
 
-An [Ethereum Everscale Native Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [native token](../../../..//../docs/Concepts/TokenTypes.md#everscale-token-types), such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) or when transferring Everscale native coin which is [WEVER](../../../../../docs/addresses.md#wever) from an Evm network to Everscale.\
+An [Ethereum Everscale Native Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [native token](../../../../../docs/Concepts/TokenTypes.md), such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) or when transferring Everscale native coin which is [WEVER](../../../../../docs/addresses.md#wever) from an Evm network to Everscale.\
 When a user wants to transfer a token from an Evm network to Everscale and chooses to pay for the event contract deployment with the Evm gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the Evm gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
 
 <details>

@@ -95,9 +95,9 @@ module.exports = {
           { text: 'Operations', collapsable: false, link: '/docs/Concepts/Operations.md' },
           { text: 'Events', collapsable: false, link: '/docs/Concepts/Events.md' },
           {
-            text: 'Credit Backend',
+            text: 'Credit Modules',
             collapsable: false,
-            link: '/docs/Concepts/CreditBackend.md',
+            link: '/docs/Concepts/CreditModules.md',
           },
           { text: 'Payloads', collapsable: false, link: '/docs/Concepts/Payloads.md' },
         ],

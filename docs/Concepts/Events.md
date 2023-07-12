@@ -7,7 +7,7 @@ There is two types of event contracts at mentioned direction that will be deploy
 - `MultiVaultEVMEverscaleEventNative`
 - `MultiVaultEVMEverscaleEventAlien`
 
-Deployer of these event contract's is [`EthereumEverscaleEventConfiguration`](#ethereumEverscaleeventconfiguration) contract,\
+Deployer of these event contract's is [`EthereumEverscaleEventConfiguration`](../addresses.md#event-configurations) contract,\
 which is deployed by `EthereumEverscaleEventConfigurationFactory`.
 
 ### EthereumEverscaleEventConfiguration
@@ -27,7 +27,7 @@ There is two types of event contracts at this direction that will be deployed on
 - `MultiVaultEverscaleEVMEventNative`
 - `MultiVaultEverscaleEVMEventAlien`
 
-Deployer of these contract's is [`EverscaleEthereumEventConfiguration`](#EverscaleEthereumeventconfiguration) contract, \
+Deployer of these contract's is [`EverscaleEthereumEventConfiguration`](../addresses.md#event-configurations) contract, \
 Which is deployed by`EverscaleEthereumEventConfigurationFactory`.
 
 ### EverscaleEthereumEventConfiguration

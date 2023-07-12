@@ -8,13 +8,17 @@
    relayers will vote on event contract and confirm the deposit in Evm network.\
    Now the event contract is confirmed, following steps can be performed based on the situation :
 
-   - 3.1: If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed with the Evm gas tokens, user must attach enough gas tokens to the transaction, the [credit Modules](./Concepts/CreditModules.md) will equalizes balances on both sides and deploys the event contract on Everscale and after that tokens will be minted or released on Everscale automatically.
+   - #### 3.1
+
+   If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed with the Evm gas tokens, user must attach enough gas tokens to the transaction, the [credit Modules](./Concepts/CreditModules.md) will equalizes balances on both sides and deploys the event contract on Everscale and after that tokens will be minted or released on Everscale automatically.
 
    In order to perform such a operation, besides attaching sufficient Evm gas tokens to transaction, [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) parameter must be set to a [certain amount](FAQ.md#how-to-set-expected_Evers).
 
-   - 3.2: If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native Token and minted if alien token.
+   - 3.2
 
-> NOTICE : All of the referenced contracts addresses can be found at [addresses.md](./addresses.md).
+     If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native Token and minted if alien token.
+
+> NOTICE : All of the referenced contracts addresses can be found at [addresses](./addresses.md).
 
 ## Step-by-Step Guide: Evm to Ever Transfer
 
@@ -89,7 +93,7 @@ struct DepositNativeTokenParams {
 
 2. Now it's time to deploy the event contract which has two ways:
 
-- 2.1: See {[Evm to Ever Transfer Mechanics Overview : 3.1](#31-if-the-user-at-the-time-of-deposit-accepted-to-pay-the-event-contract-deployment-fee-with-the-origin-Evm-network-native-coin-the-relayers-will-automatically-swap-that-to-Ever-which-is-the-Everscale-native-coin-and-deploy-the-event-contract-themselves)}.
+- 2.1: See [Evm to Ever Transfer Mechanics Overview : 3.1](#_3-1).
 
 - 2.2: Deploy event contract manually by calling `deployEvent` function on `EthereumEverscaleEventConfiguration` contract:
 
