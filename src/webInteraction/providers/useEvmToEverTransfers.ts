@@ -7,7 +7,7 @@ import MultiVaultTokenAbi from "./artifacts/EvmAbi/abi/MultiVaultToken.json";
 import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
 import { Address } from "everscale-inpage-provider";
 
-async function TransferEvmNativeToken(
+async function TransferEvmGasToken(
   amount: number,
   payWithGasToken: boolean
 ): Promise<[string, string]> {
@@ -32,7 +32,7 @@ async function TransferEvmNativeToken(
     deployedContracts.BSCMultiVault,
     MultiVaultAbi.abi,
     signer
-  );
+  ); //["depositByNativeToken(((int8,uint256),uint256,uint256,bytes))"];
 
   const recipient = {
     wid: everSender.toString().split(":")[0],
@@ -48,7 +48,7 @@ async function TransferEvmNativeToken(
   const deposit_payload = "0x";
 
   try {
-    const res = await MultiVault.depositByNativeCoin(
+    const res = await MultiVault.depositByNativeToken(
       [
         recipient,
         ethers.parseEther(amount.toString()),
@@ -99,19 +99,6 @@ async function TransferEvmMultiVaultToken(
     signer
   );
 
-  await MultiVaultToken.approve(
-    await MultiVault.getAddress(),
-    ethers.parseUnits(amount.toString(), 9)
-  );
-  // confirming that the contract is approved fro desired amount
-  console.log(
-    "this is the multiVault allowance : ",
-    await MultiVaultToken.allowance(
-      signer.address,
-      await MultiVault.getAddress()
-    )
-  );
-
   const recipient = {
     wid: everSender.toString().split(":")[0],
     addr: `0x${everSender.toString().split(":")[1]}`,
@@ -124,7 +111,23 @@ async function TransferEvmMultiVaultToken(
     ? ethers.parseUnits("5", 9)
     : "0";
   const deposit_payload = "0x";
-
+  try {
+    await MultiVaultToken.approve(
+      await MultiVault.getAddress(),
+      ethers.parseUnits(amount.toString(), 9)
+    );
+    if (
+      (
+        await MultiVaultToken.allowance(
+          signer.address,
+          await MultiVault.getAddress()
+        )
+      ).toString() < ethers.parseUnits(amount.toString(), 9).toString()
+    )
+      return ["ERROR : ", "allowance not enough"];
+  } catch (e: any) {
+    return ["an error accrued while approving: ", e.message];
+  }
   try {
     const res = await MultiVault.deposit(
       [
@@ -173,15 +176,7 @@ async function TransferEvmAlienToken(
 
   let ERC20Token = new ethers.Contract(tokenAddress, ERC20TokenAbi.abi, signer);
   // approving the MultiVault contract
-  await ERC20Token.approve(
-    await MultiVault.getAddress(),
-    ethers.parseEther("0.01")
-  );
-  // confirming that the contract is approved fro desired amount
-  console.log(
-    "this is the multiVault allowance : ",
-    await ERC20Token.allowance(signer.address, await MultiVault.getAddress())
-  );
+
   // depositing
 
   const recipient = {
@@ -196,7 +191,24 @@ async function TransferEvmAlienToken(
     ? ethers.parseUnits("5", 9)
     : "0";
   const deposit_payload = "0x";
-
+  try {
+    await ERC20Token.approve(
+      await MultiVault.getAddress(),
+      ethers.parseEther("0.01")
+    );
+    // confirming that the contract is approved fro desired amount
+    if (
+      (
+        await ERC20Token.allowance(
+          signer.address,
+          await MultiVault.getAddress()
+        )
+      ).toString() < ethers.parseEther(amount.toString())
+    )
+      return ["ERROR : ", "allowance not enough"];
+  } catch (e: any) {
+    return ["an error accrued while approving: ", e.message];
+  }
   try {
     const res = await MultiVault.deposit(
       [
@@ -218,7 +230,7 @@ async function TransferEvmAlienToken(
 
 export function useEvmToEverTransfers() {
   return {
-    TransferEvmNativeToken,
+    TransferEvmGasToken,
     TransferEvmMultiVaultToken,
     TransferEvmAlienToken,
   };

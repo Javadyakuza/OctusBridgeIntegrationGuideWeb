@@ -811,6 +811,125 @@ const MultiVaultAbi = {
       type: "function",
     },
     {
+      inputs: [
+        {
+          components: [
+            {
+              components: [
+                {
+                  internalType: "int8",
+                  name: "wid",
+                  type: "int8",
+                },
+                {
+                  internalType: "uint256",
+                  name: "addr",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IEverscale.EverscaleAddress",
+              name: "recipient",
+              type: "tuple",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expected_evers",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "payload",
+              type: "bytes",
+            },
+          ],
+          internalType:
+            "struct IMultiVaultFacetDeposit.DepositNativeTokenParams",
+          name: "d",
+          type: "tuple",
+        },
+      ],
+      name: "depositByNativeToken",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [
+        {
+          components: [
+            {
+              components: [
+                {
+                  internalType: "int8",
+                  name: "wid",
+                  type: "int8",
+                },
+                {
+                  internalType: "uint256",
+                  name: "addr",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct IEverscale.EverscaleAddress",
+              name: "recipient",
+              type: "tuple",
+            },
+            {
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "expected_evers",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "payload",
+              type: "bytes",
+            },
+          ],
+          internalType:
+            "struct IMultiVaultFacetDeposit.DepositNativeTokenParams",
+          name: "d",
+          type: "tuple",
+        },
+        {
+          internalType: "uint256",
+          name: "expectedMinBounty",
+          type: "uint256",
+        },
+        {
+          components: [
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+          ],
+          internalType:
+            "struct IMultiVaultFacetPendingWithdrawals.PendingWithdrawalId[]",
+          name: "pendingWithdrawalIds",
+          type: "tuple[]",
+        },
+      ],
+      name: "depositByNativeToken",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
       anonymous: false,
       inputs: [
         {
@@ -1748,6 +1867,33 @@ const MultiVaultAbi = {
               name: "approveStatus",
               type: "uint8",
             },
+            {
+              internalType: "uint256",
+              name: "chainId",
+              type: "uint256",
+            },
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "bytes",
+                  name: "payload",
+                  type: "bytes",
+                },
+                {
+                  internalType: "bool",
+                  name: "strict",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct IMultiVaultFacetWithdraw.Callback",
+              name: "callback",
+              type: "tuple",
+            },
           ],
           internalType:
             "struct IMultiVaultFacetPendingWithdrawals.PendingWithdrawalParams",
@@ -2284,6 +2430,11 @@ const MultiVaultAbi = {
         {
           internalType: "address",
           name: "_governance",
+          type: "address",
+        },
+        {
+          internalType: "address",
+          name: "_weth",
           type: "address",
         },
       ],
@@ -3033,7 +3184,7 @@ const MultiVaultAbi = {
           type: "bytes[]",
         },
       ],
-      name: "saveWithdrawAlien",
+      name: "saveWithdrawNative",
       outputs: [],
       stateMutability: "nonpayable",
       type: "function",

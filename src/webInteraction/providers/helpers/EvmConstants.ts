@@ -5,4 +5,6 @@ export const deployedContracts = {
   SampleEverReceiverAddress:
     "0x346c638fe811bcf448d9070116bfa356aa90b4b55567c8810e52ad2a72ff274e",
   BSCBRIDGE: "0x56C0cFDEA3f8659863a231c7F298C0A48038F6d2", //the bridge token
+  BSCQUBE: "0x59caEAc900c11E48dFe1dd449De4947dEa2F9d28",
+  BSCWEVER: "0x0A7e7D210C45c4abBA183C1D0551B53AD1756ecA",
 };

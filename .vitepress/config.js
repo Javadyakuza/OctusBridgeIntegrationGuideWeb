@@ -48,17 +48,17 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Ever Native Coin',
+                text: 'Ever',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
               },
               {
-                text: 'Ever Native Token',
+                text: 'Native Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/2.md',
               },
               {
-                text: 'Ever Alien Token',
+                text: 'Alien Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVER-TO-EVM/3.md',
               },
@@ -69,17 +69,17 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Evm Native Coin',
+                text: 'Evm Gas Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/1.md',
               },
               {
-                text: 'Evm MultiVault Token',
+                text: 'Native Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/2.md',
               },
               {
-                text: 'Evm Alien Token',
+                text: 'Alien Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/3.md',
               },
@@ -127,22 +127,22 @@ module.exports = {
                 collapsable: true,
                 items: [
                   {
-                    text: 'Ever Native Coin',
+                    text: 'EVER',
                     collapsable: true,
                     link: '/src/webInteraction/md/EverToEvm/transfers/transferEverNativeCoin.md',
                   },
                   {
-                    text: 'Ever Native Token',
+                    text: 'Native Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EverToEvm/transfers/transferEverNativeToken.md',
                   },
                   {
-                    text: 'Ever Alien Token',
+                    text: 'Alien Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EverToEvm/transfers/transferEverAlienToken.md',
                   },
                   {
-                    text: 'Evm Native Coin',
+                    text: 'Evm Gas Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EverToEvm/transfers/transferEvmNativeCoin.md',
                   },
@@ -153,12 +153,12 @@ module.exports = {
                 collapsable: true,
                 items: [
                   {
-                    text: 'Evm MultiVault Token',
+                    text: 'Native Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawNative.md',
                   },
                   {
-                    text: 'Evm Native and Alien Token ',
+                    text: 'Evm Gas and Alien Token ',
                     collapsable: true,
                     link: '/src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md',
                   },
@@ -176,17 +176,17 @@ module.exports = {
                 collapsable: true,
                 items: [
                   {
-                    text: 'Evm Native Coin',
+                    text: 'Evm Gas Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EvmToEver/transfers/transferEvmNativeCoin.md',
                   },
                   {
-                    text: 'Evm MultiVault Token',
+                    text: 'Native Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EvmToEver/transfers/transferEvmMultiVaultToken.md',
                   },
                   {
-                    text: 'Evm Alien Token',
+                    text: 'Alien Token',
                     collapsable: true,
                     link: '/src/webInteraction/md/EvmToEver/transfers/transferEvmAlienToken.md',
                   },
