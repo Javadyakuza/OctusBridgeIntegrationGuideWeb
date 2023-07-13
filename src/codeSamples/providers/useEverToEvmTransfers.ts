@@ -164,7 +164,7 @@ async function transferEverNativeToken(
 }
 
 /**
- *
+ * Transfers an Alien token such USDT or DAI from Everscale to an Evm network.
  * @param tokenAddress Address of the token on Everscale.
  * @param tokenAddressEvmAlien Address of the AlienEvm version of the target token.
  * @param amount Token amount.
@@ -245,7 +245,7 @@ async function transferEverAlienToken(
 }
 
 /**
- * Transfers a Evm gas token such as BNB or ETH from Everscale to an Evm network.
+ * Transfers Evm gas token such as BNB or ETH from Everscale to an Evm network.
  * @param tokenAddress Address of the token on Everscale.
  * @param amount Token amount.
  * @param payWithEver Pay Evm operations fees with Ever ?
