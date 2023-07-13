@@ -8,6 +8,12 @@ import {
 import * as constants from "./constants";
 import { FactorySource, factorySource } from "../artifacts/build/factorySource";
 
+/**
+ *
+ * @param provider an instance of tvm provider.
+ * @param txHash The root transaction hash that initiated the token transfer on Everscale
+ * @returns {Promise<Address | undefined>} returns either the address of the event contract is exists and undefined if not
+ */
 export async function fetchAlienEventAddressFromOriginTxHash(
   provider: ProviderRpcClient,
   txHash: string
@@ -15,8 +21,8 @@ export async function fetchAlienEventAddressFromOriginTxHash(
   // fetching the tx receipt
   const originTxReceipt = (await provider.getTransaction({ hash: txHash }))
     .transaction;
-  // fetching the conf contract
 
+  // fetching the conf contract
   const EverEvmAlienEventConfig: Contract<
     FactorySource["EverscaleEthereumEventConfiguration"]
   > = new provider.Contract(
@@ -40,7 +46,13 @@ export async function fetchAlienEventAddressFromOriginTxHash(
 
   return undefined;
 }
-//--//
+
+/**
+ *
+ * @param provider an instance of tvm provider.
+ * @param txHash The root transaction hash that initiated the token transfer on Everscale
+ * @returns {Promise<Address | undefined>} returns either the address of the event contract is exists and undefined if not
+ */
 export async function fetchNativeEventAddressFromOriginTxHash(
   provider: ProviderRpcClient,
   txHash: string
