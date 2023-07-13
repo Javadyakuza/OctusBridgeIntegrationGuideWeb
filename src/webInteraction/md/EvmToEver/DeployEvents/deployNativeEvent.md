@@ -100,6 +100,11 @@ const EthereumEverscaleEventConfAbi = {
 ```
 
 </details>
+
+<br/>
+
+#### Building event vote data relevant to NativeTransfer event emitted by MultiVault contract
+
 <br/>
 <details>
 <summary>Building Native Event Vote Data</summary>
@@ -164,6 +169,10 @@ const eventVoteData: EventVoteData = {
 ```
 
 </details>
+
+<br/>
+
+#### Deploying the Ethereum Everscale Event Native contract
 
 <br/>
 <details>

@@ -3263,10 +3263,10 @@ const MultiVaultAbi = {
 
 <br/>
 
+#### Encoding payload relevant to Everscale Ethereum Event Alien
+
+<br/>
 <details>
-
-Following code samples demonstrate how to encode data and release token on target Evm network:
-
 <summary>Encoding Payload</summary>
 
 ```typescript
@@ -3366,6 +3366,9 @@ const payload = web3.eth.abi.encodeParameters(
 
 <br/>
 
+#### Encoding signatures relevant to Everscale Ethereum Event Native
+
+<br/>
 <details>
 <summary>Encoding Signatures</summary>
 
@@ -3418,9 +3421,11 @@ signatures.sort((a, b) => {
 ```
 
 </details>
-
 <br/>
 
+#### Releasing token on Evm network
+
+<br/>
 <details>
 <summary>Release Tokens</summary>
 

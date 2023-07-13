@@ -3059,6 +3059,9 @@ const ERC20Abi = {
 ```
 
 </details>
+<br/>
+
+#### Initiating the token transfer on Evm network
 
 <br/>
 <details>
@@ -3074,6 +3077,7 @@ import { ethers } from "ethers";
  * @param MultiVaultAddr MultiVault Contract Address
  * @param MultiVaultAbi MultiVault Contract Abi
  * @param signer Evm signer
+ * @dev use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
     MultiVaultAddr,
@@ -3095,7 +3099,7 @@ import { ethers } from "ethers";
  * @param deposit_value amount of gas token to attach to transaction
  * @important @param deposit_expected_evers its very important to be set properly to certain the behavior of the operation,
  * if zero => manual event deployment or if 5( event initial value ) => automatic event deployment
- * @param payload operational payload for everscale which is not needed in normal transfers
+ * @param deposit_payload operational payload for everscale which is not needed in normal transfers
  */
   const payWithGasToken: boolean = true
 

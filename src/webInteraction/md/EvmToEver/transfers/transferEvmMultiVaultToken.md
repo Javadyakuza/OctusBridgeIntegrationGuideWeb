@@ -6,7 +6,7 @@ The code samples below demonstrate how to perform the first step of this process
 
 In order to have a complete token bridging process, Once initiated a transaction on this section, get you transaction hash and use it on [deploy native event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
 
-In this example, MultiVault and MultiVaultToken contract's Abi's are required:
+In this example, MultiVault contract Abi are required:
 
 <div class="TransferNativeToken">
 
@@ -2756,237 +2756,8 @@ const MultiVaultAbi = {
 </details>
 
 <br/>
-<details>
-<summary>MultiVaultToken Contract Abi</summary>
 
-```typescript
-const MultiVaultTokenAbi = [
-  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "spender",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-    ],
-    name: "Approval",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnershipTransferred",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "value",
-        type: "uint256",
-      },
-    ],
-    name: "Transfer",
-    type: "event",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "owner", type: "address" },
-      { internalType: "address", name: "spender", type: "address" },
-    ],
-    name: "allowance",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "spender", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "approve",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "balanceOf",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "account", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "burn",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "decimals",
-    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "spender", type: "address" },
-      {
-        internalType: "uint256",
-        name: "subtractedValue",
-        type: "uint256",
-      },
-    ],
-    name: "decreaseAllowance",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "spender", type: "address" },
-      { internalType: "uint256", name: "addedValue", type: "uint256" },
-    ],
-    name: "increaseAllowance",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "string", name: "name_", type: "string" },
-      { internalType: "string", name: "symbol_", type: "string" },
-      { internalType: "uint8", name: "decimals_", type: "uint8" },
-    ],
-    name: "initialize",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "account", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "mint",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "name",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "symbol",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalSupply",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "transfer",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "from", type: "address" },
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    name: "transferFrom",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
-```
-
-</details>
+#### Initiating the token transfer on Evm network
 
 <br/>
 <details>
@@ -3002,21 +2773,11 @@ import { ethers } from "ethers";
  * @param MultiVaultAddr MultiVault Contract Address
  * @param MultiVaultAbi MultiVault Contract Abi
  * @param signer Evm signer
+ * @dev use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
     MultiVaultAddr,
     MultiVaultAbi
-    signer
-  );
-
-/**
- * @param tokenAddress target alien token address
- * @param MultiVaultTokenAbi MultiVault Contract Abi
- * @param signer Evm signer
- */
-  let MultiVaultToken = new ethers.Contract(
-    MultiVaultTokenAddress,
-    MultiVaultTokenAbi,
     signer
   );
 
@@ -3027,7 +2788,8 @@ import { ethers } from "ethers";
  * @param deposit_value amount of gas token to attach to transaction
  * @important @param deposit_expected_evers its very important to be set properly to certain the behavior of the operation,
  * if zero => manual event deployment or if 5( event initial value ) => automatic event deployment
- * @param payload operational payload for everscale which is not needed in normal transfers
+ * @param deposit_payload operational payload for everscale which is not needed in normal transfers
+ * @param NativeTokenAddr the address of the target native token. replace with relevant address
  */
   const payWithGasToken: boolean = true
 
@@ -3048,17 +2810,13 @@ import { ethers } from "ethers";
 
   const deposit_payload = "0x";
 
-  // approving the MultiVault contract
-  await MultiVaultToken.approve(
-    await MultiVault.getAddress(),
-    ethers.parseEther(amount)
-  );
+  const NativeTokenAddr = "0x0"
 
  // calling deposit on MultiVault contract with prepared values
   const res = await MultiVault.deposit(
     [
         recipient,
-        await ERC20Token.getAddress(),
+        NativeTokenAddr,
         ethers.parseEther(amount.toString()),
         deposit_expected_evers,
         deposit_payload,

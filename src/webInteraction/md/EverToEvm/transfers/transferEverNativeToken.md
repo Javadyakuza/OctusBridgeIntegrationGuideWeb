@@ -4,7 +4,7 @@
 
 Everscale native tokens such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube) can be transferred to another EVM network through two methods. The first method involves manual asset minting on Evm network, while the second method automatically mints the assets on the target EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
 
-In order to have a complete token bridging, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
+In order to have a complete token bridging if the Everscale fees are payed with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 
 to perform such a operation we need Tip3 TokenRoot and TokenWalletUpgradable Abi's which are as follows :
 
@@ -426,6 +426,11 @@ const TokenWalletUpgradableAbi{
 ```
 
 </details>
+
+<br/>
+
+#### Initiating the token transfer on Everscale
+
 <br/>
 <details>
 <summary>Transfer Native Token</summary>

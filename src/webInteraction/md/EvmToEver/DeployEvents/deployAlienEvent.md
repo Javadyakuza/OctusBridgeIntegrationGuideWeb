@@ -103,6 +103,11 @@ const EthereumEverscaleEventConfAbi = {
 ```
 
 </details>
+
+<br/>
+
+#### Building event vote data relevant to AlienTransfer event emitted by MultiVault contract
+
 <br/>
 <details>
 <summary>Building Alien Event Vote Data</summary>
@@ -170,6 +175,10 @@ const eventVoteData: EventVoteData = {
 ```
 
 </details>
+
+<br/>
+
+#### Deploying the Ethereum Everscale Event Alien contract
 
 <br/>
 <details>

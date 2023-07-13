@@ -3263,6 +3263,9 @@ const MultiVaultAbi = {
 
 <br/>
 
+#### Encoding payload relevant to Everscale Ethereum Event Native
+
+<br/>
 <details>
 <summary>Encoding Payload</summary>
 
@@ -3363,6 +3366,9 @@ const payload = web3.eth.abi.encodeParameters(
 
 <br/>
 
+#### Encoding signatures relevant to Everscale Ethereum Event Native
+
+<br/>
 <details>
 <summary>Encoding Signatures</summary>
 
@@ -3415,9 +3421,11 @@ signatures.sort((a, b) => {
 ```
 
 </details>
-
 <br/>
 
+#### Minting token on Evm network
+
+<br/>
 <details>
 <summary>Mint tokens</summary>
 
