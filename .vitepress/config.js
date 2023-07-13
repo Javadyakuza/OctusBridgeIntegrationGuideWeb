@@ -197,6 +197,7 @@ module.exports = {
               {
                 text: 'Deploying Events',
                 collapsable: true,
+                link: '/src/webInteraction/md/EvmToEver/DeployEvents/Toc.md',
                 items: [
                   {
                     text: 'Native Event',
