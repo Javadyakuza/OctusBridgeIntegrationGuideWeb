@@ -9,10 +9,15 @@ import { usePayloadBuilders } from "./usePayloadBuilders";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 
+/**
+ * Mints the tokens on Evm network
+ * @param eventAddress The EverscaleEthereumNativeEvent confirmed contract Address
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 export async function saveWithdrawNative(
   eventAddress: Address
 ): Promise<[string, string]> {
-  //  setting the wallets up
+  // fetching the Ever provider
   let provider: ProviderRpcClient;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -21,50 +26,56 @@ export async function saveWithdrawNative(
     } else {
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const evmProvider = new ethers.BrowserProvider(
-    useEvmProvider().MetaMaskProvider()
-  );
-  const { buildSaveWithdraw } = usePayloadBuilders();
-  const rawSignatures: string[] = await getSignatures(eventAddress, provider);
-  const payload: [string, string] = await buildSaveWithdraw(eventAddress);
-  //  getting the contracts
-  const signer = await evmProvider.getSigner();
-  const MultiVault = new ethers.Contract(
-    constants.deployedContracts.BSCMultiVault,
-    MultiVaultAbi.abi,
-    signer
-  );
-  // preparing the signatures
-  const signatures = rawSignatures.map((sign) => {
-    const signature = `0x${Buffer.from(sign, "base64").toString("hex")}`;
-    const address = eth.accounts.recover(
-      utils.sha3(payload[1]) as string,
-      signature
+  try {
+    // fetching the wallet data
+    const evmProvider = new ethers.BrowserProvider(
+      useEvmProvider().MetaMaskProvider()
+    );
+    const signer = await evmProvider.getSigner();
+
+    //  fetching the MultiVault the contracts
+    const MultiVault = new ethers.Contract(
+      constants.deployedContracts.BSCMultiVault,
+      MultiVaultAbi.abi,
+      signer
     );
 
-    return {
-      address,
-      order: new BigNumber(address.slice(2).toUpperCase(), 16),
-      signature,
-    };
-  });
+    // preparing the payloads
+    const { buildSaveWithdraw } = usePayloadBuilders();
+    const rawSignatures: string[] = await getSignatures(eventAddress, provider);
+    const payload: [string, string] = await buildSaveWithdraw(eventAddress);
 
-  signatures.sort((a, b) => {
-    if (a.order.eq(b.order)) {
-      return 0;
-    }
+    // preparing the signatures
+    const signatures = rawSignatures.map((sign) => {
+      const signature = `0x${Buffer.from(sign, "base64").toString("hex")}`;
+      const address = eth.accounts.recover(
+        utils.sha3(payload[1]) as string,
+        signature
+      );
 
-    if (a.order.gt(b.order)) {
-      return 1;
-    }
+      return {
+        address,
+        order: new BigNumber(address.slice(2).toUpperCase(), 16),
+        signature,
+      };
+    });
 
-    return -1;
-  });
-  //  releasing assets
-  try {
+    signatures.sort((a, b) => {
+      if (a.order.eq(b.order)) {
+        return 0;
+      }
+
+      if (a.order.gt(b.order)) {
+        return 1;
+      }
+
+      return -1;
+    });
+
+    // mint assets
     const res: TransactionResponse = await MultiVault.saveWithdrawNative(
       payload[1],
       signatures.map(({ signature }) => signature)
@@ -76,10 +87,15 @@ export async function saveWithdrawNative(
   }
 }
 
+/**
+ * Releases tha assets on evm network
+ * @param eventAddress The EverscaleEthereumAlienEvent confirmed contract Address
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 export async function saveWithdrawAlien(
   eventAddress: Address
 ): Promise<[string, string]> {
-  //  setting the wallets up
+  // fetching the Ever provider
   let provider: ProviderRpcClient;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -88,48 +104,56 @@ export async function saveWithdrawAlien(
     } else {
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const evmProvider = new ethers.BrowserProvider(
-    useEvmProvider().MetaMaskProvider()
-  );
-  const { buildSaveWithdraw } = usePayloadBuilders();
-  const rawSignatures: string[] = await getSignatures(eventAddress, provider);
-  const Payload: [string, string] = await buildSaveWithdraw(eventAddress);
-  //  getting the contracts
-  const signer = await evmProvider.getSigner();
-  const MultiVault = new ethers.Contract(
-    constants.deployedContracts.BSCMultiVault,
-    MultiVaultAbi.abi,
-    signer
-  );
-  const signatures = rawSignatures.map((sign) => {
-    const signature = `0x${Buffer.from(sign, "base64").toString("hex")}`;
-    const address = eth.accounts.recover(
-      utils.sha3(Payload[1]) as string,
-      signature
+  try {
+    //fetching the wallets data
+    const evmProvider = new ethers.BrowserProvider(
+      useEvmProvider().MetaMaskProvider()
+    );
+    const signer = await evmProvider.getSigner();
+
+    // fetching the MultiVault the contracts
+    const MultiVault = new ethers.Contract(
+      constants.deployedContracts.BSCMultiVault,
+      MultiVaultAbi.abi,
+      signer
     );
 
-    return {
-      address,
-      order: new BigNumber(address.slice(2).toUpperCase(), 16),
-      signature,
-    };
-  });
+    //preparing the payload
+    const { buildSaveWithdraw } = usePayloadBuilders();
+    const rawSignatures: string[] = await getSignatures(eventAddress, provider);
+    const Payload: [string, string] = await buildSaveWithdraw(eventAddress);
 
-  signatures.sort((a, b) => {
-    if (a.order.eq(b.order)) {
-      return 0;
-    }
+    // preparing the signatures
+    const signatures = rawSignatures.map((sign) => {
+      const signature = `0x${Buffer.from(sign, "base64").toString("hex")}`;
+      const address = eth.accounts.recover(
+        utils.sha3(Payload[1]) as string,
+        signature
+      );
 
-    if (a.order.gt(b.order)) {
-      return 1;
-    }
+      return {
+        address,
+        order: new BigNumber(address.slice(2).toUpperCase(), 16),
+        signature,
+      };
+    });
 
-    return -1;
-  });
-  try {
+    signatures.sort((a, b) => {
+      if (a.order.eq(b.order)) {
+        return 0;
+      }
+
+      if (a.order.gt(b.order)) {
+        return 1;
+      }
+
+      return -1;
+    });
+
+    // release the tokens
     const res = await MultiVault.saveWithdrawAlien(
       Payload[1],
       signatures.map(({ signature }) => signature)
