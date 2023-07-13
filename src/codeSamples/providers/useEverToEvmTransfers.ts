@@ -16,34 +16,41 @@ import {
 import { usePayloadBuilders } from "./usePayloadBuilders";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 
+/**
+ * Transfers the Ever which is Everscale native coin from Everscale to an Evm network.
+ * @param amount Token amount.
+ * @param payWithEver Pay Evm operations fees with Ever ?
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 async function transferEverNativeCoin(
   amount: number,
   payWithEver: boolean
-): Promise<[string, string[]] | unknown> {
+): Promise<[string, string] | unknown> {
+  // fetching the wallet data
   let provider: ProviderRpcClient, everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const { buildWrapPayload } = usePayloadBuilders();
-
-  const WEVERVaultContract: Contract<typeof EverAbi.WeverVault> =
-    new provider.Contract(EverAbi.WeverVault, constants.WEVERVault);
-  // getting the payload
-  const wrapPayload: [string, string] = await buildWrapPayload(
-    amount,
-    payWithEver
-  );
-  // wrapping
   try {
+    // fetching the WEVERVault contract
+    const WEVERVaultContract: Contract<typeof EverAbi.WeverVault> =
+      new provider.Contract(EverAbi.WeverVault, constants.WEVERVault);
+
+    // building the payloads
+    const { buildWrapPayload } = usePayloadBuilders();
+    const wrapPayload: [string, string] = await buildWrapPayload(
+      amount,
+      payWithEver
+    ); // first str is payload and second str is randomNonce
+
+    // wrapping
     const res: Transaction = await WEVERVaultContract.methods
       .wrap({
         tokens: ethers.parseUnits(amount.toString(), 9).toString(),
@@ -58,6 +65,7 @@ async function transferEverNativeCoin(
           : constants.transfer_fees.EverToEvmManualRelease.toString(),
         bounce: true,
       });
+    // fetching the event address
     const eventAddress: Address | undefined =
       await fetchNativeEventAddressFromOriginTxHash(provider, res.id.hash);
     if (!payWithEver) {
@@ -74,46 +82,53 @@ async function transferEverNativeCoin(
   }
 }
 
+/**
+ * Transfers an native token such bridge or qube from Everscale to an Evm network.
+ * @param tokenAddress Ever token address.
+ * @param amount Token Amount.
+ * @param payWithEver Pay Evm operations fees with Ever ?
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 async function transferEverNativeToken(
   tokenAddress: Address,
   amount: number,
   payWithEver: boolean
-): Promise<[string, string[]] | unknown> {
-  // setting ever wallet
+): Promise<[string, string] | unknown> {
+  // fetching the wallets data
   let provider: ProviderRpcClient, everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  // fetching the contracts
-  const NativeTokenRoot: Contract<FactorySource["TokenRoot"]> =
-    new provider.Contract(factorySource["TokenRoot"], tokenAddress);
 
-  const AlienTokenWalletUpgradable: Contract<
-    FactorySource["AlienTokenWalletUpgradeable"]
-  > = new provider.Contract(
-    factorySource["AlienTokenWalletUpgradeable"],
-    (
-      await NativeTokenRoot.methods
-        .walletOf({ answerId: 0, walletOwner: everSender })
-        .call({})
-    ).value0
-  );
-  // getting the payload
-  const { buildTransferPayload } = usePayloadBuilders();
-  const transferPayload: [string, string] = await buildTransferPayload();
-
-  // transferring
   try {
-    const res: Transaction = await AlienTokenWalletUpgradable.methods
+    // fetching the contracts
+    const nativeTokenRoot: Contract<FactorySource["TokenRoot"]> =
+      new provider.Contract(factorySource["TokenRoot"], tokenAddress);
+
+    const alienTokenWalletUpgradable: Contract<
+      FactorySource["AlienTokenWalletUpgradeable"]
+    > = new provider.Contract(
+      factorySource["AlienTokenWalletUpgradeable"],
+      (
+        await nativeTokenRoot.methods
+          .walletOf({ answerId: 0, walletOwner: everSender })
+          .call({})
+      ).value0
+    );
+
+    // building the payload
+    const { buildTransferPayload } = usePayloadBuilders();
+    const transferPayload: [string, string] = await buildTransferPayload(); // first str is payload and second str is randomNonce
+
+    // transferring
+    const res: Transaction = await alienTokenWalletUpgradable.methods
       .transfer({
         amount: ethers.parseUnits(amount.toString(), 9).toString(),
         deployWalletValue: "200000000",
@@ -129,6 +144,8 @@ async function transferEverNativeToken(
           : constants.transfer_fees.EverToEvmManualRelease.toString(),
         bounce: true,
       });
+
+    // fetching the event address
     const eventAddress: Address | undefined =
       await fetchNativeEventAddressFromOriginTxHash(provider, res?.id.hash);
 
@@ -146,50 +163,55 @@ async function transferEverNativeToken(
   }
 }
 
+/**
+ *
+ * @param tokenAddress Address of the token on Everscale.
+ * @param tokenAddressEvmAlien Address of the AlienEvm version of the target token.
+ * @param amount Token amount.
+ * @param payWithEver Pay Evm operations fees with Ever ?
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 async function transferEverAlienToken(
   tokenAddress: Address,
   tokenAddressEvmAlien: Address,
   amount: number,
   payWithEver: boolean
-): Promise<[string, string[]] | unknown> {
+): Promise<[string, string] | unknown> {
   let provider: ProviderRpcClient, everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  // fetching the contracts
-
-  const AlienTokenRoot: Contract<FactorySource["TokenRoot"]> =
-    new provider.Contract(factorySource["TokenRoot"], tokenAddress);
-
-  const AlienTokenWalletUpgradable: Contract<
-    FactorySource["AlienTokenWalletUpgradeable"]
-  > = new provider.Contract(
-    factorySource["AlienTokenWalletUpgradeable"],
-    (
-      await AlienTokenRoot.methods
-        .walletOf({ answerId: 0, walletOwner: everSender })
-        .call({})
-    ).value0
-  );
-  // getting the payload
-  const { buildBurnPayloadForEvmAlienToken } = usePayloadBuilders();
-
-  const burnPayload: [string, string] = await buildBurnPayloadForEvmAlienToken(
-    tokenAddressEvmAlien
-  ); // first str is payload and second str is randomNonce
-
-  // burning
   try {
-    const res: Transaction = await AlienTokenWalletUpgradable.methods
+    // fetching the contracts
+    const alienTokenRoot: Contract<FactorySource["TokenRoot"]> =
+      new provider.Contract(factorySource["TokenRoot"], tokenAddress);
+
+    const alienTokenWalletUpgradable: Contract<
+      FactorySource["AlienTokenWalletUpgradeable"]
+    > = new provider.Contract(
+      factorySource["AlienTokenWalletUpgradeable"],
+      (
+        await alienTokenRoot.methods
+          .walletOf({ answerId: 0, walletOwner: everSender })
+          .call({})
+      ).value0
+    );
+
+    // building the payload
+    const { buildBurnPayloadForEvmAlienToken } = usePayloadBuilders();
+
+    const burnPayload: [string, string] =
+      await buildBurnPayloadForEvmAlienToken(tokenAddressEvmAlien); // first str is payload and second str is randomNonce
+
+    // burning
+    const res: Transaction = await alienTokenWalletUpgradable.methods
       .burn({
         amount: ethers.parseUnits(amount.toString(), 6).toString(),
         callbackTo: constants.MergePool_V4,
@@ -204,7 +226,7 @@ async function transferEverAlienToken(
         bounce: true,
       });
 
-    // getting the event contract address
+    // fetching the event address
     const eventAddress: Address | undefined =
       await fetchAlienEventAddressFromOriginTxHash(provider, res?.id.hash)!;
 
@@ -222,46 +244,53 @@ async function transferEverAlienToken(
   }
 }
 
+/**
+ * Transfers a Evm gas token such as BNB or ETH from Everscale to an Evm network.
+ * @param tokenAddress Address of the token on Everscale.
+ * @param amount Token amount.
+ * @param payWithEver Pay Evm operations fees with Ever ?
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 async function transferEverAlienEvmNativeCoin(
   tokenAddress: Address,
   amount: number,
   payWithEver: boolean
-): Promise<[string, string[]] | unknown> {
+): Promise<[string, string] | unknown> {
   let provider: ProviderRpcClient, everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      // Handle the case where the function returns undefined
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :any", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  // fetching the contracts
 
-  const AlienTokenRoot: Contract<FactorySource["TokenRoot"]> =
-    new provider.Contract(factorySource["TokenRoot"], tokenAddress);
-
-  const AlienTokenWalletUpgradable: Contract<
-    FactorySource["AlienTokenWalletUpgradeable"]
-  > = new provider.Contract(
-    factorySource["AlienTokenWalletUpgradeable"],
-    (
-      await AlienTokenRoot.methods
-        .walletOf({ answerId: 0, walletOwner: everSender })
-        .call({})
-    ).value0
-  );
-  const { buildBurnPayloadForEvmNativeToken } = usePayloadBuilders();
-
-  const burnPayload: [string, string] =
-    await buildBurnPayloadForEvmNativeToken();
-  // burning
   try {
-    const res: Transaction = await AlienTokenWalletUpgradable.methods
+    // fetching the contracts
+    const alienTokenRoot: Contract<FactorySource["TokenRoot"]> =
+      new provider.Contract(factorySource["TokenRoot"], tokenAddress);
+
+    const alienTokenWalletUpgradable: Contract<
+      FactorySource["AlienTokenWalletUpgradeable"]
+    > = new provider.Contract(
+      factorySource["AlienTokenWalletUpgradeable"],
+      (
+        await alienTokenRoot.methods
+          .walletOf({ answerId: 0, walletOwner: everSender })
+          .call({})
+      ).value0
+    );
+
+    // building the payloads
+    const { buildBurnPayloadForEvmNativeToken } = usePayloadBuilders();
+    const burnPayload: [string, string] =
+      await buildBurnPayloadForEvmNativeToken(); // first str is payload and second str is randomNonce
+
+    // burning
+    const res: Transaction = await alienTokenWalletUpgradable.methods
       .burn({
         callbackTo: constants.ProxyMultivaultAlienV_7,
         payload: burnPayload[0],
@@ -276,7 +305,7 @@ async function transferEverAlienEvmNativeCoin(
         bounce: true,
       });
 
-    // getting the event contract address
+    // fetching the event address
     const eventAddress: Address | undefined =
       await fetchAlienEventAddressFromOriginTxHash(provider, res?.id.hash);
 

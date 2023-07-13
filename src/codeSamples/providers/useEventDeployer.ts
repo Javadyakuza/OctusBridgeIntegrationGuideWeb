@@ -20,6 +20,11 @@ import {
 
 import { EventVoteData, EventVoteDataParam } from "./types";
 
+/**
+ *
+ * @param evmTxHash - The root transaction hash that initiated the token transfer in Evm network.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
   // fetching the provider data
   let provider: ProviderRpcClient, everSender: Address;
@@ -93,6 +98,12 @@ async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
     return ["ERROR: ", error.message];
   }
 }
+
+/**
+ *
+ * @param evmTxHash - The root transaction hash that initiated the token transfer in Evm network.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ */
 async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
   // fetching the provider data
   let provider: ProviderRpcClient, everSender: Address;

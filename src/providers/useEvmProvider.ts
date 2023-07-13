@@ -44,11 +44,11 @@ const networksConfig = () => {
   };
 };
 
-const connectToMetamaskWallet = async () => {
+const connectToMetamaskWallet = async (): Promise<void> => {
   await provider?.request({ method: "eth_requestAccounts", params: [] });
 };
 
-const changeMetaMaskNetwork = async (chainName: string) => {
+const changeMetaMaskNetwork = async (chainName: string): Promise<void> => {
   const config: { [key: string]: any } = networksConfig();
   try {
     await provider?.request({
