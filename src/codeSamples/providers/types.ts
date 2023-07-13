@@ -20,3 +20,8 @@ export type EventVoteDataParam = Parameters<
     FactorySource["EthereumEverscaleEventConfiguration"]
   >["methods"]["deployEvent"]
 >[0]["eventVoteData"];
+
+export interface PackedCell {
+  boc: string;
+  hash: string;
+}

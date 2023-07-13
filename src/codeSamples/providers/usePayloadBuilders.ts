@@ -11,14 +11,7 @@ import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import * as constants from "./helpers/constants";
 import { getRandomUint } from "./helpers/randuint";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
-
-interface EventVoteData {
-  eventTransaction: string;
-  eventIndex: number;
-  eventData: string;
-  eventBlockNumber: number;
-  eventBlock: string;
-}
+import { EventVoteData, PackedCell } from "./types";
 
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
@@ -27,13 +20,13 @@ interface EventVoteData {
  * @param amount target token amount without decimals
  * @param chainId target evm network chainId
  * @param releaseByEver this parameter specifies if the credit backend should release the assets in the target evm network(true), or user must release them manually(false)
- * @
- * returns wrap payload string and rand nonce
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
  */
 async function buildWrapPayload(
   amount: string | number,
   releaseByEver: boolean
 ): Promise<[string, string]> {
+  // fetching the wallets data
   let provider: ProviderRpcClient,
     everSender: Address,
     evmRecipient: string,
@@ -45,74 +38,78 @@ async function buildWrapPayload(
     } else {
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const transferPayload = await provider.packIntoCell({
-    data: {
-      addr: evmRecipient,
-      chainId: Number(chainId),
-      callback: {
-        recipient: "0x0000000000000000000000000000000000000000",
-        payload: "",
-        strict: false,
+  try {
+    //encoding the data
+    const transferPayload: PackedCell = await provider.packIntoCell({
+      data: {
+        addr: evmRecipient,
+        chainId: Number(chainId),
+        callback: {
+          recipient: "0x0000000000000000000000000000000000000000",
+          payload: "",
+          strict: false,
+        },
       },
-    },
-    structure: [
-      { name: "addr", type: "uint160" },
-      { name: "chainId", type: "uint256" },
-      {
-        name: "callback",
-        type: "tuple",
-        components: [
-          { name: "recipient", type: "uint160" },
-          { name: "payload", type: "cell" },
-          { name: "strict", type: "bool" },
-        ] as const,
+      structure: [
+        { name: "addr", type: "uint160" },
+        { name: "chainId", type: "uint256" },
+        {
+          name: "callback",
+          type: "tuple",
+          components: [
+            { name: "recipient", type: "uint160" },
+            { name: "payload", type: "cell" },
+            { name: "strict", type: "bool" },
+          ] as const,
+        },
+      ] as const,
+    });
+    const randomNonce: string = getRandomUint();
+    const data: PackedCell = await provider.packIntoCell({
+      data: {
+        nonce: randomNonce,
+        network: 1,
+        transferPayload: transferPayload.boc,
       },
-    ] as const,
-  });
-  const randomNonce: string = getRandomUint();
-  const data = await provider.packIntoCell({
-    data: {
-      nonce: randomNonce,
-      network: 1,
-      transferPayload: transferPayload.boc,
-    },
-    structure: [
-      { name: "nonce", type: "uint32" },
-      { name: "network", type: "uint8" },
-      { name: "transferPayload", type: "cell" },
-    ] as const,
-  });
+      structure: [
+        { name: "nonce", type: "uint32" },
+        { name: "network", type: "uint8" },
+        { name: "transferPayload", type: "cell" },
+      ] as const,
+    });
 
-  const remainingGasTo = releaseByEver ? constants.EventCloser : everSender;
+    const remainingGasTo = releaseByEver ? constants.EventCloser : everSender;
 
-  const compounderPayload = await provider.packIntoCell({
-    data: {
-      to: constants.ProxyMultiVaultNativeV_4,
-      amount: ethers.parseUnits(amount.toString(), 9).toString(),
-      remainingGasTo,
-      payload: data.boc,
-    },
-    structure: [
-      { name: "to", type: "address" },
-      { name: "amount", type: "uint128" },
-      { name: "remainingGasTo", type: "address" },
-      { name: "payload", type: "cell" },
-    ] as const,
-  });
+    const compounderPayload: PackedCell = await provider.packIntoCell({
+      data: {
+        to: constants.ProxyMultiVaultNativeV_4,
+        amount: ethers.parseUnits(amount.toString(), 9).toString(),
+        remainingGasTo,
+        payload: data.boc,
+      },
+      structure: [
+        { name: "to", type: "address" },
+        { name: "amount", type: "uint128" },
+        { name: "remainingGasTo", type: "address" },
+        { name: "payload", type: "cell" },
+      ] as const,
+    });
 
-  return [compounderPayload.boc, randomNonce];
+    return [compounderPayload.boc, randomNonce];
+  } catch (e: any) {
+    return ["ERROR :", e.message];
+  }
 }
+
 /**
  * buildTransferPayload prepares the payload to transfer a everscale native token such as BRIDGE or QUBE from everscale to an evm network
- * @
- * returns wrap payload string and rand nonce
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
  */
 async function buildTransferPayload(): Promise<[string, string]> {
+  // fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string, chainId: string;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -124,60 +121,64 @@ async function buildTransferPayload(): Promise<[string, string]> {
 
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const transferPayload = await provider.packIntoCell({
-    data: {
-      addr: evmRecipient,
-      chainId: chainId,
-      callback: {
-        recipient: "0x0000000000000000000000000000000000000000",
-        payload: "",
-        strict: false,
-      },
-    },
-    structure: [
-      { name: "addr", type: "uint160" },
-      { name: "chainId", type: "uint256" },
-      {
-        name: "callback",
-        type: "tuple",
-        components: [
-          { name: "recipient", type: "uint160" },
-          { name: "payload", type: "cell" },
-          { name: "strict", type: "bool" },
-        ] as const,
-      },
-    ] as const,
-  });
-  const randomNonce = getRandomUint();
-  const data = await provider.packIntoCell({
-    data: {
-      nonce: randomNonce,
-      network: 1,
-      transferPayload: transferPayload.boc,
-    },
-    structure: [
-      { name: "nonce", type: "uint32" },
-      { name: "network", type: "uint8" },
-      { name: "transferPayload", type: "cell" },
-    ] as const,
-  });
 
-  return [data.boc, randomNonce];
+  try {
+    // encoding the data
+    const transferPayload: PackedCell = await provider.packIntoCell({
+      data: {
+        addr: evmRecipient,
+        chainId: chainId,
+        callback: {
+          recipient: "0x0000000000000000000000000000000000000000",
+          payload: "",
+          strict: false,
+        },
+      },
+      structure: [
+        { name: "addr", type: "uint160" },
+        { name: "chainId", type: "uint256" },
+        {
+          name: "callback",
+          type: "tuple",
+          components: [
+            { name: "recipient", type: "uint160" },
+            { name: "payload", type: "cell" },
+            { name: "strict", type: "bool" },
+          ] as const,
+        },
+      ] as const,
+    });
+    const randomNonce = getRandomUint();
+    const data: PackedCell = await provider.packIntoCell({
+      data: {
+        nonce: randomNonce,
+        network: 1,
+        transferPayload: transferPayload.boc,
+      },
+      structure: [
+        { name: "nonce", type: "uint32" },
+        { name: "network", type: "uint8" },
+        { name: "transferPayload", type: "cell" },
+      ] as const,
+    });
+
+    return [data.boc, randomNonce];
+  } catch (e: any) {
+    return ["ERROR :", e.message];
+  }
 }
 /**
  * buildBurnPayloadForEvmAlienToken function prepares the payload to be used in TokenWalletUpgradable.burn in order to transfer a token from everscale and to an evm network.
  * @param evmRecipient receiver EvmAddress
- * @
- * returns burn payload string
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
  */
 async function buildBurnPayloadForEvmAlienToken(
   TargetTokenRootAlienEvm: Address
 ): Promise<[string, string]> {
+  // fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -186,69 +187,74 @@ async function buildBurnPayloadForEvmAlienToken(
     } else {
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const operationPayload = await provider.packIntoCell({
-    data: {
-      addr: evmRecipient,
-      callback: {
-        recipient: "0x0000000000000000000000000000000000000000",
-        payload: "",
-        strict: false,
-      },
-    },
-    structure: [
-      { name: "addr", type: "uint160" },
-      {
-        name: "callback",
-        type: "tuple",
-        components: [
-          { name: "recipient", type: "uint160" },
-          { name: "payload", type: "cell" },
-          { name: "strict", type: "bool" },
-        ] as const,
-      },
-    ] as const,
-  });
 
-  const payload = await provider.packIntoCell({
-    data: {
-      network: 1,
-      withdrawPayload: operationPayload.boc,
-    },
-    structure: [
-      { name: "network", type: "uint8" },
-      { name: "withdrawPayload", type: "cell" },
-    ] as const,
-  });
-  const randNonce = getRandomUint();
-  const data = await provider.packIntoCell({
-    data: {
-      nonce: randNonce,
-      type: 0,
-      targetToken: TargetTokenRootAlienEvm, // TokenRootAlienEvm, different with normal tip3 tokens in everscale.
-      operationPayload: payload.boc,
-    },
-    structure: [
-      { name: "nonce", type: "uint32" },
-      { name: "type", type: "uint8" },
-      { name: "targetToken", type: "address" },
-      { name: "operationPayload", type: "cell" },
-    ] as const,
-  });
+  try {
+    // encoding the data
+    const operationPayload: PackedCell = await provider.packIntoCell({
+      data: {
+        addr: evmRecipient,
+        callback: {
+          recipient: "0x0000000000000000000000000000000000000000",
+          payload: "",
+          strict: false,
+        },
+      },
+      structure: [
+        { name: "addr", type: "uint160" },
+        {
+          name: "callback",
+          type: "tuple",
+          components: [
+            { name: "recipient", type: "uint160" },
+            { name: "payload", type: "cell" },
+            { name: "strict", type: "bool" },
+          ] as const,
+        },
+      ] as const,
+    });
 
-  return [data.boc, randNonce];
+    const payload: PackedCell = await provider.packIntoCell({
+      data: {
+        network: 1,
+        withdrawPayload: operationPayload.boc,
+      },
+      structure: [
+        { name: "network", type: "uint8" },
+        { name: "withdrawPayload", type: "cell" },
+      ] as const,
+    });
+    const randNonce = getRandomUint();
+    const data: PackedCell = await provider.packIntoCell({
+      data: {
+        nonce: randNonce,
+        type: 0,
+        targetToken: TargetTokenRootAlienEvm, // TokenRootAlienEvm, different with normal tip3 tokens in everscale.
+        operationPayload: payload.boc,
+      },
+      structure: [
+        { name: "nonce", type: "uint32" },
+        { name: "type", type: "uint8" },
+        { name: "targetToken", type: "address" },
+        { name: "operationPayload", type: "cell" },
+      ] as const,
+    });
+
+    return [data.boc, randNonce];
+  } catch (e: any) {
+    return ["ERROR :", e.message];
+  }
 }
+
 /**
  * buildBurnPayloadForEvmNativeToken function prepares the payload to be used in TokenWalletUpgradable.burn in order to transfer a token from everscale and to an evm network.
  * @param evmRecipient receiver EvmAddress
- * @
- * returns burn payload string
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
  */
 async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
+  // fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -257,62 +263,66 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
     } else {
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  const burnPayload = await provider.packIntoCell({
-    data: {
-      addr: constants.unWrapper,
-      callback: {
-        recipient: constants.unWrapper,
-        payload:
-          encodeBase64(
-            web3.eth.abi.encodeParameters(["address"], [evmRecipient])
-          ) ?? "",
-        strict: false,
+  try {
+    // encoding the data
+    const burnPayload: PackedCell = await provider.packIntoCell({
+      data: {
+        addr: constants.unWrapper,
+        callback: {
+          recipient: constants.unWrapper,
+          payload:
+            encodeBase64(
+              web3.eth.abi.encodeParameters(["address"], [evmRecipient])
+            ) ?? "",
+          strict: false,
+        },
       },
-    },
-    structure: [
-      { name: "addr", type: "uint160" },
-      {
-        name: "callback",
-        type: "tuple",
-        components: [
-          { name: "recipient", type: "uint160" },
-          { name: "payload", type: "bytes" },
-          { name: "strict", type: "bool" },
-        ] as const,
+      structure: [
+        { name: "addr", type: "uint160" },
+        {
+          name: "callback",
+          type: "tuple",
+          components: [
+            { name: "recipient", type: "uint160" },
+            { name: "payload", type: "bytes" },
+            { name: "strict", type: "bool" },
+          ] as const,
+        },
+      ] as const,
+    });
+
+    const randomNonce: string = getRandomUint();
+    const data: PackedCell = await provider.packIntoCell({
+      data: {
+        nonce: randomNonce,
+        network: 1,
+        burnPayload: burnPayload.boc,
       },
-    ] as const,
-  });
+      structure: [
+        { name: "nonce", type: "uint32" },
+        { name: "network", type: "uint8" },
+        { name: "burnPayload", type: "cell" },
+      ] as const,
+    });
 
-  const randomNonce: string = getRandomUint();
-  const data = await provider.packIntoCell({
-    data: {
-      nonce: randomNonce,
-      network: 1,
-      burnPayload: burnPayload.boc,
-    },
-    structure: [
-      { name: "nonce", type: "uint32" },
-      { name: "network", type: "uint8" },
-      { name: "burnPayload", type: "cell" },
-    ] as const,
-  });
-
-  return [data.boc, randomNonce];
+    return [data.boc, randomNonce];
+  } catch (e: any) {
+    return ["ERROR :", e.message];
+  }
 }
+
 /**
- * prepares the payload to be used in withdraw function on MV contracts on Evm sides
+ * prepares the payload to be used in withdraw function on MV contracts on Evm network
  * @param EverEvmAlienEventContractAddress address of the relevant deployed event contract on everscale
- * @
- * returns {bytes} payload string to be used in saveWithdraw Functions
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
  */
 export async function buildSaveWithdraw(
   EverEvmAlienEventContractAddress: Address
 ): Promise<[string, string]> {
+  // fetching the wallets data
   let provider: ProviderRpcClient;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -321,94 +331,116 @@ export async function buildSaveWithdraw(
     } else {
       return ["ERROR", "rejection by user !"];
     }
-  } catch (error) {
-    // Handle any errors that occur during function execution
-
-    return ["ERROR", "unknown error accrued while fetching wallet's data !"];
+  } catch (error: any) {
+    return ["ERROR", error.message];
   }
-  // fetching the contracts
-  const EverEvmEventContract: Contract<
-    FactorySource["EverscaleEthereumBaseEvent"]
-  > = new provider.Contract(
-    factorySource["EverscaleEthereumBaseEvent"],
-    EverEvmAlienEventContractAddress
-  );
-  const eventDetails = await EverEvmEventContract.methods
-    .getDetails({ answerId: 0 })
-    .call({});
-  const EverEvmAlienEventConf: Contract<
-    FactorySource["EverscaleEthereumEventConfiguration"]
-  > = new provider.Contract(
-    factorySource["EverscaleEthereumEventConfiguration"],
-    eventDetails._eventInitData.configuration
-  );
-  const [eventConfigDetails, flags] = await Promise.all([
-    await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
-    (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
-      ._flags,
-  ]);
-  await init();
-  const eventDataEncoded = mapTonCellIntoEthBytes(
-    Buffer.from(
-      (await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}))
-        ._basicConfiguration.eventABI,
-      "base64"
-    ).toString(),
-    eventDetails._eventInitData.voteData.eventData,
-    flags
-  );
+  try {
+    // fetching the contracts
+    const EverEvmEventContract: Contract<
+      FactorySource["EverscaleEthereumBaseEvent"]
+    > = new provider.Contract(
+      factorySource["EverscaleEthereumBaseEvent"],
+      EverEvmAlienEventContractAddress
+    );
+    const eventDetails = await EverEvmEventContract.methods
+      .getDetails({ answerId: 0 })
+      .call({});
 
-  const roundNumber = (
-    await EverEvmEventContract.methods.round_number({}).call({})
-  ).round_number;
+    const EverEvmAlienEventConf: Contract<
+      FactorySource["EverscaleEthereumEventConfiguration"]
+    > = new provider.Contract(
+      factorySource["EverscaleEthereumEventConfiguration"],
+      eventDetails._eventInitData.configuration
+    );
 
-  const encodedEvent = web3.eth.abi.encodeParameters(
-    [
-      {
-        EverscaleEvent: {
-          eventTransactionLt: "uint64",
-          eventTimestamp: "uint32",
-          eventData: "bytes",
-          configurationWid: "int8",
-          configurationAddress: "uint256",
-          eventContractWid: "int8",
-          eventContractAddress: "uint256",
-          proxy: "address",
-          round: "uint32",
+    // fetching the details
+    const [eventConfigDetails, flags] = await Promise.all([
+      await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
+      (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
+        ._flags,
+    ]);
+
+    const roundNumber = (
+      await EverEvmEventContract.methods.round_number({}).call({})
+    ).round_number;
+
+    // encoding the event data into bytes
+    await init();
+    const eventDataEncoded = mapTonCellIntoEthBytes(
+      Buffer.from(
+        (
+          await EverEvmAlienEventConf.methods
+            .getDetails({ answerId: 0 })
+            .call({})
+        )._basicConfiguration.eventABI,
+        "base64"
+      ).toString(),
+      eventDetails._eventInitData.voteData.eventData,
+      flags
+    );
+
+    const encodedEvent = web3.eth.abi.encodeParameters(
+      [
+        {
+          EverscaleEvent: {
+            eventTransactionLt: "uint64",
+            eventTimestamp: "uint32",
+            eventData: "bytes",
+            configurationWid: "int8",
+            configurationAddress: "uint256",
+            eventContractWid: "int8",
+            eventContractAddress: "uint256",
+            proxy: "address",
+            round: "uint32",
+          },
         },
-      },
-    ],
-    [
-      {
-        eventTransactionLt:
-          eventDetails._eventInitData.voteData.eventTransactionLt,
-        eventTimestamp: eventDetails._eventInitData.voteData.eventTimestamp,
-        eventData: eventDataEncoded,
-        configurationWid: eventDetails._eventInitData.configuration
-          .toString()
-          .split(":")[0],
-        configurationAddress: `0x${
-          eventDetails._eventInitData.configuration.toString().split(":")[1]
-        }`,
-        eventContractWid:
-          EverEvmAlienEventContractAddress.toString().split(":")[0],
-        eventContractAddress: `0x${
-          EverEvmAlienEventContractAddress.toString().split(":")[1]
-        }`,
-        proxy: `0x${ethers
-          .toBigInt(eventConfigDetails._networkConfiguration.proxy)
-          .toString(16)
-          .padStart(40, "0")}`,
-        round: roundNumber,
-      },
-    ]
-  );
+      ],
+      [
+        {
+          eventTransactionLt:
+            eventDetails._eventInitData.voteData.eventTransactionLt,
+          eventTimestamp: eventDetails._eventInitData.voteData.eventTimestamp,
+          eventData: eventDataEncoded,
+          configurationWid: eventDetails._eventInitData.configuration
+            .toString()
+            .split(":")[0],
+          configurationAddress: `0x${
+            eventDetails._eventInitData.configuration.toString().split(":")[1]
+          }`,
+          eventContractWid:
+            EverEvmAlienEventContractAddress.toString().split(":")[0],
+          eventContractAddress: `0x${
+            EverEvmAlienEventContractAddress.toString().split(":")[1]
+          }`,
+          proxy: `0x${ethers
+            .toBigInt(eventConfigDetails._networkConfiguration.proxy)
+            .toString(16)
+            .padStart(40, "0")}`,
+          round: roundNumber,
+        },
+      ]
+    );
 
-  return ["payload", encodedEvent];
+    return ["payload", encodedEvent];
+  } catch (e: any) {
+    return ["ERROR :", e.message];
+  }
 }
+
+/**
+ * Prepares an event vote data to be used in deploying an native event on everscale on evm -> Ever.
+ * @param txHash The root transaction hash that initiated the token transfer on evm network
+ * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or the expected function value.
+ */
 export async function buildNativeEventVoteData(
   txHash: string
 ): Promise<[string, string] | EventVoteData> {
+  // simple Jrpc provider just to read data
+  const provider = new ethers.JsonRpcProvider(
+    "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
+  );
+
+  // NativeTransfer event interface
   let abi = new ethers.Interface([
     `event NativeTransfer(
         int8 native_wid,
@@ -421,9 +453,8 @@ export async function buildNativeEventVoteData(
         bytes payload
     )`,
   ]);
-  const provider = new ethers.JsonRpcProvider(
-    "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
-  );
+
+  // fetching tx receipt and extracting data out of it
   try {
     const txReceipt = await provider.getTransactionReceipt(txHash);
     if (!txReceipt) {
@@ -447,9 +478,10 @@ export async function buildNativeEventVoteData(
       data: string;
       parsedLog: any;
     }[];
-    console.log(logs);
     const log = logs.find((log) => log.parsedLog.name === "NativeTransfer");
     if (!log) return ["ERROR", "couldn't find NativeTransfer Event "];
+
+    // preprint the event vote data
     const eventVoteData: EventVoteData = {
       eventTransaction: txReceipt.hash,
       eventIndex: log?.index!,
@@ -462,12 +494,21 @@ export async function buildNativeEventVoteData(
     return ["ERROR", e.message];
   }
 }
+
+/**
+ * Prepares an event vote data to be used in deploying an alien event on everscale on evm -> Ever.
+ * @param txHash The root transaction hash that initiated the token transfer on evm network
+ * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or the expected function value.
+ */
 export async function buildAlienEventVoteData(
   txHash: string
 ): Promise<[string, string] | EventVoteData> {
+  // simple Jrpc provider just to read the data
   const provider = new ethers.JsonRpcProvider(
     "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
   );
+
+  // AlienTransfer event interface
   let abi = new ethers.Interface([
     `event AlienTransfer(
         uint256 base_chainId,
@@ -483,6 +524,8 @@ export async function buildAlienEventVoteData(
         bytes payload
     )`,
   ]);
+
+  // fetching tx receipt and extracting data out of it
   try {
     const txReceipt = await provider.getTransactionReceipt(txHash);
     if (!txReceipt) {
@@ -508,6 +551,8 @@ export async function buildAlienEventVoteData(
     }[];
     const log = logs.find((log) => log.parsedLog.name === "AlienTransfer");
     if (!log) return ["ERROR", "couldn't find AlienTransfer Event "];
+
+    // preparing the event vote data
     const eventVoteData: EventVoteData = {
       eventTransaction: txReceipt.hash,
       eventIndex: log?.index!,
@@ -515,12 +560,18 @@ export async function buildAlienEventVoteData(
       eventBlockNumber: txReceipt.blockNumber,
       eventBlock: txReceipt.blockHash,
     };
+
     return eventVoteData;
   } catch (e: any) {
     return ["ERROR", e.message];
   }
 }
 
+/**
+ * this function prepares format from returned values of the functions of this module.
+ * @param data String array of data.
+ * @returns {string} formatted string.
+ */
 const format = (data: string[]): string => {
   return `payload : ${data[0]} <br/>
   random nonce : ${data[1]}
