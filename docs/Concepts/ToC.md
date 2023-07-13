@@ -1,5 +1,7 @@
 # Concepts
 
+**Explanation of the expressions and keywords used in this documentation**
+
 ## Table of Contents
 
 - [Token Types](./TokenTypes.md)

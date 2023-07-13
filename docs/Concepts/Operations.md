@@ -33,8 +33,8 @@ In the Evm to Ever direction, the following operations are performed on Everscal
   When transferring an native token, it will be locked on Everscale and minted on Evm network.\
   When transferring an alien token it will be burnt on Everscale and released on Evm network.
 - Evm -> Ever \
-  When transferring the Evm gas token, it will be wrapped into a ERC-20 (WETH, WBNB and etc), then will be locked on Evm network and minted on Everscale network.
-  When transferring an alien token it will be locked on Evm network and minted on Everscale network.
+  When transferring the Evm gas token, it will be wrapped into a ERC-20 (WETH, WBNB and etc), then will be locked on Evm network and minted on Everscale network.\
+  When transferring an alien token it will be locked on Evm network and minted on Everscale network.\
   When transferring an native token (WEVER, BRIDGE and QUBE), it will be burnt on Evm network and released on Everscale network.
 
 ## Manual Asset releasing

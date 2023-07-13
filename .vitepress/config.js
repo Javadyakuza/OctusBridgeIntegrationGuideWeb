@@ -42,6 +42,7 @@ module.exports = {
       {
         text: 'Work-Flow-Visuals',
         collapsable: false,
+        link: '/docs/Visual-Guide/README.md',
         items: [
           {
             text: 'EVER to EVM',
@@ -90,6 +91,7 @@ module.exports = {
       {
         text: 'Concepts',
         collapsable: true,
+        link: '/docs/Concepts/ToC.md',
         items: [
           { text: 'Token Types', collapsable: false, link: '/docs/Concepts/TokenTypes.md' },
           { text: 'Operations', collapsable: false, link: '/docs/Concepts/Operations.md' },

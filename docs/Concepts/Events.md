@@ -14,7 +14,7 @@ which is deployed by `EthereumEverscaleEventConfigurationFactory`.
 
 This contract has two version, one deploys `MultiVaultEVMEverscaleEventNative` contracts and another one deploys `MultiVaultEVMEverscaleEventAlien`.
 
-These contracts can be called by the user with `deployEvent` function on config contract or by the [credit modules](./CreditModules.md) with `deployEvents`.
+These contracts can be deployed by the user with calling `deployEvent` function or by [credit modules](./CreditModules.md) with calling `deployEvents` function on config contract.
 
 `MultiVaultEVMEverscaleEventNative` is deployed when transferring a native token and `MultiVaultEVMEverscaleEventAlien` are deployed when transferring alien token.
 
@@ -40,4 +40,4 @@ this contract has two versions, one deploys `MultiVaultEverscaleEVMEventNative` 
 
 `MultiVaultEverscaleEVMEventNative` is deployed when transferring a native token and `MultiVaultEverscaleEVMEventAlien` are deployed when transferring alien token.
 
-> In the Ever -> Evm direction, event deploying is done automatically.
+> ❗ In the Ever -> Evm direction, event deploying is done automatically.
