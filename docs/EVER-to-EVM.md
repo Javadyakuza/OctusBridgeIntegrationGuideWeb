@@ -239,4 +239,4 @@
 
 ---
 
-> Code samples related to examples above can be found [here](../src/webInteraction/md/EverToEvm/workFlow.md)
+> Code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)

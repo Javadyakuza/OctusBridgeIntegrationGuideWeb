@@ -121,7 +121,7 @@ struct EthereumEverscaleEventVoteData {
 }
 ```
 
-The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../src/webInteraction/md/EvmToEver/DeployEvents/Toc.md).
+The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md).
 
 | param            | description           |
 | ---------------- | --------------------- |
@@ -135,4 +135,4 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 
 ---
 
-> All of the scripts related to examples above can be found [here](../src/webInteraction/md/EvmToEver/workFlow.md)
+> All of the scripts related to examples above can be found [here](../src/codeSamples/md/EvmToEver/workFlow.md)

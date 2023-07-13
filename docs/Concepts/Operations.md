@@ -42,7 +42,7 @@ In the Evm to Ever direction, the following operations are performed on Everscal
 - In the Ever to Evm direction, If the Evm fees is payed with Evm gas tokens, the target assets need to be manually released or minted. Calling saveWithdrawNative will perform this operation for native tokens, while calling saveWithdrawAlien will perform it for alien tokens.
 
 - In the Evm to Ever direction, If Everscale fees are payed with Ever, the assets on Everscale need to be manually released or minted by deploying an event contract. \
-  see [Event contract deployment](../../src/webInteraction/md/EvmToEver/DeployEvents/Toc.md).
+  see [Event contract deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md).
 
 ## Automatic Asset releasing
 

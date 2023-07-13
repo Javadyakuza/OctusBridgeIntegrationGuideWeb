@@ -1,5 +1,6 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
+import { MaybeArray } from "rollup";
 import * as web3 from "web3";
 const MetamaskOptions: MetaMaskSDKOptions = {
   dappMetadata: { name: "OctusIntegrationGuide", url: "localhost:5173" },
@@ -42,11 +43,13 @@ const networksConfig = () => {
     },
   };
 };
+
 const connectToMetamaskWallet = async () => {
   await provider?.request({ method: "eth_requestAccounts", params: [] });
 };
+
 const changeMetaMaskNetwork = async (chainName: string) => {
-  const config = networksConfig() as { [key: string]: any };
+  const config: { [key: string]: any } = networksConfig();
   try {
     await provider?.request({
       method: "wallet_switchEthereumChain",

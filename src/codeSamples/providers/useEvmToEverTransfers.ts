@@ -93,12 +93,6 @@ async function TransferEvmMultiVaultToken(
     signer
   );
 
-  let MultiVaultToken = new ethers.Contract(
-    MultiVaultTokenAddress,
-    MultiVaultTokenAbi,
-    signer
-  );
-
   const recipient = {
     wid: everSender.toString().split(":")[0],
     addr: `0x${everSender.toString().split(":")[1]}`,
@@ -111,28 +105,12 @@ async function TransferEvmMultiVaultToken(
     ? ethers.parseUnits("6", 9)
     : "0";
   const deposit_payload = "0x";
-  try {
-    await MultiVaultToken.approve(
-      await MultiVault.getAddress(),
-      ethers.parseUnits(amount.toString(), 9)
-    );
-    if (
-      (
-        await MultiVaultToken.allowance(
-          signer.address,
-          await MultiVault.getAddress()
-        )
-      ).toString() < ethers.parseUnits(amount.toString(), 9).toString()
-    )
-      return ["ERROR : ", "allowance not enough"];
-  } catch (e: any) {
-    return ["an error accrued while approving: ", e.message];
-  }
+
   try {
     const res = await MultiVault.deposit(
       [
         recipient,
-        await MultiVaultToken.getAddress(),
+        MultiVaultTokenAddress,
         ethers.parseUnits(amount.toString(), 9).toString(),
         deposit_expected_evers,
         deposit_payload,

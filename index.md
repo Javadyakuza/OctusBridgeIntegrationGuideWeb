@@ -33,5 +33,5 @@ To implement custom cross-chain data bridging, it is necessary to develop, propo
 
 - Code Samples
 
-  - [EVER to Evm Code Samples](./src/webInteraction/md/EverToEvm/workFlow.md)
-  - [EVM to EVER Code Samples](./src/webInteraction/md/EvmToEver/workFlow.md)
+  - [EVER to Evm Code Samples](./src/codeSamples/md/EverToEvm/workFlow.md)
+  - [EVM to EVER Code Samples](./src/codeSamples/md/EvmToEver/workFlow.md)
