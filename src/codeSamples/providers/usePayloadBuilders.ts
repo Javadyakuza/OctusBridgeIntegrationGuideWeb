@@ -39,9 +39,9 @@ async function buildWrapPayload(
     evmRecipient: string,
     chainId: string;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, everSender, evmRecipient, chainId] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, everSender, evmRecipient, chainId] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }
@@ -115,9 +115,9 @@ async function buildWrapPayload(
 async function buildTransferPayload(): Promise<[string, string]> {
   let provider: ProviderRpcClient, evmRecipient: string, chainId: string;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, , evmRecipient, chainId] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, , evmRecipient, chainId] = providerDetails;
       // Use the returned values as needed
     } else {
       // Handle the case where the function returns undefined
@@ -180,9 +180,9 @@ async function buildBurnPayloadForEvmAlienToken(
 ): Promise<[string, string]> {
   let provider: ProviderRpcClient, evmRecipient: string;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, , evmRecipient] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, , evmRecipient] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }
@@ -251,9 +251,9 @@ async function buildBurnPayloadForEvmAlienToken(
 async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
   let provider: ProviderRpcClient, evmRecipient: string;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, , evmRecipient] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, , evmRecipient] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }
@@ -315,9 +315,9 @@ export async function buildSaveWithdraw(
 ): Promise<[string, string]> {
   let provider: ProviderRpcClient;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, , ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, , ,] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }

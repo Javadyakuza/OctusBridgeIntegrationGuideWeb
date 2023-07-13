@@ -15,9 +15,9 @@ export async function saveWithdrawNative(
   //  setting the wallets up
   let provider: ProviderRpcClient;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, , ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, , ,] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }
@@ -82,9 +82,9 @@ export async function saveWithdrawAlien(
   //  setting the wallets up
   let provider: ProviderRpcClient;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, , ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, , ,] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }

@@ -3,7 +3,6 @@ import { deployedContracts } from "./helpers/EvmConstants";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
-import MultiVaultTokenAbi from "./artifacts/EvmAbi/abi/MultiVaultToken.json";
 import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
 import { Address } from "everscale-inpage-provider";
 
@@ -13,9 +12,9 @@ async function TransferEvmGasToken(
 ): Promise<[string, string]> {
   let everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [, everSender, ,] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }
@@ -72,9 +71,9 @@ async function TransferEvmMultiVaultToken(
 ): Promise<[string, string]> {
   let everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [, everSender, ,] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }
@@ -131,9 +130,9 @@ async function TransferEvmAlienToken(
 ): Promise<[string, string]> {
   let everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [, everSender, ,] = providerDetails;
     } else {
       return ["ERROR", "rejection by user !"];
     }

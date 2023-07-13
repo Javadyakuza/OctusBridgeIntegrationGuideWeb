@@ -22,9 +22,9 @@ async function transferEverNativeCoin(
 ): Promise<[string, string[]] | unknown> {
   let provider: ProviderRpcClient, everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, everSender, ,] = providerDetails;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -82,9 +82,9 @@ async function transferEverNativeToken(
   // setting ever wallet
   let provider: ProviderRpcClient, everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, everSender, ,] = providerDetails;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -154,9 +154,9 @@ async function transferEverAlienToken(
 ): Promise<[string, string[]] | unknown> {
   let provider: ProviderRpcClient, everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, everSender, ,] = providerDetails;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
@@ -229,9 +229,9 @@ async function transferEverAlienEvmNativeCoin(
 ): Promise<[string, string[]] | unknown> {
   let provider: ProviderRpcClient, everSender: Address;
   try {
-    const returnedValues = await setupAndGetProvidersDetails();
-    if (returnedValues) {
-      [provider, everSender, ,] = returnedValues;
+    const providerDetails = await setupAndGetProvidersDetails();
+    if (providerDetails) {
+      [provider, everSender, ,] = providerDetails;
     } else {
       // Handle the case where the function returns undefined
       return ["ERROR", "rejection by user !"];
