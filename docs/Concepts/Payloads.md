@@ -12,5 +12,7 @@ For token transfers from Ever to Evm, payloads are needed. The instructions on h
 - Mint native and release alien token on Evm network:\
   The two mentioned operations can be performed using two functions: `saveWithdrawNative` for minting native tokens and `saveWithdrawAlien` for releasing alien tokens. The inputs for these functions are as follows:
 
-- [payload](../../src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md#save-withdraw-alien)
-- [signatures](../../src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md#save-withdraw-alien)
+- [Alien Events payload](../../src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md#encoding-payload-relevant-to-everscale-ethereum-event-alien)
+- [Native Events payload](../../src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawNative.md#encoding-payload-relevant-to-everscale-ethereum-event-native)
+- [Alien Events Signatures](../../src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md#encoding-signatures-relevant-to-everscale-ethereum-event-alien)
+- [Native Events Signatures](../../src/webInteraction/md/EverToEvm/saveWithdraw/saveWithdrawNative.md#encoding-signatures-relevant-to-everscale-ethereum-event-native)

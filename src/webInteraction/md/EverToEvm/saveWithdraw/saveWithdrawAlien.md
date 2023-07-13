@@ -3366,7 +3366,7 @@ const payload = web3.eth.abi.encodeParameters(
 
 <br/>
 
-#### Encoding signatures relevant to Everscale Ethereum Event Native
+#### Encoding signatures relevant to Everscale Ethereum Event Alien
 
 <br/>
 <details>
