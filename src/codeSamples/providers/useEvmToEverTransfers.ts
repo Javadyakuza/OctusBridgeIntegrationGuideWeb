@@ -7,7 +7,6 @@ import { deployedContracts } from "./helpers/EvmConstants";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 
-
 /**
  * Transfers an Evm gas token such BNB or DAI from an  Evm network to Everscale.
  * @param amount Token amount
@@ -72,8 +71,8 @@ async function TransferEvmGasToken(
         value: toBigInt(deposit_value) + ethers.parseEther(amount.toString()),
       }
     );
-    
-return ["successful, tx hash: ", res?.hash];
+
+    return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
     return ["an error accrued : ", e.message];
   }
@@ -91,6 +90,7 @@ async function TransferEvmMultiVaultToken(
   amount: number,
   payWithGasToken: boolean
 ): Promise<[string, string]> {
+  console.log("entered the multivault ");
   // fetching the ever receiver address
   let everSender: Address;
   try {
@@ -132,7 +132,13 @@ async function TransferEvmMultiVaultToken(
       : "0";
 
     const deposit_payload = "0x";
-
+    console.log(
+      recipient,
+      MultiVaultTokenAddress,
+      ethers.parseUnits(amount.toString(), 9).toString(),
+      deposit_expected_evers,
+      deposit_payload
+    );
     // depositing the native token
     const res = await MultiVault.deposit(
       [
@@ -146,8 +152,8 @@ async function TransferEvmMultiVaultToken(
         value: deposit_value,
       }
     );
-    
-return ["successful, tx hash: ", res?.hash];
+
+    return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
     return ["an error accrued : ", e.message];
   }
@@ -227,8 +233,9 @@ async function TransferEvmAlienToken(
             await MultiVault.getAddress()
           )
         ) < Number(ethers.parseEther(amount.toString()))
-      )
-        {return ["ERROR : ", "allowance not enough"];}
+      ) {
+        return ["ERROR : ", "allowance not enough"];
+      }
     } catch (e: any) {
       return ["an error accrued while approving: ", e.message];
     }
@@ -246,8 +253,8 @@ async function TransferEvmAlienToken(
         value: deposit_value,
       }
     );
-    
-return ["successful, tx hash: ", res?.hash];
+
+    return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
     return ["an error accrued : ", e.message];
   }

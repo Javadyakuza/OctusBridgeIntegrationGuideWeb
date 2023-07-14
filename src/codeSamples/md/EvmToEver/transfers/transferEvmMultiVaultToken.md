@@ -2832,7 +2832,6 @@ import { ethers } from "ethers";
 <br/>
 <label for="NativeToken">select the token </label>
 <select ref="NativeToken" @change="HandleSelectionChange">
- 
   <option value="BSCWEVER" selected>WEVER</option>
   <option value="BSCBRIDGE"  >BRIDGE</option>   
   <option value="BSCQUBE">QUBE</option>
