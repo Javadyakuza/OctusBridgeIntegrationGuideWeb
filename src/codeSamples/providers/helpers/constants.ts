@@ -40,10 +40,14 @@ export const MergePool_V4 = new Address(
   "0:ec31a2d0740402900a065d2fdd027ef31f0f3748a9862d113902acecc6acae18"
 );
 // merge pool
+
+//--- TOKENS --///
 export const EVERUSDT: Address = new Address(
   "0:a519f99bb5d6d51ef958ed24d337ad75a1c770885dcd42d51d6663f9fcdacfb2"
 );
 // ever USDT
+export const EVERUSDC: Address = new Address("");
+// ever USDC
 export const TargetTokenRootAlienEvmUSDT = new Address(
   "0:5f1ae3df506d1cec64cb2a30040a930f29e662a4527c1ddc0dfc2a86ba897dc4"
 );
@@ -52,11 +56,29 @@ export const EVERWBNB: Address = new Address(
   "0:9002c8a1cbbca3f9700b1b9438082342ede76d579e3a5a7c6f0e5d030ac5df43"
 );
 // ever WBNB
+export const EVERETH: Address = new Address(
+  "0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d"
+);
+export const EVERBTC: Address = new Address(
+  "0:9002c8a1cbbca3f9700b1b9438082342ede76d579e3a5a7c6f0e5d030ac5df43"
+);
+export const EVERMATIC: Address = new Address(
+  "0:d009bcd68fb281196d91b04ada7795e8774734979fe9345b24b1112ed856a51b"
+);
+export const EVERFTM: Address = new Address(
+  "0:d53f813f775ae9435cc1f35eb5d9608590e78b11420b0e4529acfa8b591c78f7"
+);
+export const EVERAVAX: Address = new Address(
+  "0:ebdf9c30182724001e5db8a66a985899821de5ac0dcae1293349fa942fcc8891"
+);
 export const EVERBRIDGE: Address = new Address(
   "0:f2679d80b682974e065e03bf42bbee285ce7c587eb153b41d761ebfd954c45e1"
 );
 export const EVERQUBE: Address = new Address(
   "0:9f20666ce123602fd7a995508aeaa0ece4f92133503c0dfbd609b3239f3901e2"
+);
+export const EVERDAI: Address = new Address(
+  "0:eb2ccad2020d9af9cec137d3146dde067039965c13a27d97293c931dae22b2b9"
 );
 // ever BRIDGE
 export const EvmReceiver = "0xF1B7B971Da6715ecDF24F0c38352618a059309d7";

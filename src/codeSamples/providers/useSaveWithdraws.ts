@@ -39,7 +39,7 @@ export async function saveWithdrawNative(
 
     //  fetching the MultiVault the contracts
     const MultiVault = new ethers.Contract(
-      constants.deployedContracts.BSCMultiVault,
+      constants.deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
@@ -47,8 +47,9 @@ export async function saveWithdrawNative(
     // preparing the payloads
     const { buildSaveWithdraw } = usePayloadBuilders();
     const rawSignatures: string[] = await getSignatures(eventAddress, provider);
-    if (rawSignatures[0] == "Error:")
-      {return [rawSignatures[0], rawSignatures[1]];}
+    if (rawSignatures[0] == "Error:") {
+      return [rawSignatures[0], rawSignatures[1]];
+    }
     const payload: [string, string] = await buildSaveWithdraw(eventAddress);
 
     // preparing the signatures
@@ -119,7 +120,7 @@ export async function saveWithdrawAlien(
 
     // fetching the MultiVault the contracts
     const MultiVault = new ethers.Contract(
-      constants.deployedContracts.BSCMultiVault,
+      constants.deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
@@ -127,8 +128,9 @@ export async function saveWithdrawAlien(
     //preparing the payload
     const { buildSaveWithdraw } = usePayloadBuilders();
     const rawSignatures: string[] = await getSignatures(eventAddress, provider);
-    if (rawSignatures[0] == "Error:")
-      {return [rawSignatures[0], rawSignatures[1]];}
+    if (rawSignatures[0] == "Error:") {
+      return [rawSignatures[0], rawSignatures[1]];
+    }
     const Payload: [string, string] = await buildSaveWithdraw(eventAddress);
 
     // preparing the signatures

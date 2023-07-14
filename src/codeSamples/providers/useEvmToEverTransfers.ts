@@ -38,7 +38,7 @@ async function TransferEvmGasToken(
 
     // fetching the MultiVault contract
     const MultiVault = new ethers.Contract(
-      deployedContracts.BSCMultiVault,
+      deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
@@ -90,7 +90,6 @@ async function TransferEvmMultiVaultToken(
   amount: number,
   payWithGasToken: boolean
 ): Promise<[string, string]> {
-  console.log("entered the multivault ");
   // fetching the ever receiver address
   let everSender: Address;
   try {
@@ -112,7 +111,7 @@ async function TransferEvmMultiVaultToken(
     const signer = await evmProvider.getSigner();
 
     const MultiVault = new ethers.Contract(
-      deployedContracts.BSCMultiVault,
+      deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
@@ -132,13 +131,7 @@ async function TransferEvmMultiVaultToken(
       : "0";
 
     const deposit_payload = "0x";
-    console.log(
-      recipient,
-      MultiVaultTokenAddress,
-      ethers.parseUnits(amount.toString(), 9).toString(),
-      deposit_expected_evers,
-      deposit_payload
-    );
+
     // depositing the native token
     const res = await MultiVault.deposit(
       [
@@ -192,7 +185,7 @@ async function TransferEvmAlienToken(
 
     // fetching the contracts
     const MultiVault = new ethers.Contract(
-      deployedContracts.BSCMultiVault,
+      deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
