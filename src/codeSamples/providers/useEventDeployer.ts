@@ -1,24 +1,24 @@
+import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
+import { ethers } from "ethers";
 import {
   Contract,
   ProviderRpcClient,
   Address,
   Transaction,
 } from "everscale-inpage-provider";
-import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
-import { usePayloadBuilders } from "./usePayloadBuilders";
+
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import {
   EthereumEverscaleEventConfigurationA,
   EthereumEverscaleEventConfigurationN,
 } from "./helpers/constants";
-import { setupAndGetProvidersDetails } from "./useWalletsData";
-import { ethers } from "ethers";
 import {
   fetchAlienEventAddressFromOriginTxHash,
   fetchNativeEventAddressFromOriginTxHash,
 } from "./helpers/deriveEventAddressFromOriginHash";
-
 import { EventVoteData, EventVoteDataParam } from "./types";
+import { usePayloadBuilders } from "./usePayloadBuilders";
+import { setupAndGetProvidersDetails } from "./useWalletsData";
 
 /**
  *
@@ -49,9 +49,9 @@ async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
 
   // building the payload
   const { buildAlienEventVoteData } = usePayloadBuilders();
-  let eventLog: [string, string] | EventVoteData =
+  const eventLog: [string, string] | EventVoteData =
     await buildAlienEventVoteData(evmTxHash);
-  if (Array.isArray(eventLog)) return eventLog;
+  if (Array.isArray(eventLog)) {return eventLog;}
 
   let eventData: string | undefined;
 
@@ -93,7 +93,8 @@ async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
       provider,
       res?.id.hash
     ))!;
-    return ["event address : ", eventAddress.toString()];
+    
+return ["event address : ", eventAddress.toString()];
   } catch (error: any) {
     return ["ERROR: ", error.message];
   }
@@ -128,9 +129,9 @@ async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
 
   // Building the payload
   const { buildNativeEventVoteData } = usePayloadBuilders();
-  let eventLog: [string, string] | EventVoteData =
+  const eventLog: [string, string] | EventVoteData =
     await buildNativeEventVoteData(evmTxHash);
-  if (Array.isArray(eventLog)) return eventLog;
+  if (Array.isArray(eventLog)) {return eventLog;}
 
   let eventData: string | undefined;
 
@@ -169,7 +170,8 @@ async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
       });
     const eventAddress: Address =
       (await fetchNativeEventAddressFromOriginTxHash(provider, res?.id.hash))!;
-    return ["event address : ", eventAddress.toString()];
+    
+return ["event address : ", eventAddress.toString()];
   } catch (error: any) {
     return ["ERROR: ", error.message];
   }

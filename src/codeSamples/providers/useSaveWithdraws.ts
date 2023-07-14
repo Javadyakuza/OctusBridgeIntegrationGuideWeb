@@ -2,6 +2,7 @@ import BigNumber from "bignumber.js";
 import { ethers, TransactionResponse } from "ethers";
 import { ProviderRpcClient, Address } from "everscale-inpage-provider";
 import { eth, utils } from "web3";
+
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
 import * as constants from "./helpers/EvmConstants";
 import { getSignatures } from "./helpers/getSignatures";
@@ -47,7 +48,7 @@ export async function saveWithdrawNative(
     const { buildSaveWithdraw } = usePayloadBuilders();
     const rawSignatures: string[] = await getSignatures(eventAddress, provider);
     if (rawSignatures[0] == "Error:")
-      return [rawSignatures[0], rawSignatures[1]];
+      {return [rawSignatures[0], rawSignatures[1]];}
     const payload: [string, string] = await buildSaveWithdraw(eventAddress);
 
     // preparing the signatures
@@ -127,7 +128,7 @@ export async function saveWithdrawAlien(
     const { buildSaveWithdraw } = usePayloadBuilders();
     const rawSignatures: string[] = await getSignatures(eventAddress, provider);
     if (rawSignatures[0] == "Error:")
-      return [rawSignatures[0], rawSignatures[1]];
+      {return [rawSignatures[0], rawSignatures[1]];}
     const Payload: [string, string] = await buildSaveWithdraw(eventAddress);
 
     // preparing the signatures

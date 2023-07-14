@@ -1,6 +1,5 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
-import { MaybeArray } from "rollup";
 import * as web3 from "web3";
 const MetamaskOptions: MetaMaskSDKOptions = {
   dappMetadata: { name: "OctusIntegrationGuide", url: "localhost:5173" },

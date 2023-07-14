@@ -1,10 +1,6 @@
-import {
-  Contract,
-  ProviderRpcClient,
-  Address,
-  Transaction,
-} from "everscale-inpage-provider";
-import { FactorySource, factorySource } from "./artifacts/build/factorySource";
+import { Contract } from "everscale-inpage-provider";
+
+import { FactorySource } from "./artifacts/build/factorySource";
 
 // event vote data interface to be passed to deployEvent function  on EventConfig contract.
 export interface EventVoteData {

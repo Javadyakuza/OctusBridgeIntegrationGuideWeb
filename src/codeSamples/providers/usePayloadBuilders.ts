@@ -10,8 +10,8 @@ import * as web3 from "web3";
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import * as constants from "./helpers/constants";
 import { getRandomUint } from "./helpers/randuint";
-import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { EventVoteData, PackedCell } from "./types";
+import { setupAndGetProvidersDetails } from "./useWalletsData";
 
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
@@ -441,7 +441,7 @@ export async function buildNativeEventVoteData(
   );
 
   // NativeTransfer event interface
-  let abi = new ethers.Interface([
+  const abi = new ethers.Interface([
     `event NativeTransfer(
         int8 native_wid,
         uint256 native_addr,
@@ -460,10 +460,11 @@ export async function buildNativeEventVoteData(
     if (!txReceipt) {
       return ["ERROR: ", "Transaction receipt not found"];
     }
-    const logs = txReceipt.logs
+    const txLogs = txReceipt.logs
       .map((log) => {
         try {
-          let abiArgs = { topics: [log.topics[0]], data: log.data };
+          const abiArgs = { topics: [log.topics[0]], data: log.data };
+
           return {
             index: log.index,
             data: log.data,
@@ -478,17 +479,22 @@ export async function buildNativeEventVoteData(
       data: string;
       parsedLog: any;
     }[];
-    const log = logs.find((log) => log.parsedLog.name === "NativeTransfer");
-    if (!log) return ["ERROR", "couldn't find NativeTransfer Event "];
+    const log = txLogs.find(
+      (txLog) => txLog.parsedLog.name === "NativeTransfer"
+    );
+    if (!log) {
+      return ["ERROR", "couldn't find NativeTransfer Event "];
+    }
 
     // preprint the event vote data
     const eventVoteData: EventVoteData = {
       eventTransaction: txReceipt.hash,
-      eventIndex: log?.index!,
-      eventData: log?.data!,
+      eventIndex: log?.index,
+      eventData: log?.data,
       eventBlockNumber: txReceipt.blockNumber,
       eventBlock: txReceipt.blockHash,
     };
+
     return eventVoteData;
   } catch (e: any) {
     return ["ERROR", e.message];
@@ -509,7 +515,7 @@ export async function buildAlienEventVoteData(
   );
 
   // AlienTransfer event interface
-  let abi = new ethers.Interface([
+  const abi = new ethers.Interface([
     `event AlienTransfer(
         uint256 base_chainId,
         uint160 base_token,
@@ -531,10 +537,11 @@ export async function buildAlienEventVoteData(
     if (!txReceipt) {
       return ["ERROR: ", "Transaction receipt not found"];
     }
-    const logs = txReceipt.logs
+    const txLogs = txReceipt.logs
       .map((log) => {
         try {
-          let abiArgs = { topics: [log.topics[0]], data: log.data };
+          const abiArgs = { topics: [log.topics[0]], data: log.data };
+
           return {
             index: log.index,
             data: log.data,
@@ -549,14 +556,18 @@ export async function buildAlienEventVoteData(
       data: string;
       parsedLog: any;
     }[];
-    const log = logs.find((log) => log.parsedLog.name === "AlienTransfer");
-    if (!log) return ["ERROR", "couldn't find AlienTransfer Event "];
+    const log = txLogs.find(
+      (txLog) => txLog.parsedLog.name === "AlienTransfer"
+    );
+    if (!log) {
+      return ["ERROR", "couldn't find AlienTransfer Event "];
+    }
 
     // preparing the event vote data
     const eventVoteData: EventVoteData = {
       eventTransaction: txReceipt.hash,
-      eventIndex: log?.index!,
-      eventData: log?.data!,
+      eventIndex: log?.index,
+      eventData: log?.data,
       eventBlockNumber: txReceipt.blockNumber,
       eventBlock: txReceipt.blockHash,
     };

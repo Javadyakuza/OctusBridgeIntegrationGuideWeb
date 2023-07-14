@@ -1,10 +1,12 @@
 import { ethers, toBigInt } from "ethers";
+import { Address } from "everscale-inpage-provider";
+
+import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
+import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
 import { deployedContracts } from "./helpers/EvmConstants";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
-import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
-import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
-import { Address } from "everscale-inpage-provider";
+
 
 /**
  * Transfers an Evm gas token such BNB or DAI from an  Evm network to Everscale.
@@ -70,7 +72,8 @@ async function TransferEvmGasToken(
         value: toBigInt(deposit_value) + ethers.parseEther(amount.toString()),
       }
     );
-    return ["successful, tx hash: ", res?.hash];
+    
+return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
     return ["an error accrued : ", e.message];
   }
@@ -143,7 +146,8 @@ async function TransferEvmMultiVaultToken(
         value: deposit_value,
       }
     );
-    return ["successful, tx hash: ", res?.hash];
+    
+return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
     return ["an error accrued : ", e.message];
   }
@@ -187,7 +191,7 @@ async function TransferEvmAlienToken(
       signer
     );
 
-    let ERC20Token = new ethers.Contract(
+    const ERC20Token = new ethers.Contract(
       tokenAddress,
       ERC20TokenAbi.abi,
       signer
@@ -224,7 +228,7 @@ async function TransferEvmAlienToken(
           )
         ) < Number(ethers.parseEther(amount.toString()))
       )
-        return ["ERROR : ", "allowance not enough"];
+        {return ["ERROR : ", "allowance not enough"];}
     } catch (e: any) {
       return ["an error accrued while approving: ", e.message];
     }
@@ -242,7 +246,8 @@ async function TransferEvmAlienToken(
         value: deposit_value,
       }
     );
-    return ["successful, tx hash: ", res?.hash];
+    
+return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
     return ["an error accrued : ", e.message];
   }
