@@ -12,7 +12,8 @@ import * as constants from "./helpers/constants";
 import { getRandomUint } from "./helpers/randuint";
 import { EventVoteData, PackedCell } from "./types";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
-
+import { useEvmProvider } from "../../providers/useEvmProvider";
+import { deriveEvmAlienTokenRoot } from "./helpers/deriveEvmAlienTokenRoot";
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
  * @param everSender sender ever account wallet address
@@ -115,10 +116,7 @@ async function buildTransferPayload(): Promise<[string, string]> {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {
       [provider, , evmRecipient, chainId] = providerDetails;
-      // Use the returned values as needed
     } else {
-      // Handle the case where the function returns undefined
-
       return ["ERROR", "rejection by user !"];
     }
   } catch (error: any) {
@@ -176,7 +174,7 @@ async function buildTransferPayload(): Promise<[string, string]> {
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
  */
 async function buildBurnPayloadForEvmAlienToken(
-  TargetTokenRootAlienEvm: Address
+  TargetTokenEvmAddress: string
 ): Promise<[string, string]> {
   // fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string;
@@ -190,7 +188,15 @@ async function buildBurnPayloadForEvmAlienToken(
   } catch (error: any) {
     return ["ERROR", error.message];
   }
-
+  // fetching he token root
+  const TargetTokenRootAlienEvm: Address | [string, string] =
+    await deriveEvmAlienTokenRoot(
+      provider,
+      new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider()),
+      TargetTokenEvmAddress
+    );
+  console.log(TargetTokenRootAlienEvm);
+  if (Array.isArray(TargetTokenRootAlienEvm)) return TargetTokenRootAlienEvm;
   try {
     // encoding the data
     const operationPayload: PackedCell = await provider.packIntoCell({
@@ -435,9 +441,9 @@ export async function buildSaveWithdraw(
 export async function buildNativeEventVoteData(
   txHash: string
 ): Promise<[string, string] | EventVoteData> {
-  // simple Jrpc provider just to read data
-  const provider = new ethers.JsonRpcProvider(
-    "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
+  // fetching the wallets data
+  const provider = new ethers.BrowserProvider(
+    useEvmProvider().MetaMaskProvider()
   );
 
   // NativeTransfer event interface
@@ -509,9 +515,9 @@ export async function buildNativeEventVoteData(
 export async function buildAlienEventVoteData(
   txHash: string
 ): Promise<[string, string] | EventVoteData> {
-  // simple Jrpc provider just to read the data
-  const provider = new ethers.JsonRpcProvider(
-    "https://endpoints.omniatech.io/v1/bsc/mainnet/public"
+  // fetching the wallets data
+  const provider = new ethers.BrowserProvider(
+    useEvmProvider().MetaMaskProvider()
   );
 
   // AlienTransfer event interface

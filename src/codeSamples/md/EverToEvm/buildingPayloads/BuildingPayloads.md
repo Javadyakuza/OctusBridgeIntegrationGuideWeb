@@ -65,7 +65,7 @@ structure: [
 });
 
 // {remainingGasTo} will be Ever user address if asset releasing is done manually and Event closer if automatically.
-const remainingGasTo = releaseByEver ? constants.EventCloser : everSender;
+const remainingGasTo = releaseByEver ? EventCloser : everSender;
 /**
 * Encodes data about the EVER wrapper
 * @param to {address} : WEVER receiver, must be ProxyMultiVaultNativeV_4 which can be found in addresses.
@@ -74,7 +74,7 @@ const remainingGasTo = releaseByEver ? constants.EventCloser : everSender;
 */
 const compounderPayload = await provider.packIntoCell({
 data: {
-to: constants.ProxyMultiVaultNativeV_4,
+to: ProxyMultiVaultNativeV_4,
 amount: locklift.utils.toNano(amount),
 remainingGasTo,
 payload: data.boc, // boc is payload string
@@ -261,13 +261,18 @@ const operationPayload = await provider.packIntoCell({
 </details>
 <br/>
 <label for="burnToken">select the token </label>
-<select ref="burnToken" >
-  <option value="TargetTokenRootAlienEvmUSDT" selected >USDT</option>
+<select @change="HandleSelection" ref="burnToken" >
+  <option value="USDT" selected >USDT</option>
+  <option value="USDC" >USDC</option>
+  <option value="WETH" >WETH</option>
+  <option value="WBTC" >WBTC</option>
+  <option value="DAI" >DAI</option>
+
 </select>
 
 <br/>
 
-<button @click="HandleBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn Payload</button>
+<button ref="buildBurnAlien" @click="HandleBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn USDT Payload</button>
 
 <p class="output-p" ref="burnPayloadOutput"></p>
 
@@ -278,7 +283,7 @@ The provided payload is utilized for transferring an Evm gas token (such as BNB,
 > ❗ this payload is only available on Binance Smart chain at the moment.
 
 <details>
-<summary>show code</summary>w
+<summary>show code</summary>
 
 ```typescript
 //initial the Tvm provider as mentioned in prerequisites section
@@ -291,9 +296,9 @@ The provided payload is utilized for transferring an Evm gas token (such as BNB,
    */
   const burnPayload = await provider.packIntoCell({
     data: {
-      addr: constants.unWrapper,
+      addr: unWrapper,
       callback: {
-        recipient: constants.unWrapper,
+        recipient: unWrapper,
         payload: encodeBase64(web3.eth.abi.encodeParameters(["address"], [evmRecipient])) ?? "",
         strict: false,
       },
@@ -340,7 +345,7 @@ The provided payload is utilized for transferring an Evm gas token (such as BNB,
 
 </details>
 
-<button @click="HandleNativeBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn Payload </button>
+<button ref="buildBurnNative" @click="HandleNativeBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn {{BurnNativeBtnText(true)}} Payload </button>
 
 <p class="output-p" ref="burnNativePayloadOutput"></p>
 
@@ -350,8 +355,9 @@ The provided payload is utilized for transferring an Evm gas token (such as BNB,
 import { usePayloadBuilders } from "../../../providers/usePayloadBuilders";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "Everscale-inpage-provider";
-import * as constants from "../../../providers/helpers/constants";
-
+import {deployedContracts} from "../../../providers/helpers/EvmConstants";
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {ethers} from "ethers" 
 export default defineComponent({
   name: "buildPayload",
   setup() {
@@ -363,6 +369,13 @@ export default defineComponent({
       format,
     } = usePayloadBuilders();
 
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
+    const BurnNativeBtnText = (auto : boolean ) => {
+      if (auto) return useEvmProvider().getSymbol()
+
+      }
     async function HandleWrapPayload() {
       this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
       var wrapPayloadOutput = await buildWrapPayload(
@@ -382,8 +395,9 @@ export default defineComponent({
     }
     async function HandleBurnPayload() {
       this.$refs.burnPayloadOutput.innerHTML = "processing ...";
+      const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
       var burnPayloadOutput = await buildBurnPayloadForEvmAlienToken(
-        constants[this.$refs.burnToken.value]
+        deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.burnToken.value]
       );
       this.$refs.burnPayloadOutput.innerHTML = format(burnPayloadOutput);
     }
@@ -393,12 +407,18 @@ export default defineComponent({
       this.$refs.burnNativePayloadOutput.innerHTML = format(
         burnNativePayloadOutput
       );
+    } 
+    async function HandleSelection(){
+      console.log(this.$refs.burnToken.value)
+    this.$refs.buildBurnAlien.innerHTML = ` build burn ${this.$refs.burnToken.value} payload`
     }
     return {
       HandleWrapPayload,
       HandleTransferPayload,
       HandleBurnPayload,
       HandleNativeBurnPayload,
+      HandleSelection,
+      BurnNativeBtnText
     };
   },
 });

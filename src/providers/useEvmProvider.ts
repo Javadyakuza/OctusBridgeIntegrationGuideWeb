@@ -42,6 +42,13 @@ const networksConfig = () => {
     },
   };
 };
+const chainsTokens: { [key: string]: string } = {
+  1: "ETH",
+  56: "BNB",
+  137: "MATIC",
+  250: "FTM",
+  43114: "AVAX",
+};
 
 const connectToMetamaskWallet = async (): Promise<void> => {
   await provider?.request({ method: "eth_requestAccounts", params: [] });
@@ -84,6 +91,10 @@ const MetaMaskProvider = (): MetaMaskInpageProvider => {
   return MMSDK.getProvider()!;
 };
 
+const getSymbol = (): string | undefined => {
+  return chainsTokens[Number(MMSDK.getProvider()!.chainId!)] ?? undefined;
+};
+
 export function useEvmProvider() {
   return {
     connectToMetamaskWallet,
@@ -91,5 +102,6 @@ export function useEvmProvider() {
     MetaMaskProvider,
     HandleAccountChange,
     changeMetaMaskNetwork,
+    getSymbol,
   };
 }

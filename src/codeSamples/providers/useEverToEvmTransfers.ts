@@ -173,7 +173,7 @@ async function transferEverNativeToken(
  */
 async function transferEverAlienToken(
   tokenAddress: Address,
-  tokenAddressEvmAlien: Address,
+  EvmTokenAddress: string,
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string] | unknown> {
@@ -208,7 +208,7 @@ async function transferEverAlienToken(
     const { buildBurnPayloadForEvmAlienToken } = usePayloadBuilders();
 
     const burnPayload: [string, string] =
-      await buildBurnPayloadForEvmAlienToken(tokenAddressEvmAlien); // first str is payload and second str is randomNonce
+      await buildBurnPayloadForEvmAlienToken(EvmTokenAddress); // first str is payload and second str is randomNonce
 
     // burning
     const res: Transaction = await alienTokenWalletUpgradable.methods

@@ -51,6 +51,9 @@ export const EVERUSDC: Address = new Address("");
 export const TargetTokenRootAlienEvmUSDT = new Address(
   "0:5f1ae3df506d1cec64cb2a30040a930f29e662a4527c1ddc0dfc2a86ba897dc4"
 );
+export const TargetTokenRootAlienEvmUSDC = new Address(
+  "0:26d233676e2b5f9fa93ea0cf59c9b2795e33f22fbea58f8f861854d668534094"
+);
 // MergePoolUSDTEvmBsc
 export const EVERWBNB: Address = new Address(
   "0:9002c8a1cbbca3f9700b1b9438082342ede76d579e3a5a7c6f0e5d030ac5df43"
@@ -83,7 +86,7 @@ export const EVERDAI: Address = new Address(
 // ever BRIDGE
 export const EvmReceiver = "0xF1B7B971Da6715ecDF24F0c38352618a059309d7";
 // sample evm receiver
-export const unWrapper = "0xa5cf4c57a7756943559B6B65f6cC67Aa834F79F5";
+export const unWrapper = "0xa5cf4c57a7756943559B6B65f6cC67Aa834F79F5"; // same for all networks
 // unWrapper for evm native token
 export const transfer_fees = {
   EverToEvmAutoRelease: ethers.parseUnits("13", 9),
