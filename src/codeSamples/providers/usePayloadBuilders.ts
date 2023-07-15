@@ -9,11 +9,11 @@ import * as web3 from "web3";
 
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import * as constants from "./helpers/constants";
+import { deriveEvmAlienTokenRoot } from "./helpers/deriveEvmAlienTokenRoot";
 import { getRandomUint } from "./helpers/randuint";
 import { EventVoteData, PackedCell } from "./types";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
-import { deriveEvmAlienTokenRoot } from "./helpers/deriveEvmAlienTokenRoot";
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
  * @param everSender sender ever account wallet address
@@ -195,8 +195,9 @@ async function buildBurnPayloadForEvmAlienToken(
       new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider()),
       TargetTokenEvmAddress
     );
-  console.log(TargetTokenRootAlienEvm);
-  if (Array.isArray(TargetTokenRootAlienEvm)) return TargetTokenRootAlienEvm;
+  if (Array.isArray(TargetTokenRootAlienEvm)) {
+    return TargetTokenRootAlienEvm;
+  }
   try {
     // encoding the data
     const operationPayload: PackedCell = await provider.packIntoCell({
@@ -590,8 +591,8 @@ export async function buildAlienEventVoteData(
  * @returns {string} formatted string.
  */
 const format = (data: string[]): string => {
-  return `payload : ${data[0]} <br/>
-  random nonce : ${data[1]}
+  return `${data[0] != "ERROR" ? "payload : " : ""}  ${data[0]} <br/>
+  ${data[0] != "ERROR" ? "random nonce" : ""} ${data[1]}
 `;
 };
 

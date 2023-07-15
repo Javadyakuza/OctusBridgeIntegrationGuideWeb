@@ -213,7 +213,15 @@ async function transferEverAlienToken(
     // burning
     const res: Transaction = await alienTokenWalletUpgradable.methods
       .burn({
-        amount: ethers.parseUnits(amount.toString(), 6).toString(),
+        amount: ethers
+          .parseUnits(
+            amount.toString(),
+            Number(
+              (await alienTokenRoot.methods.decimals({ answerId: 0 }).call({}))
+                .value0
+            )
+          )
+          .toString(),
         callbackTo: constants.MergePool_V4,
         payload: burnPayload[0],
         remainingGasTo: payWithEver ? constants.EventCloser : everSender,

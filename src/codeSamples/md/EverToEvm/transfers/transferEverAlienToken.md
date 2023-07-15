@@ -471,9 +471,13 @@ const payWithEver: boolean = true;
 const auto_value: number = 13;
 const manual_value: number = 6;
 
-// preparing the payload. see building payloads section
+/**
+ * preparing the payload. see building payloads section
+ * @param tokenEvmAddress address of the target token on evm network
+ */
+
 const burnPayload: [string, string] = await buildBurnPayloadForEvmAlienToken(
-  tokenAddressEvmAlien // different version of the the target token, it's address can be found in addresses section
+  tokenEvmAddress
 );
 
 /**
@@ -505,7 +509,10 @@ await AlienTokenWalletUpgradable.methods
 <br/>
 <label for="AlienToken">select the token </label>
 <select ref="AlienToken" @change="HandleSelectionChange">
-  <option value="TargetTokenRootAlienEvmUSDT">USDT</option>
+  <option value="EVERUSDT" selected >USDT</option>
+  <option value="EVERUSDC">USDC</option>
+  <option value="EVERDAI">DAI</option>
+  <option value="EVERWBTC">WBTC</option>
 </select>
 <br/>
 
@@ -517,7 +524,7 @@ await AlienTokenWalletUpgradable.methods
 <input ref="everPay" type="checkbox"/>
 
 <br/>
-<button @click="HandleTransferEverAlienToken" style="{background-color : gray, border-radius: 100px}">Transfer Alien token</button>
+<button ref="transferAlienTokenBtn" @click="HandleTransferEverAlienToken" style="{background-color : gray, border-radius: 100px}">Transfer USDT token</button>
 
 <p class="output-p" ref="EverAlienTokenOutput"></p>
 
@@ -529,22 +536,33 @@ import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers"
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
+import {deployedContracts} from "../../../providers/helpers/EvmConstants"
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 export default defineComponent({
   name: "EverAlienTokenTransfer",
   setup() {
     const { transferEverAlienToken } = useEverToEvmTransfers();
     async function HandleTransferEverAlienToken(){
         this.$refs.EverAlienTokenOutput.innerHTML = "processing ...";
+        if (Number(this.$refs.amount.value) <= 0){
+          this.$refs.EverAlienTokenOutput.innerHTML = "ERROR: please enter valid number !!"
+          return 
+        }
+        
         const transferAlienTokenOutput = await transferEverAlienToken(
-            constants.EVERUSDT,
             constants[this.$refs.AlienToken.value],
+            deployedContracts[Number(await useEvmProvider().MetaMaskProvider().chainId)][this.$refs.AlienToken.value.split("EVER")[1]],
             this.$refs.amount.value,
             this.$refs.everPay.checked 
         );
         this.$refs.EverAlienTokenOutput.innerHTML = transferAlienTokenOutput;
     }
+    async function HandleSelectionChange(){
+      this.$refs.transferAlienTokenBtn.innerHTML = `Transfer ${this.$refs.AlienToken.value.split("EVER")[1]} Token`
+    }
     return {
       HandleTransferEverAlienToken,
+      HandleSelectionChange
     };
   },
 });

@@ -6,14 +6,18 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
 async function checkMetaMaskNetwork() {
   const evmProvider = useEvmProvider();
 
-  if (evmProvider.MetaMaskProvider().chainId! != "56") {
+  if (Number(evmProvider.MetaMaskProvider().chainId!) != 56) {
     try {
       await useEvmProvider().changeMetaMaskNetwork("BSC");
 
-      return true;
+      return Number(evmProvider.MetaMaskProvider().chainId!) != 56
+        ? false
+        : true;
     } catch (e) {
       return undefined;
     }
+  } else {
+    return true;
   }
 }
 
@@ -49,16 +53,7 @@ export async function setupAndGetProvidersDetails(): Promise<
 
     return [provider, everSender, evmRecipient, chainId];
   } else {
-    // means not connected, trying to connect ...
-    await evmProvider.connectToMetamaskWallet();
-    if ((await evmProvider.getAccounts())![0] != undefined) {
-      evmRecipient = (await evmProvider.getAccounts())![0];
-      chainId = evmProvider.MetaMaskProvider().chainId!;
-
-      return [provider, everSender, evmRecipient, chainId];
-    } else {
-      // means user rejected the connection
-      return undefined;
-    }
+    // means rejection by user
+    return undefined;
   }
 }

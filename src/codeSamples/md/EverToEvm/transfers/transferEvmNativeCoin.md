@@ -511,7 +511,7 @@ await AlienTokenWalletUpgradable.methods
 <input class="everPayCheck" ref="everPay" type="checkbox"/>
 
 <br/>
-<button @click="HandleTransferEvmNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer Evm Native Coin</button>
+<button @click="HandleTransferEvmNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer {{BurnNativeBtnText()}}</button>
 
 <p class="output-p" ref="EvmNativeCoinOutput"></p>
 
@@ -523,15 +523,27 @@ import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers"
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 
 export default defineComponent({
   name: "EvmNativeCoinTransfer",
   setup() {
     const { transferEverAlienEvmNativeCoin } = useEverToEvmTransfers();
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
+    const BurnNativeBtnText = () => {
+     return useEvmProvider().getSymbol()
+
+      }
     async function HandleTransferEvmNativeCoin(){
         this.$refs.EvmNativeCoinOutput.innerHTML = "processing ...";
+        if (Number(this.$refs.amount.value) <= 0){
+          this.$refs.EvmNativeCoinOutput.innerHTML = "ERROR: please enter valid number !!"
+          return 
+        }
         const EvmNativeCoinOutput = await transferEverAlienEvmNativeCoin(
-            constants.EVERWBNB,
+            constants[`EVERW${BurnNativeBtnText()}`],
             this.$refs.amount.value,
             this.$refs.everPay.checked 
         );
@@ -539,6 +551,7 @@ export default defineComponent({
     }
     return {
       HandleTransferEvmNativeCoin,
+      BurnNativeBtnText
     };
   },
 });

@@ -1,11 +1,12 @@
+import { BrowserProvider, ethers } from "ethers";
 import {
   Address,
   Contract,
   ProviderRpcClient,
 } from "everscale-inpage-provider";
-import { FactorySource, factorySource } from "../artifacts/build/factorySource";
+
 import { ProxyMultivaultAlienV_7 } from "./constants";
-import { BrowserProvider, ethers } from "ethers";
+import { FactorySource, factorySource } from "../artifacts/build/factorySource";
 import ERC20Abi from "../artifacts/EvmAbi/abi/ERC20.json";
 export async function deriveEvmAlienTokenRoot(
   provider: ProviderRpcClient,
@@ -46,6 +47,7 @@ export async function deriveEvmAlienTokenRoot(
         })
         .call({})
     ).value0;
+    console.log(res);
     return res;
   } catch (e: any) {
     return ["ERROR: ", e];
