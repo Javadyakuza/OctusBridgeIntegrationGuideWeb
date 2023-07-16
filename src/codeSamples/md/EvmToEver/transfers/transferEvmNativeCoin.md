@@ -2835,7 +2835,7 @@ import { ethers, toBigInt } from "ethers";
 <input ref="gasTokenPay" type="checkbox"/>
 <br/>
 
-<button @click="HandleTransferEvmGasToken" style="{background-color : gray, border-radius: 100px}">Approve and Transfer Gas Token</button>
+<button @click="HandleTransferEvmGasToken" style="{background-color : gray, border-radius: 100px}">Transfer {{BurnNativeBtnText()}}</button>
 
 <p class="output-p" ref="TransferEvmGasToken"></p>
 
@@ -2845,13 +2845,18 @@ import { ethers, toBigInt } from "ethers";
 import { useEvmToEverTransfers } from "../../../providers/useEvmToEverTransfers";
 import { defineComponent, ref, onMounted } from "vue";
 import { deployedContracts} from "../../../providers/helpers/EvmConstants";
-
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 const { TransferEvmGasToken } = useEvmToEverTransfers();
 
 export default defineComponent({
   name: "TransferEvmGasToken",
   setup() {
-
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
+    const BurnNativeBtnText = () => {
+     return useEvmProvider().getSymbol()
+      }
     async function HandleTransferEvmGasToken() {
       this.$refs.TransferEvmGasToken.innerHTML = "processing ...";
      if (Number(this.$refs.amount.value) <= 0) {
@@ -2860,12 +2865,14 @@ export default defineComponent({
       }
       let output = await TransferEvmGasToken(
         this.$refs.amount.value, 
-        this.$refs.gasTokenPay.checked
+        this.$refs.gasTokenPay.checked,
+        BurnNativeBtnText()
         );
       this.$refs.TransferEvmGasToken.innerHTML = output;
     }
     return {
       HandleTransferEvmGasToken,
+      BurnNativeBtnText
     };
   },
 });

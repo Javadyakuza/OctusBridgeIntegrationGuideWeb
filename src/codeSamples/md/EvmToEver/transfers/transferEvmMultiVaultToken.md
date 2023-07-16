@@ -2832,9 +2832,9 @@ import { ethers } from "ethers";
 <br/>
 <label for="NativeToken">select the token </label>
 <select ref="NativeToken" @change="HandleSelectionChange">
-  <option value="BSCWEVER" selected>WEVER</option>
-  <option value="BSCBRIDGE"  >BRIDGE</option>   
-  <option value="BSCQUBE">QUBE</option>
+  <option value="WEVER" selected>WEVER</option>
+  <option value="BRIDGE">BRIDGE</option>   
+  <option value="QUBE">QUBE</option>
 
 </select>
 
@@ -2848,7 +2848,7 @@ import { ethers } from "ethers";
 <input ref="gasTokenPay" type="checkbox"/>
 <br/>
 
-<button ref="TransferNativeTokenButton" @click="HandleTransferNativeToken" style="{background-color : gray, border-radius: 100px}">Approve and Transfer WEVER</button>
+<button ref="TransferNativeTokenButton" @click="HandleTransferNativeToken" style="{background-color : gray, border-radius: 100px}">Burn WEVER</button>
 
 <p class="output-p" ref="TransferNativeToken"></p>
 
@@ -2858,15 +2858,22 @@ import { ethers } from "ethers";
 import { useEvmToEverTransfers } from "../../../providers/useEvmToEverTransfers";
 import { defineComponent, ref, onMounted } from "vue";
 import { deployedContracts} from "../../../providers/helpers/EvmConstants";
-
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {ethers} from "ethers";
 const { TransferEvmMultiVaultToken } = useEvmToEverTransfers();
 
 export default defineComponent({
   name: "TransferNativeToken",
   setup() {
 
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
+    const symbol = () => {
+     return useEvmProvider().getSymbol()
+      }
     async function HandleSelectionChange(){
-        this.$refs.TransferNativeTokenButton.innerHTML = `approve and Transfer ${this.$refs.NativeToken.value.split("BSC")[1]}`
+        this.$refs.TransferNativeTokenButton.innerHTML = `Burn ${this.$refs.NativeToken.value}`
     }
     async function HandleTransferNativeToken() {
       this.$refs.TransferNativeToken.innerHTML = "processing ...";
@@ -2874,10 +2881,12 @@ export default defineComponent({
         this.$refs.TransferNativeToken.innerHTML = "ERROR: please enter valid amount !!"
         return;
       }
+      const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
       let output = await TransferEvmMultiVaultToken(
-        deployedContracts[this.$refs.NativeToken.value],
+        deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.NativeToken.value],
         this.$refs.amount.value, 
-        this.$refs.gasTokenPay.checked
+        this.$refs.gasTokenPay.checked,
+        symbol()
         );
       this.$refs.TransferNativeToken.innerHTML = output;
     }

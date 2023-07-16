@@ -47,7 +47,7 @@ export async function deriveEvmAlienTokenRoot(
         })
         .call({})
     ).value0;
-    console.log(res);
+
     return res;
   } catch (e: any) {
     return ["ERROR: ", e];

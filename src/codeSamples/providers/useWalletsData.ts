@@ -2,24 +2,7 @@ import { ProviderRpcClient, Address } from "everscale-inpage-provider";
 
 import { useEvmProvider } from "../../providers/useEvmProvider";
 
-// changes to BSC network, its temporary and will change the network to other networks too.
-async function checkMetaMaskNetwork() {
-  const evmProvider = useEvmProvider();
-
-  if (Number(evmProvider.MetaMaskProvider().chainId!) != 56) {
-    try {
-      await useEvmProvider().changeMetaMaskNetwork("BSC");
-
-      return Number(evmProvider.MetaMaskProvider().chainId!) != 56
-        ? false
-        : true;
-    } catch (e) {
-      return undefined;
-    }
-  } else {
-    return true;
-  }
-}
+const supportedNetworks = [1, 56, 137, 43114, 250];
 
 // sets up the tvm and evm browser injected providers. (metamask and everWallet)
 export async function setupAndGetProvidersDetails(): Promise<
@@ -42,11 +25,15 @@ export async function setupAndGetProvidersDetails(): Promise<
 
   let evmRecipient: string;
   let chainId: string;
-
+  // checks if the network is one of the supported networks.
   if (
-    (await evmProvider.getAccounts())![0] != undefined &&
-    (await checkMetaMaskNetwork())
-  ) {
+    !supportedNetworks.includes(Number(evmProvider.MetaMaskProvider().chainId!))
+  )
+    {throw new Error(
+      `unsupported network, only 
+  Ethereum, BNB Chain, Polygon, Avalanche and Fantom are supported.`
+    );}
+  if ((await evmProvider.getAccounts())![0] != undefined) {
     // means user is well connected
     evmRecipient = (await evmProvider.getAccounts())![0];
     chainId = evmProvider.MetaMaskProvider().chainId!;

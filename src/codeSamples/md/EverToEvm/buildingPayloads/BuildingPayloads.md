@@ -1099,7 +1099,6 @@ const operationPayload = await provider.packIntoCell({
 <select @change="HandleSelection" ref="burnToken" >
   <option value="USDT" selected >USDT</option>
   <option value="USDC" >USDC</option>
-  <option value="WETH" >WETH</option>
   <option value="WBTC" >WBTC</option>
   <option value="DAI" >DAI</option>
 
@@ -1209,7 +1208,6 @@ export default defineComponent({
     })
     const BurnNativeBtnText = () => {
      return useEvmProvider().getSymbol()
-
       }
     async function HandleWrapPayload() {
       this.$refs.wrapPayloadOutput.innerHTML = "processing ...";

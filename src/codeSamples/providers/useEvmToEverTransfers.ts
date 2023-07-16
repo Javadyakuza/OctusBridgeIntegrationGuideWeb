@@ -4,9 +4,9 @@ import { Address } from "everscale-inpage-provider";
 import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
 import { deployedContracts } from "./helpers/EvmConstants";
+import { calculateEventContractDeployValueInEvmGasToken } from "./helpers/fetchEventDeployValueInEvmGasToken";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
-
 /**
  * Transfers an Evm gas token such BNB or DAI from an  Evm network to Everscale.
  * @param amount Token amount
@@ -15,7 +15,8 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
  */
 async function TransferEvmGasToken(
   amount: number,
-  payWithGasToken: boolean
+  payWithGasToken: boolean,
+  symbol: string
 ): Promise<[string, string]> {
   // fetching the ever receiver address
   let everSender: Address;
@@ -42,6 +43,7 @@ async function TransferEvmGasToken(
       MultiVaultAbi.abi,
       signer
     );
+    // checking the balance
 
     // preparing the values
     const recipient = {
@@ -49,8 +51,17 @@ async function TransferEvmGasToken(
       addr: `0x${everSender.toString().split(":")[1]}`,
     };
 
+    const depositManualValue =
+      await calculateEventContractDeployValueInEvmGasToken(symbol);
+    if (
+      (await calculateEventContractDeployValueInEvmGasToken(symbol))[0] ==
+      "ERROR: "
+    ) {
+      return depositManualValue;
+    }
+
     const deposit_value = payWithGasToken
-      ? ethers.parseEther("0.0016").toString()
+      ? ethers.parseEther(depositManualValue[1]).toString()
       : "0";
 
     const deposit_expected_evers = payWithGasToken
@@ -58,7 +69,22 @@ async function TransferEvmGasToken(
       : "0";
 
     const deposit_payload = "0x";
-
+    // checking the balance
+    if (payWithGasToken) {
+      if (
+        (await evmProvider.getBalance(signer.getAddress())) <=
+        toBigInt(deposit_value) + ethers.parseEther(amount.toString())
+      ) {
+        return ["ERROR: ", "low balance"];
+      }
+    } else {
+      if (
+        (await evmProvider.getBalance(signer.getAddress())) <=
+        ethers.parseEther(amount.toString())
+      ) {
+        return ["ERROR: ", "low balance"];
+      }
+    }
     // depositing the gas token
     const res = await MultiVault.depositByNativeToken(
       [
@@ -88,7 +114,8 @@ async function TransferEvmGasToken(
 async function TransferEvmMultiVaultToken(
   MultiVaultTokenAddress: string,
   amount: number,
-  payWithGasToken: boolean
+  payWithGasToken: boolean,
+  symbol: string
 ): Promise<[string, string]> {
   // fetching the ever receiver address
   let everSender: Address;
@@ -121,9 +148,16 @@ async function TransferEvmMultiVaultToken(
       wid: everSender.toString().split(":")[0],
       addr: `0x${everSender.toString().split(":")[1]}`,
     };
-
+    const depositManualValue =
+      await calculateEventContractDeployValueInEvmGasToken(symbol);
+    if (
+      (await calculateEventContractDeployValueInEvmGasToken(symbol))[0] ==
+      "ERROR: "
+    ) {
+      return depositManualValue;
+    }
     const deposit_value = payWithGasToken
-      ? ethers.parseEther("0.0016").toString()
+      ? ethers.parseEther(depositManualValue[1]).toString()
       : "0";
 
     const deposit_expected_evers = payWithGasToken
@@ -131,6 +165,14 @@ async function TransferEvmMultiVaultToken(
       : "0";
 
     const deposit_payload = "0x";
+    // checking the balance
+    if (
+      payWithGasToken &&
+      (await evmProvider.getBalance(signer.getAddress())) <=
+        toBigInt(deposit_value)
+    ) {
+      return ["ERROR: ", "low balance"];
+    }
 
     // depositing the native token
     const res = await MultiVault.deposit(
@@ -162,7 +204,8 @@ async function TransferEvmMultiVaultToken(
 async function TransferEvmAlienToken(
   tokenAddress: string,
   amount: number,
-  payWithGasToken: boolean
+  payWithGasToken: boolean,
+  symbol: string
 ): Promise<[string, string]> {
   // fetching the ever receiver address
   let everSender: Address;
@@ -201,9 +244,18 @@ async function TransferEvmAlienToken(
       wid: everSender.toString().split(":")[0],
       addr: `0x${everSender.toString().split(":")[1]}`,
     };
+    const decimals = await ERC20Token.decimals();
+    const depositManualValue =
+      await calculateEventContractDeployValueInEvmGasToken(symbol);
+    if (
+      (await calculateEventContractDeployValueInEvmGasToken(symbol))[0] ==
+      "ERROR: "
+    ) {
+      return depositManualValue;
+    }
 
     const deposit_value = payWithGasToken
-      ? ethers.parseEther("0.0016").toString()
+      ? ethers.parseUnits(depositManualValue[1], decimals).toString()
       : "0";
 
     const deposit_expected_evers = payWithGasToken
@@ -212,11 +264,19 @@ async function TransferEvmAlienToken(
 
     const deposit_payload = "0x";
 
+    // checking the balance
+    if (
+      payWithGasToken &&
+      (await evmProvider.getBalance(signer.getAddress())) <=
+        toBigInt(deposit_value)
+    ) {
+      return ["ERROR: ", "low balance"];
+    }
     // approving the MultiVault contract
     try {
       await ERC20Token.approve(
         await MultiVault.getAddress(),
-        ethers.parseEther("0.01")
+        ethers.parseUnits(amount.toString(), decimals)
       );
       // confirming that the contract is approved fro desired amount
       if (
@@ -238,7 +298,7 @@ async function TransferEvmAlienToken(
       [
         recipient,
         await ERC20Token.getAddress(),
-        ethers.parseEther(amount.toString()),
+        ethers.parseUnits(amount.toString(), decimals),
         deposit_expected_evers,
         deposit_payload,
       ],

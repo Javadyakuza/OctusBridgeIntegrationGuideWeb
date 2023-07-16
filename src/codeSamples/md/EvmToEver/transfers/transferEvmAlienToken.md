@@ -3146,10 +3146,11 @@ import { ethers } from "ethers";
 <br/>
 <label for="AlienToken">select the token </label>
 <select ref="AlienToken" @change="HandleSelectionChange">
-
-  <option value="BSCUSDT" selected >USDT</option>
-  <option value="BSCDAI">DAI</option>
-</select>
+  <option value="USDT" selected >USDT</option>
+  <option value="USDC">USDC</option>
+  <option value="DAI">DAI</option>
+  <option value="WBTC">WBTC</option>
+  </select>
 
 <br/>
 
@@ -3171,15 +3172,21 @@ import { ethers } from "ethers";
 import { useEvmToEverTransfers } from "../../../providers/useEvmToEverTransfers";
 import { defineComponent, ref, onMounted } from "vue";
 import { deployedContracts} from "../../../providers/helpers/EvmConstants";
-
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {ethers} from "ethers"
 const { TransferEvmAlienToken } = useEvmToEverTransfers();
 
 export default defineComponent({
   name: "TransferAlienToken",
   setup() {
-
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
+    const symbol = () => {
+     return useEvmProvider().getSymbol()
+      }
     async function HandleSelectionChange(){
-        this.$refs.TransferAlienTokenButton.innerHTML = `approve and Transfer ${this.$refs.AlienToken.value.split("BSC")[1]}`
+        this.$refs.TransferAlienTokenButton.innerHTML = `approve and Transfer ${this.$refs.AlienToken.value}`
     }
     async function HandleTransferAlienToken() {
       this.$refs.TransferAlienToken.innerHTML = "processing ...";
@@ -3187,10 +3194,12 @@ export default defineComponent({
         this.$refs.TransferAlienToken.innerHTML = "ERROR: please enter valid amount !!"
         return;
       }
+      const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
       let output = await TransferEvmAlienToken(
-        deployedContracts[this.$refs.AlienToken.value],
+        deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.AlienToken.value],
         this.$refs.amount.value, 
-        this.$refs.gasTokenPay.checked
+        this.$refs.gasTokenPay.checked,
+        symbol()
         );
       this.$refs.TransferAlienToken.innerHTML = output;
     }
