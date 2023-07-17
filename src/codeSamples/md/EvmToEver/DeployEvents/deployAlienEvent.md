@@ -116,7 +116,7 @@ const EthereumEverscaleEventConfAbi = {
 //Import following libraries
 import { ethers } from "ethers";
 
-//initial the Evm provider as mentioned in prerequisites section
+//Initial the Evm provider as mentioned in prerequisites section
 
 // AlienTransfer event Abi interface
 let abi = new ethers.Interface([
@@ -134,15 +134,17 @@ let abi = new ethers.Interface([
         bytes payload
     )`,
 ]);
+
 /**
+ * Fetches the transaction receipt from a tx hash to extract the logs and use them to build event vote data.
  * @param txHash The initializer transaction hash which called one of the deposit functions on MultiVault contract
- * fetches the transaction receipt from tx hash to extract the logs and use them to build event vote data to be used when deploying an alien event contract on Everscale
  */
 const txReceipt = await provider.getTransactionReceipt(txHash);
 if (!txReceipt) {
-  return ["ERROR: ", "Transaction receipt not found"];
+  throw new Error("Transaction receipt not found");
 }
-// fetching the logs from that receipt
+
+// Fetching the logs from that receipt
 const logs = txReceipt.logs
   .map((log) => {
     try {
@@ -161,11 +163,12 @@ const logs = txReceipt.logs
   data: string;
   parsedLog: any;
 }[];
-// finding the AlienTransfer event from fetched logs
+
+// Finding the AlienTransfer event from fetched logs
 const log = logs.find((log) => log.parsedLog.name === "AlienTransfer");
 
 // building the event vote data
-const eventVoteData: EventVoteData = {
+const eventLog = {
   eventTransaction: txReceipt.hash,
   eventIndex: log?.index!,
   eventData: log?.data!,
@@ -186,9 +189,9 @@ const eventVoteData: EventVoteData = {
 
 ```typescript
 //Import following libraries
-import { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
+import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
 
-//initial the Tvm provider as mentioned in prerequisites section
+//Initial the Tvm provider as mentioned in prerequisites section
 
 /**
  * @param EthereumEverscaleEventConfAbi The event config contract Abi
@@ -199,28 +202,18 @@ const EvmEverEventConf = new provider.Contract(
   EthereumEverscaleAlienEventConfigurationAddr
 );
 
-// event vote data interface
-interface EventVoteData {
-  eventTransaction: string;
-  eventIndex: number;
-  eventData: string;
-  eventBlockNumber: number;
-  eventBlock: string;
-}
-
-//  building the event vote data. see Building Alien event Vote Data in previous accordion
-let eventLog: EventVoteData = await buildAlienEventVoteData();
-
-// getting the details from config contract to extract the event contract Abi and use it when encoding event data
+// Fetching the details from config contract to extract the event contract Abi and use it when encoding event data
 const ethConfigDetails = await EvmEverEventConf.methods
   .getDetails({ answerId: 0 })
   .call({});
-// fetching the flags from the config contract to use when encoding the event data
+
+// Fetching the flags from the config contract to use when encoding the event data
 const flags = (
   await EvmEverEventConf.methods.getFlags({ answerId: 0 }).call({})
 )._flags;
 
-// encoding the event data
+// Encoding the event data
+await init(); // initializing the wasm
 const eventData: string = await mapEthBytesIntoTonCell(
   Buffer.from(
     ethConfigDetails._basicConfiguration.eventABI,
@@ -229,8 +222,8 @@ const eventData: string = await mapEthBytesIntoTonCell(
   eventLog.eventData,
   flags
 );
-// preparing the parameter
 
+// Preparing the parameter's
 const eventVoteData = {
   eventTransaction: eventLog.eventTransaction,
   eventIndex: eventLog.eventIndex,

@@ -1,12 +1,12 @@
 # Transfer Native Token
 
-When transferring native tokens such as **BRIDGE**, **QUBE** and **WEVER**, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed.
+When transferring native tokens such as **BRIDGE**, **QUBE** and **WEVER**, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to release tokens on Everscale.
 
 The code samples below demonstrate how to perform the first step of this process.
 
-In order to have a complete token bridging process, Once initiated a transaction on this section, get you transaction hash and use it on [deploy native event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
+In order to have a complete token bridging process, If paying the event contract deployment with Evm gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Native Event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
 
-In this example, MultiVault contract Abi are required:
+In this example, MultiVault contract Abi is required:
 
 <div class="TransferNativeToken">
 
@@ -2761,19 +2761,19 @@ const MultiVaultAbi = {
 
 <br/>
 <details>
-<summary>Transfer native Token</summary>
+<summary>Transfer Native Token</summary>
 
 ```typescript
 //Import following libraries
 import { ethers } from "ethers";
 
-//initial the Evm provider as mentioned in prerequisites section
+//Initial the Evm provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddr MultiVault Contract Address
  * @param MultiVaultAbi MultiVault Contract Abi
  * @param signer Evm signer
- * @dev use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
+ * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
     MultiVaultAddr,
@@ -2781,43 +2781,45 @@ import { ethers } from "ethers";
     signer
   );
 
-/**
- * @param payWithGasToken pay Everscale fees with evm gas token ?
- * @param amount token amount to transfer
- * @param recipient sample ever recipient
- * @param deposit_value amount of gas token to attach to transaction
- * @important @param deposit_expected_evers its very important to be set properly to certain the behavior of the operation,
- * if zero => manual event deployment or if 5( event initial value ) => automatic event deployment
- * @param deposit_payload operational payload for everscale which is not needed in normal transfers
- * @param NativeTokenAddr the address of the target native token. replace with relevant address
- */
-  const payWithGasToken: boolean = true
+  // Pay Everscale fees with evm gas token ?
+  const payWithGasToken: boolean;
 
-  const amount: number = "0.01"
+  // Amount to transfer
+  const amount: string;
 
+  // Everscale receiver address. e.g. 0:0000...0000
+  const everAddress : string;
+
+  // Everscale Address Evm object
   const recipient = {
-    wid: everSender.toString().split(":")[0],
-    addr: `0x${everSender.toString().split(":")[1]}`,
+    wid: everAddress.split(":")[0],
+    addr: `0x${everAddress.split(":")[1]}`,
   };
 
+  /**
+   * @param deployEventValueInEvmGasToken {string} Event contract initial balance in Evm gas token.
+   */
   const deposit_value = payWithGasToken
-    ? ethers.parseEther("0.0016").toString()
+    ? ethers.parseEther(deployEventValueInEvmGasToken).toString()
     : "0";
 
+  // See Concepts -> operations -> Event Contract Deploy Value
   const deposit_expected_evers = payWithGasToken
     ? ethers.parseUnits("6", 9)
     : "0";
 
+  // Operational payload
   const deposit_payload = "0x";
 
-  const NativeTokenAddr = "0x0"
+  // Target native token address on Evm network
+  const NativeTokenAddr: string;
 
- // calling deposit on MultiVault contract with prepared values
+ // Calling deposit on MultiVault contract with prepared values
   const res = await MultiVault.deposit(
     [
         recipient,
         NativeTokenAddr,
-        ethers.parseEther(amount.toString()),
+        ethers.parseUnits(amount, 9),
         deposit_expected_evers,
         deposit_payload,
     ],

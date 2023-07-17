@@ -255,7 +255,7 @@ async function TransferEvmAlienToken(
     }
 
     const deposit_value = payWithGasToken
-      ? ethers.parseUnits(depositManualValue[1], decimals).toString()
+      ? ethers.parseEther(depositManualValue[1]).toString()
       : "0";
 
     const deposit_expected_evers = payWithGasToken
