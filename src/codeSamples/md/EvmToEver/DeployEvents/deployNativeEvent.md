@@ -133,7 +133,7 @@ let abi = new ethers.Interface([
 
 /**
  * Fetches the transaction receipt from a tx hash to extract the logs and use them to build event vote data.
- * @param txHash The initializer transaction hash which called one of the deposit functions on MultiVault contract
+ * @param txHash {string} The initializer transaction hash which called one of the deposit functions on MultiVault contract
  */
 const txReceipt = await provider.getTransactionReceipt(txHash);
 if (!txReceipt) {
@@ -185,13 +185,17 @@ const eventLog = {
 
 ```typescript
 //Import following libraries
-import { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
+import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
+import { Address } from "everscale-inpage-provider";
 
 //Initial the Tvm provider as mentioned in prerequisites section
 
+// Everscale user address
+const everSender: Address = new Address("0:12345");
+
 /**
- * @param EthereumEverscaleEventConfAbi The event config contract Abi
- * @param EthereumEverscaleNativeEventConfigurationAddr The Native event config contract address. can be found in addresses section
+ * @param EthereumEverscaleEventConfAbi {JSON} The event config contract Abi
+ * @param EthereumEverscaleNativeEventConfigurationAddr {Address} The Native event config contract address.
  */
 const EvmEverEventConf = new provider.Contract(
   EthereumEverscaleEventConfAbi,
@@ -209,6 +213,7 @@ const flags = (
 )._flags;
 
 // Encoding the event data
+await init();
 const eventData: string = await mapEthBytesIntoTonCell(
   Buffer.from(
     ethConfigDetails._basicConfiguration.eventABI,
@@ -218,8 +223,17 @@ const eventData: string = await mapEthBytesIntoTonCell(
   flags
 );
 
+// Event vote data interface
+interface EventVoteData {
+  eventTransaction: string;
+  eventIndex: number;
+  eventData: string;
+  eventBlockNumber: number;
+  eventBlock: string;
+}
+
 // Preparing the parameters
-const eventVoteData = {
+const eventVoteData: EventVoteData = {
   eventTransaction: eventLog.eventTransaction,
   eventIndex: eventLog.eventIndex,
   eventData: eventData,
@@ -228,10 +242,10 @@ const eventVoteData = {
 };
 
 /**
- * @param eventVoteData prepared event vote data
- * @param from user Ever address
- * @param amount event initial value
- * @param bounce should return remained gas ?
+ * @param eventVoteData {EventVoteData} prepared event vote data
+ * @param from {Address} user Ever address
+ * @param amount {string} event initial value
+ * @param bounce {boolean} should return remained gas ?
  */
 await EvmEverEventConf.methods
   .deployEvent({ eventVoteData: eventVoteData })

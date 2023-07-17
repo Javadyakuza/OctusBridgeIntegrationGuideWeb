@@ -3070,13 +3070,14 @@ const ERC20Abi = {
 ```typescript
 //Import following libraries
 import { ethers } from "ethers";
+import {Address} from "everscale-inpage-provider"
 
 //Initial the Evm provider as mentioned in prerequisites section
 
 /**
- * @param MultiVaultAddr MultiVault Contract Address
- * @param MultiVaultAbi MultiVault Contract Abi
- * @param signer Evm signer
+ * @param MultiVaultAddr {string} MultiVault Contract Address
+ * @param MultiVaultAbi {JSON} MultiVault Contract Abi
+ * @param signer Evm signer. see prerequisites section
  * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
@@ -3086,9 +3087,9 @@ import { ethers } from "ethers";
   );
 
 /**
- * @param tokenAddress Target alien token address
- * @param ERC20TokenAbi ERC20 Contract Abi
- * @param signer Evm signer
+ * @param tokenAddress {string} Target alien token address
+ * @param ERC20TokenAbi {JSON} ERC20 Contract Abi
+ * @param signer Evm signer. see prerequisites section
  * @dev Use JSON.parse(JSON.stringify(ERC20Abi)) as the abi if encountering json parse error
  */
   let ERC20Token = new ethers.Contract(tokenAddress, ERC20Abi, signer);
@@ -3100,13 +3101,13 @@ import { ethers } from "ethers";
   const amount: string;
 
   // Target ERC20 token decimals
-  const decimals = await ERC20Token.decimals();
+  const decimals: string = await ERC20Token.decimals();
 
   // Everscale receiver address. e.g. 0:0000...0000
   const everAddress : string;
 
   // Everscale Address Evm object
-  const recipient = {
+  const recipient: Address = {
     wid: everAddress.split(":")[0],
     addr: `0x${everAddress.split(":")[1]}`,
   };
@@ -3114,17 +3115,17 @@ import { ethers } from "ethers";
   /**
    * @param deployEventValueInEvmGasToken {string} Event contract initial balance in Evm gas token.
    */
-  const deposit_value = payWithGasToken
+  const deposit_value: string = payWithGasToken
     ? ethers.parseEther(deployEventValueInEvmGasToken).toString()
     : "0";
 
   // See Concepts -> operations -> Event Contract Deploy Value
-  const deposit_expected_evers = payWithGasToken
-    ? ethers.parseUnits("6", 9)
+  const deposit_expected_evers: string = payWithGasToken
+    ? ethers.parseUnits("6", 9).toString()
     : "0";
 
   // Operational payload
-  const deposit_payload = "0x";
+  const deposit_payload: string = "0x";
 
   // Approving the MultiVault contract
   await ERC20Token.approve(
@@ -3132,7 +3133,14 @@ import { ethers } from "ethers";
     ethers.parseUnits(amount, decimals).toString()
     );
 
- // Calling deposit on MultiVault contract with prepared values
+  /**
+   * @param recipient {Address} Recipient Everscale address
+   * @param token {string} Target Token address
+   * @param amount {string} Token amount to transfer
+   * @param deposit_expected_evers {string} Event initial balance
+   * @param deposit_payload {string} Operational payload
+   * @param deposit_value Amount of gas tokens attached to tx
+   */
   const res = await MultiVault.deposit(
     [
         recipient,
