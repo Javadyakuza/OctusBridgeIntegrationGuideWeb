@@ -2,17 +2,20 @@
 
 ## Evm Smart Contracts
 
-This table contains the Evm smart contracts mentioned in the Ever-to-Evm.md and Evm-to-Ever.md files.
+The following table presents the smart contracts on EVM networks.
 
-| network 𝜤 Contract Name                         | MultiVault                                 | UnWrapper                                  |
-| ----------------------------------------------- | ------------------------------------------ | ------------------------------------------ |
-| Ethereum, BNB Chain, Polygon, Fantom, Avalanche | 0x54c55369A6900731D22eACb0DF7C0253CF19dFff | 0xa5cf4c57a7756943559B6B65f6cC67Aa834F79F5 |
+| Contract Name | global Address                             |
+| ------------- | ------------------------------------------ |
+| UnWrapper     | 0x54c55369A6900731D22eACb0DF7C0253CF19dFff |
+| MultiVault    | 0x54c55369A6900731D22eACb0DF7C0253CF19dFff |
+
+> note that the mentioned contracts have same addresses on all of the supported Evm networks.
 
 ## Everscale Smart Contracts
 
-This table contains the Everscale Smart Contracts mentioned in the Ever-to-Evm.md and Evm-to-Ever.md files.
+The following table presents the smart contracts on Everscale network.
 
-| contract name    | Ever address                                                       |
+| contract name    | Everscale Address                                                  |
 | ---------------- | ------------------------------------------------------------------ |
 | vault            | 0:557957cba74ab1dc544b4081be81f1208ad73997d74ab3b72d95864a41b779a4 |
 | Compounder       | 0:8707c99c2e4a98642ba29a9d389656e804bd5b3cbe11a426ca12335792168d8a |
@@ -41,20 +44,22 @@ This table contains EthereumEverscaleEventConfiguration contract addresses for e
 | network | ---           | ---                                                                | ---                                                                |
 | global  | ---           | 0:a8698f1a9bd48201b1eafcb6975b90b60867063ffff3cc7114a480f924999b75 | 0:6b7e3255de478ff6b5d441235e6ea6c43764f897dd761d56c2fdf7199d80cf86 |
 
-Opposite of the ethereumEverscaleEventConfigurations, the EverscaleEthereumEventConfigurations are having just two addresses on Everscale which supports all Evm networks.
+The EverscaleEthereumEventConfigurations differ from the ethereumEverscaleEventConfigurations in that they only consist of two addresses on Everscale, which provide support for all EVM networks.
 
 ## TokensAddress
 
-This table contains Everscale network mentioned tokens.
+This table presents mentioned Everscale tokens.
 
-| Token name | Ever Address                                                       |
+| Token name | Everscale Address                                                  |
 | ---------- | ------------------------------------------------------------------ |
 | WEVER      | 0:ba1d79499624b1f998a82e951cf2ffd000d17c8f2e14779fcf8cddedb1b90a13 |
+| BRIDGE     | 0:f2679d80b682974e065e03bf42bbee285ce7c587eb153b41d761ebfd954c45e1 |
+| QUBE       | 0:9f20666ce123602fd7a995508aeaa0ece4f92133503c0dfbd609b3239f3901e2 |
 | WBTC       | 0:89534ea68ec2e6bcf5eb51d62592cda08c3c2a45a362be97cd340683f5d0a5f6 |
 | WETH       | 0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d |
 | USDT       | 0:1b62e528d0c2d0ee20c4aef5294214295998465b58d947405ee757cecfb47148 |
-| BRIDGE     | 0:f2679d80b682974e065e03bf42bbee285ce7c587eb153b41d761ebfd954c45e1 |
-| QUBE       | 0:9f20666ce123602fd7a995508aeaa0ece4f92133503c0dfbd609b3239f3901e2 |
+| USDC       | 0:c37b3fafca5bf7d3704b081fde7df54f298736ee059bf6d32fac25f5e6085bf6 |
+| DAI        | 0:eb2ccad2020d9af9cec137d3146dde067039965c13a27d97293c931dae22b2b9 |
 
 ---
 
@@ -83,3 +88,11 @@ This table contains Everscale network mentioned tokens.
 #### USDT
 
 > https://Everscan.io/accounts/0:1b62e528d0c2d0ee20c4aef5294214295998465b58d947405ee757cecfb47148
+
+#### USDC
+
+> https://Everscan.io/accounts/0:c37b3fafca5bf7d3704b081fde7df54f298736ee059bf6d32fac25f5e6085bf6
+
+#### DAI
+
+> https://Everscan.io/accounts/0:eb2ccad2020d9af9cec137d3146dde067039965c13a27d97293c931dae22b2b9
