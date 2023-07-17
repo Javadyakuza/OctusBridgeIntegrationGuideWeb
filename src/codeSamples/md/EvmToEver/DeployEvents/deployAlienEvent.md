@@ -241,7 +241,7 @@ const eventVoteData = {
 await EvmEverEventConf.methods
   .deployEvent({ eventVoteData: eventVoteData })
   .send({
-    from: await everSender,
+    from: everSender,
     amount: ethers.parseUnits("6", 9).toString(),
     bounce: true,
   });

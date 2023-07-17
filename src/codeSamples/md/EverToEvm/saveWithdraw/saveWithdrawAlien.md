@@ -3275,36 +3275,39 @@ import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
 import * as web3 from "web3";
 import { ethers } from "ethers";
 
-//initial the Tvm provider as mentioned in prerequisites section
+//Initial the Tvm provider as mentioned in prerequisites section
 
 /**
- * @param EverscaleEthereumBaseEventABI event contract abi
- * @param EverEvmAlienEventContractAddress relevant deployed event contract address
+ * @param EverscaleEthereumBaseEventABI {JSON} Event contract abi
+ * @param EverEvmAlienEventContractAddress {Address} Relevant deployed event contract address
  */
 const EverEvmEventContract = new provider.Contract(
   EverscaleEthereumBaseEventABI,
   EverscaleEthereumBaseEventAddr
 );
-// fetches the event contract details
+
+// Fetching the event contract details
 const eventDetails = await EverEvmEventContract.methods
   .getDetails({ answerId: 0 })
   .call({});
+
 /**
- * @param EverscaleEthereumEventConfigurationABI event contract abi
- * @param EverscaleEthereumEventConfigurationAddr config contract address which is fetched from event contract details
+ * @param EverscaleEthereumEventConfigurationABI {JSON} Event contract abi
+ * @param EverscaleEthereumEventConfigurationAddr {Address} Config contract address which is fetched from event contract details
  */
 const EverEvmAlienEventConf = new provider.Contract(
   EverscaleEthereumEventConfiguration,
   eventDetails._eventInitData.configuration
 );
 
+// Fetching the event config contract details
 const [eventConfigDetails, flags] = await Promise.all([
   await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
   (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
     ._flags,
 ]);
 
-// preparing the payload
+// Preparing the payload
 const eventDataEncoded = mapTonCellIntoEthBytes(
   Buffer.from(
     (await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}))
@@ -3376,19 +3379,18 @@ const payload = web3.eth.abi.encodeParameters(
 // Import the required libraries
 import * as web3 from "web3";
 
-//initial the Tvm provider as mentioned in prerequisites section
+//Initial the Tvm provider as mentioned in prerequisites section
 
 /**
- * @param EverscaleEthereumBaseEventABI ABI of event contract
- * @param EverscaleEthereumBaseEventAddr address of the relevant deployed event contract
- * fetches the event contract
+ * @param EverscaleEthereumBaseEventABI {JSON} ABI of event contract
+ * @param EverscaleEthereumBaseEventAddr {Address} address of the relevant deployed event contract
  */
 const eventContract = new provider.Contract(
   EverscaleEthereumBaseEventABI,
   EverscaleEthereumBaseEventAddr
 );
 
-// get signatures array from deployed event contract
+// fetching the  signatures array from event contract
 let rawSignatures = (
   await eventContract.methods.getDetails({ answerId: 0 }).call({})
 )._signatures;
@@ -3433,16 +3435,20 @@ signatures.sort((a, b) => {
 // Import the required libraries
 import { ethers } from "ethers";
 
-//initial the Evm provider as mentioned in prerequisites section
+//Initial the Evm provider as mentioned in prerequisites section
 
 /**
- * @param MultiVaultAddress contract address of MultiVault contract on target Evm network, can be found in addresses section
- * @param MultiVaultAbi MultiVault contract ABI
- * @param signer signer of the transaction which is metamask
- * @dev use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
+ * @param MultiVaultAddress {Address} contract address of MultiVault contract on target Evm network, can be found in addresses section
+ * @param MultiVaultAbi {JSON} MultiVault contract ABI
+ * @param signer Signer of the transaction. see prerequisites section
+ * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
  */
 let MultiVault = new ethers.Contract(MultiVaultAddress, MultiVaultAbi, signer);
-// releases token with prepared values
+
+/**
+ * @param Payload {bytes} The operational payload
+ * @param Signatures {bytes[]} The relayers signatures
+ */
 await MultiVault.saveWithdrawAlien(
   Payload,
   signatures.map(({ signature }) => signature)

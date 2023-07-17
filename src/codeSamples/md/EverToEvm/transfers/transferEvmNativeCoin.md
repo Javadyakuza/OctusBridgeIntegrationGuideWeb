@@ -1,10 +1,11 @@
-# Transfer Evm Native coin
+# Transfer Evm Gas Token
 
 <div class="EvmNativeCoinTransfer">
 
-The target Evm network gas tokens such as **BNB**, **ETH**, **FTM**, **MATIC** and others, which are known as alien tokens as well as ERC-20 tokens, can be transferred to another EVM network through two methods. The first method involves manual asset releasing on Evm network, while the second method automatically releases the assets on the target EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
+To transfer an Evm network gas token such as **BNB**, **ETH**, **FTM**, or any other supported token, it is necessary to initiate a transaction in Everscale to authorize the transfer. Once the event contract is confirmed, the assets can be released on the Evm network. The asset releasing step can be executed either manually or automatically, depending on your preferred method.
+Below, you will find code samples illustrating the implementation of your chosen approach:
 
-In order to have a complete token bridging if the Everscale fees are payed with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
+In order to have a complete token bridging, if the Evm network fees are payed with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
 To perform such a operation Tip3 Token Root and wallet upgradable Abi's are required which are as follows :
 
@@ -438,18 +439,22 @@ const TokenWalletUpgradableAbi{
 ```typescript
 // Import the required libraries
 import { ethers } from "ethers";
+import { Address } from "everscale-inpage-provider";
 
-//initial the Tvm provider as mentioned in prerequisites section
+// Initial the Tvm provider as mentioned in prerequisites section
+
+// Everscale user address
+const everSender: Address = new Address("0:12345");
 
 /**
- * @param TokenRootAbi abi of the token root
- * @param tokenAddress address of the token root, some token root addresses can be found in addresses section
+ * @param TokenRootAbi {JSON} The abi of the token root
+ * @param tokenAddress {Address} Address of the token root
  */
 const AlienTokenRoot = new provider.Contract(TokenRootAbi, tokenAddress);
 
 /**
- * @param TokenWalletUpgradableAbi abi of the token wallet upgradable
- * @param everSender users wallet account contract address
+ * @param TokenWalletUpgradableAbi {JSON} The abi of the token wallet upgradable
+ * @param everSender {Address} User address
  */
 const AlienTokenWalletUpgradable = new provider.Contract(
   TokenWalletUpgradableAbi,
@@ -460,40 +465,41 @@ const AlienTokenWalletUpgradable = new provider.Contract(
   ).value0
 );
 
-/**
- * @param amount ever amount top be transferred
- * @param payWithEver determines if paying the evm operations with ever or its native coin
- * @param auto_value value to attach to transaction if paying evm fees with ever
- * @param manual_value value to attach to transaction if paying evm fees with it native coin
- */
-const amount: number = 1;
-const payWithEver: boolean = true;
-const auto_value: number = 13;
-const manual_value: number = 6;
+// Token amount
+let amount: string;
 
-// preparing the payload. see building payloads section
-const burnPayload: [string, string] = await buildBurnPayloadForEvmNativeToken();
+// Pay evm network fee's with Ever ?
+let payWithEver: boolean;
+
+// Amount to attach to tx if payWithEver == true
+const auto_value: string = 13;
+
+// Amount to attach to tx if payWithEver == false
+const manual_value: string = 6;
+
+// See building payloads -> Evm Gas Token Payload
+let EvmGasTokenPayload: string;
 
 /**
- *  @param amount amount of target token to transfer
- *  @param callbackTo who should get the fallback message after its burned. can be found in addresses section
- *  @param payload operational payload
- *  @param remainingGasTo who to send the remaining tx gas. will be event closer if releasing assets are done automatically on evm side and users address if manual
- *  @param from sender address
- *  @notice @param amount this parameter is important when asset releasing is done automatically on evm side, must be set to certain amounts
- *  @param bounce return remaining gas ? always true
+ *  @param amount {string} Token amount
+ *  @param callbackTo {Address} Callback receiver
+ *  @param payload {string} Operational payload
+ *  @param remainingGasTo {Address} Remaining gas receiver.
+ *  @param from {Address} Sender address
+ *  @notice @param amount {string} This parameter is important when asset releasing on evm side is done automatically
+ *  @param bounce {boolean} Return remaining gas ? always true
  */
 await AlienTokenWalletUpgradable.methods
   .burn({
-    amount: ethers.parseEther(amount.toString()).toString(),
+    amount: ethers.parseEther(amount).toString(),
     callbackTo: ProxyMultiVaultAlienV_7,
-    payload: burnPayload[0],
+    payload: EvmGasTokenPayload,
     remainingGasTo: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
   })
   .send({
     from: everSender,
     amount: ethers
-      .parseUnits((payWithEver ? auto_value : manual_value).toString(), 9)
+      .parseUnits(payWithEver ? auto_value : manual_value, 9)
       .toString(),
     bounce: true,
   });

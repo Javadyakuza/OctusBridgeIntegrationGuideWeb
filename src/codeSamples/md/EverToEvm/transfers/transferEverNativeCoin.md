@@ -185,55 +185,54 @@ abstract class EverAbi {
 ```typescript
 // Import the required libraries
 import { ethers } from "ethers";
+import { Address } from "everscale-inpage-provider";
 
-//initial the Tvm provider as mentioned in prerequisites section
+//Initial the Tvm provider as mentioned in prerequisites section
+
+// Everscale user address
+const everSender: Address = new Address("0:12345");
 
 /**
- * fetches the contract to interact with
- * @param WeverVaultAbi WEVER contract Abi
- * @param WEVERVaultAddress address of the WEVERVault contract, WEVERVault address can be found in addresses section
+ * @param WeverVaultAbi {JSON} WEVER contract Abi
+ * @param WEVERVaultAddress {Address} address of the WEVERVault contract
  */
 const WEVERVaultContract: =
   new provider.Contract(WeverVaultAbi, WEVERVaultAddress);
 
-/**
- * @param amount ever amount top be transferred
- * @param payWithEver determines if paying the evm operations with ever or its native coin
+// Token amount
+let amount: string;
 
- * @param auto_value value to attach to transaction if paying evm fees with ever
- * @param manual_value value to attach to transaction if paying evm fees with it native coin
- */
-const amount : number = 1;
-const payWithEver : boolean = true;
-const auto_value : number = 13
-const manual_value : number = 6
-// preparing payload. see payload building section
-const wrapPayload: [string, string] = await buildWrapPayload(
-  amount,
-  payWithEver
-);
+// Pay evm network fee's with Ever ?
+let payWithEver: boolean;
+
+// Amount to attach to tx if payWithEver == true
+const auto_value: string = 13;
+
+// Amount to attach to tx if payWithEver == false
+const manual_value: string = 6;
+
+// See building payloads -> Ever Native Coin Payload
+let EverNativeCoinPayload: string;
 
 /**
- * calls the wrap function on WEVERVaultContract and after wrapping Evers will deploy an Event contract.
- * @param tokens amount of EVER to transfer
- * @param owner_address always compounder address,
- * @param gas_back_address address to return the remained gas from tx, will be user if paying Evm operations with Evm native coin or EventCloser if paying with Ever
- * @param payload operational payload
- * @param from sender address
- * @notice @param amount this parameter is important when asset releasing is done automatically on evm side, must be set to certain amounts
- * @param bounce return remaining gas ? always true
- * @notice compounder and EventCLoser addresses can be found in addresses section.
+ * @param tokens {string} EVER amount
+ * @param owner_address {Address} Always compounder address
+ * @param gas_back_address {Address} Remaining gas receiver
+ * @param payload {string} Operational payload
+ * @param from {Address} Sender address
+ * @notice @param amount {string} this parameter is important when asset releasing on evm side is done automatically
+ * @param bounce {boolean} return remaining gas ? always true
  */
   await WEVERVaultContract.methods
     .wrap({
-      tokens: ethers.parseUnits(amount.toString(), 9).toString(),
-      owner_address: Compounder,
+      tokens: ethers.parseUnits(amount, 9).toString(),
+      owner_address: Compounder,// Compounder address can be found in addresses section
       gas_back_address: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
-      payload: wrapPayload[0],
+      payload: EverNativeCoinPayload,
     })
     .send({
       from: everSender,
-      amount: ethers.parseUnits((payWithEver ? auto_value : manual_value ).toString(), 9).toString(),
+      amount: ethers.parseUnits((payWithEver ? auto_value : manual_value ), 9).toString(),
       bounce: true,
     });
 ```

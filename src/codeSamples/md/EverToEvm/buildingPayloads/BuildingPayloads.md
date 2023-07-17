@@ -956,7 +956,7 @@ const ERC20Abi = {
 
 <br/>
 <details>
-<summary>Get TokenRootALienEvm Address</summary>
+<summary>Get TokenRootAlienEvm Address</summary>
 
 ```typescript
 // Import the following libraries
@@ -967,8 +967,8 @@ import ERC20Abi from "../artifacts/EvmAbi/abi/ERC20.json";
 
 /**
  * Fetches the ProxyMultivaultAlienV_7 contract.
- * @param ProxyMultivaultAlienV_7Abi The ProxyMultivaultAlienV_7 contract abi
- * @param ProxyMultivaultAlienV_7Addr The ProxyMultivaultAlienV_7 contract address. can be found in addresses section
+ * @param ProxyMultivaultAlienV_7Abi {JSON} The ProxyMultivaultAlienV_7 contract abi
+ * @param ProxyMultivaultAlienV_7Addr {Address} The ProxyMultivaultAlienV_7 contract address. can be found in addresses section
  */
 const proxyMVAlienV_7 = new TvmProvider.Contract(
   ProxyMultivaultAlienV_7Abi,
@@ -977,8 +977,8 @@ const proxyMVAlienV_7 = new TvmProvider.Contract(
 
 /**
  * Fetches the target token contract
- * @param EvmTokenAddress The target token address on the Evm network
- * @param ERC20Abi.abi The erc-20 contract abi
+ * @param EvmTokenAddress {Address} The target token address on the Evm network
+ * @param ERC20Abi.abi {JSON} The erc-20 contract abi
  * @param EvmPRovider instructions on prerequisites section
  */
 const ERC20Token = new ethers.Contract(
@@ -987,17 +987,24 @@ const ERC20Token = new ethers.Contract(
   EvmProvider
 );
 
-// getting the erc-20 token details
+// Fetching the erc-20 token details
 const [name, symbol, decimals] = await Promise.all<[string, string, number]>([
   await ERC20Token.name(),
   await ERC20Token.symbol(),
   await ERC20Token.decimals(),
 ]);
 
-// details chain id
+// Fetching the chain id
 const chainId: string = (await EvmProvider.getNetwork()).chainId.toString();
 
-// deriving the TokenRootEvmALien address
+/**
+ * @param answerId {number} answer id
+ * @param chainId {string} The current provider chain id
+ * @param token {string} the Evm token address. e.g. "0x1234"
+ * @param name {string} the name of the token
+ * @param symbol {string} the symbol of the token
+ * @param decimals {string} the decimals of the token
+ */
 const TargetTokenRootAlienEvm = (
   await proxyMVAlienV_7.methods
     .deriveEVMAlienTokenRoot({

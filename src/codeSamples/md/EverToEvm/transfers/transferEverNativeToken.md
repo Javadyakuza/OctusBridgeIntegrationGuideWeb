@@ -438,18 +438,22 @@ const TokenWalletUpgradableAbi{
 ```typescript
 // Import the required libraries
 import { ethers } from "ethers";
+import { Address } from "everscale-inpage-provider";
 
-//initial the Tvm provider as mentioned in prerequisites section
+//Initial the Tvm provider as mentioned in prerequisites section
+
+// Everscale user address
+const everSender: Address = new Address("0:12345");
 
 /**
- * @param TokenRootAbi abi of the token root
- * @param tokenAddress address of the token root, some token root addresses can be found in addresses section
+ * @param TokenRootAbi {JSON} The abi of the token root
+ * @param tokenAddress {Address} Address of the token root
  */
 const NativeTokenRoot = new provider.Contract(TokenRootAbi, tokenAddress);
 
 /**
- * @param TokenWalletUpgradableAbi abi of the token wallet upgradable
- * @param everSender users wallet account contract address
+ * @param TokenWalletUpgradableAbi {JSON} The abi of the token wallet upgradable
+ * @param everSender {Address} User address
  */
 const AlienTokenWalletUpgradable = new provider.Contract(
   TokenWalletUpgradableAbi,
@@ -460,44 +464,45 @@ const AlienTokenWalletUpgradable = new provider.Contract(
   ).value0
 );
 
-/**
- * @param amount ever amount top be transferred
- * @param payWithEver determines if paying the evm operations with ever or its native coin
- * @param auto_value value to attach to transaction if paying evm fees with ever
- * @param manual_value value to attach to transaction if paying evm fees with it native coin
- */
-const amount: number = 1;
-const payWithEver: boolean = true;
-const auto_value: number = 13;
-const manual_value: number = 6;
+// Token amount
+let amount: string;
 
-// preparing the payloads. see building payloads section
-const transferPayload: [string, string] = await buildTransferPayload();
+// Pay evm network fee's with Ever ?
+let payWithEver: boolean;
+
+// Amount to attach to tx if payWithEver == true
+const auto_value: string = 13;
+
+// Amount to attach to tx if payWithEver == false
+const manual_value: string = 6;
+
+// See building payloads -> Native Token Payload
+let NativeTokenPayload: string;
 
 /**
- *  @param amount amount os target token to transfer
- *  @param deployWalletValue value to deploy the token wallet if not deployed already
- *  @param notify let recipient know that token are received
- *  @param payload operational payload
- *  @param recipient always ProxyMultiVaultNativeV_4, can be found in addresses section
- *  @param remainingGasTo who to send the remaining tx gas. will be event closer if releasing assets are done automatically on evm side and users address if manual
- *  @param from sender address
- *  @notice @param amount this parameter is important when asset releasing is done automatically on evm side, must be set to certain amounts
- *  @param bounce return remaining gas ? always true
+ *  @param amount {string} Token amount
+ *  @param deployWalletValue {string} Token wallet deploy value if not deployed already
+ *  @param notify {boolean} Notify recipient when tokens are received
+ *  @param payload {string} Operational payload
+ *  @param recipient {Address} Always ProxyMultiVaultNativeV_4, can be found in addresses section
+ *  @param remainingGasTo {Address} remaining gas receiver
+ *  @param from {Address} Sender address
+ *  @notice @param amount {string} this parameter is important when asset releasing on evm side is done automatically.
+ *  @param bounce {boolean} return remaining gas ? always true
  */
 await AlienTokenWalletUpgradable.methods
   .transfer({
-    amount: ethers.parseUnits(amount.toString(), 9).toString(),
+    amount: ethers.parseUnits(amount, 9).toString(),
     deployWalletValue: "200000000",
     notify: true,
-    payload: transferPayload[0],
+    payload: NativeTokenPayload,
     recipient: ProxyMultiVaultNativeV_4,
     remainingGasTo: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
   })
   .send({
     from: everSender,
     amount: ethers
-      .parseUnits((payWithEver ? auto_value : manual_value).toString(), 9)
+      .parseUnits(payWithEver ? auto_value : manual_value, 9)
       .toString(),
 
     bounce: true,
