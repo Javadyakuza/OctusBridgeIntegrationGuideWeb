@@ -10,7 +10,6 @@ export const deployedContracts = {
     DAI: "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
     BRIDGE: "0x56C0cFDEA3f8659863a231c7F298C0A48038F6d2",
     QUBE: "0x59caEAc900c11E48dFe1dd449De4947dEa2F9d28",
-    //WEVER: "0x0A7e7D210C45c4abBA183C1D0551B53AD1756ecA", // this version of the wever is not used in deposit function
     WEVER: "0x1ffEFD8036409Cb6d652bd610DE465933b226917",
   },
   1: {

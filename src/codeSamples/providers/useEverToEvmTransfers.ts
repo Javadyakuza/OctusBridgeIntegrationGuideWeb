@@ -20,7 +20,7 @@ import { setupAndGetProvidersDetails } from "./useWalletsData";
  * Transfers the Ever which is Everscale native coin from Everscale to an Evm network.
  * @param amount Token amount.
  * @param payWithEver Pay Evm operations fees with Ever ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverNativeCoin(
   amount: number,
@@ -87,7 +87,7 @@ async function transferEverNativeCoin(
  * @param tokenAddress Ever token address.
  * @param amount Token Amount.
  * @param payWithEver Pay Evm operations fees with Ever ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverNativeToken(
   tokenAddress: Address,
@@ -169,7 +169,7 @@ async function transferEverNativeToken(
  * @param tokenAddressEvmAlien Address of the AlienEvm version of the target token.
  * @param amount Token amount.
  * @param payWithEver Pay Evm operations fees with Ever ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverAlienToken(
   tokenAddress: Address,
@@ -257,7 +257,7 @@ async function transferEverAlienToken(
  * @param tokenAddress Address of the token on Everscale.
  * @param amount Token amount.
  * @param payWithEver Pay Evm operations fees with Ever ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverAlienEvmNativeCoin(
   tokenAddress: Address,

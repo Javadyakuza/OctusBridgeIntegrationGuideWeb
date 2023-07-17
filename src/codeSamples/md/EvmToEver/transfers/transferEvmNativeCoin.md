@@ -2760,7 +2760,7 @@ const MultiVaultAbi = {
 
 <br/>
 <details>
-<summary>Transfer Native Token</summary>
+<summary>Transfer Evm Gas Token</summary>
 
 ```typescript
 //Import following libraries
@@ -2782,13 +2782,13 @@ import { Address } from "everscale-inpage-provider";
 
 
   // Pay Everscale fees with evm gas token ?
-  const payWithGasToken: boolean;
+  let payWithGasToken: boolean;
 
   // Amount to transfer
-  const amount: string;
+  let amount: string;
 
   // Everscale receiver address. e.g. 0:0000...0000
-  const everAddress : string;
+  let everAddress : string;
 
   // Everscale Address Evm object
   const recipient: Address = {

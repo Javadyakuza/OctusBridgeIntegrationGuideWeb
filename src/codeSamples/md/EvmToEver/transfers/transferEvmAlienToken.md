@@ -3070,7 +3070,7 @@ const ERC20Abi = {
 ```typescript
 //Import following libraries
 import { ethers } from "ethers";
-import {Address} from "everscale-inpage-provider"
+import { Address } from "everscale-inpage-provider";
 
 //Initial the Evm provider as mentioned in prerequisites section
 
@@ -3095,16 +3095,16 @@ import {Address} from "everscale-inpage-provider"
   let ERC20Token = new ethers.Contract(tokenAddress, ERC20Abi, signer);
 
   // Pay Everscale fees with evm gas token ?
-  const payWithGasToken: boolean;
+  let payWithGasToken: boolean;
 
   // Amount to transfer
-  const amount: string;
+  let amount: string;
 
   // Target ERC20 token decimals
   const decimals: string = await ERC20Token.decimals();
 
   // Everscale receiver address. e.g. 0:0000...0000
-  const everAddress : string;
+  let everAddress : string;
 
   // Everscale Address Evm object
   const recipient: Address = {

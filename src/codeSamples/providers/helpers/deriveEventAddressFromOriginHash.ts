@@ -18,11 +18,11 @@ export async function fetchAlienEventAddressFromOriginTxHash(
   provider: ProviderRpcClient,
   txHash: string
 ): Promise<Address | undefined> {
-  // fetching the tx receipt
+  // Fetching the tx receipt
   const originTxReceipt = (await provider.getTransaction({ hash: txHash }))
     .transaction;
 
-  // fetching the conf contract
+  // Fetching the conf contract
   const EverEvmAlienEventConfig: Contract<
     FactorySource["EverscaleEthereumEventConfiguration"]
   > = new provider.Contract(
@@ -30,7 +30,7 @@ export async function fetchAlienEventAddressFromOriginTxHash(
     constants.EverscaleEthereumEventConfigurationA
   );
 
-  // getting the pastEvents
+  // Fetching the pastEvents
   const pastEvents: EventsBatch<
     FactorySource["EverscaleEthereumEventConfiguration"],
     FactorySource["EverscaleEthereumEventConfiguration"]["events"][1]["name"]

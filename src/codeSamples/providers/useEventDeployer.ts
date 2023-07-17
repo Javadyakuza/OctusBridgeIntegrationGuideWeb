@@ -23,7 +23,7 @@ import { setupAndGetProvidersDetails } from "./useWalletsData";
 /**
  *
  * @param evmTxHash - The root transaction hash that initiated the token transfer in Evm network.
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the deployed event address.
  */
 async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
   // fetching the provider data
@@ -51,7 +51,9 @@ async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
   const { buildAlienEventVoteData } = usePayloadBuilders();
   const eventLog: [string, string] | EventVoteData =
     await buildAlienEventVoteData(evmTxHash);
-  if (Array.isArray(eventLog)) {return eventLog;}
+  if (Array.isArray(eventLog)) {
+    return eventLog;
+  }
 
   let eventData: string | undefined;
 
@@ -93,8 +95,8 @@ async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {
       provider,
       res?.id.hash
     ))!;
-    
-return ["event address : ", eventAddress.toString()];
+
+    return ["event address : ", eventAddress.toString()];
   } catch (error: any) {
     return ["ERROR: ", error.message];
   }
@@ -103,7 +105,7 @@ return ["event address : ", eventAddress.toString()];
 /**
  *
  * @param evmTxHash - The root transaction hash that initiated the token transfer in Evm network.
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the deployed event address.
  */
 async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
   // fetching the provider data
@@ -131,7 +133,9 @@ async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
   const { buildNativeEventVoteData } = usePayloadBuilders();
   const eventLog: [string, string] | EventVoteData =
     await buildNativeEventVoteData(evmTxHash);
-  if (Array.isArray(eventLog)) {return eventLog;}
+  if (Array.isArray(eventLog)) {
+    return eventLog;
+  }
 
   let eventData: string | undefined;
 
@@ -170,8 +174,8 @@ async function deployNativeEvent(evmTxHash: string): Promise<[string, string]> {
       });
     const eventAddress: Address =
       (await fetchNativeEventAddressFromOriginTxHash(provider, res?.id.hash))!;
-    
-return ["event address : ", eventAddress.toString()];
+
+    return ["event address : ", eventAddress.toString()];
   } catch (error: any) {
     return ["ERROR: ", error.message];
   }

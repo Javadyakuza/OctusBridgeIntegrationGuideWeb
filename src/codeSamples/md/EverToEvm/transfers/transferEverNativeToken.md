@@ -504,7 +504,6 @@ await AlienTokenWalletUpgradable.methods
     amount: ethers
       .parseUnits(payWithEver ? auto_value : manual_value, 9)
       .toString(),
-
     bounce: true,
   });
 ```

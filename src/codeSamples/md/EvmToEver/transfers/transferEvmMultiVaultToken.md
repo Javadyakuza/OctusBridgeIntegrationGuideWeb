@@ -2766,7 +2766,7 @@ const MultiVaultAbi = {
 ```typescript
 //Import following libraries
 import { ethers } from "ethers";
-import {Address} from "everscale-inpage-provider"
+import { Address } from "everscale-inpage-provider";
 
 //Initial the Evm provider as mentioned in prerequisites section
 
@@ -2783,13 +2783,13 @@ import {Address} from "everscale-inpage-provider"
   );
 
   // Pay Everscale fees with evm gas token ?
-  const payWithGasToken: boolean;
+  let payWithGasToken: boolean;
 
   // Amount to transfer
-  const amount: string;
+  let amount: string;
 
   // Everscale receiver address. e.g. 0:0000...0000
-  const everAddress : string;
+  let everAddress : string;
 
   // Everscale Address Evm object
   const recipient: Address = {
@@ -2813,7 +2813,7 @@ import {Address} from "everscale-inpage-provider"
   const deposit_payload: string = "0x";
 
   // Target native token address on Evm network
-  const NativeTokenAddr: string;
+  let NativeTokenAddr: string;
 
   /**
    * @param recipient {Address} Recipient Everscale address
