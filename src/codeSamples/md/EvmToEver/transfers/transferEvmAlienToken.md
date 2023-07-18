@@ -3172,8 +3172,10 @@ import { Address } from "everscale-inpage-provider";
 <input ref="amount" type="number"/>
 <br/>
 
-<label for="gasTokenPay">pay with Evm Gas Token </label>
-<input ref="gasTokenPay" type="checkbox"/>
+<label class="container">pay with {{symbol()}}
+<input class="checkboxInput" ref="gasTokenPay" type="checkbox">
+<span class="checkmark"></span>
+</label>
 <br/>
 
 <button ref="TransferAlienTokenButton" @click="HandleTransferAlienToken" style="{background-color : gray, border-radius: 100px}">Approve and Transfer USDT</button>
@@ -3200,7 +3202,7 @@ export default defineComponent({
      return useEvmProvider().getSymbol()
       }
     async function HandleSelectionChange(){
-        this.$refs.TransferAlienTokenButton.innerHTML = `approve and Transfer ${this.$refs.AlienToken.value}`
+        this.$refs.TransferAlienTokenButton.innerHTML = `Approve and Transfer ${this.$refs.AlienToken.value}`
     }
     async function HandleTransferAlienToken() {
       this.$refs.TransferAlienToken.innerHTML = "processing ...";
@@ -3219,7 +3221,8 @@ export default defineComponent({
     }
     return {
       HandleTransferAlienToken,
-      HandleSelectionChange
+      HandleSelectionChange,
+      symbol
     };
   },
 });
@@ -3237,4 +3240,61 @@ export default defineComponent({
   cursor : pointer;  
 }
 
+.container {
+  display: flex;
+  position: relative;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container .checkboxInput {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  
+}
+
+.checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: var(--vp-c-bg-mute);
+  border: 1px solid var(--vp-c-divider);
+  border-radius : 8px;
+  margin-left: 10px;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: rgb(16, 185, 129);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 </style>

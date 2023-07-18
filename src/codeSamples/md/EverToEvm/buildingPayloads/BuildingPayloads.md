@@ -97,9 +97,6 @@ const boc: string = compounderPayload.boc;
 <input ref="amount" type="number"/>
 <br/>
 
-<!-- <label for="amount">pay with EVER </label>
-<input  ref="everPay" type="checkbox"/> -->
-
 <label class="container">pay with Ever
 <input class="checkboxInput" ref="everPay" type="checkbox">
 <span class="checkmark"></span>
@@ -1281,9 +1278,6 @@ export default defineComponent({
   margin-right: 0.5rem;
   cursor : pointer;  
 }
-
-
-/* The container */
 .container {
   display: flex;
   position: relative;
@@ -1295,7 +1289,6 @@ export default defineComponent({
   user-select: none;
 }
 
-/* Hide the browser's default checkbox */
 .container .checkboxInput {
   position: absolute;
   opacity: 0;
@@ -1305,7 +1298,6 @@ export default defineComponent({
   
 }
 
-/* Create a custom checkbox */
 .checkmark {
   position: relative;
   top: 0;
@@ -1318,24 +1310,20 @@ export default defineComponent({
   margin-left: 10px;
 }
 
-/* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: rgb(16, 185, 129);
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
-/* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
 
-/* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 9px;
   top: 5px;

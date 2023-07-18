@@ -1,7 +1,8 @@
 import vue from '@vitejs/plugin-vue';
 import wasm from 'vite-plugin-wasm';
 const HELP_URL = 'https://t.me/everdev';
-const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
+// const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
+const FEEDBACK_URL = 'https://t.me/javad_yakuzaa';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
 
 module.exports = {

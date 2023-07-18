@@ -53,7 +53,7 @@ export const EVERWETH: Address = new Address(
   "0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d"
 );
 export const EVERWBTC: Address = new Address(
-  "0:9002c8a1cbbca3f9700b1b9438082342ede76d579e3a5a7c6f0e5d030ac5df43"
+  "0:2ba32b75870d572e255809b7b423f30f36dd5dea075bd5f026863fceb81f2bcf"
 );
 export const EVERWMATIC: Address = new Address(
   "0:d009bcd68fb281196d91b04ada7795e8774734979fe9345b24b1112ed856a51b"
