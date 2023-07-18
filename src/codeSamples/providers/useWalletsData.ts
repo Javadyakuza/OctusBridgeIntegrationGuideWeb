@@ -4,7 +4,10 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
 
 const supportedNetworks = [1, 56, 137, 43114, 250];
 
-// sets up the tvm and evm browser injected providers. (metamask and everWallet)
+/**
+ * Fetches the data about the two connected wallets which are metamask and ever wallet
+ * @returns Either the Tvm provider, Tvm wallet address, evm wallet address and evm chain id or undefined
+ */
 export async function setupAndGetProvidersDetails(): Promise<
   [ProviderRpcClient, Address, string, string] | undefined
 > {
@@ -28,11 +31,12 @@ export async function setupAndGetProvidersDetails(): Promise<
   // checks if the network is one of the supported networks.
   if (
     !supportedNetworks.includes(Number(evmProvider.MetaMaskProvider().chainId!))
-  )
-    {throw new Error(
+  ) {
+    throw new Error(
       `unsupported network, only 
   Ethereum, BNB Chain, Polygon, Avalanche and Fantom are supported.`
-    );}
+    );
+  }
   if ((await evmProvider.getAccounts())![0] != undefined) {
     // means user is well connected
     evmRecipient = (await evmProvider.getAccounts())![0];
@@ -40,7 +44,14 @@ export async function setupAndGetProvidersDetails(): Promise<
 
     return [provider, everSender, evmRecipient, chainId];
   } else {
-    // means rejection by user
-    return undefined;
+    await evmProvider.connectToMetamaskWallet();
+    if ((await evmProvider.getAccounts())![0] != undefined) {
+      // means user is well connected
+      evmRecipient = (await evmProvider.getAccounts())![0];
+      chainId = evmProvider.MetaMaskProvider().chainId!;
+      return [provider, everSender, evmRecipient, chainId];
+    } else {
+      return undefined;
+    }
   }
 }

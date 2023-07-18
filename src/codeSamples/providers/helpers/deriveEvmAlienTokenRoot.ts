@@ -5,7 +5,7 @@ import {
   ProviderRpcClient,
 } from "everscale-inpage-provider";
 
-import { ProxyMultivaultAlienV_7 } from "./constants";
+import { ProxyMultiVaultAlienV_7 } from "./constants";
 import { FactorySource, factorySource } from "../artifacts/build/factorySource";
 import ERC20Abi from "../artifacts/EvmAbi/abi/ERC20.json";
 
@@ -25,7 +25,7 @@ export async function deriveEvmAlienTokenRoot(
   const proxyMVAlienV_7: Contract<FactorySource["ProxyMultiVaultAlien_V6"]> =
     new provider.Contract(
       factorySource["ProxyMultiVaultAlien_V6"],
-      ProxyMultivaultAlienV_7
+      ProxyMultiVaultAlienV_7
     );
   try {
     const ERC20Token = new ethers.Contract(

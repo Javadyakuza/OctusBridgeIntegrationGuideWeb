@@ -97,8 +97,13 @@ const boc: string = compounderPayload.boc;
 <input ref="amount" type="number"/>
 <br/>
 
-<label for="amount">pay with EVER </label>
-<input ref="everPay" type="checkbox"/>
+<!-- <label for="amount">pay with EVER </label>
+<input  ref="everPay" type="checkbox"/> -->
+
+<label class="container">pay with Ever
+<input class="checkboxInput" ref="everPay" type="checkbox">
+<span class="checkmark"></span>
+</label>
 
 <br/>
 <button @click="HandleWrapPayload" style="{background-color : gray, border-radius: 100px}">Build wrap Payload</button>
@@ -191,7 +196,7 @@ To accomplish that, it is necessary to obtain the Abi files for the ProxyMultiVa
 <summary>ProxyMultiVaultAlien_V7 Contract Abi</summary>
 
 ```typescript
-const ProxyMultivaultAlienV_7Abi = {
+const ProxyMultiVaultAlienV_7Abi = {
   "ABI version": 2,
   version: "2.2",
   header: ["pubkey", "time"],
@@ -966,13 +971,13 @@ import ERC20Abi from "../artifacts/EvmAbi/abi/ERC20.json";
 //Initialize the Evm and Tvm provider
 
 /**
- * Fetches the ProxyMultivaultAlienV_7 contract.
- * @param ProxyMultivaultAlienV_7Abi {JSON} The ProxyMultivaultAlienV_7 contract abi
- * @param ProxyMultivaultAlienV_7Addr {Address} The ProxyMultivaultAlienV_7 contract address. can be found in addresses section
+ * Fetches the ProxyMultiVaultAlienV_7 contract.
+ * @param ProxyMultivaultAlienV_7Abi {JSON} The ProxyMultiVaultAlienV_7 contract abi
+ * @param ProxyMultiVaultAlienV_7Addr {Address} The ProxyMultiVaultAlienV_7 contract address. can be found in addresses section
  */
 const proxyMVAlienV_7 = new TvmProvider.Contract(
-  ProxyMultivaultAlienV_7Abi,
-  ProxyMultivaultAlienV_7Addr
+  ProxyMultiVaultAlienV_7Abi,
+  ProxyMultiVaultAlienV_7Addr
 );
 
 /**
@@ -1217,6 +1222,7 @@ export default defineComponent({
      return useEvmProvider().getSymbol()
       }
     async function HandleWrapPayload() {
+      console.log(this.$refs.everPay.checked)
       this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
       if (Number(this.$refs.amount.value) <= 0) {
         this.$refs.wrapPayloadOutput.innerHTML = "ERROR: please enter a valid number !!";
@@ -1277,4 +1283,69 @@ export default defineComponent({
   cursor : pointer;  
 }
 
+
+/* The container */
+.container {
+  display: flex;
+  position: relative;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container .checkboxInput {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: var(--vp-c-bg-mute);
+  border: 1px solid var(--vp-c-divider);
+  border-radius : 8px;
+  margin-left: 10px;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: rgb(16, 185, 129);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 </style>

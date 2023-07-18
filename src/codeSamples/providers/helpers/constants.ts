@@ -29,7 +29,7 @@ export const Compounder = new Address(
 export const ProxyMultiVaultNativeV_4 = new Address(
   "0:36122a25a11e8772dc5d94f5f6a653d4661f6e474bc85cb275aece185acd62a4"
 );
-export const ProxyMultivaultAlienV_7 = new Address(
+export const ProxyMultiVaultAlienV_7 = new Address(
   "0:85c3287c6114e420ae82ec1364da3c760a5789f383213ef3cedef5d8c3d126fd"
 );
 export const MergePool_V4 = new Address(

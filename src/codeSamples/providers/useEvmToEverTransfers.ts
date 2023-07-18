@@ -18,7 +18,7 @@ async function TransferEvmGasToken(
   payWithGasToken: boolean,
   symbol: string
 ): Promise<[string, string]> {
-  // fetching the ever receiver address
+  // Fetching the ever receiver address
   let everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -31,19 +31,18 @@ async function TransferEvmGasToken(
     return ["ERROR", error.message];
   }
   try {
-    // fetching the wallets data
+    // Fetching the wallets data
     const evmProvider = new ethers.BrowserProvider(
       useEvmProvider().MetaMaskProvider()
     );
     const signer = await evmProvider.getSigner();
 
-    // fetching the MultiVault contract
+    // Fetching the MultiVault contract
     const MultiVault = new ethers.Contract(
       deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
-    // checking the balance
 
     // preparing the values
     const recipient = {
@@ -51,12 +50,10 @@ async function TransferEvmGasToken(
       addr: `0x${everSender.toString().split(":")[1]}`,
     };
 
-    const depositManualValue =
+    // Fetching the event initial value in Evm gas token
+    const depositManualValue: [string, string] =
       await calculateEventContractDeployValueInEvmGasToken(symbol);
-    if (
-      (await calculateEventContractDeployValueInEvmGasToken(symbol))[0] ==
-      "ERROR: "
-    ) {
+    if (depositManualValue[0] == "ERROR: ") {
       return depositManualValue;
     }
 
@@ -69,6 +66,7 @@ async function TransferEvmGasToken(
       : "0";
 
     const deposit_payload = "0x";
+
     // checking the balance
     if (payWithGasToken) {
       if (
@@ -117,7 +115,7 @@ async function TransferEvmMultiVaultToken(
   payWithGasToken: boolean,
   symbol: string
 ): Promise<[string, string]> {
-  // fetching the ever receiver address
+  // Fetching the ever receiver address
   let everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -131,7 +129,7 @@ async function TransferEvmMultiVaultToken(
   }
 
   try {
-    // fetching the wallets data
+    // Fetching the wallets data
     const evmProvider = new ethers.BrowserProvider(
       useEvmProvider().MetaMaskProvider()
     );
@@ -143,17 +141,16 @@ async function TransferEvmMultiVaultToken(
       signer
     );
 
-    // fetching the wallets data
+    // Fetching the wallets data
     const recipient = {
       wid: everSender.toString().split(":")[0],
       addr: `0x${everSender.toString().split(":")[1]}`,
     };
-    const depositManualValue =
+
+    // Fetching the event initial value in Evm gas token
+    const depositManualValue: [string, string] =
       await calculateEventContractDeployValueInEvmGasToken(symbol);
-    if (
-      (await calculateEventContractDeployValueInEvmGasToken(symbol))[0] ==
-      "ERROR: "
-    ) {
+    if (depositManualValue[0] == "ERROR: ") {
       return depositManualValue;
     }
     const deposit_value = payWithGasToken
@@ -207,7 +204,7 @@ async function TransferEvmAlienToken(
   payWithGasToken: boolean,
   symbol: string
 ): Promise<[string, string]> {
-  // fetching the ever receiver address
+  // Fetching the ever receiver address
   let everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -220,13 +217,13 @@ async function TransferEvmAlienToken(
     return ["ERROR", error.message];
   }
   try {
-    // fetching the wallets data
+    // Fetching the wallets data
     const evmProvider = new ethers.BrowserProvider(
       useEvmProvider().MetaMaskProvider()
     );
     const signer = await evmProvider.getSigner();
 
-    // fetching the contracts
+    // Fetching the contracts
     const MultiVault = new ethers.Contract(
       deployedContracts.MultiVault,
       MultiVaultAbi.abi,
@@ -245,12 +242,11 @@ async function TransferEvmAlienToken(
       addr: `0x${everSender.toString().split(":")[1]}`,
     };
     const decimals = await ERC20Token.decimals();
-    const depositManualValue =
+
+    // Fetching the event initial value in Evm gas token
+    const depositManualValue: [string, string] =
       await calculateEventContractDeployValueInEvmGasToken(symbol);
-    if (
-      (await calculateEventContractDeployValueInEvmGasToken(symbol))[0] ==
-      "ERROR: "
-    ) {
+    if (depositManualValue[0] == "ERROR: ") {
       return depositManualValue;
     }
 

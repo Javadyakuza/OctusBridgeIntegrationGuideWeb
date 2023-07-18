@@ -300,7 +300,7 @@ async function transferEverAlienEvmNativeCoin(
     // burning
     const res: Transaction = await alienTokenWalletUpgradable.methods
       .burn({
-        callbackTo: constants.ProxyMultivaultAlienV_7,
+        callbackTo: constants.ProxyMultiVaultAlienV_7,
         payload: burnPayload[0],
         remainingGasTo: payWithEver ? constants.EventCloser : everSender,
         amount: ethers.parseEther(amount.toString()).toString(),
