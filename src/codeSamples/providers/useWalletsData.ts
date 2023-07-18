@@ -49,7 +49,8 @@ export async function setupAndGetProvidersDetails(): Promise<
       // means user is well connected
       evmRecipient = (await evmProvider.getAccounts())![0];
       chainId = evmProvider.MetaMaskProvider().chainId!;
-      return [provider, everSender, evmRecipient, chainId];
+      
+return [provider, everSender, evmRecipient, chainId];
     } else {
       return undefined;
     }

@@ -1222,7 +1222,6 @@ export default defineComponent({
      return useEvmProvider().getSymbol()
       }
     async function HandleWrapPayload() {
-      console.log(this.$refs.everPay.checked)
       this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
       if (Number(this.$refs.amount.value) <= 0) {
         this.$refs.wrapPayloadOutput.innerHTML = "ERROR: please enter a valid number !!";
