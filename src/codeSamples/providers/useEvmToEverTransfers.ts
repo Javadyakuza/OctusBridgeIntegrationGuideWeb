@@ -281,7 +281,7 @@ async function TransferEvmAlienToken(
             signer.address,
             await MultiVault.getAddress()
           )
-        ) < Number(ethers.parseEther(amount.toString()))
+        ) < Number(ethers.parseUnits(amount.toString(), decimals))
       ) {
         return ["ERROR : ", "allowance not enough"];
       }

@@ -4,7 +4,7 @@ import { ProviderRpcClient, Address } from "everscale-inpage-provider";
 import { eth, utils } from "web3";
 
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
-import * as constants from "./helpers/EvmConstants";
+import { deployedContracts } from "./helpers/EvmConstants";
 import { getSignatures } from "./helpers/getSignatures";
 import { usePayloadBuilders } from "./usePayloadBuilders";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
@@ -39,7 +39,7 @@ export async function saveWithdrawNative(
 
     //  fetching the MultiVault the contracts
     const MultiVault = new ethers.Contract(
-      constants.deployedContracts.MultiVault,
+      deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );
@@ -120,7 +120,7 @@ export async function saveWithdrawAlien(
 
     // fetching the MultiVault the contracts
     const MultiVault = new ethers.Contract(
-      constants.deployedContracts.MultiVault,
+      deployedContracts.MultiVault,
       MultiVaultAbi.abi,
       signer
     );

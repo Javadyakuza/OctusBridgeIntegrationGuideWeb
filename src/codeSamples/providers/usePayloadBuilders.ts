@@ -27,7 +27,7 @@ async function buildWrapPayload(
   amount: string | number,
   releaseByEver: boolean
 ): Promise<[string, string]> {
-  // fetching the wallets data
+  // Fetching the wallets data
   let provider: ProviderRpcClient,
     everSender: Address,
     evmRecipient: string,
@@ -110,7 +110,7 @@ async function buildWrapPayload(
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 async function buildTransferPayload(): Promise<[string, string]> {
-  // fetching the wallets data
+  // Fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string, chainId: string;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -176,7 +176,7 @@ async function buildTransferPayload(): Promise<[string, string]> {
 async function buildBurnPayloadForEvmAlienToken(
   TargetTokenEvmAddress: string
 ): Promise<[string, string]> {
-  // fetching the wallets data
+  // Fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -188,7 +188,7 @@ async function buildBurnPayloadForEvmAlienToken(
   } catch (error: any) {
     return ["ERROR", error.message];
   }
-  // fetching he token root
+  // Fetching he token root
   const TargetTokenRootAlienEvm: Address | [string, string] =
     await deriveEvmAlienTokenRoot(
       provider,
@@ -261,7 +261,7 @@ async function buildBurnPayloadForEvmAlienToken(
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
-  // fetching the wallets data
+  // Fetching the wallets data
   let provider: ProviderRpcClient, evmRecipient: string;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -329,7 +329,7 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
 export async function buildSaveWithdraw(
   EverEvmAlienEventContractAddress: Address
 ): Promise<[string, string]> {
-  // fetching the wallets data
+  // Fetching the wallets data
   let provider: ProviderRpcClient;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -342,7 +342,7 @@ export async function buildSaveWithdraw(
     return ["ERROR", error.message];
   }
   try {
-    // fetching the contracts
+    // Fetching the contracts
     const EverEvmEventContract: Contract<
       FactorySource["EverscaleEthereumBaseEvent"]
     > = new provider.Contract(
@@ -360,7 +360,7 @@ export async function buildSaveWithdraw(
       eventDetails._eventInitData.configuration
     );
 
-    // fetching the details
+    // Fetching the details
     const [eventConfigDetails, flags] = await Promise.all([
       await EverEvmAlienEventConf.methods.getDetails({ answerId: 0 }).call({}),
       (await EverEvmAlienEventConf.methods.getFlags({ answerId: 0 }).call({}))
@@ -442,7 +442,7 @@ export async function buildSaveWithdraw(
 export async function buildNativeEventVoteData(
   txHash: string
 ): Promise<[string, string] | EventVoteData> {
-  // fetching the wallets data
+  // Fetching the wallets data
   const provider = new ethers.BrowserProvider(
     useEvmProvider().MetaMaskProvider()
   );
@@ -461,7 +461,7 @@ export async function buildNativeEventVoteData(
     )`,
   ]);
 
-  // fetching tx receipt and extracting data out of it
+  // Fetching tx receipt and extracting data out of it
   try {
     const txReceipt = await provider.getTransactionReceipt(txHash);
     if (!txReceipt) {
@@ -516,7 +516,7 @@ export async function buildNativeEventVoteData(
 export async function buildAlienEventVoteData(
   txHash: string
 ): Promise<[string, string] | EventVoteData> {
-  // fetching the wallets data
+  // Fetching the wallets data
   const provider = new ethers.BrowserProvider(
     useEvmProvider().MetaMaskProvider()
   );
@@ -538,7 +538,7 @@ export async function buildAlienEventVoteData(
     )`,
   ]);
 
-  // fetching tx receipt and extracting data out of it
+  // Fetching tx receipt and extracting data out of it
   try {
     const txReceipt = await provider.getTransactionReceipt(txHash);
     if (!txReceipt) {
