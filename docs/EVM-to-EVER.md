@@ -85,7 +85,7 @@ struct DepositNativeTokenParams {
 | param          | description                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------- |
 | recipient      | Ever address of recipient                                                                 |
-| amount         | amount of native coin                                                                     |
+| amount         | amount of the Evm gas token                                                               |
 | expected_Evers | see [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
 | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 

@@ -3438,7 +3438,7 @@ import { ethers } from "ethers";
 //Initial the Evm provider as mentioned in prerequisites section
 
 /**
- * @param MultiVaultAddress {Address} contract address of MultiVault contract on target Evm network, can be found in addresses section
+ * @param MultiVaultAddress {Address} contract address of MultiVault contract on Evm network, can be found in addresses section
  * @param MultiVaultAbi {JSON} MultiVault contract ABI
  * @param signer Signer of the transaction. see prerequisites section
  * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error

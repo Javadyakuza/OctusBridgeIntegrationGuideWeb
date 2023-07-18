@@ -434,7 +434,7 @@ const TokenWalletUpgradableAbi{
 
 <br/>
 <details>
-<summary>Transfer Evm Native Coin</summary>
+<summary>Transfer Evm Gas Token</summary>
 
 ```typescript
 // Import the required libraries

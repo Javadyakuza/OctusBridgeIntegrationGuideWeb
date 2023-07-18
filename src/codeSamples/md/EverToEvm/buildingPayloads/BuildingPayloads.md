@@ -1132,7 +1132,7 @@ The provided payload is utilized for transferring an Evm gas token (such as BNB,
 //initial the Tvm provider as mentioned in prerequisites section
 
   /**
-   * Encodes data about unWrapper of wrapped version of the target Evm network native coin (BNB, ETH, ...).
+   * Encodes data about unWrapper of wrapped version of the Evm network gas token (BNB, ETH, ...).
    * @param addr {uint160} Wrapped coin unWrapper contract address. Example: "0x0000000000000000000000000000000000000000"
    * @param recipient {uint160} Wrapped coin unWrapper contract address. Example: "0x0000000000000000000000000000000000000000"
    * @param payload {bytes} Encoded data related to Evm recipient address. "0x0"

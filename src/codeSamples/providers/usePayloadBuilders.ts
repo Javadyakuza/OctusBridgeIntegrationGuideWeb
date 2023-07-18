@@ -18,8 +18,8 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
  * @param everSender sender ever account wallet address
  * @param evmRecipient receiver EvmAddress
- * @param amount target token amount without decimals
- * @param chainId target evm network chainId
+ * @param amount Target token amount without decimals
+ * @param chainId Evm network chainId
  * @param releaseByEver this parameter specifies if the credit backend should release the assets in the target evm network(true), or user must release them manually(false)
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
