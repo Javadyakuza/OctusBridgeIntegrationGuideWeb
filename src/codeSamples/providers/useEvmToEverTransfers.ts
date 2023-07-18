@@ -11,7 +11,7 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
  * Transfers an Evm gas token such BNB or DAI from an  Evm network to Everscale.
  * @param amount Token amount
  * @param payWithGasToken Pay the Everscale operations fees with Evm gas token ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the transaction hash.
  */
 async function TransferEvmGasToken(
   amount: number,
@@ -107,7 +107,7 @@ async function TransferEvmGasToken(
  * @param MultiVaultTokenAddress address of the native token on the Evm network
  * @param amount Token amount
  * @param payWithGasToken Pay the Everscale operations fees with Evm gas token ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the transaction hash.
  */
 async function TransferEvmMultiVaultToken(
   MultiVaultTokenAddress: string,
@@ -196,7 +196,7 @@ async function TransferEvmMultiVaultToken(
  * @param tokenAddress Address of the token on evm network
  * @param amount Token amount
  * @param payWithGasToken Pay the Everscale operations fees with Evm gas token ?
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the transaction hash.
  */
 async function TransferEvmAlienToken(
   tokenAddress: string,

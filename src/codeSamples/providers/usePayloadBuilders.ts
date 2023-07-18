@@ -21,7 +21,7 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
  * @param amount target token amount without decimals
  * @param chainId target evm network chainId
  * @param releaseByEver this parameter specifies if the credit backend should release the assets in the target evm network(true), or user must release them manually(false)
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 async function buildWrapPayload(
   amount: string | number,
@@ -107,7 +107,7 @@ async function buildWrapPayload(
 
 /**
  * buildTransferPayload prepares the payload to transfer a everscale native token such as BRIDGE or QUBE from everscale to an evm network
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 async function buildTransferPayload(): Promise<[string, string]> {
   // fetching the wallets data
@@ -171,7 +171,7 @@ async function buildTransferPayload(): Promise<[string, string]> {
 /**
  * buildBurnPayloadForEvmAlienToken function prepares the payload to be used in TokenWalletUpgradable.burn in order to transfer a token from everscale and to an evm network.
  * @param evmRecipient receiver EvmAddress
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 async function buildBurnPayloadForEvmAlienToken(
   TargetTokenEvmAddress: string
@@ -258,7 +258,7 @@ async function buildBurnPayloadForEvmAlienToken(
 /**
  * buildBurnPayloadForEvmNativeToken function prepares the payload to be used in TokenWalletUpgradable.burn in order to transfer a token from everscale and to an evm network.
  * @param evmRecipient receiver EvmAddress
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
   // fetching the wallets data
@@ -324,7 +324,7 @@ async function buildBurnPayloadForEvmNativeToken(): Promise<[string, string]> {
 /**
  * prepares the payload to be used in withdraw function on MV contracts on Evm network
  * @param EverEvmAlienEventContractAddress address of the relevant deployed event contract on everscale
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the the built payload.
  */
 export async function buildSaveWithdraw(
   EverEvmAlienEventContractAddress: Address
@@ -437,7 +437,7 @@ export async function buildSaveWithdraw(
 /**
  * Prepares an event vote data to be used in deploying an native event on everscale on evm -> Ever.
  * @param txHash The root transaction hash that initiated the token transfer on evm network
- * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or an object containing the event vote data.
  */
 export async function buildNativeEventVoteData(
   txHash: string
@@ -511,7 +511,7 @@ export async function buildNativeEventVoteData(
 /**
  * Prepares an event vote data to be used in deploying an alien event on everscale on evm -> Ever.
  * @param txHash The root transaction hash that initiated the token transfer on evm network
- * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or an object containing the event vote data.
  */
 export async function buildAlienEventVoteData(
   txHash: string

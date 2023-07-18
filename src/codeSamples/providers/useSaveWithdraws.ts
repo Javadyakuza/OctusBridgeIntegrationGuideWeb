@@ -13,7 +13,7 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
 /**
  * Mints the tokens on Evm network
  * @param eventAddress The EverscaleEthereumNativeEvent confirmed contract Address
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the transaction hash.
  */
 export async function saveWithdrawNative(
   eventAddress: Address
@@ -94,7 +94,7 @@ export async function saveWithdrawNative(
 /**
  * Releases tha assets on evm network
  * @param eventAddress The EverscaleEthereumAlienEvent confirmed contract Address
- * @returns {Promise<[string, string]>} - An array of strings representing error messages or the expected function value.
+ * @returns {Promise<[string, string]>} - An array of strings representing error messages or the transaction hash.
  */
 export async function saveWithdrawAlien(
   eventAddress: Address
