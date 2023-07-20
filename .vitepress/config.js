@@ -6,7 +6,7 @@ const FEEDBACK_URL = 'https://t.me/javad_yakuzaa';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
 
 module.exports = {
-  title: 'OctusBridge',
+  title: 'OctusBridgeIntegrationGuide',
   base: '/',
   description: 'OctusBridgeIntegrationGuide',
   plugins: [vue(), wasm()],

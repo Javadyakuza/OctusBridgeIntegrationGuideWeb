@@ -39,20 +39,28 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
-| param            | description                                                                                  |
-| ---------------- | -------------------------------------------------------------------------------------------- |
-| tokens           | amount of the token                                                                          |
-| owner_address    | [Compounder](./addresses.md#Everscale-smart-contracts)                                       |
-| gas_back_address | address to send the change back                                                              |
-| payload          | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
+| param  | description         |
+| ------ | ------------------- |
+| tokens | amount of the token |
+
+::: details
+| owner_address | [Compounder](./addresses.md#Everscale-smart-contracts) |
+| gas_back_address | address to send the change back |
+| payload | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
 
 > NOTE : gas_back_address will be user's address ie paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
+:::
+
 ---
 
-#### :exclamation: Next step is only necessary if paying Evm network fess with it's gas token
+::: warning
+The next step is only necessary if paying Evm network fees with its gas token.
+:::
 
 ---
 
@@ -67,12 +75,19 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
-| param      | description                                                                                                        |
-| ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
+| param   | description                        |
+| ------- | ---------------------------------- |
+| payload | operational payload, see [payload] |
+
+::: details
+(./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
 | signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+
+:::
 
 ---
 
@@ -95,6 +110,8 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
 | param             | description                                                                                                 |
@@ -108,9 +125,13 @@
 
 > NOTE : remainingGasTo will be user's address if paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
+:::
+
 ---
 
-#### :exclamation: Next step is only necessary if paying Evm network fess with it's gas token
+::: warning
+The next step is only necessary if paying Evm network fees with its gas token.
+:::
 
 ---
 
@@ -125,12 +146,16 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
 | param      | description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
 | signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+
+:::
 
 ---
 
@@ -151,6 +176,8 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
 | param          | description                                                                                               |
@@ -162,9 +189,13 @@
 
 > NOTE : remainingGasTo will be user's address if paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
+:::
+
 ---
 
-#### :exclamation: Next step is only necessary if paying Evm network fess with it's gas token
+::: warning
+The next step is only necessary if paying Evm network fees with its gas token.
+:::
 
 ---
 
@@ -179,12 +210,16 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
 | param      | description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
 | signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+
+:::
 
 ---
 
@@ -205,6 +240,8 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
 | param          | description                                                                                                 |
@@ -216,9 +253,13 @@
 
 > NOTE : remainingGasTo will be user's address if paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
+:::
+
 ---
 
-#### :exclamation: Next step is only necessary if paying Evm network fess with it's gas token
+::: warning
+The next step is only necessary if paying Evm network fees with its gas token.
+:::
 
 ---
 
@@ -233,12 +274,16 @@
     ) external;
 ```
 
+::: details
+
 ### Parameters
 
 | param      | description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
 | signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+
+:::
 
 ---
 

@@ -18,7 +18,7 @@
 
     - 3.2
 
-      If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation can be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native token and minted if alien token.
+      If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation can be done with calling the `deployEvent` on function `EthereumEverscaleEventConfiguration` contract which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native token and minted if alien token.
 
 4
 
