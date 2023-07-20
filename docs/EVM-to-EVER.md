@@ -34,11 +34,13 @@
 
 - 1.1: If target token was an ERC-20 token we must use the `deposit` function on `MultiVault` contract,
   but before that we must approve [MultiVault](./addresses.md#Evm-smart-contracts) for desired token amount, once approved deposit function can be called.\
-  **❗If the token is an native token approval is not needed**
+   **❗If the token is an native token approval is not needed**
 
   ```solidity
   function deposit(depositParams memory d) external payable override;
   ```
+
+  ::: details
 
   ### Parameters
 
@@ -60,6 +62,8 @@
   | expected_Evers | see [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
   | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
+  :::
+
 ## Transfer Evm Gas Tokens
 
 - 1.2: If target token was the Evm network gas token, we must use `depositByNativeToken` on `MultiVault` contract and attach the desired amount of the gas token equal to the amount value parameter to transaction:
@@ -71,6 +75,8 @@
 ```solidity
 function depositByNativeToken(DepositNativeTokenParams memory d) external payable override;
 ```
+
+::: details
 
 ### Parameters
 
@@ -90,9 +96,13 @@ struct DepositNativeTokenParams {
 | expected_Evers | see [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
 | payload        | operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
+:::
+
 ---
 
-#### :exclamation: Next step is only necessary if paying Everscale operations fees with Ever
+::: warning
+Next step is only necessary if paying Everscale operations fees with Ever
+:::
 
 ## Deploy Events
 
@@ -107,6 +117,8 @@ struct DepositNativeTokenParams {
 ```solidity
 function deployEvent(IEthereumEverscaleEvent.EthereumEverscaleEventVoteData eventVoteData) external override;
 ```
+
+::: details
 
 ### Parameters
 
@@ -132,8 +144,11 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 | eventBlockNumber | eventBlockNumber      |
 | eventBlock       | eventBlock Hash       |
 
+instructions on how to get this values can be found in [deploy Events](../.../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md)
+:::
+
 3. After this step tokens must be deposited to recipient EverWallet.
 
 ---
 
-> All of the scripts related to examples above can be found [here](../src/codeSamples/md/EvmToEver/workFlow.md)
+> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EvmToEver/workFlow.md)

@@ -287,4 +287,4 @@ The next step is only necessary if paying Evm network fees with its gas token.
 
 ---
 
-> Code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)
+> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)
