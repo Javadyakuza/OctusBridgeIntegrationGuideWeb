@@ -1,6 +1,7 @@
 # Ever to Evm Transfer Mechanics Overview
 
-1. Locking the target token in Everscale if native token and burning it if alien token. see [token types](./Concepts/TokenTypes.md#token-types).
+1. Locking or burning the target token based on its type.\
+   If the target token is an native token it will be locked on Everscale and if its an alien token it will be burned. see [token types](./Concepts/TokenTypes.md#token-types).
 
 2. Through previous transaction the event contract is deployed on Everscale and after few second the relayers will confirm it by voting on it.
 
@@ -8,12 +9,14 @@
 
 - 3.1
 
-  If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with Ever, the [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the related function on the MultiVault contract.\
+  If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with Ever, The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the relevant function on the MultiVault contract.\
    After that MultiVault contract handles minting or releasing the token based on its type. \
 
 - 3.2
 
-  If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with is [gas tokens](./Concepts/TokenTypes.md#evm-gas-tokens), its time to mint the tokens if they are native tokens by calling `saveWithdrawNative` or release them by calling `saveWithdrawAlien` on `MultiVault` contract.
+  If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with is [gas tokens](./Concepts/TokenTypes.md#evm-gas-tokens), its time to mint or release the tokens on Evm network based on its type.\
+  If the targe token is an native token, calling the `saveWithdrawNative` function will mint tokens and if its an alien token, calling `saveWithdrawAlien` will release the tokens.
+  Note that the saveWithdraw functions must be called on `multiVault` contract.
 
 4. At this point desired amount of target token must be deposited to recipient Evm address.
 

@@ -1,8 +1,9 @@
 # Evm to Ever Transfer Mechanics Overview
 
 1.  Deposit desired amount of the target token into the [`MultiVault`](./addresses.md#contractaddresses) contract which is in the Evm network.\
-    Note that if the token is an ERC-20 token regardless if it's an native or alien token, such as **WEVER**, **USDT**, **WBTC** and others, the token owner must approve the `MultiVault` contract before depositing the token into the contract. see [approving erc-20 tokens](./Concepts/Operations.md#approving-erc-20-tokens).\
+    Note that if the token is an ERC-20 token regardless if it's an native or alien token, such as **DAI**, **USDT**, **WBTC** and others, the token owner must approve the `MultiVault` contract before depositing the token into it. see [approving erc-20 tokens](./Concepts/Operations.md#approving-erc-20-tokens).\
     After it all the `MultiVault` contract will handle burning or locking the token based on it's [type](./Concepts/TokenTypes.md).
+    The target token will be burned if its an native token and locked if an alien token.
 
 2.  Through the previous operation, two events will be emitted. one of them is always `Deposit` and another one depended on the token type is either `AlienTransfer` or `NativeTransfer`.
 
@@ -17,7 +18,7 @@
 
     - 3.2
 
-      If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation will be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native token and minted if alien token.
+      If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough Evm gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation can be done calling `deployEvent` on `EthereumEverscaleEventConfiguration` which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native token and minted if alien token.
 
 4
 

@@ -13,8 +13,10 @@ export async function setupAndGetProvidersDetails(): Promise<
 > {
   // fetching the evm provider
   const evmProvider = useEvmProvider();
+
   // fetching the tvm provider
   const provider = new ProviderRpcClient();
+
   // Make sure the tvm provider is initialized.
   await provider.ensureInitialized();
   // Request permissions from the user to execute API
@@ -49,8 +51,8 @@ export async function setupAndGetProvidersDetails(): Promise<
       // means user is well connected
       evmRecipient = (await evmProvider.getAccounts())![0];
       chainId = evmProvider.MetaMaskProvider().chainId!;
-      
-return [provider, everSender, evmRecipient, chainId];
+
+      return [provider, everSender, evmRecipient, chainId];
     } else {
       return undefined;
     }
