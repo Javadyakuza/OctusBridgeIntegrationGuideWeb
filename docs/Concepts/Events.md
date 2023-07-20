@@ -40,4 +40,4 @@ this contract has two versions, one deploys `MultiVaultEverscaleEVMEventNative` 
 
 `MultiVaultEverscaleEVMEventNative` is deployed when transferring a native token and `MultiVaultEverscaleEVMEventAlien` are deployed when transferring alien token.
 
-> ❗ In the Ever -> Evm direction, event deploying is done automatically.
+**In the Ever -> Evm direction, event deploying is done automatically.**

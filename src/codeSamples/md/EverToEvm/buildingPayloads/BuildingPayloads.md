@@ -1123,8 +1123,6 @@ const operationPayload = await provider.packIntoCell({
 
 The provided payload is utilized for transferring an Evm gas token (such as BNB, ETH, FTM, etc.), from Everscale to an Evm network. The payload contains encoded operational data that is relevant to the Evm recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the EVM network gas token back to its original form. The code sample below illustrates how to construct such a payload.
 
-> ❗ this payload is only available on Binance Smart chain at the moment.
-
 <details>
 <summary>show code</summary>
 

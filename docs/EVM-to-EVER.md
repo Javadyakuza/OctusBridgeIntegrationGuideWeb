@@ -34,7 +34,8 @@
 
 - 1.1: If target token was an ERC-20 token we must use the `deposit` function on `MultiVault` contract,
   but before that we must approve [MultiVault](./addresses.md#Evm-smart-contracts) for desired token amount, once approved deposit function can be called.\
-   **❗If the token is an native token approval is not needed**
+
+  > Notice if the token is an native token approval is not needed
 
   ```solidity
   function deposit(depositParams memory d) external payable override;

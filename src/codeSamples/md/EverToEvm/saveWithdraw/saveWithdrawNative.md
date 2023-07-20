@@ -3458,7 +3458,9 @@ await MultiVault.saveWithdrawNative(
 </details>
 <br/>
 
-> **❗Only EverscaleEthereumNativeEvent contract addresses from unfinished bridging processes can be used**
+::: warning
+Only EverscaleEthereumNativeEvent contract addresses from unfinished bridging processes can be used
+:::
 
 <label for="eventAddr">Everscale Native Event Address </label>
 <input ref="eventAddr" type="text"/>

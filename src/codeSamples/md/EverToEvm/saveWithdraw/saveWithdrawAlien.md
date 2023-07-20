@@ -3458,7 +3458,9 @@ await MultiVault.saveWithdrawAlien(
 </details>
 <br/>
 
-> **❗Only EverscaleEthereumAlienEvent contract addresses from unfinished bridging processes can be used**
+::: warning
+Only EverscaleEthereumAlienEvent contract addresses from unfinished bridging processes can be used
+:::
 
 <label for="eventAddr">Everscale Alien Event Address </label>
 <input ref="eventAddr" type="text"/>
