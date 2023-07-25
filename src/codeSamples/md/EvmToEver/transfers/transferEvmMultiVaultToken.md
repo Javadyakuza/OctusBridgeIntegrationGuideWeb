@@ -2927,10 +2927,7 @@ export default defineComponent({
   position: relative;
   margin-bottom: 12px;
   cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+
 }
 
 .container .checkboxInput {

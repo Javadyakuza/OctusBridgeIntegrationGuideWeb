@@ -30,7 +30,6 @@ export default {
     margin-bottom: 10px;
     cursor: pointer;
     font-size: 16px;
-    user-select: none;
 }
 
 .everpay-checkbox input {
@@ -75,4 +74,5 @@ export default {
     border: solid white;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
-}</style>
+}
+</style>
