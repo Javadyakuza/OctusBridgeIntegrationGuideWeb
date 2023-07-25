@@ -10,7 +10,7 @@
 - 3.1
 
   If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with Ever, The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the relevant function on the MultiVault contract.\
-   After that MultiVault contract handles minting or releasing the token based on its type. \
+   After that MultiVault contract handles minting or releasing the token based on its type.\
 
 - 3.2
 
@@ -46,8 +46,6 @@
 | param  | description         |
 | ------ | ------------------- |
 | tokens | amount of the token |
-
-::: details
 | owner_address | [Compounder](./addresses.md#Everscale-smart-contracts) |
 | gas_back_address | address to send the change back |
 | payload | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
@@ -81,10 +79,7 @@ The next step is only necessary if paying Evm network fees with its gas token.
 
 | param   | description                        |
 | ------- | ---------------------------------- |
-| payload | operational payload, see [payload] |
-
-::: details
-(./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).|
 | signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
 
 :::
