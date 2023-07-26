@@ -1,32 +1,34 @@
-# Ever to EVM transfer mechanics overview
+# Overview of Ever to EVM transfer mechanics 
 
-1. Locking or burning the target token based on its type.\
-   If the target token is an native token it will be locked on Everscale and if its an alien token it will be burned. see [token types](./Concepts/TokenTypes.md#token-types).
+1. Locking or burning the target token based on its [type](./Concepts/TokenTypes.md#token-types):
+   - If the target token is a native token, it will be locked on Everscale. 
+   - If it is an alien token, it will be burned. 
 
-2. Through previous transaction the event contract is deployed on Everscale and after few second the relayers will confirm it by voting on it.
+2. Event contract deployment and confirmation: 
+   - The event contract is deployed on Everscale through a previous transaction. 
+   - After a few seconds, relayers confirm the event contract by voting on it. 
 
-3. Once the Event contract gets confirmed, The tokens can be released or minted on the EVM network via two approaches: 
+3. Approaches for releasing or minting tokens on the EVM network: 
 
-    - 3.1
-   
-      If paying the [operations](./Concepts/Operations.md#EVM-operations) gas fees in EVM network with Ever, The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the relevant function on the MultiVault contract.\
+   3.1 Paying gas fees in EVM network with EVER: 
+
+    In this case, the process of token release or minting on the EVM network is automated.
+      - The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will call the relevant function on the MultiVault contract,
       After that MultiVault contract handles minting or releasing the token based on its type.
 
-   - 3.2 
-    
-      If paying the [operations](./Concepts/Operations.md#EVM-operations) gas fees in EVM network with is [gas tokens](./Concepts/TokenTypes.md#EVM-gas-tokens), its time to mint or release the tokens on EVM network based on its type.\
-      If the targe token is an native token, calling the `saveWithdrawNative` function will mint tokens and if its an alien token, calling `saveWithdrawAlien` will release the tokens.
-      Note that the saveWithdraw functions must be called on `multiVault` contract.
+   3.2 Paying gas fees in EVM network with the [EVM gas token](./Concepts/TokenTypes.md#evm-gas-tokens):
 
-4. At this point desired amount of target token must be deposited to recipient EVM address.
+    In this case, the process of token release or minting on the EVM network is done manually.
+    - For native tokens, call the `saveWithdrawNative` function to mint tokens. 
+    - For alien tokens, call the `saveWithdrawAlien` function to release tokens. Note that these functions must be called on the `MultiVault` contract. 
 
-> NOTICE : All of the referenced contracts addresses can be found at [addresses](./addresses.md).
+4. At this point desired amount of target token must have been deposited to recipient EVM address.
 
 ## Step-by-Step Guide: Ever to EVM transfer
 
 ## Native Coin transfer
 
-- 1 - Call the `wrap` method on the [`WEVERVault`](./addresses.md#Everscale-smart-contracts) contract and mint WEVER token :
+- 1 - Call the `wrap` function on the [`WEVERVault`](./addresses.md#Everscale-smart-contracts) contract and mint WEVER tokens :
 
 ### Function
 
@@ -62,7 +64,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 ---
 
-- 2 - Mint `WEVER` in the EVM network by calling the `saveWithdrawNative` :
+- 2 - Mint `WEVER` tokens in the EVM network by calling the `saveWithdrawNative` :
 
 ### Function
 
@@ -90,7 +92,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 > `BRIDGE` is used in this example.
 
-1 - Lock the the desired amount of the token in `ProxyMultiVaultNativeV-4`'s `TokenWallet` contract by calling the `transfer` function on our `TokenWallet` contract :
+1 - Transfer the token's to the `ProxyMultiVaultNativeV-4`'s `TokenWallet` contract by calling the `transfer` function on the your `TokenWallet` contract :
 
 ### Function
 
@@ -130,7 +132,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 ---
 
-- 2 - Mint `BRIDGE` in the EVM network by calling the `saveWithdrawNative` :
+- 2 - Mint the tokens in the EVM network by calling the `saveWithdrawNative` :
 
 ### Function
 
@@ -158,7 +160,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 > `USDT` is used in this example.
 
-1 - Burn the token on Everscale network by calling the `burn` function on our `tokenWallet` contract :
+1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
 ### Function
 
@@ -194,7 +196,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 ---
 
-- 2 - Release `USDT` in the EVM network by calling the `saveWithdrawAlien` :
+- 2 - Release the tokens in the EVM network by calling the `saveWithdrawAlien` :
 
 ### Function
 
@@ -222,7 +224,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 > `WBNB` is used in this example.
 
-1 - Burn the token on Everscale network by calling the `burn` function on our `tokenWallet` contract :
+1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
 ### Function
 
@@ -258,7 +260,7 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 ---
 
-- 2 - Release `BNB` in EVM network by calling the `saveWithdrawAlien` :
+- 2 - Release the tokens in EVM network by calling the `saveWithdrawAlien` :
 
 ### Function
 
@@ -282,4 +284,6 @@ The next step is only necessary if paying EVM network fees with its gas token.
 
 ---
 
-> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEVM/workFlow.md)
+> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)
+
+> All of the referenced contract's addresses can be found [here](./addresses.md)  

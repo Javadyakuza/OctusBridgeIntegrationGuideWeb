@@ -1,41 +1,45 @@
-# EVM To Ever transfer mechanics overview
+# Overview of EVM to Ever transfer mechanics 
 
-1.  Deposit desired amount of the target token into the [`MultiVault`](./addresses.md#contractaddresses) contract which is in the EVM network.\
-    Note that if the token is an ERC-20 token regardless if it's an native or alien token, such as **DAI**, **USDT**, **WBTC** and others, the token owner must approve the `MultiVault` contract before depositing the token into it. see [approving erc-20 tokens](./Concepts/Operations.md#approving-erc-20-tokens).\
-    After it all the `MultiVault` contract will handle burning or locking the token based on it's [type](./Concepts/TokenTypes.md).
-    The target token will be burned if its an native token and locked if an alien token.
+1. Locking or Burning the Target Token: 
+  
+   - To initiate the transfer on the EVM network, deposit the desired amount of the target token into the `MultiVault` contract on the EVM network. Please note that if the token is an [Alien token](./Concepts/TokenTypes.md#alien-tokens) (e.g., DAI, USDT, WBTC, etc.), the token owner must approve the `MultiVault` contract before making the deposit. For detailed instructions, refer to the guide on [approving Alien tokens](./Concepts/Operations.md#approving-alien-tokens). 
+   
+   - Once the deposit is complete, the `MultiVault` contract will handle the burning or locking of the token based on its [type](./Concepts/TokenTypes.md). Native tokens will be burned, while alien tokens will be locked. 
+ 
+2. Emitting Events: 
+  
+   - During this process, two events will be emitted: the `Deposit` event and either the `AlienTransfer` or `NativeTransfer` event, depending on the token type. 
+ 
+3. Deploying and Confirming the Event Contract: 
+   
+   - After the events are emitted by the `MultiVault` contract, it is necessary to deploy an event contract on the Everscale network. 
+   
+   - Relayers will then vote on the event contract to confirm the deposit on the EVM network. 
+   
+   - Methods for Deploying the Event Contract: 
+  
+   #### 3.1 Paying Everscale Operations Gas Fees with EVM Gas Tokens: 
 
-2.  Through the previous operation, two events will be emitted. one of them is always `Deposit` and another one depended on the token type is either `AlienTransfer` or `NativeTransfer`.
+      - If Everscale [operations](./Concepts/Operations.md#everscale-operations) gas fees are paid with EVM gas tokens, the user must attach enough gas tokens to the transaction. The [Credit Modules](./Concepts/CreditModules.md) will deploy the event contract on Everscale. Afterward, tokens will be automatically minted or released on Everscale. To perform this operation, besides attaching sufficient EVM gas tokens to the transaction, the [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_evers) parameter must be set to a [certain amount](./FAQ.md#how-to-set-expected_evers). 
+ 
+   3.2 Paying Everscale Operations Gas Fees with Ever: 
 
-3.  Once the relevant events are emitted by `MultiVault` contract, it's time for deploying an event Contract on the Everscale network.\
-     Relayers will vote on event contract and confirm the deposit in EVM network.\
-     Deploying the event contract can be done through two methods:
-
-    - #### 3.1
-
-      If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed with the EVM gas tokens, user must attach enough gas tokens to the transaction, the [credit Modules](./Concepts/CreditModules.md) will equalizes balances on both sides and deploys the event contract on Everscale and after that tokens will be minted or released on Everscale automatically.
-      In order to perform such a operation, besides attaching sufficient EVM gas tokens to transaction, [expected_evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) parameter must be set to a [certain amount](FAQ.md#how-to-set-expected_Evers).
-
-    - 3.2
-
-      If Everscale [operations](./Concepts/Operations.md#Ever-network-operations) gas fees are payed Ever, which is operable by not attaching enough EVM gas tokens and setting expected_evers to zero, it's time for the user to deploy the event contract manually. Such an operation can be done with calling the `deployEvent` on function `EthereumEverscaleEventConfiguration` contract which deploys an event contract and after exceeding the quorum confirm votes by relayers, the token will be released if its native token and minted if alien token.
+      - If Everscale operations gas fees are paid with Ever, the user can proceed without attaching enough EVM gas tokens and set expected_evers to zero. At this point, the user needs to manually deploy the event contract by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract. This will deploy an event contract, and after exceeding the quorum confirm votes by relayers, the token will be released if it's a native token and minted if it's an alien token. 
 
 4. At this point the tokens must be deposited to the recipient ever wallet.
 
-> NOTICE : All of the referenced contracts addresses can be found at [addresses](./addresses.md).
 
 ## Step-by-Step Guide: EVM to Ever transfer
 
 ## Alien Token transfer
 
-1. Deposit the desired amount of target token to `MultiVault` contract, which has two ways:
+1.Deposit the desired amount of the target token into the  `MultiVault` contract, which can be accomplished through two approaches:
 
 ### Function
 
-- 1.1: If target token was an ERC-20 token we must use the `deposit` function on `MultiVault` contract,
-  but before that we must approve [MultiVault](./addresses.md#EVM-smart-contracts) for desired token amount, once approved deposit function can be called.\
+- 1.1: If target token was an Alien token we must use the `deposit` function on `MultiVault` contract,
+  but before that we must approve `MultiVault` for desired token amount, once approved deposit function can be called.
 
-  > Notice if the token is an native token approval is not needed
 
   ```solidity
   function deposit(depositParams memory d) external payable override;
@@ -107,9 +111,9 @@ Next step is only necessary if paying Everscale operations fees with Ever
 
 ## Deploy Events
 
-2. Now it's time to deploy the event contract which has two ways:
+2. Now it's time to deploy the event contract which can be accomplished trough two ways:
 
-- 2.1: See [EVM to Ever Transfer Mechanics Overview : 3.1](#_3-1).
+- 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1](#overview-of-evm-to-ever-transfer-mechanics).
 
 - 2.2: Deploy event contract manually by calling `deployEvent` function on `EthereumEverscaleEventConfiguration` contract:
 
@@ -135,7 +139,7 @@ struct EthereumEverscaleEventVoteData {
 }
 ```
 
-The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../src/codeSamples/md/EVMToEver/DeployEvents/Toc.md).
+The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. following parameters can be fetched and prepared from event data and its root tx. see [Deploy Events](../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md).
 
 | param            | description           |
 | ---------------- | --------------------- |
@@ -145,11 +149,13 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 | eventBlockNumber | eventBlockNumber      |
 | eventBlock       | eventBlock Hash       |
 
-instructions on how to get these values can be found in [deploy Events](../.../../src/codeSamples/md/EVMToEver/DeployEvents/Toc.md)
+instructions on how to get these values can be found in [deploy Events](../.../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md)
 :::
 
 3. After this step tokens must be deposited to recipient EverWallet.
 
 ---
 
-> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EVMToEver/workFlow.md)
+> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EvmToEver/workFlow.md)
+
+> NOTICE : All of the referenced contracts addresses can be found at [addresses](./addresses.md).

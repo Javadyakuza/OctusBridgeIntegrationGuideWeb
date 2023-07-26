@@ -8,9 +8,9 @@ At the Ever -> EVM direction the operation's on the EVM network are as follows :
 
 - Releasing: If the token is an alien token.
 
-### Approving ERC-20 Tokens
+### Approving Alien Tokens
 
-If the token being transferred from EVM to Everscale is an ERC-20 token, The MultiVault contract must be able to transfer the token to itself, Therefore it is necessary to approve the "MultiVault" contract first. If the transferable token is the EVM gas token, the desired amount of the gas token should be attached to the transaction when calling the deposit function for EVM gas tokens.
+If the token being transferred from EVM to Everscale is an Alien token, The MultiVault contract must be able to transfer the token to itself, Therefore it is necessary to approve the "MultiVault" contract first. If the transferable token is the EVM gas token, the desired amount of the gas token should be attached to the transaction when calling the deposit function for EVM gas tokens.
 Note that the deposit functions for alien tokens and EVM gas tokens are not the same !
 
 ### Event Contract Deploy Value (expected_evers)
@@ -42,7 +42,7 @@ In the EVM to Ever direction, the following operations are performed on Everscal
 - In the Ever to EVM direction, If the EVM fees is payed with EVM gas tokens, the target assets need to be manually released or minted. Calling saveWithdrawNative will perform this operation for native tokens, while calling saveWithdrawAlien will perform it for alien tokens.
 
 - In the EVM to Ever direction, If Everscale fees are payed with Ever, the assets on Everscale need to be manually released or minted by deploying an event contract. \
-  see [Event contract deployment](../../src/codeSamples/md/EVMToEver/DeployEvents/Toc.md).
+  see [Event contract deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md).
 
 ## Automatic Asset releasing
 

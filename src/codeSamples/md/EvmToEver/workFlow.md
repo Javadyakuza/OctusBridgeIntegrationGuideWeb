@@ -6,9 +6,9 @@ The process of transferring tokens from an EVM network to the Everscale network 
 
 ### Table of Contents
 
-- [Transfer EVM Gas Token](./transfers/transferEVMNativeCoin.md)
-- [Transfer Native Token](./transfers/transferEVMMultiVaultToken.md)
-- [Transfer Alien Token](./transfers/transferEVMAlienToken.md)
+- [Transfer EVM Gas Token](./transfers/transferEvmNativeCoin.md)
+- [Transfer Native Token](./transfers/transferEvmMultiVaultToken.md)
+- [Transfer Alien Token](./transfers/transferEvmAlienToken.md)
 
 ## Deploying Events on Everscale
 

@@ -216,7 +216,7 @@ module.exports = {
         ],
       },
       {
-        text: 'Addresses',
+        text: 'Links',
         collapsable: true,
         link: '/docs/addresses.md',
       },

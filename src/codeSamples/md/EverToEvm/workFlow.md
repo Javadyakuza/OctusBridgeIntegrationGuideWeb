@@ -20,7 +20,7 @@ The second step involved in transferring a token from Everscale to an EVM networ
 - [transfer Ever](./transfers/transferEverNativeCoin.md)
 - [transfer Native token](./transfers/transferEverNativeToken.md)
 - [transfer Alien Token](./transfers/transferEverAlienToken.md)
-- [transfer EVM gas Token](./transfers//transferEVMNativeCoin.md)
+- [transfer EVM gas Token](./transfers//transferEvmNativeCoin.md)
 
 ## Asset Releasing or Minting on EVM
 
