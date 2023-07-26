@@ -4,7 +4,7 @@
 
 ## Ever Native Coin Payload
 
-The following payload is utilized when transferring **EVER**. It encompasses encoded operational data related to wrapping EVER into [WEVER](../../../../../docs/addresses.md#wever), as well as specifying the Evm network and recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring **EVER**. It encompasses encoded operational data related to wrapping EVER into [WEVER](../../../../../docs/addresses.md#wever), as well as specifying the EVM network and recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -109,7 +109,7 @@ const boc: string = compounderPayload.boc;
 
 ## Native Token Payload
 
-The following payload is utilized when transferring an native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to Evm network and Evm recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring an native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to EVM network and EVM recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -183,7 +183,7 @@ The following payload is utilized when transferring an native token such as [BRI
 
 ## Alien Token Payload
 
-The following payload is utilized when transferring an Alien token which is not an Evm gas token, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to EVM network, Evm recipient and target alien Evm token on Everscale.\
+The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to EVM network, EVM recipient and target alien EVM token on Everscale.\
 The code sample below demonstrates how to construct such a payload.
 
 To accomplish that, it is necessary to obtain the Abi files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows
@@ -1119,9 +1119,9 @@ const operationPayload = await provider.packIntoCell({
 
 <p class="output-p" ref="burnPayloadOutput"></p>
 
-## Evm Gas token Payload
+## EVM Gas token Payload
 
-The provided payload is utilized for transferring an Evm gas token (such as BNB, ETH, FTM, etc.), from Everscale to an Evm network. The payload contains encoded operational data that is relevant to the Evm recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the EVM network gas token back to its original form. The code sample below illustrates how to construct such a payload.
+The provided payload is utilized for transferring an EVM gas token (such as BNB, ETH, FTM, etc.), from Everscale to an EVM network. The payload contains encoded operational data that is relevant to the EVM recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the EVM network gas token back to its original form. The code sample below illustrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>

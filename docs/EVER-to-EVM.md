@@ -1,30 +1,30 @@
-# Ever to Evm Transfer Mechanics Overview
+# Ever to EVM transfer mechanics overview
 
 1. Locking or burning the target token based on its type.\
    If the target token is an native token it will be locked on Everscale and if its an alien token it will be burned. see [token types](./Concepts/TokenTypes.md#token-types).
 
 2. Through previous transaction the event contract is deployed on Everscale and after few second the relayers will confirm it by voting on it.
 
-3.
+3. Once the Event contract gets confirmed, The tokens can be released or minted on the EVM network via two approaches: 
 
-- 3.1
+    - 3.1
+   
+      If paying the [operations](./Concepts/Operations.md#EVM-operations) gas fees in EVM network with Ever, The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the relevant function on the MultiVault contract.\
+      After that MultiVault contract handles minting or releasing the token based on its type.
 
-  If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with Ever, The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will equalizes balances on both sides and calls the relevant function on the MultiVault contract.\
-   After that MultiVault contract handles minting or releasing the token based on its type.\
+   - 3.2 
+    
+      If paying the [operations](./Concepts/Operations.md#EVM-operations) gas fees in EVM network with is [gas tokens](./Concepts/TokenTypes.md#EVM-gas-tokens), its time to mint or release the tokens on EVM network based on its type.\
+      If the targe token is an native token, calling the `saveWithdrawNative` function will mint tokens and if its an alien token, calling `saveWithdrawAlien` will release the tokens.
+      Note that the saveWithdraw functions must be called on `multiVault` contract.
 
-- 3.2
-
-  If paying the [operations](./Concepts/Operations.md#Evm-operations) gas fees in Evm network with is [gas tokens](./Concepts/TokenTypes.md#evm-gas-tokens), its time to mint or release the tokens on Evm network based on its type.\
-  If the targe token is an native token, calling the `saveWithdrawNative` function will mint tokens and if its an alien token, calling `saveWithdrawAlien` will release the tokens.
-  Note that the saveWithdraw functions must be called on `multiVault` contract.
-
-4. At this point desired amount of target token must be deposited to recipient Evm address.
+4. At this point desired amount of target token must be deposited to recipient EVM address.
 
 > NOTICE : All of the referenced contracts addresses can be found at [addresses](./addresses.md).
 
-## Step-by-Step Guide: Ever to EVM Transfer
+## Step-by-Step Guide: Ever to EVM transfer
 
-## Transferring Native Coin
+## Native Coin transfer
 
 - 1 - Call the `wrap` method on the [`WEVERVault`](./addresses.md#Everscale-smart-contracts) contract and mint WEVER token :
 
@@ -50,19 +50,19 @@
 | gas_back_address | address to send the change back |
 | payload | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
 
-> NOTE : gas_back_address will be user's address ie paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
+> NOTE : gas_back_address will be user's address ie paying the EVM network [operations](./Concepts/Operations.md#EVM-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 :::
 
 ---
 
 ::: warning
-The next step is only necessary if paying Evm network fees with its gas token.
+The next step is only necessary if paying EVM network fees with its gas token.
 :::
 
 ---
 
-- 2 - Mint `WEVER` in the Evm network by calling the `saveWithdrawNative` :
+- 2 - Mint `WEVER` in the EVM network by calling the `saveWithdrawNative` :
 
 ### Function
 
@@ -86,7 +86,7 @@ The next step is only necessary if paying Evm network fees with its gas token.
 
 ---
 
-## Transferring [Native Token](./Concepts/TokenTypes.md#native-tokens)
+## Native Token transfer
 
 > `BRIDGE` is used in this example.
 
@@ -118,19 +118,19 @@ The next step is only necessary if paying Evm network fees with its gas token.
 | notify            | Notify receiver on incoming transfer                                                                        |
 | payload           | operational payload, see [transfer payload](./Concepts/Payloads.md#transfer-native-token--transer-payload). |
 
-> NOTE : remainingGasTo will be user's address if paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
+> NOTE : remainingGasTo will be user's address if paying the EVM network [operations](./Concepts/Operations.md#EVM-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 :::
 
 ---
 
 ::: warning
-The next step is only necessary if paying Evm network fees with its gas token.
+The next step is only necessary if paying EVM network fees with its gas token.
 :::
 
 ---
 
-- 2 - Mint `BRIDGE` in the Evm network by calling the `saveWithdrawNative` :
+- 2 - Mint `BRIDGE` in the EVM network by calling the `saveWithdrawNative` :
 
 ### Function
 
@@ -154,7 +154,7 @@ The next step is only necessary if paying Evm network fees with its gas token.
 
 ---
 
-## Transferring Alien Token
+## Alien Token transfer
 
 > `USDT` is used in this example.
 
@@ -182,19 +182,19 @@ The next step is only necessary if paying Evm network fees with its gas token.
 | remainingGasTo | Remaining gas receiver                                                                                    |
 | payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).       |
 
-> NOTE : remainingGasTo will be user's address if paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
+> NOTE : remainingGasTo will be user's address if paying the EVM network [operations](./Concepts/Operations.md#EVM-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 :::
 
 ---
 
 ::: warning
-The next step is only necessary if paying Evm network fees with its gas token.
+The next step is only necessary if paying EVM network fees with its gas token.
 :::
 
 ---
 
-- 2 - Release `USDT` in the Evm network by calling the `saveWithdrawAlien` :
+- 2 - Release `USDT` in the EVM network by calling the `saveWithdrawAlien` :
 
 ### Function
 
@@ -218,7 +218,7 @@ The next step is only necessary if paying Evm network fees with its gas token.
 
 ---
 
-## Transferring Evm Gas Token
+## EVM Gas Token transfer
 
 > `WBNB` is used in this example.
 
@@ -246,19 +246,19 @@ The next step is only necessary if paying Evm network fees with its gas token.
 | remainingGasTo | Remaining gas receiver                                                                                      |
 | payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).         |
 
-> NOTE : remainingGasTo will be user's address if paying the Evm network [operations](./Concepts/Operations.md#Evm-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
+> NOTE : remainingGasTo will be user's address if paying the EVM network [operations](./Concepts/Operations.md#EVM-operations) gas fees with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if paying with Ever.
 
 :::
 
 ---
 
 ::: warning
-The next step is only necessary if paying Evm network fees with its gas token.
+The next step is only necessary if paying EVM network fees with its gas token.
 :::
 
 ---
 
-- 2 - Release `BNB` in Evm network by calling the `saveWithdrawAlien` :
+- 2 - Release `BNB` in EVM network by calling the `saveWithdrawAlien` :
 
 ### Function
 
@@ -282,4 +282,4 @@ The next step is only necessary if paying Evm network fees with its gas token.
 
 ---
 
-> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)
+> Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEVM/workFlow.md)

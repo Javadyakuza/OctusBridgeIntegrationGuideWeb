@@ -1,8 +1,7 @@
 import vue from '@vitejs/plugin-vue';
 import wasm from 'vite-plugin-wasm';
 const HELP_URL = 'https://t.me/everdev';
-// const FEEDBACK_URL = 'mailto:javad.solidity.dev@gmail.com';
-const FEEDBACK_URL = 'https://t.me/javad_yakuzaa';
+const FEEDBACK_URL = 'https://t.me/broxus_chat';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
 
 module.exports = {
@@ -29,12 +28,12 @@ module.exports = {
 
         items: [
           {
-            text: 'EVER to EVM',
+            text: 'Ever to EVM',
             collapsable: false,
             link: '/docs/EVER-to-EVM.md',
           },
           {
-            text: 'EVM to EVER',
+            text: 'EVM to Ever',
             collapsable: false,
             link: '/docs/EVM-to-EVER.md',
           },
@@ -71,7 +70,7 @@ module.exports = {
             collapsable: false,
             items: [
               {
-                text: 'Evm Gas Token',
+                text: 'EVM Gas Token',
                 collapsable: false,
                 link: '/docs/Visual-Guide/EVM-TO-EVER/1.md',
               },
@@ -145,14 +144,14 @@ module.exports = {
                     link: '/src/codeSamples/md/EverToEvm/transfers/transferEverAlienToken.md',
                   },
                   {
-                    text: 'Evm Gas Token',
+                    text: 'EVM Gas Token',
                     collapsable: true,
                     link: '/src/codeSamples/md/EverToEvm/transfers/transferEvmNativeCoin.md',
                   },
                 ],
               },
               {
-                text: 'Evm Asset Releasing',
+                text: 'EVM Asset Releasing',
                 collapsable: true,
                 items: [
                   {
@@ -161,7 +160,7 @@ module.exports = {
                     link: '/src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawNative.md',
                   },
                   {
-                    text: 'Evm Gas and Alien Token ',
+                    text: 'EVM Gas and Alien Token ',
                     collapsable: true,
                     link: '/src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md',
                   },
@@ -179,7 +178,7 @@ module.exports = {
                 collapsable: true,
                 items: [
                   {
-                    text: 'Evm Gas Token',
+                    text: 'EVM Gas Token',
                     collapsable: true,
                     link: '/src/codeSamples/md/EvmToEver/transfers/transferEvmNativeCoin.md',
                   },

@@ -1,10 +1,10 @@
-# Transfer Evm Gas Token
+# Transfer EVM Gas Token
 
-When transferring Evm gas tokens such as **BNB**, **ETH** and **MATIC** and others, Firstly the deposit function for Evm Gas tokens must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to mint tokens on Everscale.
+When transferring EVM gas tokens such as **BNB**, **ETH** and **MATIC** and others, Firstly the deposit function for EVM Gas tokens must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to mint tokens on Everscale.
 
 The code samples below demonstrate how to perform the first step of this process.
 
-In order to have a complete token bridging process, If paying the event contract deployment with Evm gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
+In order to have a complete token bridging process, If paying the event contract deployment with EVM gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
 
 In this example, MultiVault contract Abi is required:
 
@@ -2756,11 +2756,11 @@ const MultiVaultAbi = {
 </details>
 <br/>
 
-#### Initiating the token transfer on Evm network
+#### Initiating the token transfer on EVM network
 
 <br/>
 <details>
-<summary>Transfer Evm Gas Token</summary>
+<summary>Transfer EVM Gas Token</summary>
 
 ```typescript
 //Import following libraries

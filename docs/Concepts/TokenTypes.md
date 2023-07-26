@@ -6,8 +6,8 @@ Tokens that are not originally from Everscale are known as alien tokens. Example
 
 ### Native Tokens
 
-Token that play a vital role in the ecosystem such as [WEVER](../addresses.md#wever), [BRIDGE](../addresses.md#bridge), and [QUBE](../addresses.md#qube) are known as native tokens. For example, BRIDGE incentive's relayers, QUBE is the FlatQube DEX token, and unwrapped version of WEVER serves as the Everscale gas token. Other tokens that are created on Everscale for the first time are not considered as native tokens.
+Token that play a vital role in the ecosystem such as [WEVER](../addresses.md#wever), [BRIDGE](../addresses.md#bridge), and [QUBE](../addresses.md#qube) are known as native tokens. For example, BRIDGE incentivize's relayers, QUBE is the FlatQube DEX token, and unwrapped version of WEVER serves as the Everscale gas token. Other tokens that are created on Everscale for the first time are not considered as native tokens.
 
-### Evm Gas Tokens
+### EVM Gas Tokens
 
-The Evm native coins are called Evm gas tokens for simplification.
+The native coins on the EVM networks are commonly referred to as EVM gas tokens for the purpose of simplification. Examples of such tokens include ETH, BNB, Matic, and others.

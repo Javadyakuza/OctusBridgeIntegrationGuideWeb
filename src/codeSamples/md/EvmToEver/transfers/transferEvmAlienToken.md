@@ -1,10 +1,10 @@
 # Transfer Alien Token
 
-When transferring Alien tokens which are not Evm gas tokens such as **USDT**, **DAI**, **WBTC** and others, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to mint tokens on Everscale.
+When transferring Alien tokens which are not EVM gas tokens such as **USDT**, **DAI**, **WBTC** and others, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to mint tokens on Everscale.
 
 The code samples below demonstrate how to perform the first step of this process.
 
-In order to have a complete token bridging process, If paying the event contract deployment with Evm gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
+In order to have a complete token bridging process, If paying the event contract deployment with EVM gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
 
 In this example, MultiVault and ERC-20 Token contracts's Abi's is required:
 
@@ -3061,7 +3061,7 @@ const ERC20Abi = {
 </details>
 <br/>
 
-#### Initiating the token transfer on Evm network
+#### Initiating the token transfer on EVM network
 
 <br/>
 <details>

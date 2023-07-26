@@ -1,11 +1,11 @@
-# Transfer Evm Gas Token
+# Transfer EVM Gas Token
 
 <div class="EvmNativeCoinTransfer">
 
-To transfer an Evm network gas token such as **BNB**, **ETH**, **FTM**, or any other supported token, it is necessary to initiate a transaction in Everscale to authorize the transfer. Once the event contract is confirmed, the assets can be released on the Evm network. The asset releasing step can be executed either manually or automatically, depending on your preferred method.
+To transfer an EVM network gas token such as **BNB**, **ETH**, **FTM**, or any other supported token, it is necessary to initiate a transaction in Everscale to authorize the transfer. Once the event contract is confirmed, the assets can be released on the EVM network. The asset releasing step can be executed either manually or automatically, depending on your preferred method.
 Below, you will find code samples illustrating the implementation of your chosen approach:
 
-In order to have a complete token bridging, if the Evm network fees are payed with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
+In order to have a complete token bridging, if the EVM network fees are payed with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
 To perform such a operation Tip3 Token Root and wallet upgradable Abi's are required which are as follows :
 
@@ -434,7 +434,7 @@ const TokenWalletUpgradableAbi{
 
 <br/>
 <details>
-<summary>Transfer Evm Gas Token</summary>
+<summary>Transfer EVM Gas Token</summary>
 
 ```typescript
 // Import the required libraries

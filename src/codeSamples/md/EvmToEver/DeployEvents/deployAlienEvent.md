@@ -2,9 +2,9 @@
 
 # Deploy Alien Events
 
-An [Ethereum Everscale Alien Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [alien token](../../../../../docs/Concepts/TokenTypes.md) from an Evm network to Everscale.
-These tokens can be either the Evm gas tokens, such as **BNB** or **ETH**, or ERC-20 tokens, such as **USDT** or **WBTC**.
-When a user wants to transfer a token from an Evm network to Everscale and chooses to pay for the event contract deployment with the Evm gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the Evm gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
+An [Ethereum Everscale Alien Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [alien token](../../../../../docs/Concepts/TokenTypes.md) from an EVM network to Everscale.
+These tokens can be either the EVM gas tokens, such as **BNB** or **ETH**, or ERC-20 tokens, such as **USDT** or **WBTC**.
+When a user wants to transfer a token from an EVM network to Everscale and chooses to pay for the event contract deployment with the EVM gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the EVM gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
 
 To perform such a operation the EthereumEverscaleEventConfiguration contract Abi is needed which is as follows:
 
@@ -262,7 +262,7 @@ await EvmEverEventConf.methods
 
 </details>
 
-<label for="txHash">Evm Transaction Hash </label>
+<label for="txHash">EVM Transaction Hash </label>
 <input ref="txHash" type="text"/>
 
 <br/>

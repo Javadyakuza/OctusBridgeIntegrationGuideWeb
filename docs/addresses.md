@@ -1,6 +1,6 @@
 # ContractAddresses
 
-## Evm Smart Contracts
+## EVM Smart Contracts
 
 The following table presents the smart contracts on EVM networks.
 
@@ -9,7 +9,7 @@ The following table presents the smart contracts on EVM networks.
 | UnWrapper     | 0x54c55369A6900731D22eACb0DF7C0253CF19dFff |
 | MultiVault    | 0x54c55369A6900731D22eACb0DF7C0253CF19dFff |
 
-> note that the mentioned contracts have same addresses on all of the supported Evm networks.
+> note that the mentioned contracts have same addresses on all of the supported EVM networks.
 
 ## Everscale Smart Contracts
 

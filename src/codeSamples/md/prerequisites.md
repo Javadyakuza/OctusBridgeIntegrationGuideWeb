@@ -21,10 +21,10 @@ The necessary npm packages are as follows:
 
 ## Providers
 
-This documentation utilizes two types of providers: one for Tvm-based networks and another for Evm-based networks. However, it's important to note that OctusBridge also supports transfers between Solana and Everscale, which require a different type of provider that is not covered in this documentation.
+This documentation utilizes two types of providers: one for Tvm-based networks and another for EVM-based networks. However, it's important to note that OctusBridge also supports transfers between Solana and Everscale, which require a different type of provider that is not covered in this documentation.
 
-- Evm-based Provider:
-  There are several providers available for Evm-based networks, but for the purposes of this documentation, we will be using MetaMask. Follow the steps below to initialize and use MetaMask provider in your code samples.
+- EVM-based Provider:
+  There are several providers available for EVM-based networks, but for the purposes of this documentation, we will be using MetaMask. Follow the steps below to initialize and use MetaMask provider in your code samples.
 
 ```typescript
 // Import the required libraries

@@ -4,7 +4,7 @@ When transferring native tokens such as **BRIDGE**, **QUBE** and **WEVER**, Firs
 
 The code samples below demonstrate how to perform the first step of this process.
 
-In order to have a complete token bridging process, If paying the event contract deployment with Evm gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Native Event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
+In order to have a complete token bridging process, If paying the event contract deployment with EVM gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Native Event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
 
 In this example, MultiVault contract Abi is required:
 
@@ -2757,7 +2757,7 @@ const MultiVaultAbi = {
 
 <br/>
 
-#### Initiating the token transfer on Evm network
+#### Initiating the token transfer on EVM network
 
 <br/>
 <details>
