@@ -6,15 +6,15 @@ At the Ever -> EVM direction, The actions on the EVM network are as follows :
 
 - Token Minting: If the token is an native token.
 
-- Token Releasing: If the token is an alien token.
+- Token Releasing: If the token is an Alien token.
 
 ### Approving Alien Tokens
 
 If the token being transferred from EVM to Everscale is an Alien token, The MultiVault contract must be able to transfer the token to itself, Therefore it is necessary to approve the "MultiVault" contract first. If the transferable token is the EVM gas token, the desired amount of the gas token should be attached to the transaction when calling the deposit function.
 ::: info
-Note that the deposit functions for alien tokens and EVM gas tokens are not the same !
+Note that the deposit functions for Alien tokens and EVM gas tokens are not the same !
 
-- `deposit` is utilized when transferring an alien or native token.
+- `deposit` is utilized when transferring an Alien or native token.
 - `depositByNativeToken` is utilized when transferring an EVM gas token.
 
 :::
@@ -31,7 +31,7 @@ In the EVM to Ever direction, The actions on Everscale are as follows:
 
 - Event Deployment : Deploying an event contract referring to the token deposit on the EVM network.
 - Token Releasing : If the token is a native token.
-- Token Minting : If the token is an alien token.
+- Token Minting : If the token is an Alien token.
 
 ## Alien & Native Tokens operational differences in Everscale
 
@@ -40,19 +40,19 @@ In the EVM to Ever direction, The actions on Everscale are as follows:
 
 - When transferring a native token, it will be locked on Everscale and minted on the EVM network.
 
-- When transferring an alien token, it will be burnt on Everscale and released on the EVM network.
+- When transferring an Alien token, it will be burnt on Everscale and released on the EVM network.
 
 ### EVM -> Ever
 
 - When transferring the EVM gas token, it will be wrapped into an ERC-20 (WETH, WBNB, etc.). Subsequently, it will be locked on the EVM network and minted on Everscale.
 
-- When transferring an alien token, it will be locked on the EVM network and then minted on Everscale.
+- When transferring an Alien token, it will be locked on the EVM network and then minted on Everscale.
 
 - When transferring a native token (WEVER, BRIDGE, and QUBE), it will be burnt on the EVM network and released on the Everscale network.
 
 ## Manual Asset releasing
 
-- In the Ever -> EVM direction, if the EVM fees are paid with EVM gas tokens, the target assets need to be manually released or minted. To perform this operation for native tokens, use the  `saveWithdrawNative`  function, and for alien tokens, use the  `saveWithdrawAlien`  function. 
+- In the Ever -> EVM direction, if the EVM fees are paid with EVM gas tokens, the target assets need to be manually released or minted. To perform this operation for native tokens, use the  `saveWithdrawNative`  function, and for Alien tokens, use the  `saveWithdrawAlien`  function. 
 
 - In the EVM -> Ever direction, if Everscale fees are paid with Ever, the assets on Everscale need to be manually released or minted by deploying an event contract. For instructions on deploying an event contract, refer to the [Event Contract Deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md) guide. 
 

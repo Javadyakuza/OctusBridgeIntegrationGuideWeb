@@ -2,7 +2,7 @@
 
 ### Alien Tokens
 
-Tokens that are not originally from Everscale are known as alien tokens. Examples include [WETH](../addresses.md#weth), [WBTC](../addresses.md#wbtc), [USDT](../addresses.md#usdt) and others.
+Tokens that are not originally from Everscale are known as Alien tokens. Examples include [WETH](../addresses.md#weth), [WBTC](../addresses.md#wbtc), [USDT](../addresses.md#usdt) and others.
 
 ### Native Tokens
 

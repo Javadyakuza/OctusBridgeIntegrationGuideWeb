@@ -8,7 +8,7 @@ To facilitate the transfer of a token from Everscale to an EVM network, it is ne
 
 - [Payload for Ever](./buildingPayloads/BuildingPayloads.md#ever-native-coin-payload)
 - [Payload for Native token](./buildingPayloads/BuildingPayloads.md#native-token-payload)
-- [Payload for Alien Token](./buildingPayloads/BuildingPayloads.md#alien-token-payload)
+- [Payload for Alien Token](./buildingPayloads/BuildingPayloads.md#Alien-token-payload)
 - [Payload for EVM gas Token](./buildingPayloads/BuildingPayloads.md#EVM-gas-token-payload)
 
 ## Transferring Tokens from Everscale

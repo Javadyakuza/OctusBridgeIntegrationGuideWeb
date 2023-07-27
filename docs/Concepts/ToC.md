@@ -1,6 +1,6 @@
 # Concepts
 
-**Explanation of the expressions and keywords used in this documentation**
+**Explanation of the expressions and keywords used in this documentation.**
 
 ## Table of Contents
 

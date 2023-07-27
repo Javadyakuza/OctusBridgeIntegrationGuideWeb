@@ -183,7 +183,7 @@ The following payload is utilized when transferring an native token such as [BRI
 
 ## Alien Token Payload
 
-The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to EVM network, EVM recipient and target alien EVM token on Everscale.\
+The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to EVM network, EVM recipient and target Alien EVM token on Everscale.\
 The code sample below demonstrates how to construct such a payload.
 
 To accomplish that, it is necessary to obtain the Abi files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows
@@ -954,7 +954,7 @@ const ERC20Abi = {
 </details>
 <br/>
 
-#### Getting the TokenRootEvmALien address
+#### Getting the TokenRootEvmAlien address
 
 <br/>
 <details>
@@ -1024,7 +1024,7 @@ const TargetTokenRootAlienEvm = (
 </details>
 <br/>
 
-#### Building the burn alien token payload
+#### Building the burn Alien token payload
 
 <br/>
 <details>

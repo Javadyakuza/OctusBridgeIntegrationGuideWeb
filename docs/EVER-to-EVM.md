@@ -2,7 +2,7 @@
 
 1. Locking or burning the target token based on its [type](./Concepts/TokenTypes.md#token-types):
    - If the target token is a native token, it will be locked on Everscale. 
-   - If it is an alien token, it will be burned. 
+   - If it is an Alien token, it will be burned. 
 
 2. Event contract deployment and confirmation: 
    - The event contract is deployed on Everscale through a previous transaction. 
@@ -20,7 +20,7 @@
 
     In this case, the process of token release or minting on the EVM network is done manually.
     - For native tokens, call the `saveWithdrawNative` function to mint tokens. 
-    - For alien tokens, call the `saveWithdrawAlien` function to release tokens. Note that these functions must be called on the `MultiVault` contract. 
+    - For Alien tokens, call the `saveWithdrawAlien` function to release tokens. Note that these functions must be called on the `MultiVault` contract. 
 
 4. At this point the desired amount of target token must be deposited to the recipient EVM address.
 
@@ -81,8 +81,8 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 | Param   | Description                        |
 | ------- | ---------------------------------- |
-| payload | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).|
-| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative).|
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative). |
 
 :::
 
@@ -149,8 +149,8 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 | Param      | Description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
-| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative).   |
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative). |
 
 :::
 
@@ -182,7 +182,7 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | amount         | Amount of the target token token                                                                          |
 | callBackTo     | Callback Receiver contract which is [MergePoolV_4](./addresses.md#Everscale-smart-contracts) in this case |
 | remainingGasTo | Remaining gas receiver                                                                                    |
-| payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).       |
+| payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-Alien-token--burn-payload).       |
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
 
@@ -214,8 +214,8 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 | Param      | Description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
-| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative).   |
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative). |
 
 :::
 
@@ -247,7 +247,7 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | amount         | Amount of the token                                                                                         |
 | callBackTo     | Callback Receiver contract.[ProxyMultiVaultAlienV_7](./addresses.md#Everscale-smart-contracts) in this case |
 | remainingGasTo | Remaining gas receiver                                                                                      |
-| payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).         |
+| payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-Alien-token--burn-payload).         |
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
 
@@ -278,8 +278,8 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 | Param      | Description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
-| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative).   |
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawnative). |
 
 :::
 
