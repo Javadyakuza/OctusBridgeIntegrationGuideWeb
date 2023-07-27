@@ -45,12 +45,12 @@
 
 ### Parameters
 
-| param  | description         |
+| Param  | Description         |
 | ------ | ------------------- |
-| tokens | amount of the token |
+| tokens | Amount of the token |
 | owner_address | [Compounder](./addresses.md#Everscale-smart-contracts) |
-| gas_back_address | address to send the change back |
-| payload | operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
+| gas_back_address | Address to send the change back |
+| payload | Operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
 
 > NOTE : gas_back_address will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
 
@@ -79,10 +79,10 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param   | description                        |
+| Param   | Description                        |
 | ------- | ---------------------------------- |
-| payload | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).|
-| signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).|
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
 
 :::
 
@@ -111,14 +111,14 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param             | description                                                                                                 |
+| Param             | Description                                                                                                 |
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| amount            | amount of the token                                                                                         |
-| recipient         | recipient address which is [proxyMultivaultNativeV_4](./addresses.md#Everscale-smart-contracts)             |
+| amount            | Amount of the token                                                                                         |
+| recipient         | Recipient address which is [proxyMultivaultNativeV_4](./addresses.md#Everscale-smart-contracts)             |
 | deployWalletValue | Token Wallet deploy value if not deployed before                                                            |
 | remainingGasTo    | Remaining gas receiver                                                                                      |
 | notify            | Notify receiver on incoming transfer                                                                        |
-| payload           | operational payload, see [transfer payload](./Concepts/Payloads.md#transfer-native-token--transer-payload). |
+| payload           | Operational payload, see [transfer payload](./Concepts/Payloads.md#transfer-native-token--transer-payload). |
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
 
@@ -147,10 +147,10 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param      | description                                                                                                        |
+| Param      | Description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
-| signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
 
 :::
 
@@ -177,12 +177,12 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param          | description                                                                                               |
+| Param          | Description                                                                                               |
 | -------------- | --------------------------------------------------------------------------------------------------------- |
-| amount         | amount of the target token token                                                                          |
-| callBackTo     | callback Receiver contract which is [MergePoolV_4](./addresses.md#Everscale-smart-contracts) in this case |
+| amount         | Amount of the target token token                                                                          |
+| callBackTo     | Callback Receiver contract which is [MergePoolV_4](./addresses.md#Everscale-smart-contracts) in this case |
 | remainingGasTo | Remaining gas receiver                                                                                    |
-| payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).       |
+| payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).       |
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
 
@@ -212,10 +212,10 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param      | description                                                                                                        |
+| Param      | Description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
-| signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
 
 :::
 
@@ -242,12 +242,12 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param          | description                                                                                                 |
+| Param          | Description                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------------------- |
-| amount         | amount of the token                                                                                         |
-| callBackTo     | callback Receiver contract.[ProxyMultiVaultAlienV_7](./addresses.md#Everscale-smart-contracts) in this case |
+| amount         | Amount of the token                                                                                         |
+| callBackTo     | Callback Receiver contract.[ProxyMultiVaultAlienV_7](./addresses.md#Everscale-smart-contracts) in this case |
 | remainingGasTo | Remaining gas receiver                                                                                      |
-| payload        | operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).         |
+| payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-alien-token--burn-payload).         |
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
 
@@ -276,10 +276,10 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ### Parameters
 
-| param      | description                                                                                                        |
+| Param      | Description                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| payload    | operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
-| signatures | relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
+| payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative).   |
+| signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawalien-and-savewithdrawnative). |
 
 :::
 
