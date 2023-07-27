@@ -5,14 +5,14 @@ When transferring EVM gas tokens such as **BNB**, **ETH** and **MATIC** and othe
 The code samples below demonstrate how to perform the first step of this process.
 
  Once a transaction is initiated on this section, in order to have a complete token bridging process if the event contract deployment value is paid with the EVM gas token, get your transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
-In this example, MultiVault contract Abi is required:
+In this example, MultiVault contract ABI is required:
 
-In this example MultiVault contract Abi is required:
+In this example MultiVault contract ABI is required:
 
 <div class="TransferEvmGasToken">
 
 <details>
-<summary>MultiVault Contract Abi</summary>
+<summary>MultiVault Contract ABI</summary>
 
 ```typescript
 const MultiVaultAbi = {
@@ -2764,16 +2764,17 @@ const MultiVaultAbi = {
 <summary>Transfer EVM Gas Token</summary>
 
 ```typescript
-//Import following libraries
+// Import following libraries
 import { ethers, toBigInt } from "ethers";
 import { Address } from "everscale-inpage-provider";
-//Initiate the Evm provider as mentioned in prerequisites section
+
+// Initiate the Evm provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddr {string} MultiVault Contract Address
- * @param MultiVaultAbi {JSON} MultiVault Contract Abi
+ * @param MultiVaultAbi {JSON} MultiVault Contract ABI
  * @param signer Evm signer. see prerequisites section
- * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
+ * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the ABI if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
     MultiVaultAddr,
@@ -2782,16 +2783,16 @@ import { Address } from "everscale-inpage-provider";
   );
 
 
-  // Pay Everscale fees with evm gas token ?
+  // Pay Everscale fees with EVM gas token ?
   let payWithGasToken: boolean;
 
   // Amount to transfer
   let amount: string;
 
-  // Everscale receiver address. e.g. 0:0000...0000
+  // Everscale receiver address. e.g. "0:0000...0000"
   let everAddress : string;
 
-  // Everscale Address Evm object
+  // Everscale Address EVM object
   const recipient: Address = {
     wid: everAddress.split(":")[0],
     addr: `0x${everAddress.split(":")[1]}`,
@@ -2818,7 +2819,7 @@ import { Address } from "everscale-inpage-provider";
    * @param amount {string} Gas token amount to transfer
    * @param deposit_expected_evers {string} Event initial balance
    * @param deposit_payload {string} Operational payload
-   * @param value Amount of gas tokens attached to tx
+   * @param value {BigInt} Amount of gas tokens attached to tx
    */
  const res = await MultiVault.depositByNativeToken(
       [
@@ -2850,6 +2851,10 @@ import { Address } from "everscale-inpage-provider";
 <button @click="HandleTransferEvmGasToken" style="{background-color : gray, border-radius: 100px}">Transfer {{BurnNativeBtnText()}}</button>
 
 <p class="output-p" ref="TransferEvmGasToken"></p>
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
 
 </div>
 

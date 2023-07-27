@@ -5,14 +5,14 @@ When transferring Alien tokens which are not EVM gas tokens such as **USDT**, **
 The code samples below demonstrate how to perform the first step of this process.
 
  Once a transaction is initiated on this section, in order to have a complete token bridging process if the event contract deployment value is paid with the EVM gas token, get your transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
-In this example, MultiVault contract Abi is required:
+In this example, MultiVault contract ABI is required:
 
-In this example MultiVault and ERC-20 Token contracts' Abis is required:
+In this example MultiVault and ERC-20 Token contracts' ABIs is required:
 
 <div class="TransferAlienToken">
 
 <details>
-<summary>MultiVault Contract Abi</summary>
+<summary>MultiVault Contract ABI</summary>
 
 ```typescript
 const MultiVaultAbi = {
@@ -2758,7 +2758,7 @@ const MultiVaultAbi = {
 
 <br/>
 <details>
-<summary>ERC-20 Contract Abi</summary>
+<summary>ERC-20 Contract ABI</summary>
 
 ```typescript
 const ERC20Abi = {
@@ -3069,17 +3069,17 @@ const ERC20Abi = {
 <summary>Transfer Alien Token</summary>
 
 ```typescript
-//Import following libraries
+// Import following libraries
 import { ethers } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
-//Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the EVM provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddr {string} MultiVault Contract Address
- * @param MultiVaultAbi {JSON} MultiVault Contract Abi
- * @param signer Evm signer. see prerequisites section
- * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
+ * @param MultiVaultAbi {JSON} MultiVault Contract ABI
+ * @param signer EVM signer. see prerequisites section
+ * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the ABI if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
     MultiVaultAddr,
@@ -3089,13 +3089,13 @@ import { Address } from "everscale-inpage-provider";
 
 /**
  * @param tokenAddress {string} Target alien token address
- * @param ERC20TokenAbi {JSON} ERC20 Contract Abi
- * @param signer Evm signer. see prerequisites section
- * @dev Use JSON.parse(JSON.stringify(ERC20Abi)) as the abi if encountering json parse error
+ * @param ERC20TokenAbi {JSON} ERC20 Contract ABI
+ * @param signer EVM signer. see prerequisites section
+ * @dev Use JSON.parse(JSON.stringify(ERC20Abi)) as the ABI if encountering json parse error
  */
   let ERC20Token = new ethers.Contract(tokenAddress, ERC20Abi, signer);
 
-  // Pay Everscale fees with evm gas token ?
+  // Pay Everscale fees with EVM gas token ?
   let payWithGasToken: boolean;
 
   // Amount to transfer
@@ -3104,17 +3104,17 @@ import { Address } from "everscale-inpage-provider";
   // Target ERC20 token decimals
   const decimals: string = await ERC20Token.decimals();
 
-  // Everscale receiver address. e.g. 0:0000...0000
+  // Everscale receiver address. e.g. "0:0000...0000"
   let everAddress : string;
 
-  // Everscale Address Evm object
+  // Everscale Address EVM object
   const recipient: Address = {
     wid: everAddress.split(":")[0],
     addr: `0x${everAddress.split(":")[1]}`,
   };
 
   /**
-   * @param deployEventValueInEvmGasToken {string} Event contract initial balance in Evm gas token.
+   * @param deployEventValueInEvmGasToken {string} Event contract initial balance in EVM gas token.
    */
   const deposit_value: string = payWithGasToken
     ? ethers.parseEther(deployEventValueInEvmGasToken).toString()
@@ -3182,6 +3182,11 @@ import { Address } from "everscale-inpage-provider";
 <button ref="TransferAlienTokenButton" @click="HandleTransferAlienToken" style="{background-color : gray, border-radius: 100px}">Approve and Transfer USDT</button>
 
 <p class="output-p" ref="TransferAlienToken"></p>
+
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
 
 </div>
 

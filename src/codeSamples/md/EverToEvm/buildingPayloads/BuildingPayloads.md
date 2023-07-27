@@ -16,7 +16,7 @@ The following payload is utilized when transferring **EVER**. It encompasses enc
 * Encodes evm data into a cell
 * @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
 * @param chainId {uint256} : Evm network chain id. Example: "56"
-* @callback {tuple} default for child params because of direct token transferring between MultiVault contract and user
+* @callback {tuple} Default values in this case
 */
 const transferPayload = await provider.packIntoCell({
     data: {
@@ -50,7 +50,7 @@ return Math.abs(~~(Math.random() \* 2 \*\* bits) | 0).toString();
 }
 let randomNonce: string = getRandomUint();
 
-// base encoded data
+// Base encoded data
 const data = await provider.packIntoCell({
 data: {
 nonce: randomNonce,
@@ -64,20 +64,20 @@ structure: [
 ] as const,
 });
 
-// {remainingGasTo} will be Ever user address if asset releasing is done manually and Event closer if automatically.
+// {remainingGasTo} will be user's Ever address if asset releasing is done manually and Event closer address if its done automatically.
 const remainingGasTo = releaseByEver ? EventCloser : everSender;
 /**
-* Encodes data about the EVER wrapper
-* @param to {address} : WEVER receiver, must be ProxyMultiVaultNativeV_4 which can be found in addresses.
+* Encodes data related to the EVER wrapper
+* @param to {address} : WEVER receiver, must be ProxyMultiVaultNativeV_4's address.
 * @param amount {uint128} : Ever amount. Example: "1000000000".
-* @param remainingGasTo {address} : remaining gas receiver Ever address. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
+* @param remainingGasTo {address} : Address to send the change back. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
 */
 const compounderPayload = await provider.packIntoCell({
 data: {
 to: ProxyMultiVaultNativeV_4,
 amount: locklift.utils.toNano(amount),
 remainingGasTo,
-payload: data.boc, // boc is payload string
+payload: data.boc, // boc is the payload string
 },
 structure: [
 { name: "to", type: "address" },
@@ -115,14 +115,13 @@ The following payload is utilized when transferring an Native token such as [BRI
 <summary>show code</summary>
 
 ```typescript
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
 * Encodes evm data into a cell
 * @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
 * @param chainId {uint256} : Evm network chain id. Example: "56"
-* @callback {tuple} default for child params because of direct token transferring between MultiVault contract and user
-
+* @callback {tuple} Default values in this case
 */
  const transferPayload = await provider.packIntoCell({
     data: {
@@ -156,12 +155,12 @@ The following payload is utilized when transferring an Native token such as [BRI
   }
   let randomNonce: string = getRandomUint();
 
-  // base encoded data
+  // Base encoded data
   const data = await provider.packIntoCell({
     data: {
       nonce: randomNonce,
       network: 1,
-      transferPayload: transferPayload.boc, // boc is payload string
+      transferPayload: transferPayload.boc, // boc is the payload string
     },
     structure: [
       { name: "nonce", type: "uint32" },
@@ -186,11 +185,11 @@ The following payload is utilized when transferring an Native token such as [BRI
 The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` among others. It encompasses encoded operational data related to EVM network, EVM recipient and target Alien EVM token on Everscale.\
 The code sample below demonstrates how to construct such a payload.
 
-To accomplish that, it is necessary to obtain the Abi files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows.
+To accomplish that, it is necessary to obtain the ABI files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows.
 
 <br/>
 <details>
-<summary>ProxyMultiVaultAlien_V7 Contract Abi</summary>
+<summary>ProxyMultiVaultAlien_V7 Contract ABI</summary>
 
 ```typescript
 const ProxyMultiVaultAlienV_7Abi = {
@@ -963,14 +962,13 @@ const ERC20Abi = {
 ```typescript
 // Import the following libraries
 import { ethers } from "ethers";
-import ERC20Abi from "../artifacts/EvmAbi/abi/ERC20.json";
 
-//Initiate the Evm and Tvm provider
+// Initiate the Evm and Tvm provider
 
 /**
  * Fetches the ProxyMultiVaultAlienV_7 contract.
- * @param ProxyMultivaultAlienV_7Abi {JSON} The ProxyMultiVaultAlienV_7 contract abi
- * @param ProxyMultiVaultAlienV_7Addr {Address} The ProxyMultiVaultAlienV_7 contract address. can be found in addresses section
+ * @param ProxyMultivaultAlienV_7Abi {JSON} The ProxyMultiVaultAlienV_7 contract ABI
+ * @param ProxyMultiVaultAlienV_7Addr {Address} The ProxyMultiVaultAlienV_7 contract address.
  */
 const proxyMVAlienV_7 = new TvmProvider.Contract(
   ProxyMultiVaultAlienV_7Abi,
@@ -980,7 +978,7 @@ const proxyMVAlienV_7 = new TvmProvider.Contract(
 /**
  * Fetches the target token contract
  * @param EvmTokenAddress {Address} The target token address on the Evm network
- * @param ERC20Abi.abi {JSON} The erc-20 contract abi
+ * @param ERC20Abi.abi {JSON} The erc-20 contract ABI
  * @param EvmPRovider instructions on prerequisites section
  */
 const ERC20Token = new ethers.Contract(
@@ -1002,17 +1000,17 @@ const chainId: string = (await EvmProvider.getNetwork()).chainId.toString();
 /**
  * @param answerId {number} answer id
  * @param chainId {string} The current provider chain id
- * @param token {string} the Evm token address. e.g. "0x1234"
- * @param name {string} the name of the token
- * @param symbol {string} the symbol of the token
- * @param decimals {string} the decimals of the token
+ * @param token {string} The Evm token address. e.g. "0x1234"
+ * @param name {string} The name of the token
+ * @param symbol {string} The symbol of the token
+ * @param decimals {string} The decimals of the token
  */
 const TargetTokenRootAlienEvm = (
   await proxyMVAlienV_7.methods
     .deriveEVMAlienTokenRoot({
       answerId: 0,
       chainId: chainId,
-      token: EvmTokenAddress, // the raw address string of target token
+      token: EvmTokenAddress, // the string of target token address
       name: name,
       symbol: symbol,
       decimals: decimals.toString(),
@@ -1031,12 +1029,13 @@ const TargetTokenRootAlienEvm = (
 <summary>Build burn payload</summary>
 
 ```typescript
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
  * Encodes evm data into a cell
  * @param addr {uint160} Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
- * @callback {tuple} default for child params because of direct token transferring between MultiVault contract and user
+ * @callback {tuple} Default values in this case
+
  * */
 const operationPayload = await provider.packIntoCell({
     data: {
@@ -1060,7 +1059,7 @@ const operationPayload = await provider.packIntoCell({
       },
     ] as const,
   });
-  // base encoded data
+  // Base encoded data
   const payload = await provider.packIntoCell({
     data: {
       network: 1,
@@ -1080,8 +1079,7 @@ const operationPayload = await provider.packIntoCell({
   let randomNonce: string = getRandomUint();
   // Encodes TokenRootAlienEVM and base encoded data
   /**
-   * @param targetToken {ever address} represents an alterNative version of the token on Everscale, differing from its standard counterpart. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
-   * @note all different versions of tokens can be found in addresses section
+   * @param targetToken {ever address} Represents an alterNative version of the token on Everscale, differing from its standard counterpart. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
    * */
     const data = await provider.packIntoCell({
     data: {
@@ -1127,7 +1125,7 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
 <summary>show code</summary>
 
 ```typescript
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
   /**
    * Encodes data about unWrapper of wrapped version of the Evm network gas token (BNB, ETH, ...).
@@ -1165,7 +1163,7 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
   }
   let randomNonce: string = getRandomUint();
 
-  // base encoded data
+  // Base encoded data
   const data = await provider.packIntoCell({
     data: {
       nonce: randomNonce,

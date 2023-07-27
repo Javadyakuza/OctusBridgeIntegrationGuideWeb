@@ -6,10 +6,10 @@ An [Ethereum Everscale Alien Event](../../../../../docs/Concepts/Events.md#evm-t
 These tokens can be either the EVM gas tokens, such as **BNB** or **ETH**, or ERC-20 tokens, like **USDT** or **WBTC**.
 When a user wants to transfer a token from an EVM network to Everscale and chooses to pay for the event contract deployment with the EVM gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the EVM gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
 
-To perform such an operation, the EthereumEverscaleEventConfiguration contract Abi is needed which is as follows:
+To perform such an operation, the EthereumEverscaleEventConfiguration contract ABI is needed which is as follows:
 
 <details>
-<summary>EthereumEverscaleEventConfiguration Contract Abi</summary>
+<summary>EthereumEverscaleEventConfiguration Contract ABI</summary>
 
 ```typescript
 const EthereumEverscaleEventConfAbi = {
@@ -116,9 +116,9 @@ const EthereumEverscaleEventConfAbi = {
 //Import following libraries
 import { ethers } from "ethers";
 
-//Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the Evm provider as mentioned in prerequisites section
 
-// AlienTransfer event Abi interface
+// AlienTransfer event ABI interface
 let abi = new ethers.Interface([
   `event AlienTransfer(
         uint256 base_chainId,
@@ -137,14 +137,14 @@ let abi = new ethers.Interface([
 
 /**
  * Fetches the transaction receipt from a tx hash to extract the logs and use them to build event vote data.
- * @param txHash {string} The initializer transaction hash which called one of the deposit functions on MultiVault contract
+ * @param txHash {string} The initializer function call transaction hash 
  */
 const txReceipt = await provider.getTransactionReceipt(txHash);
 if (!txReceipt) {
   throw new Error("Transaction receipt not found");
 }
 
-// Fetching the logs from that receipt
+// Fetching the logs from the receipt
 const logs = txReceipt.logs
   .map((log) => {
     try {
@@ -167,7 +167,7 @@ const logs = txReceipt.logs
 // Finding the AlienTransfer event from fetched logs
 const log = logs.find((log) => log.parsedLog.name === "AlienTransfer");
 
-// building the event vote data
+// Building the event vote data
 const eventLog = {
   eventTransaction: txReceipt.hash,
   eventIndex: log?.index!,
@@ -188,17 +188,17 @@ const eventLog = {
 <summary>Deploy Alien Event</summary>
 
 ```typescript
-//Import following libraries
+// Import following libraries
 import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
 import { Address } from "everscale-inpage-provider";
 
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
-// Everscale user address
+// User's Everscale  address
 const everSender: Address = new Address("0:12345");
 
 /**
- * @param EthereumEverscaleEventConfAbi {JSON} The event config contract Abi
+ * @param EthereumEverscaleEventConfAbi {JSON} The event config contract ABI
  * @param EthereumEverscaleAlienEventConfigurationAddr {Address} The alien event config contract address. can be found in addresses section
  */
 const EvmEverEventConf = new provider.Contract(
@@ -206,7 +206,7 @@ const EvmEverEventConf = new provider.Contract(
   EthereumEverscaleAlienEventConfigurationAddr
 );
 
-// Fetching the details from config contract to extract the event contract Abi and use it when encoding event data
+// Fetching the details from config contract to extract the event contract ABI and use it when encoding event data
 const ethConfigDetails = await EvmEverEventConf.methods
   .getDetails({ answerId: 0 })
   .call({});
@@ -246,10 +246,10 @@ const eventVoteData: EventVoteData = {
 };
 
 /**
- * @param eventVoteData {EventVoteData} prepared event vote data
- * @param from {Address} user Ever address
- * @param amount {string} event initial value
- * @param bounce {boolean} should return remained gas ?
+ * @param eventVoteData {EventVoteData} Prepared event vote data
+ * @param from {Address} User Ever address
+ * @param amount {string} Event initial value
+ * @param bounce {boolean} Should return remained gas ?
  */
 await EvmEverEventConf.methods
   .deployEvent({ eventVoteData: eventVoteData })
@@ -269,6 +269,10 @@ await EvmEverEventConf.methods
 <button @click="HandleDeployAlienEvent" style="{background-color : gray, border-radius: 100px}">Deploy Alien Event</button>
 
 <p class="output-p" ref="deployAlienEventOutput"></p>
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
 
 </div>
 

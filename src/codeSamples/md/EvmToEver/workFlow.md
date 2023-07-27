@@ -1,4 +1,4 @@
-# EVM to Everscale transfer workflow
+# EVM to Everscale Transfer Workflow
 
 ## Transferring Tokens from EVM
 
@@ -18,3 +18,7 @@ The second step in transferring a token from an EVM network to the Everscale net
 
 - [Deploy Everscale Ethereum Alien Event](./DeployEvents/deployAlienEvent.md)
 - [Deploy Everscale Ethereum Native Event](./DeployEvents/deployNativeEvent.md)
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).

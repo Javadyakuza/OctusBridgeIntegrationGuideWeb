@@ -6,10 +6,10 @@ Same as the last two examples, Alien tokens such as [USDT](../../../../../docs/a
 
 In order to have a complete token bridging if the Everscale fees are paid with Ever once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
-To perform such an operation we need Tip3 TokenRoot and TokenWalletUpgradable Abis which are as follows :
+To perform such an operation we need Tip3 TokenRoot and TokenWalletUpgradable ABIs which are as follows :
 
 <details>
-<summary>TokenRoot Contract Abi</summary>
+<summary>TokenRoot Contract ABI</summary>
 
 ```typescript
 const TokenRootAbi = {
@@ -207,7 +207,7 @@ const TokenRootAbi = {
 </details>
 <br/>
 <details>
-<summary>TokenWalletUpgradable Contract Abi</summary>
+<summary>TokenWalletUpgradable Contract ABI</summary>
 
 ```typescript
 const TokenWalletUpgradableAbi{
@@ -440,20 +440,20 @@ const TokenWalletUpgradableAbi{
 import { ethers } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
-// Everscale user address
+// User's Everscale address
 const everSender: Address = new Address("0:12345");
 
 /**
- * @param TokenRootAbi {JSON} The abi of the token root
- * @param tokenAddress {Address} Address of the token root
+ * @param TokenRootAbi {JSON} The ABI of the token root contract
+ * @param tokenAddress {Address} Address of the token root contract
  */
 const AlienTokenRoot = new provider.Contract(TokenRootAbi, tokenAddress);
 
 /**
- * @param TokenWalletUpgradableAbi {JSON} The abi of the token wallet upgradable
- * @param everSender {Address} User address
+ * @param TokenWalletUpgradableAbi {JSON} The ABI of the token wallet upgradable contract
+ * @param everSender {Address} User's Everscale address
  */
 const AlienTokenWalletUpgradable = new provider.Contract(
   TokenWalletUpgradableAbi,
@@ -467,13 +467,13 @@ const AlienTokenWalletUpgradable = new provider.Contract(
 // Token amount
 let amount: string;
 
-// Pay evm network fees with Ever ?
+// Pay EVM network fees with Ever ?
 let payWithEver: boolean;
 
-// Amount to attach to tx if payWithEver == true
+// Amount to attach to the transaction if payWithEver = true
 const auto_value: string = 13;
 
-// Amount to attach to tx if payWithEver == false
+// Amount to attach to the transaction if payWithEver = false
 const manual_value: string = 6;
 
 // See building payloads -> Alien Token Payload
@@ -488,7 +488,7 @@ const decimals: string = (
  *  @param amount {string} Token amount
  *  @param callbackTo {Address} Callback receiver
  *  @param payload {string} Operational payload
- *  @param remainingGasTo {Address} Remaining gas receiver.
+ *  @param remainingGasTo {Address} Address to send the change back
  *  @param from {Address} Sender address
  *  @notice @param amount {string} This parameter is important when asset releasing on evm side is done automatically
  *  @param bounce {boolean} Return remaining gas ? always true

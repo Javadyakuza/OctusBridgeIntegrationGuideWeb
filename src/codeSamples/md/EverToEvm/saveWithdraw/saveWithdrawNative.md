@@ -11,7 +11,7 @@ In this example, interaction takes place with three contracts. The following ABI
 <div class="saveWithdrawNative">
 
 <details>
-<summary>EverscaleEthereumBaseEvent Contract Abi</summary>
+<summary>EverscaleEthereumBaseEvent Contract ABI</summary>
 
 ```typescript
 const EverscaleEthereumBaseEventABI = {
@@ -281,7 +281,7 @@ const EverscaleEthereumBaseEventABI = {
 <br/>
 
 <details>
-<summary>EverscaleEthereumEventConfiguration Contract Abi</summary>
+<summary>EverscaleEthereumEventConfiguration Contract ABI</summary>
 
 ```typescript
 const EverscaleEthereumEventConfigurationABI = {
@@ -517,7 +517,7 @@ const EverscaleEthereumEventConfigurationABI = {
 
 <br/>
 <details>
-<summary>MultiVault Contract Abi</summary>
+<summary>MultiVault Contract ABI</summary>
 
 ```typescript
 const MultiVaultAbi = {
@@ -3275,11 +3275,11 @@ import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
 import * as web3 from "web3";
 import { ethers } from "ethers";
 
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
- * @param EverscaleEthereumBaseEventABI {JSON} event contract abi
- * @param EverEvmAlienEventContractAddress {Address} relevant deployed event contract address
+ * @param EverscaleEthereumBaseEventABI {JSON} Event contract ABI
+ * @param EverEvmAlienEventContractAddress {Address} Relevant deployed event contract address
  */
 const EverEvmEventContract = new provider.Contract(
   EverscaleEthereumBaseEventABI,
@@ -3291,7 +3291,7 @@ const eventDetails = await EverEvmEventContract.methods
   .getDetails({ answerId: 0 })
   .call({});
 /**
- * @param EverscaleEthereumEventConfigurationABI {JSON} Event contract abi
+ * @param EverscaleEthereumEventConfigurationABI {JSON} Event contract ABI
  * @param EverscaleEthereumEventConfigurationAddr {Address} Config contract address which is fetched from event contract details
  */
 const EverEvmAlienEventConf = new provider.Contract(
@@ -3378,11 +3378,11 @@ const payload = web3.eth.abi.encodeParameters(
 // Import the required libraries
 import * as web3 from "web3";
 
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
- * @param EverscaleEthereumBaseEventABI {JSON} ABI of event contract
- * @param EverscaleEthereumBaseEventAddr {Address} address of the relevant deployed event contract
+ * @param EverscaleEthereumBaseEventABI {JSON} Event contract ABI
+ * @param EverscaleEthereumBaseEventAddr {Address} Address of the relevant deployed event contract
  * fetches the event contract
  */
 const eventContract = new provider.Contract(
@@ -3435,13 +3435,13 @@ signatures.sort((a, b) => {
 // Import the required libraries
 import { ethers } from "ethers";
 
-//Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the Evm provider as mentioned in prerequisites section
 
 /**
- * @param MultiVaultAddress {Address} contract address of MultiVault contract on target Evm network, can be found in addresses section
+ * @param MultiVaultAddress {Address} Contract address of MultiVault contract on Evm network
  * @param MultiVaultAbi {JSON} MultiVault contract ABI
- * @param signer signer of the transaction. see prerequisites section
- * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the abi if encountering json parse error
+ * @param signer Signer of the transaction. see prerequisites section
+ * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the ABI if encountering json parse error
  */
 let MultiVault = new ethers.Contract(MultiVaultAddress, MultiVaultAbi, signer);
 
@@ -3459,7 +3459,7 @@ await MultiVault.saveWithdrawNative(
 <br/>
 
 ::: warning
-Only EverscaleEthereumNativeEvent contract addresses from incomplete bridging transactions can be used
+Only EverscaleEthereumNativeEvent contract addresses from incomplete bridging processes can be used
 :::
 
 <label for="eventAddr">Everscale Native Event Address </label>
@@ -3469,6 +3469,10 @@ Only EverscaleEthereumNativeEvent contract addresses from incomplete bridging tr
 <button @click="HandleSaveWithdrawNative" style="{background-color : gray, border-radius: 100px}">saveWithdrawNative</button>
 
 <p class="output-p" ref="saveWithdrawNativeOutput"></p>
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
 
 </div>
 

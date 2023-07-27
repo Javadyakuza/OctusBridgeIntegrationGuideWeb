@@ -1,6 +1,6 @@
 # Operations
 
-## EVM operations
+## EVM Operations
 
 At the Ever -> EVM direction, the actions on the EVM network are as follows :
 
@@ -25,7 +25,7 @@ In the EVM to Ever direction, when paying Everscale fees with EVM gas tokens, it
 The user must set it to zero if paying the fees with Ever. \
 see [how to set expected_evers](../FAQ.md##how-to-set-expected_evers).
 
-## Everscale operations
+## Everscale Operations
 
 In the EVM to Ever direction, The actions on Everscale are as follows:
 
@@ -33,7 +33,7 @@ In the EVM to Ever direction, The actions on Everscale are as follows:
 - Token Releasing : If the token is a Native token.
 - Token Minting : If the token is an Alien token.
 
-## Alien & Native Tokens operational differences in Everscale
+## Alien & Native Tokens Operational Differences in Everscale
 
 
  ### Ever -> EVM
@@ -50,13 +50,13 @@ In the EVM to Ever direction, The actions on Everscale are as follows:
 
 - When transferring a Native token (WEVER, BRIDGE, and QUBE), it will be burnt on the EVM network and released on Everscale.
 
-## Manual asset releasing
+## Manual Asset Releasing
 
 - In the Ever -> EVM direction, if the EVM fees are paid with EVM gas tokens, the target assets need to be manually released or minted. To perform this operation for Native tokens, use the  `saveWithdrawNative`  function and for Alien tokens, use the  `saveWithdrawAlien`  function. 
 
 - In the EVM -> Ever direction, if Everscale fees are paid with Ever, the assets on Everscale need to be manually released or minted by deploying an event contract. For instructions on deploying an event contract, refer to the [Event Contract Deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md) guide. 
 
-## Automatic asset releasing
+## Automatic Asset Releasing
 
 - In Ever -> EVM direction assets will be released or minted on EVM network by attaching enough Ever and proper [payload](./Payloads.md) to the transaction.
 

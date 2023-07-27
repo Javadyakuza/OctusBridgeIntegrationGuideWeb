@@ -6,10 +6,10 @@ The Native coin of Everscale, known as EVER, can be transferred to another EVM n
 
 In order to have a complete token bridging, if the Everscale fees are paid with Ever once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 
-To perform such an operation we need WEVERVaultContract Abi which is as follows :
+To perform such an operation we need WEVERVaultContract ABI which is as follows :
 
 <details>
-<summary>WEVERVault Contract Abi</summary>
+<summary>WEVERVault Contract ABI</summary>
 
 ```typescript
 abstract class EverAbi {
@@ -187,13 +187,13 @@ abstract class EverAbi {
 import { ethers } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
-//Initiate the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
-// Everscale user address
+// User's Everscale address
 const everSender: Address = new Address("0:12345");
 
 /**
- * @param WeverVaultAbi {JSON} WEVER contract Abi
+ * @param WeverVaultAbi {JSON} WEVER contract ABI
  * @param WEVERVaultAddress {Address} address of the WEVERVault contract
  */
 const WEVERVaultContract: =
@@ -202,13 +202,13 @@ const WEVERVaultContract: =
 // Token amount
 let amount: string;
 
-// Pay evm network fees with Ever ?
+// Pay EVM network fees with Ever ?
 let payWithEver: boolean;
 
-// Amount to attach to tx if payWithEver == true
+// Amount to attach to the transaction if payWithEver = true
 const auto_value: string = 13;
 
-// Amount to attach to tx if payWithEver == false
+// Amount to attach to the transaction if payWithEver = false
 const manual_value: string = 6;
 
 // See building payloads -> Ever Native Coin Payload
@@ -217,17 +217,17 @@ let EverNativeCoinPayload: string;
 /**
  * @param tokens {string} EVER amount
  * @param owner_address {Address} Always compounder address
- * @param gas_back_address {Address} Remaining gas receiver
+ * @param gas_back_address {Address} Address to send the change back
  * @param payload {string} Operational payload
  * @param from {Address} Sender address
- * @notice @param amount {string} this parameter is important when asset releasing on evm side is done automatically
+ * @notice @param amount {string} this parameter is important when asset releasing on EVM network is done automatically
  * @param bounce {boolean} return remaining gas ? always true
  */
   await WEVERVaultContract.methods
     .wrap({
       tokens: ethers.parseUnits(amount, 9).toString(),
-      owner_address: Compounder,// Compounder address can be found in addresses section
-      gas_back_address: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
+      owner_address: Compounder,
+      gas_back_address: payWithEver ? EventCloser : everSender, 
       payload: EverNativeCoinPayload,
     })
     .send({
@@ -252,6 +252,10 @@ let EverNativeCoinPayload: string;
 <button @click="HandleTransferEverNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer EVER</button>
 
 <p class="output-p" ref="EverNativeCoinOutput"></p>
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
 
 </div>
 

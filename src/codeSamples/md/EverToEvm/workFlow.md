@@ -1,4 +1,4 @@
-# Everscale to EVM transfer workflow
+# Everscale to EVM Transfer Workflow
 
 ## Building Payloads
 
@@ -30,3 +30,7 @@ The final step entails releasing or minting the assets on the EVM network based 
 
 - [Mint Native Token](./saveWithdraw/saveWithdrawNative.md)
 - [Release Alien Token](./saveWithdraw/saveWithdrawAlien.md)
+
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).

@@ -1,4 +1,4 @@
-# Overview of Ever to EVM transfer mechanics 
+# Overview of Ever to EVM Transfer Mechanics 
 
 1. Locking or burning the target token based on its [type](./Concepts/TokenTypes.md#token-types):
    - If the target token is a Native token, it will be locked on Everscale. 
@@ -24,7 +24,7 @@
 
 4. At this point the desired amount of target token must be deposited to the recipient EVM address.
 
-## Step-by-Step Guide: Ever to EVM transfer
+## Step-by-Step Guide: Ever to EVM Transfer
 
 ## Native Coin transfer
 
@@ -52,7 +52,7 @@
 | gas_back_address | Address to send the change back |
 | payload | Operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
 
-> NOTE : gas_back_address will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
+> NOTE : gas_back_address will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
 :::
 
@@ -88,7 +88,7 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ---
 
-## Native Token transfer
+## Native Token Transfer
 
 > `BRIDGE` is used in this example.
 
@@ -116,11 +116,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | amount            | Amount of the token                                                                                         |
 | recipient         | Recipient address which is proxyMultivaultNativeV_4 address       |
 | deployWalletValue | Token Wallet deploy value if not deployed before                                                            |
-| remainingGasTo    | Remaining gas receiver                                                                                      |
+| remainingGasTo    | Address to send the change back                                                                                      |
 | notify            | Notify receiver on incoming transfer                                                                        |
 | payload           | Operational payload, see [transfer payload](./Concepts/Payloads.md#transfer-Native-token--transer-payload). |
 
-> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
+> NOTE : remainingGasTo will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
 :::
 
@@ -156,7 +156,7 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ---
 
-## Alien Token transfer
+## Alien Token Transfer
 
 > `USDT` is used in this example.
 
@@ -181,10 +181,10 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | -------------- | --------------------------------------------------------------------------------------------------------- |
 | amount         | Amount of the target token token                                                                          |
 | callBackTo     | Callback Receiver contract which is MergePoolV_4 in this case |
-| remainingGasTo | Remaining gas receiver                                                                                    |
+| remainingGasTo | Address to send the change back                                                                                    |
 | payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-Alien-token--burn-payload).       |
 
-> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
+> NOTE : remainingGasTo will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
 
 :::
@@ -221,7 +221,7 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 ---
 
-## EVM Gas Token transfer
+## EVM Gas Token Transfer
 
 > `WBNB` is used in this example.
 
@@ -246,10 +246,10 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | -------------- | ----------------------------------------------------------------------------------------------------------- |
 | amount         | Amount of the token                                                                                         |
 | callBackTo     | Callback Receiver contract.ProxyMultiVaultAlienV_7 in this case |
-| remainingGasTo | Remaining gas receiver                                                                                      |
+| remainingGasTo | Address to send the change back                                                                                      |
 | payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-Alien-token--burn-payload).         |
 
-> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
+> NOTE : remainingGasTo will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
 :::
 
