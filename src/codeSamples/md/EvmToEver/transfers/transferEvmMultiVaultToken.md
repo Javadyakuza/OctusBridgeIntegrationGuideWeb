@@ -2767,12 +2767,12 @@ const MultiVaultAbi = {
 import { ethers } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
-// Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the EVM provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddr {string} MultiVault Contract Address
  * @param MultiVaultAbi {JSON} MultiVault Contract ABI
- * @param signer Evm signer. see prerequisites section
+ * @param signer EVM signer. see prerequisites section
  * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the ABI if encountering json parse error
  */
   const MultiVault = new ethers.Contract(

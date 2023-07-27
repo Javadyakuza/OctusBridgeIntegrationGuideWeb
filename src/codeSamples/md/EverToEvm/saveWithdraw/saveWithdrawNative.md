@@ -3435,10 +3435,10 @@ signatures.sort((a, b) => {
 // Import the required libraries
 import { ethers } from "ethers";
 
-// Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the EVM provider as mentioned in prerequisites section
 
 /**
- * @param MultiVaultAddress {Address} Contract address of MultiVault contract on Evm network
+ * @param MultiVaultAddress {Address} Contract address of MultiVault contract on EVM network
  * @param MultiVaultAbi {JSON} MultiVault contract ABI
  * @param signer Signer of the transaction. see prerequisites section
  * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the ABI if encountering json parse error

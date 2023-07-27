@@ -487,7 +487,7 @@ let NativeTokenPayload: string;
  *  @param recipient {Address} Always ProxyMultiVaultNativeV_4's address
  *  @param remainingGasTo {Address} Address to send the change back
  *  @param from {Address} Sender address
- *  @notice @param amount {string} this parameter is important when asset releasing on evm side is done automatically.
+ *  @notice @param amount {string} this parameter is important when asset releasing on EVM side is done automatically.
  *  @param bounce {boolean} return remaining gas ? always true
  */
 await AlienTokenWalletUpgradable.methods

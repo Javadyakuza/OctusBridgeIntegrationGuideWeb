@@ -22,7 +22,7 @@ import { setupAndGetProvidersDetails } from "./useWalletsData";
 
 /**
  *
- * @param evmTxHash - The root transaction hash that initiated the token transfer in Evm network.
+ * @param evmTxHash - The root transaction hash that initiated the token transfer in EVM network.
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the deployed event address.
  */
 async function deployAlienEvent(evmTxHash: string): Promise<[string, string]> {

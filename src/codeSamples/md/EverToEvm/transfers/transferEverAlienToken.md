@@ -490,7 +490,7 @@ const decimals: string = (
  *  @param payload {string} Operational payload
  *  @param remainingGasTo {Address} Address to send the change back
  *  @param from {Address} Sender address
- *  @notice @param amount {string} This parameter is important when asset releasing on evm side is done automatically
+ *  @notice @param amount {string} This parameter is important when asset releasing on EVM side is done automatically
  *  @param bounce {boolean} Return remaining gas ? always true
  */
 await AlienTokenWalletUpgradable.methods

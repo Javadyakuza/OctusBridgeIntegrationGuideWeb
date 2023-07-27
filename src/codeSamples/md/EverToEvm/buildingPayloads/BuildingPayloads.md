@@ -13,9 +13,9 @@ The following payload is utilized when transferring **EVER**. It encompasses enc
 // Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
-* Encodes evm data into a cell
-* @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
-* @param chainId {uint256} : Evm network chain id. Example: "56"
+* Encodes EVM data into a cell
+* @param addr {uint160} : EVM recipient address. Example: "0x0000000000000000000000000000000000000000"
+* @param chainId {uint256} : EVM network chain id. Example: "56"
 * @callback {tuple} Default values in this case
 */
 const transferPayload = await provider.packIntoCell({
@@ -118,9 +118,9 @@ The following payload is utilized when transferring an Native token such as [BRI
 // Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
-* Encodes evm data into a cell
-* @param addr {uint160} : Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
-* @param chainId {uint256} : Evm network chain id. Example: "56"
+* Encodes EVM data into a cell
+* @param addr {uint160} : EVM recipient address. Example: "0x0000000000000000000000000000000000000000"
+* @param chainId {uint256} : EVM network chain id. Example: "56"
 * @callback {tuple} Default values in this case
 */
  const transferPayload = await provider.packIntoCell({
@@ -963,7 +963,7 @@ const ERC20Abi = {
 // Import the following libraries
 import { ethers } from "ethers";
 
-// Initiate the Evm and Tvm provider
+// Initiate the EVM and Tvm provider
 
 /**
  * Fetches the ProxyMultiVaultAlienV_7 contract.
@@ -977,7 +977,7 @@ const proxyMVAlienV_7 = new TvmProvider.Contract(
 
 /**
  * Fetches the target token contract
- * @param EvmTokenAddress {Address} The target token address on the Evm network
+ * @param EvmTokenAddress {Address} The target token address on the EVM network
  * @param ERC20Abi.abi {JSON} The erc-20 contract ABI
  * @param EvmPRovider instructions on prerequisites section
  */
@@ -1000,7 +1000,7 @@ const chainId: string = (await EvmProvider.getNetwork()).chainId.toString();
 /**
  * @param answerId {number} answer id
  * @param chainId {string} The current provider chain id
- * @param token {string} The Evm token address. e.g. "0x1234"
+ * @param token {string} The EVM token address. e.g. "0x1234"
  * @param name {string} The name of the token
  * @param symbol {string} The symbol of the token
  * @param decimals {string} The decimals of the token
@@ -1032,8 +1032,8 @@ const TargetTokenRootAlienEvm = (
 // Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
- * Encodes evm data into a cell
- * @param addr {uint160} Evm recipient address. Example: "0x0000000000000000000000000000000000000000"
+ * Encodes EVM data into a cell
+ * @param addr {uint160} EVM recipient address. Example: "0x0000000000000000000000000000000000000000"
  * @callback {tuple} Default values in this case
 
  * */
@@ -1128,10 +1128,10 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
 // Initiate the Tvm provider as mentioned in prerequisites section
 
   /**
-   * Encodes data about unWrapper of wrapped version of the Evm network gas token (BNB, ETH, ...).
+   * Encodes data about unWrapper of wrapped version of the EVM network gas token (BNB, ETH, ...).
    * @param addr {uint160} Wrapped coin unWrapper contract address. Example: "0x0000000000000000000000000000000000000000"
    * @param recipient {uint160} Wrapped coin unWrapper contract address. Example: "0x0000000000000000000000000000000000000000"
-   * @param payload {bytes} Encoded data related to Evm recipient address. "0x0"
+   * @param payload {bytes} Encoded data related to EVM recipient address. "0x0"
    */
   const burnPayload = await provider.packIntoCell({
     data: {

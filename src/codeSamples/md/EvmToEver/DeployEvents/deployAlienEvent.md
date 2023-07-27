@@ -116,7 +116,7 @@ const EthereumEverscaleEventConfAbi = {
 //Import following libraries
 import { ethers } from "ethers";
 
-// Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the EVM provider as mentioned in prerequisites section
 
 // AlienTransfer event ABI interface
 let abi = new ethers.Interface([

@@ -2768,12 +2768,12 @@ const MultiVaultAbi = {
 import { ethers, toBigInt } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
-// Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the EVM provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddr {string} MultiVault Contract Address
  * @param MultiVaultAbi {JSON} MultiVault Contract ABI
- * @param signer Evm signer. see prerequisites section
+ * @param signer EVM signer. see prerequisites section
  * @dev Use JSON.parse(JSON.stringify(MultiVaultAbi)) as the ABI if encountering json parse error
  */
   const MultiVault = new ethers.Contract(
@@ -2799,7 +2799,7 @@ import { Address } from "everscale-inpage-provider";
   };
 
   /**
-   * @param deployEventValueInEvmGasToken {string} Event contract initial balance in Evm gas token.
+   * @param deployEventValueInEvmGasToken {string} Event contract initial balance in EVM gas token.
    */
   const deposit_value: string = payWithGasToken
     ? ethers.parseEther(deployEventValueInEvmGasToken).toString()

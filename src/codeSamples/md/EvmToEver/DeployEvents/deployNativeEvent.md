@@ -115,7 +115,7 @@ const EthereumEverscaleEventConfAbi = {
 // Import following libraries
 import { ethers } from "ethers";
 
-// Initiate the Evm provider as mentioned in prerequisites section
+// Initiate the EVM provider as mentioned in prerequisites section
 
 // NativeTransfer event ABI interface
 let abi = new ethers.Interface([
@@ -258,7 +258,7 @@ await EvmEverEventConf.methods
 
 </details>
 
-<label for="txHash">Evm Transaction Hash </label>
+<label for="txHash">EVM Transaction Hash </label>
 <input ref="txHash" type="text"/>
 
 <br/>

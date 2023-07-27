@@ -477,7 +477,7 @@ const auto_value: string = 13;
 // Amount to attach to the transaction if payWithEver = false
 const manual_value: string = 6;
 
-// See building payloads -> Evm Gas Token Payload
+// See building payloads -> EVM Gas Token Payload
 let EvmGasTokenPayload: string;
 
 /**
@@ -486,7 +486,7 @@ let EvmGasTokenPayload: string;
  *  @param payload {string} Operational payload
  *  @param remainingGasTo {Address} Address to send the change back.
  *  @param from {Address} Sender address
- *  @notice @param amount {string} This parameter is important when asset releasing on evm side is done automatically
+ *  @notice @param amount {string} This parameter is important when asset releasing on EVM side is done automatically
  *  @param bounce {boolean} Return remaining gas ? always true
  */
 await AlienTokenWalletUpgradable.methods
