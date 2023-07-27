@@ -498,7 +498,7 @@ await AlienTokenWalletUpgradable.methods
     amount: ethers.parseUnits(amount, decimals).toString(),
     callbackTo: MergePool_V4,
     payload: ALienTokenPayload,
-    remainingGasTo: payWithEver ? EventCloser : everSender, // event closer address can be found in addresses section
+    remainingGasTo: payWithEver ? EventCloser : everSender, 
   })
   .send({
     from: everSender,

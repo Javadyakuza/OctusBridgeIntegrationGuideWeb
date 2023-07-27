@@ -484,7 +484,7 @@ let NativeTokenPayload: string;
  *  @param deployWalletValue {string} Token wallet deploy value if not deployed already
  *  @param notify {boolean} Notify recipient when tokens are received
  *  @param payload {string} Operational payload
- *  @param recipient {Address} Always ProxyMultiVaultNativeV_4, can be found in addresses section
+ *  @param recipient {Address} Always ProxyMultiVaultNativeV_4's address
  *  @param remainingGasTo {Address} Address to send the change back
  *  @param from {Address} Sender address
  *  @notice @param amount {string} this parameter is important when asset releasing on evm side is done automatically.

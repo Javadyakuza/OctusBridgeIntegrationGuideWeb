@@ -40,4 +40,4 @@ The  `MultiVaultEverscaleEVMEventNative`  contract is used when transferring a N
 ::: info 
  **In the Ever -> EVM direction, event deployment is done automatically.** 
  :::
- > The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+ > The addresses of all the referenced contracts and tokens can be found at [Links](../addresses.md).

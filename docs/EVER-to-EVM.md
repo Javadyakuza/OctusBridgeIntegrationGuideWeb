@@ -1,27 +1,31 @@
 # Overview of Ever to EVM Transfer Mechanics 
 
-1. Locking or burning the target token based on its [type](./Concepts/TokenTypes.md#token-types):
+1. Locking or Burning the Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
    - If the target token is a Native token, it will be locked on Everscale. 
    - If it is an Alien token, it will be burned. 
 
-2. Event contract deployment and confirmation: 
+2. Event Contract Deployment and Confirmation: 
    - The event contract is deployed on Everscale through a previous transaction. 
    - After a few seconds relayers confirm the event contract by voting on it. 
 
-3. Approaches for releasing or minting tokens on the EVM network: 
+3. Releasing or Minting Tokens on the EVM Network: 
 
-   3.1 Paying gas fees in EVM network with EVER: 
+   3.1 Paying Gas Fees in EVM Network with EVER: 
 
     In this case, the process of token release or minting on the EVM network is automated.
       - The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will call the relevant function on the MultiVault contract,
       After that MultiVault contract handles minting or releasing the token based on its type.
 
-   3.2 Paying gas fees in EVM network with the [EVM gas token](./Concepts/TokenTypes.md#evm-gas-tokens):
+   3.2 Paying Gas Fees in EVM Network with the [EVM Gas Token](./Concepts/TokenTypes.md#evm-gas-tokens):
 
     In this case, the process of token release or minting on the EVM network is done manually.
     - For Native tokens, call the `saveWithdrawNative` function to mint tokens. 
-    - For Alien tokens, call the `saveWithdrawAlien` function to release tokens. Note that these functions must be called on the `MultiVault` contract. 
-
+    - For Alien tokens, call the `saveWithdrawAlien` function to release tokens. 
+    - 
+    ::: tip
+    Note that these functions must be called on the `MultiVault` contract. 
+    :::
+    
 4. At this point the desired amount of target token must be deposited to the recipient EVM address.
 
 ## Step-by-Step Guide: Ever to EVM Transfer

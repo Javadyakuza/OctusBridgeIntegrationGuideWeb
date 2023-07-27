@@ -1190,7 +1190,7 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
 
 ---
 
-> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+> The addresses of all the referenced contracts and tokens can be found at [Links](../../../../../docs/addresses.md).
 </div>
 
 <script lang="ts" >

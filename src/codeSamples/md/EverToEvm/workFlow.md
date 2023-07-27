@@ -33,4 +33,4 @@ The final step entails releasing or minting the assets on the EVM network based 
 
 ---
 
-> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+> The addresses of all the referenced contracts and tokens can be found at [Links](../../../../docs/addresses.md).

@@ -199,7 +199,7 @@ const everSender: Address = new Address("0:12345");
 
 /**
  * @param EthereumEverscaleEventConfAbi {JSON} The event config contract ABI
- * @param EthereumEverscaleAlienEventConfigurationAddr {Address} The alien event config contract address. can be found in addresses section
+ * @param EthereumEverscaleAlienEventConfigurationAddr {Address} The alien event config contract address. 
  */
 const EvmEverEventConf = new provider.Contract(
   EthereumEverscaleEventConfAbi,
@@ -272,7 +272,7 @@ await EvmEverEventConf.methods
 
 ---
 
-> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+> The addresses of all the referenced contracts and tokens can be found at [Links](../../../../../docs/addresses.md).
 
 </div>
 

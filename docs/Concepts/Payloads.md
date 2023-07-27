@@ -22,4 +22,4 @@ Payloads are essential in transferring tokens from Everscale to an EVM network. 
     - [Alien Events Signatures](../../src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md#encoding-signatures-relevant-to-everscale-ethereum-event-Alien)
     - [Native Events Signatures](../../src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawNative.md#encoding-signatures-relevant-to-everscale-ethereum-event-Native)
 
-> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+> The addresses of all the referenced contracts and tokens can be found at [Links](../addresses.md).
