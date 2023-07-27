@@ -7,8 +7,8 @@ Payloads are not necessary and can be empty when transferring a token from an EV
 Payloads are essential in transferring tokens from Everscale to an EVM network. Detailed instructions on constructing these payloads can be found below:
 
 - Transfer Ever : [wrap payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#ever-Native-coin-payload)
-- Transfer Native Token : [transfer payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#Native-token-payload)
-- Transfer Alien Token : [burn payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#Alien-token-payload)
+- Transfer Native Token : [transfer payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#native-token-payload)
+- Transfer Alien Token : [burn payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#alien-token-payload)
 - To mint Native tokens and release Alien tokens on the EVM network, you can utilize the following functions:
    
   - `saveWithdrawNative`  for minting Native tokens and   

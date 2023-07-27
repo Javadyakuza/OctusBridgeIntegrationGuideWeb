@@ -45,7 +45,7 @@ module.exports = {
         link: '/docs/Visual-Guide/README.md',
         items: [
           {
-            text: 'EVER to EVM',
+            text: 'Ever to EVM',
             collapsable: false,
             items: [
               {
@@ -66,7 +66,7 @@ module.exports = {
             ],
           },
           {
-            text: 'EVM to EVER',
+            text: 'EVM to Ever',
             collapsable: false,
             items: [
               {
@@ -115,7 +115,7 @@ module.exports = {
             link: '/src/codeSamples/md/prerequisites.md',
           },
           {
-            text: 'EVER to EVM',
+            text: 'Ever to EVM',
             collapsable: true,
             link: '/src/codeSamples/md/EverToEvm/workFlow.md',
             items: [
@@ -169,7 +169,7 @@ module.exports = {
             ],
           },
           {
-            text: 'EVM to EVER',
+            text: 'EVM to Ever',
             collapsable: true,
             link: '/src/codeSamples/md/EvmToEver/workFlow.md',
             items: [

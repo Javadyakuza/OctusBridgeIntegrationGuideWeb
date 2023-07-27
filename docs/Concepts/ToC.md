@@ -7,5 +7,5 @@
 - [Token Types](./TokenTypes.md)
 - [Operations](./Operations.md)
 - [Events](./Events.md)
-- [Credit Backend](Events.md)
+- [Credit Backend](CreditModules.md)
 - [Payloads](Payloads.md)

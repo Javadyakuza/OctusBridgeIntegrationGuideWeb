@@ -7,7 +7,7 @@ There are two types of event contracts deployed on Everscale for the mentioned d
 -  `MultiVaultEVMEverscaleEventNative`  
 -  `MultiVaultEVMEverscaleEventAlien`  
  
-These event contracts are deployed by the [` EthereumEverscaleEventConfiguration` ](../addresses.md#event-configurations) contract, which is created by the  `EthereumEverscaleEventConfigurationFactory`  contract. 
+These event contracts are deployed by the ` EthereumEverscaleEventConfiguration`  contract, which is created by the  `EthereumEverscaleEventConfigurationFactory`  contract. 
  
 ### EthereumEverscaleEventConfiguration 
  
@@ -26,7 +26,7 @@ There are two types of event contracts deployed on Everscale for the mentioned d
 -  `MultiVaultEverscaleEVMEventNative`  
 -  `MultiVaultEverscaleEVMEventAlien`  
  
-These contracts are deployed by the [ `EverscaleEthereumEventConfiguration` ](../addresses.md#event-configurations) contract, which is created by the  `EverscaleEthereumEventConfigurationFactory`  contract. 
+These contracts are deployed by the  `EverscaleEthereumEventConfiguration` contract, which is created by the  `EverscaleEthereumEventConfigurationFactory`  contract. 
  
 ### EverscaleEthereumEventConfiguration 
  
