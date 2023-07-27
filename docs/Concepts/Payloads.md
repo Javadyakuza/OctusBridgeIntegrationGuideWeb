@@ -9,7 +9,7 @@ Payloads are essential in transferring tokens from Everscale to an EVM network. 
 - Transfer Ever : [wrap payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#ever-Native-coin-payload)
 - Transfer Native Token : [transfer payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#native-token-payload)
 - Transfer Alien Token : [burn payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#alien-token-payload)
-- To mint Native tokens and release Alien tokens on the EVM network, you can utilize the following functions:
+- To mint Native tokens and release Alien tokens on the EVM network, you can utilize the following functions on the `MultiVault` contract:
    
   - `saveWithdrawNative`  for minting Native tokens and   
   - `saveWithdrawAlien`  for releasing Alien tokens. 
@@ -21,3 +21,5 @@ Payloads are essential in transferring tokens from Everscale to an EVM network. 
     - [Native Events payload](../../src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawNative.md#encoding-payload-relevant-to-everscale-ethereum-event-Native)
     - [Alien Events Signatures](../../src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawAlien.md#encoding-signatures-relevant-to-everscale-ethereum-event-Alien)
     - [Native Events Signatures](../../src/codeSamples/md/EverToEvm/saveWithdraw/saveWithdrawNative.md#encoding-signatures-relevant-to-everscale-ethereum-event-Native)
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).

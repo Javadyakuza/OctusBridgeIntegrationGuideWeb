@@ -203,4 +203,4 @@ Instructions on how to get these values can be found in [deploy Events](../.../.
 
 > Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EvmToEver/workFlow.md)
 
-> NOTICE : All of the referenced contracts' addresses can be found at [addresses](./addresses.md).
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).

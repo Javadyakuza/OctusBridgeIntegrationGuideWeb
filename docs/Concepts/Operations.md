@@ -70,3 +70,5 @@ The following table contains operations that are done at each network to perform
 | ----------- | ----------------------------------------- | ----------------------------------------- |
 | EVM -> Ever | Release(Native Token) - Mint(Alien Token) | Burn(Native Token) - Lock(Alien Token)    |
 | Ever -> EVM | Lock(Native Token) Burn(Alien Token)      | Mint(Native Token) - Release(Alien Token) |
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).

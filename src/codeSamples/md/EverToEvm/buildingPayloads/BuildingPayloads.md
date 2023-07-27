@@ -1190,6 +1190,9 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
 
 <p class="output-p" ref="burnNativePayloadOutput"></p>
 
+---
+
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
 </div>
 
 <script lang="ts" >

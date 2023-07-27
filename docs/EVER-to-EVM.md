@@ -28,7 +28,7 @@
 
 ## Native Coin transfer
 
-- 1 - Call the `wrap` function on the [`WEVERVault`](./addresses.md#Everscale-smart-contracts) contract and mint WEVER tokens :
+- 1 - Call the `wrap` function on the `WEVERVault` contract and mint WEVER tokens :
 
 ### Function
 
@@ -48,11 +48,11 @@
 | Param  | Description         |
 | ------ | ------------------- |
 | tokens | Amount of the token |
-| owner_address | [Compounder](./addresses.md#Everscale-smart-contracts) |
+| owner_address | Compounder address|
 | gas_back_address | Address to send the change back |
 | payload | Operational payload, see [wrap payload](./Concepts/Payloads.md#transfer-Ever--wrap-payload). |
 
-> NOTE : gas_back_address will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
+> NOTE : gas_back_address will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
 
 :::
 
@@ -114,13 +114,13 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | Param             | Description                                                                                                 |
 | ----------------- | ----------------------------------------------------------------------------------------------------------- |
 | amount            | Amount of the token                                                                                         |
-| recipient         | Recipient address which is [proxyMultivaultNativeV_4](./addresses.md#Everscale-smart-contracts)             |
+| recipient         | Recipient address which is proxyMultivaultNativeV_4 address       |
 | deployWalletValue | Token Wallet deploy value if not deployed before                                                            |
 | remainingGasTo    | Remaining gas receiver                                                                                      |
 | notify            | Notify receiver on incoming transfer                                                                        |
 | payload           | Operational payload, see [transfer payload](./Concepts/Payloads.md#transfer-Native-token--transer-payload). |
 
-> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
+> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
 
 :::
 
@@ -180,11 +180,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | Param          | Description                                                                                               |
 | -------------- | --------------------------------------------------------------------------------------------------------- |
 | amount         | Amount of the target token token                                                                          |
-| callBackTo     | Callback Receiver contract which is [MergePoolV_4](./addresses.md#Everscale-smart-contracts) in this case |
+| callBackTo     | Callback Receiver contract which is MergePoolV_4 in this case |
 | remainingGasTo | Remaining gas receiver                                                                                    |
 | payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-Alien-token--burn-payload).       |
 
-> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
+> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
 
 
 :::
@@ -245,11 +245,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | Param          | Description                                                                                                 |
 | -------------- | ----------------------------------------------------------------------------------------------------------- |
 | amount         | Amount of the token                                                                                         |
-| callBackTo     | Callback Receiver contract.[ProxyMultiVaultAlienV_7](./addresses.md#Everscale-smart-contracts) in this case |
+| callBackTo     | Callback Receiver contract.ProxyMultiVaultAlienV_7 in this case |
 | remainingGasTo | Remaining gas receiver                                                                                      |
 | payload        | Operational payload, see [burn payload](./Concepts/Payloads.md#transfer-Alien-token--burn-payload).         |
 
-> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be [EventCloser](./addresses.md#Everscale-smart-contracts) if it is paid with Ever.
+> NOTE : remainingGasTo will be the user's address if the EVM network fees is paid with its gas token and will be EventCloser if it is paid with Ever.
 
 :::
 
@@ -287,4 +287,4 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 > Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)
 
-> All of the referenced contracts' addresses can be found [here](./addresses.md)  
+> The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).

@@ -1,7 +1,6 @@
 
 # Links
 
-
 ### WETH
 
 > https://Everscan.io/accounts/0:59b6b64ac6798aacf385ae9910008a525a84fc6dcf9f942ae81f8e8485fe160d
@@ -33,3 +32,12 @@
 ### DAI
 
 > https://Everscan.io/accounts/0:eb2ccad2020d9af9cec137d3146dde067039965c13a27d97293c931dae22b2b9
+
+
+**Check the repository below for more tokens:**
+
+https://github.com/broxus/ton-assets/blob/master/manifest.json
+
+**And the following repository for mentioned smart contracts:**
+
+https://github.com/broxus/bridge-assets/blob/master/main.json

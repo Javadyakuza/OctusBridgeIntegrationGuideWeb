@@ -37,5 +37,7 @@ The  `MultiVaultEverscaleEVMEventNative`  contract is deployed by the  `Everscal
 The  `MultiVaultEverscaleEVMEventAlien`  contract is deployed by the  `EverscaleEthereumEventConfiguration`  contract, and its  `deployEvent`  function can only be called by the  `ProxyMultiVaultAlien_V7`  contract. 
  
 The  `MultiVaultEverscaleEVMEventNative`  contract is used when transferring a Native token, while the  `MultiVaultEverscaleEVMEventAlien`  contract is used when transferring an Alien token. 
- 
-> **In the Ever -> EVM direction, event deployment is done automatically.** 
+::: info 
+ **In the Ever -> EVM direction, event deployment is done automatically.** 
+ :::
+ > The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
