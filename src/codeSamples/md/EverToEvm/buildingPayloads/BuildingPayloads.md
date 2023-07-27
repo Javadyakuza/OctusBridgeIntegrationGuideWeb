@@ -109,7 +109,7 @@ const boc: string = compounderPayload.boc;
 
 ## Native Token Payload
 
-The following payload is utilized when transferring an native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to EVM network and EVM recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring an Native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to EVM network and EVM recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -1080,7 +1080,7 @@ const operationPayload = await provider.packIntoCell({
   let randomNonce: string = getRandomUint();
   // Encodes TokenRootAlienEVM and base encoded data
   /**
-   * @param targetToken {ever address} represents an alternative version of the token on Everscale, differing from its standard counterpart. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
+   * @param targetToken {ever address} represents an alterNative version of the token on Everscale, differing from its standard counterpart. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
    * @note all different versions of tokens can be found in addresses section
    * */
     const data = await provider.packIntoCell({

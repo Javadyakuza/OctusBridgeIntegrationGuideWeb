@@ -1,6 +1,6 @@
 # Transfer Native Token
 
-When transferring native tokens such as **BRIDGE**, **QUBE** and **WEVER**, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to release tokens on Everscale.
+When transferring Native tokens such as **BRIDGE**, **QUBE** and **WEVER**, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to release tokens on Everscale.
 
 The code samples below demonstrate how to perform the first step of this process.
 
@@ -2812,7 +2812,7 @@ import { Address } from "everscale-inpage-provider";
   // Operational payload
   const deposit_payload: string = "0x";
 
-  // Target native token address on Evm network
+  // Target Native token address on Evm network
   let NativeTokenAddr: string;
 
   /**

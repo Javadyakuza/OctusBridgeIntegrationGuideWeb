@@ -24,7 +24,7 @@
  
    3.2 Paying Everscale Operations Gas Fees with Ever: 
 
-      - If Everscale operations gas fees are paid with Ever, the user can proceed without attaching enough EVM gas tokens and set expected_evers to zero. At this point, the user needs to manually deploy the event contract by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract. This will deploy an Event contract, and after exceeding the quorum confirm votes by relayers, the token will be released if it's a native token and minted if it's an Alien token. 
+      - If Everscale operations gas fees are paid with Ever, the user can proceed without attaching enough EVM gas tokens and set expected_evers to zero. At this point, the user needs to manually deploy the event contract by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract. This will deploy an Event contract, and after exceeding the quorum confirm votes by relayers, the token will be released if it's a Native token and minted if it's an Alien token. 
 
 4. At this point the tokens must be deposited to the recipient Ever wallet.
 
