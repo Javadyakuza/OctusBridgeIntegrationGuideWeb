@@ -1,6 +1,6 @@
 # FAQ
 
-## How to Set `expected_evers`?
+## How to set `expected_evers`?
 
 `expected_evers` plays a crucial role when transferring a token from an EVM network to Everscale. The user can configure this parameter to determine the behavior of the transaction.
 
