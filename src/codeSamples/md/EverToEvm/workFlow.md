@@ -13,7 +13,7 @@ To facilitate the transfer of a token from Everscale to an EVM network, it is ne
 
 ## Transferring Tokens from Everscale
 
-The second step involved in transferring a token from Everscale to an EVM network is to initiate the token transfer from Everscale by either locking or burning the tokens. Additionally, an event contract will be automatically deployed at this stage to ensure confirmation of token transfer on the Everscale network by relayers. Following this, asset releasing or minting can be executed on the EVM network.
+The second step involved in transferring a token from Everscale to an EVM network is to initiate the token transfer from Everscale by either locking or burning the tokens. Additionally, an event contract will be automatically deployed at this stage to ensure confirmation of token transfer on the Everscale network by relayers. Consequently, asset releasing or minting can be executed on the EVM network.
 
 ### Table of Contents
 

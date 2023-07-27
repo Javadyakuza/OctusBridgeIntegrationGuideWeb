@@ -1,12 +1,12 @@
 # Save Withdraw Alien
 
-The mentioned operation is utilized when a bridging process is initiated from Everscale to a EVM network. In this scenario, an event contract is deployed on Everscale, but the user prefers to pay the operation fees on the EVM network using is gas tokens, rather than EVER. If the fees were paid with EVER, assets would be released automatically.
+The mentioned operation is utilized when a bridging process is initiated from Everscale to a EVM network. In this scenario, an event contract is deployed on Everscale, but the user prefers to pay the operation fees on the EVM network using its gas tokens, rather than EVER. If the fees were paid with EVER, assets would be released automatically.
 
 This operation is specifically used for transferring Alien tokens. At this stage, assets are released and to execute this operation, the `saveWithdrawAlien` function needs to be called with a payload that includes encoded data related to the deployed event contract on Everscale, as well as all the relayers' signatures that have confirmed the event contract.
 
-In order to execute transaction at this page you need to initial a transaction and get your event address from [Transfer Alien Token](../transfers/transferEverAlienToken.md) or [Transfer EVM Gas Token](../transfers/transferEvmNativeCoin.md) section.
+In order to execute transaction at this page you need to Initiate a transaction and get your event address from [Transfer Alien Token](../transfers/transferEverAlienToken.md) or [Transfer EVM Gas Token](../transfers/transferEvmNativeCoin.md) sections.
 
-In this example, interaction takes place with three contracts, following ABIs are used to interact with those:
+In this example, interaction takes place with three contracts. The following ABIs are used to interact with those:
 
 <div class="saveWithdrawAlien">
 
@@ -3275,7 +3275,7 @@ import { mapTonCellIntoEthBytes } from "eth-ton-abi-converter";
 import * as web3 from "web3";
 import { ethers } from "ethers";
 
-//Initial the Tvm provider as mentioned in prerequisites section
+//Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
  * @param EverscaleEthereumBaseEventABI {JSON} Event contract abi
@@ -3379,7 +3379,7 @@ const payload = web3.eth.abi.encodeParameters(
 // Import the required libraries
 import * as web3 from "web3";
 
-//Initial the Tvm provider as mentioned in prerequisites section
+//Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
  * @param EverscaleEthereumBaseEventABI {JSON} ABI of event contract
@@ -3435,7 +3435,7 @@ signatures.sort((a, b) => {
 // Import the required libraries
 import { ethers } from "ethers";
 
-//Initial the Evm provider as mentioned in prerequisites section
+//Initiate the Evm provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddress {Address} contract address of MultiVault contract on Evm network, can be found in addresses section

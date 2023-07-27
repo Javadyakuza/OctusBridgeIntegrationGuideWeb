@@ -1,6 +1,6 @@
 # Prerequisites
 
-To perform operations mentioned in this section for transferring a token from Everscale to EVM, the following requirements must be met:
+To perform operations mentioned in this section for transferring a token between Everscale and EVM, the following requirements must be met:
 
 ## Packages
 
@@ -31,7 +31,7 @@ This documentation utilizes two types of providers: one for Tvm-based networks a
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { MetaMaskSDK, MetaMaskSDKOptions } from "@metamask/sdk";
 import { ethers } from "ethers";
-// Initialize the etaMask provider
+// Initialize the MetaMask provider
 const MetamaskOptions: MetaMaskSDKOptions = {
   dappMetadata: { name: "<YOUR-DAPP-NAME>", url: "<YOUR-DAPP-URL>" },
 };
@@ -44,7 +44,7 @@ const signer = await browserProvider.getSigner();
 ```
 
 - Tvm-based Provider:
-  everscale-inpage-provider is used as provider for everscale, Follow the steps below to initialize and use everscale-inpage-provider in your code samples.
+  everscale-inpage-provider is used as provider for everscale. Follow the steps below to initialize and use everscale-inpage-provider in your code samples.
 
   ```typescript
   // Import the required libraries

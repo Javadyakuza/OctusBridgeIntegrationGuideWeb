@@ -2,7 +2,7 @@
 
 ## How to Set `expected_evers`?
 
-`expected_evers` play a crucial role when transferring a token from an EVM network to Everscale. The user can configure this parameter to determine the behavior of the transaction.
+`expected_evers` plays a crucial role when transferring a token from an EVM network to Everscale. The user can configure this parameter to determine the behavior of the transaction.
 
 If the user sets `expected_evers` to match the event's initial balance and attaches sufficient EVM gas tokens to the transaction, the event will be automatically deployed by the credit backend. In such cases, the user simply needs to wait for the deployment process to complete.
 

@@ -1,12 +1,11 @@
 # Transfer Native Token
 
-When transferring Native tokens such as **BRIDGE**, **QUBE** and **WEVER**, Firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to release tokens on Everscale.
+When transferring Native tokens such as **BRIDGE**, **QUBE** and **WEVER**, firstly the deposit function must be called on the `MultiVault` contract and then an event contract must be deployed on Everscale in order to release tokens on Everscale.
 
 The code samples below demonstrate how to perform the first step of this process.
 
-In order to have a complete token bridging process, If paying the event contract deployment with EVM gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Native Event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
-
-In this example, MultiVault contract Abi is required:
+ Once a transaction is initiated on this section, in order to have a complete token bridging process if the event contract deployment value is paid with the EVM gas token, get your transaction hash and use it on [Deploy Native Event](../DeployEvents/deployNativeEvent.md) section to complete the bridging process.
+In this example MultiVault contract Abi is required:
 
 <div class="TransferNativeToken">
 
@@ -2768,7 +2767,7 @@ const MultiVaultAbi = {
 import { ethers } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
-//Initial the Evm provider as mentioned in prerequisites section
+//Initiate the Evm provider as mentioned in prerequisites section
 
 /**
  * @param MultiVaultAddr {string} MultiVault Contract Address

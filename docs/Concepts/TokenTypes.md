@@ -10,4 +10,4 @@ Token that play a vital role in the ecosystem such as [WEVER](../addresses.md#we
 
 ### EVM Gas Tokens
 
-The Native coins on the EVM networks are commonly referred to as EVM gas tokens for the purpose of simplification. Examples of such tokens include ETH, BNB, Matic, and others.
+The Native coins on the EVM networks are commonly referred to as EVM gas tokens for the purpose of simplification. Examples of such tokens include **ETH**, **BNB** and **Matic** among others.

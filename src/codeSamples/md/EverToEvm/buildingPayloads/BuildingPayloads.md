@@ -10,7 +10,7 @@ The following payload is utilized when transferring **EVER**. It encompasses enc
 <summary>show code</summary>
 
 ```typescript
-//initial the Tvm provider as mentioned in prerequisites section
+// Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
 * Encodes evm data into a cell
@@ -115,7 +115,7 @@ The following payload is utilized when transferring an Native token such as [BRI
 <summary>show code</summary>
 
 ```typescript
-//initial the Tvm provider as mentioned in prerequisites section
+//Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
 * Encodes evm data into a cell
@@ -183,10 +183,10 @@ The following payload is utilized when transferring an Native token such as [BRI
 
 ## Alien Token Payload
 
-The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` and others. It encompasses encoded operational data related to EVM network, EVM recipient and target Alien EVM token on Everscale.\
+The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` among others. It encompasses encoded operational data related to EVM network, EVM recipient and target Alien EVM token on Everscale.\
 The code sample below demonstrates how to construct such a payload.
 
-To accomplish that, it is necessary to obtain the Abi files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows
+To accomplish that, it is necessary to obtain the Abi files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows.
 
 <br/>
 <details>
@@ -965,7 +965,7 @@ const ERC20Abi = {
 import { ethers } from "ethers";
 import ERC20Abi from "../artifacts/EvmAbi/abi/ERC20.json";
 
-//Initialize the Evm and Tvm provider
+//Initiate the Evm and Tvm provider
 
 /**
  * Fetches the ProxyMultiVaultAlienV_7 contract.
@@ -1031,7 +1031,7 @@ const TargetTokenRootAlienEvm = (
 <summary>Build burn payload</summary>
 
 ```typescript
-//initial the Tvm provider as mentioned in prerequisites section
+//Initiate the Tvm provider as mentioned in prerequisites section
 
 /**
  * Encodes evm data into a cell
@@ -1119,15 +1119,15 @@ const operationPayload = await provider.packIntoCell({
 
 <p class="output-p" ref="burnPayloadOutput"></p>
 
-## EVM Gas token Payload
+## EVM Gas Token Payload
 
-The provided payload is utilized for transferring an EVM gas token (such as BNB, ETH, FTM, etc.), from Everscale to an EVM network. The payload contains encoded operational data that is relevant to the EVM recipient, EVM network and its unWrapper contract. The purpose of the unWrapper contract is to convert the wrapped version of the EVM network gas token back to its original form. The code sample below illustrates how to construct such a payload.
+The provided payload is utilized for transferring an EVM gas token (such as BNB, ETH, FTM, etc.), from Everscale to an EVM network. The payload contains encoded operational data that is relevant to the EVM recipient, EVM network and its unwrapper contract. The purpose of the unwrapper contract is to convert the wrapped version of the EVM network gas token back to its original form. The code sample below illustrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
 
 ```typescript
-//initial the Tvm provider as mentioned in prerequisites section
+//Initiate the Tvm provider as mentioned in prerequisites section
 
   /**
    * Encodes data about unWrapper of wrapped version of the Evm network gas token (BNB, ETH, ...).

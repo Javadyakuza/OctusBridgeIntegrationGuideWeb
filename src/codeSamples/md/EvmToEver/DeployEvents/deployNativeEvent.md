@@ -115,7 +115,7 @@ const EthereumEverscaleEventConfAbi = {
 //Import following libraries
 import { ethers } from "ethers";
 
-//Initial the Evm provider as mentioned in prerequisites section
+//Initiate the Evm provider as mentioned in prerequisites section
 
 // NativeTransfer event Abi interface
 let abi = new ethers.Interface([
@@ -188,7 +188,7 @@ const eventLog = {
 import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
 import { Address } from "everscale-inpage-provider";
 
-//Initial the Tvm provider as mentioned in prerequisites section
+//initiate the Tvm provider as mentioned in prerequisites section
 
 // Everscale user address
 const everSender: Address = new Address("0:12345");

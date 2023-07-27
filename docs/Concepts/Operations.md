@@ -2,27 +2,27 @@
 
 ## EVM operations
 
-At the Ever -> EVM direction, The actions on the EVM network are as follows :
+At the Ever -> EVM direction, the actions on the EVM network are as follows :
 
-- Token Minting: If the token is an Native token.
+- Token Minting: If the token is a Native token.
 
 - Token Releasing: If the token is an Alien token.
 
 ### Approving Alien Tokens
 
-If the token being transferred from EVM to Everscale is an Alien token, The MultiVault contract must be able to transfer the token to itself, Therefore it is necessary to approve the "MultiVault" contract first. If the transferable token is the EVM gas token, the desired amount of the gas token should be attached to the transaction when calling the deposit function.
+If the token being transferred from EVM to Everscale is an Alien token, the MultiVault contract must be able to transfer the token to itself, therefore it is necessary to approve the "MultiVault" contract first. If the transferable token is the EVM gas token, the desired amount of the gas token should be attached to the transaction when calling the deposit function.
 ::: info
 Note that the deposit functions for Alien tokens and EVM gas tokens are not the same !
 
-- `deposit` is utilized when transferring an Alien or Native token.
-- `depositByNativeToken` is utilized when transferring an EVM gas token.
+- `deposit` function is utilized when transferring an Alien or Native token.
+- `depositByNativeToken` function  is utilized when transferring an EVM gas token.
 
 :::
 
 ### Event Contract Deploy Value (expected_evers)
 
 In the EVM to Ever direction, when paying Everscale fees with EVM gas tokens, it is necessary to set a specific value for this parameter. \
-User must set it to zero if paying the fees with Ever. \
+The user must set it to zero if paying the fees with Ever. \
 see [how to set expected_evers](../FAQ.md##how-to-set-expected_evers).
 
 ## Everscale operations
@@ -48,23 +48,23 @@ In the EVM to Ever direction, The actions on Everscale are as follows:
 
 - When transferring an Alien token, it will be locked on the EVM network and then minted on Everscale.
 
-- When transferring a Native token (WEVER, BRIDGE, and QUBE), it will be burnt on the EVM network and released on the Everscale network.
+- When transferring a Native token (WEVER, BRIDGE, and QUBE), it will be burnt on the EVM network and released on Everscale.
 
-## Manual Asset releasing
+## Manual asset releasing
 
-- In the Ever -> EVM direction, if the EVM fees are paid with EVM gas tokens, the target assets need to be manually released or minted. To perform this operation for Native tokens, use the  `saveWithdrawNative`  function, and for Alien tokens, use the  `saveWithdrawAlien`  function. 
+- In the Ever -> EVM direction, if the EVM fees are paid with EVM gas tokens, the target assets need to be manually released or minted. To perform this operation for Native tokens, use the  `saveWithdrawNative`  function and for Alien tokens, use the  `saveWithdrawAlien`  function. 
 
 - In the EVM -> Ever direction, if Everscale fees are paid with Ever, the assets on Everscale need to be manually released or minted by deploying an event contract. For instructions on deploying an event contract, refer to the [Event Contract Deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md) guide. 
 
-## Automatic Asset releasing
+## Automatic asset releasing
 
 - In Ever -> EVM direction assets will be released or minted on EVM network by attaching enough Ever and proper [payload](./Payloads.md) to the transaction.
 
-- In EVM -> Ever direction assets will be released or minted on Everscale by attaching enough EVM Native coin to tx and setting the expected_Ever to event contract initial balance. see [how to set expected_Evers](../FAQ.md#how-to-set-expected_Evers)
+- In EVM -> Ever direction assets will be released or minted on Everscale by attaching enough EVM gas token to transaction and setting the expected_Ever to event contract's initial balance. see [how to set expected_Evers](../FAQ.md#how-to-set-expected_Evers).
 
 ## Directions
 
-Following table contains operations that are done at each network to perform a Cross Chain transfer
+The following table contains operations that are done at each network to perform a Cross Chain transfer.
 
 | Direction   | What happens on Everscale                 | What happens on EVM                       |
 | ----------- | ----------------------------------------- | ----------------------------------------- |

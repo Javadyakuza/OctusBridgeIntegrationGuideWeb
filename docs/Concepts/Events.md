@@ -2,7 +2,7 @@
  
 ## EVM to Ever Events 
  
-There are two types of event contracts deployed on Everscale for the mentioned direction. 
+There are two types of event contracts deployed on Everscale for the mentioned direction: 
  
 -  `MultiVaultEVMEverscaleEventNative`  
 -  `MultiVaultEVMEverscaleEventAlien`  
@@ -11,9 +11,9 @@ These event contracts are deployed by the [` EthereumEverscaleEventConfiguration
  
 ### EthereumEverscaleEventConfiguration 
  
-This contract has two versions: one deploys  `MultiVaultEVMEverscaleEventNative`  contracts, and the other one deploys  `MultiVaultEVMEverscaleEventAlien`  contracts. 
+This contract has two versions, one deploys  `MultiVaultEVMEverscaleEventNative`  contracts, and the other deploys  `MultiVaultEVMEverscaleEventAlien`  contracts. 
  
-Users have the option to deploy these contracts by invoking the `deployEvent` function. Alternatively, if the bridging process is automated, The events can be deployed by [`credit modules`](./CreditModules.md) through the `deployEvents` function on the configuration contract.
+Users have the option to deploy these contracts by invoking the `deployEvent` function. Alternatively, if the bridging process is automated, the events can be deployed by [`credit modules`](./CreditModules.md) through the `deployEvents` function on the configuration contract.
  
 The  `MultiVaultEVMEverscaleEventNative`  contract is used when transferring a Native token, while the  `MultiVaultEVMEverscaleEventAlien`  contract is used when transferring an Alien token. 
  
@@ -21,7 +21,7 @@ The  `MultiVaultEVMEverscaleEventNative`  contract is used when transferring a N
  
 ## Ever to EVM Events 
  
-There are two types of event contracts deployed on Everscale for the mentioned direction. 
+There are two types of event contracts deployed on Everscale for the mentioned direction:
  
 -  `MultiVaultEverscaleEVMEventNative`  
 -  `MultiVaultEverscaleEVMEventAlien`  
@@ -30,7 +30,7 @@ These contracts are deployed by the [ `EverscaleEthereumEventConfiguration` ](..
  
 ### EverscaleEthereumEventConfiguration 
  
-This contract also has two versions: one deploys  `MultiVaultEverscaleEVMEventNative`  contracts, and the other one deploys  `MultiVaultEverscaleEVMEventAlien`  contracts. 
+This contract also has two versions: one deploys  `MultiVaultEverscaleEVMEventNative`  contracts, and the other deploys  `MultiVaultEverscaleEVMEventAlien`  contracts. 
  
 The  `MultiVaultEverscaleEVMEventNative`  contract is deployed by the  `EverscaleEthereumEventConfiguration`  contract, and its  `deployEvent`  function can only be called by the  `ProxyMultiVaultNative_V4`  contract. 
  

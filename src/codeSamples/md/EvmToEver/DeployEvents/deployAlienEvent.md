@@ -3,10 +3,10 @@
 # Deploy Alien Events
 
 An [Ethereum Everscale Alien Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [Alien token](../../../../../docs/Concepts/TokenTypes.md) from an EVM network to Everscale.
-These tokens can be either the EVM gas tokens, such as **BNB** or **ETH**, or ERC-20 tokens, such as **USDT** or **WBTC**.
+These tokens can be either the EVM gas tokens, such as **BNB** or **ETH**, or ERC-20 tokens, like **USDT** or **WBTC**.
 When a user wants to transfer a token from an EVM network to Everscale and chooses to pay for the event contract deployment with the EVM gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of the EVM gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
 
-To perform such a operation the EthereumEverscaleEventConfiguration contract Abi is needed which is as follows:
+To perform such an operation, the EthereumEverscaleEventConfiguration contract Abi is needed which is as follows:
 
 <details>
 <summary>EthereumEverscaleEventConfiguration Contract Abi</summary>
@@ -116,7 +116,7 @@ const EthereumEverscaleEventConfAbi = {
 //Import following libraries
 import { ethers } from "ethers";
 
-//Initial the Evm provider as mentioned in prerequisites section
+//Initiate the Evm provider as mentioned in prerequisites section
 
 // AlienTransfer event Abi interface
 let abi = new ethers.Interface([
@@ -192,7 +192,7 @@ const eventLog = {
 import init, { mapEthBytesIntoTonCell } from "eth-ton-abi-converter";
 import { Address } from "everscale-inpage-provider";
 
-//Initial the Tvm provider as mentioned in prerequisites section
+//Initiate the Tvm provider as mentioned in prerequisites section
 
 // Everscale user address
 const everSender: Address = new Address("0:12345");
