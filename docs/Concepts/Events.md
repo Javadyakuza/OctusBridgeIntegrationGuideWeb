@@ -1,43 +1,41 @@
-# Events
-
-## EVM to Ever Events
-
-There is two types of event contracts at mentioned direction that will be deployed on Everscale.
-
-- `MultiVaultEVMEverscaleEventNative`
-- `MultiVaultEVMEverscaleEventAlien`
-
-Deployer of these event contract's is [`EthereumEverscaleEventConfiguration`](../addresses.md#event-configurations) contract,\
-which is deployed by `EthereumEverscaleEventConfigurationFactory`.
-
-### EthereumEverscaleEventConfiguration
-
-This contract has two version, one deploys `MultiVaultEVMEverscaleEventNative` contracts and another one deploys `MultiVaultEVMEverscaleEventAlien`.
-
-These contracts can be deployed by the user with calling `deployEvent` function or by [credit modules](./CreditModules.md) with calling `deployEvents` function on config contract.
-
-`MultiVaultEVMEverscaleEventNative` is deployed when transferring a native token and `MultiVaultEVMEverscaleEventAlien` are deployed when transferring alien token.
-
-> `EthereumEverscaleEventConfiguration` contract has two deployed version for each network, OctusBridge support's 6 network's right now regardless of Everscale , so there is 12 `EthereumEverscaleEventConfiguration` contract's, all these addresses can be found [here](../addresses.md#event-configurations).
-
-## Ever to EVM Events
-
-There is two types of event contracts at this direction that will be deployed on Everscale.
-
-- `MultiVaultEverscaleEVMEventNative`
-- `MultiVaultEverscaleEVMEventAlien`
-
-Deployer of these contract's is [`EverscaleEthereumEventConfiguration`](../addresses.md#event-configurations) contract, \
-Which is deployed by`EverscaleEthereumEventConfigurationFactory`.
-
-### EverscaleEthereumEventConfiguration
-
-this contract has two versions, one deploys `MultiVaultEverscaleEVMEventNative` contracts and another one deploys `MultiVaultEverscaleEVMEventAlien`.
-
-`MultiVaultEverscaleEVMEventNative` deployer is `EverscaleEthereumEventConfiguration` contract and it's `deployEvent` function is only callable by `ProxyMultiVaultNative_V4`
-
-`MultiVaultEverscaleEVMEventAlien` deployer is `EverscaleEthereumEventConfiguration` contract and it's `deployEvent` function is only callable by `ProxyMultiVaultAlien_V7`
-
-`MultiVaultEverscaleEVMEventNative` is deployed when transferring a native token and `MultiVaultEverscaleEVMEventAlien` are deployed when transferring alien token.
-
-**In the Ever -> EVM direction, event deploying is done automatically.**
+# Events 
+ 
+## EVM to Ever Events 
+ 
+There are two types of event contracts deployed on Everscale for the mentioned direction. 
+ 
+-  `MultiVaultEVMEverscaleEventNative`  
+-  `MultiVaultEVMEverscaleEventAlien`  
+ 
+These event contracts are deployed by the [` EthereumEverscaleEventConfiguration` ](../addresses.md#event-configurations) contract, which is created by the  `EthereumEverscaleEventConfigurationFactory`  contract. 
+ 
+### EthereumEverscaleEventConfiguration 
+ 
+This contract has two versions: one deploys  `MultiVaultEVMEverscaleEventNative`  contracts, and the other one deploys  `MultiVaultEVMEverscaleEventAlien`  contracts. 
+ 
+Users have the option to deploy these contracts by invoking the `deployEvent` function. Alternatively, if the bridging process is automated, The events can be deployed by [`credit modules`](./CreditModules.md) through the `deployEvents` function on the configuration contract.
+ 
+The  `MultiVaultEVMEverscaleEventNative`  contract is used when transferring a native token, while the  `MultiVaultEVMEverscaleEventAlien`  contract is used when transferring an alien token. 
+ 
+> Note: There are two deployed versions of the  `EthereumEverscaleEventConfiguration`  contract for each network. As OctusBridge supports 6 networks currently, there are a total of 12  `EthereumEverscaleEventConfiguration`  contracts. You can find all their addresses [here](../addresses.md#event-configurations). 
+ 
+## Ever to EVM Events 
+ 
+There are two types of event contracts deployed on Everscale for the mentioned direction. 
+ 
+-  `MultiVaultEverscaleEVMEventNative`  
+-  `MultiVaultEverscaleEVMEventAlien`  
+ 
+These contracts are deployed by the [ `EverscaleEthereumEventConfiguration` ](../addresses.md#event-configurations) contract, which is created by the  `EverscaleEthereumEventConfigurationFactory`  contract. 
+ 
+### EverscaleEthereumEventConfiguration 
+ 
+This contract also has two versions: one deploys  `MultiVaultEverscaleEVMEventNative`  contracts, and the other one deploys  `MultiVaultEverscaleEVMEventAlien`  contracts. 
+ 
+The  `MultiVaultEverscaleEVMEventNative`  contract is deployed by the  `EverscaleEthereumEventConfiguration`  contract, and its  `deployEvent`  function can only be called by the  `ProxyMultiVaultNative_V4`  contract. 
+ 
+The  `MultiVaultEverscaleEVMEventAlien`  contract is deployed by the  `EverscaleEthereumEventConfiguration`  contract, and its  `deployEvent`  function can only be called by the  `ProxyMultiVaultAlien_V7`  contract. 
+ 
+The  `MultiVaultEverscaleEVMEventNative`  contract is used when transferring a native token, while the  `MultiVaultEverscaleEVMEventAlien`  contract is used when transferring an alien token. 
+ 
+> **In the Ever -> EVM direction, event deployment is done automatically.** 
