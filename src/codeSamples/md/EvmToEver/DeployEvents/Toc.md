@@ -1,6 +1,6 @@
 # Deploy Events
 
-**Deploying Ethereum Everscale Event contract's which are utilized when transferring direction is EVM -> Ever**
+**Deploying Ethereum Everscale Event contracts which are utilized when transferring direction is EVM -> Ever**
 
 ## Table of Contents
 

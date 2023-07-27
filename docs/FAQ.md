@@ -10,7 +10,7 @@ On the other hand, if the user sets `expected_evers` to a value lower than the e
 
 Credit backends possess wallets across all networks and ensure balance equality. Consequently, if payment is made with the appropriate amount of attached EVM gas tokens (matching the `eventInitialBalance`), the credit backend will proceed with deploying the event contract.
 
-## Contract ABI's doesn't work, why ?
+## Contract's ABIs don't work, why ?
 
 Due to the Markdown code formatter used in the code blocks, the ABIs may appear to be in an incorrect format. However, you can use the following method to reformat the ABI to its original JSON format, enabling you to fetch the contract:
 

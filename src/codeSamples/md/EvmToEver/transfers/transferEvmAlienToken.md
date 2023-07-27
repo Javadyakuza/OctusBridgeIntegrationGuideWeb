@@ -6,7 +6,7 @@ The code samples below demonstrate how to perform the first step of this process
 
 In order to have a complete token bridging process, If paying the event contract deployment with EVM gas token, Once initiated a transaction on this section, get you transaction hash and use it on [Deploy Alien Event](../DeployEvents/deployAlienEvent.md) section to complete the bridging process.
 
-In this example, MultiVault and ERC-20 Token contracts's Abi's is required:
+In this example, MultiVault and ERC-20 Token contracts' Abis is required:
 
 <div class="TransferAlienToken">
 

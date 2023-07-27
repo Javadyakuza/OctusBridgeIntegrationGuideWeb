@@ -236,7 +236,7 @@ interface EventVoteData {
   eventBlock: string;
 }
 
-// Preparing the parameter's
+// Preparing the parameters
 const eventVoteData: EventVoteData = {
   eventTransaction: eventLog.eventTransaction,
   eventIndex: eventLog.eventIndex,

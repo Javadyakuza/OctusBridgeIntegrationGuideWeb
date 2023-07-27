@@ -6,7 +6,7 @@ This operation is specifically used for transferring native tokens. At this stag
 
 In order to execute transaction at this page you need to initial a transaction and get your event address from [Transfer Ever](../transfers/transferEverNativeCoin.md) or [Transfer Native token](../transfers/transferEverNativeToken.md) section.
 
-In this example, interaction takes place with three contracts, following ABI's are used to interact with those:
+In this example, interaction takes place with three contracts, following ABIs are used to interact with those:
 
 <div class="saveWithdrawNative">
 

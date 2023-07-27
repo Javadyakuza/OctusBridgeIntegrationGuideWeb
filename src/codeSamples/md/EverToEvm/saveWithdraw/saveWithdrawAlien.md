@@ -6,7 +6,7 @@ This operation is specifically used for transferring alien tokens. At this stage
 
 In order to execute transaction at this page you need to initial a transaction and get your event address from [Transfer Alien Token](../transfers/transferEverAlienToken.md) or [Transfer EVM Gas Token](../transfers/transferEvmNativeCoin.md) section.
 
-In this example, interaction takes place with three contracts, following ABI's are used to interact with those:
+In this example, interaction takes place with three contracts, following ABIs are used to interact with those:
 
 <div class="saveWithdrawAlien">
 

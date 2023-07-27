@@ -4,9 +4,9 @@
 
 Same as two last examples, Alien tokens such as [USDT](../../../../../docs/addresses.md#usdt) or others which are not EVM gas tokens such as **WBNB** or **WETH**, can be transferred to another EVM network through two methods. The first method involves manual asset releasing on EVM network, while the second method automatically releases the assets on the EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
 
-In order to have a complete token bridging if the Everscale fees are payed with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
+In order to have a complete token bridging if the Everscale fees are paid with Ever, Once you have initialed a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
-to perform such a operation we need Tip3 TokenRoot and TokenWalletUpgradable Abi's which are as follows :
+to perform such a operation we need Tip3 TokenRoot and TokenWalletUpgradable Abis which are as follows :
 
 <details>
 <summary>TokenRoot Contract Abi</summary>
@@ -467,7 +467,7 @@ const AlienTokenWalletUpgradable = new provider.Contract(
 // Token amount
 let amount: string;
 
-// Pay evm network fee's with Ever ?
+// Pay evm network fees with Ever ?
 let payWithEver: boolean;
 
 // Amount to attach to tx if payWithEver == true

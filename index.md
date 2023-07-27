@@ -1,12 +1,12 @@
 # OctusBridge Integration Guide
 
-Octus Bridge serves as a vital connection between EVM-compatible networks and the Everscale network. Its primary function is to facilitate the smooth transfer of tokens and data across supported networks.
+OctusBridge serves as a vital connection between EVM-compatible networks and Everscale network. Its primary function is to facilitate the smooth transfer of tokens and data across supported networks.
 
-Octus Bridge's architecture extends beyond token transfers, enabling the bridging of different types of data between source and destination chains.
+OctusBridge's architecture extends beyond token transfers, enabling the bridging of different types of data between the source and destination chains.
 
 # Custom Data Bridging
 
-To implement custom cross-chain data bridging, it is necessary to develop, propose, and obtain acceptance through a vote by the Octus Bridge DAO for the Configuration and Event contracts.
+To implement custom cross-chain data bridging, it is necessary to develop, propose, and obtain acceptance through a vote by the OctusBridge DAO for the Configuration and Event contracts.
 
 ### Call to Action
 
