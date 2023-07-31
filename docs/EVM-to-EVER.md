@@ -14,8 +14,8 @@
    
    - After the events are emitted by the `MultiVault` contract, it is necessary to deploy an event contract on the Everscale network. 
    
-   - Relayers will then vote on the event contract to confirm the deposit on the EVM network. 
-   
+   - Relayers will then vote on the event contract to confirm the deposit on the EVM network, it will take `blocksToConfirm` blocks for relayers to confirm the event contract.
+    
    - Methods for deploying the Event contract: 
   
    #### 3.1 Paying Everscale Operations Gas Fees with EVM Gas Tokens: 
@@ -28,6 +28,9 @@
 
 4. At this point the tokens must be deposited to the recipient Ever wallet.
 
+::: tip
+`blocksToConfirm` value can be fetched from the relevant event config contract
+:::
 
 ## Step-by-Step Guide: EVM to Ever Transfer
 

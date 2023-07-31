@@ -21,7 +21,6 @@
     In this case, the process of token release or minting on the EVM network is done manually.
     - For Native tokens, call the `saveWithdrawNative` function to mint tokens. 
     - For Alien tokens, call the `saveWithdrawAlien` function to release tokens. 
-    - 
     ::: tip
     Note that these functions must be called on the `MultiVault` contract. 
     :::
@@ -58,6 +57,12 @@
 
 > NOTE : gas_back_address will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
+### Example transactions
+
+- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/71ae5978b9257fa4af27ca451cfa66c2fe55efcb8e8391e4a2006a76fb5616aa)   
+
+- [Everscale transaction - Manual mint on EVM](https://everscan.io/transactions/0f3ea0439cddb3a4814f15ed2091c93a72e236338d75d33fa94fae4e8e8cb66f)
+
 :::
 
 ---
@@ -88,6 +93,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | payload | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative).|
 | signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative). |
 
+### Example transactions
+
+- [EVM transaction - Auto mint on EVM](https://bscscan.com/tx/0x81bbdf5048ec5b0278e1c8c41b7c3a6de796f465459798a9e6933da4100f9298)
+- [EVM transaction - Manual mint on EVM](https://bscscan.com/tx/0xe1655727b752d553a90dd1b352b0c721b4518dab35a572a3d00b547a039eb52c)
+
 :::
 
 ---
@@ -110,7 +120,6 @@ The next step is only necessary if EVM network fees is paid with its gas token.
         TvmCell payload
     ) external;
 ```
-
 ::: details
 
 ### Parameters
@@ -125,6 +134,12 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | payload           | Operational payload, see [transfer payload](./Concepts/Payloads.md#transfer-Native-token--transer-payload). |
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
+
+### Example transactions
+
+- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/2edae42cda0943436455e1b4e81b462e4e6fb552244a4a53363efcb5c5ed48e1)   
+
+- [Everscale transaction - Manual mint on EVM](https://everscan.io/transactions/f7c568ae0baf7547721be36d947a4df243b3f6b45810b50f724e1721665e80dd)
 
 :::
 
@@ -155,6 +170,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative).   |
 | signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative). |
+
+### Example transactions
+
+- [EVM transaction - Auto mint on EVM](https://bscscan.com/tx/0x3054af3f81f4c503594678fde72cd45f7a5e67c1c9737013e1408453c95294de)
+- [EVM transaction - Manual mint on EVM](https://bscscan.com/tx/0x4358963d03cd66ac79b247b7b08bdce48a986566dc6f7f7193e9a1867840037f)
 
 :::
 
@@ -190,6 +210,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
+### Example transactions
+
+- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/afd6506185c95b20bbff62c8da0d54178ea0785ca3a13e1672e831407eef1820)   
+
+- [Everscale transaction - Manual mint on EVM](https://everscan.io/transactions/54a9adf2d0960416cbc13df34e02b760828b15a2a32770631b0828a1782e2585)
 
 :::
 
@@ -220,6 +245,11 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative).   |
 | signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative). |
+
+### Example transactions
+
+- [EVM transaction - Auto mint on EVM](https://bscscan.com/tx/0x5fe0e422519844039ec64c95500d007c01b970719175e999008ce1d7b77195e2)
+- [EVM transaction - Manual mint on EVM](https://bscscan.com/tx/0xa5d3b0c8d14b7dae3f8ea5fc5b18224a57fda1ae3567ff9e89f851a6eff1cace)
 
 :::
 
@@ -255,6 +285,9 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 
 > NOTE : remainingGasTo will be the user's address if the EVM network fees are paid with its gas token and will be EventCloser if it is paid with Ever.
 
+### Example transactions
+
+- [Everscale transaction - Manual mint on EVM](https://everscan.io/transactions/27030361242c3193a771c324aa94109d80212af30322b45909a88690ca36f527)
 :::
 
 ---
@@ -285,6 +318,9 @@ The next step is only necessary if EVM network fees is paid with its gas token.
 | payload    | Operational payload, see [payload](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative).   |
 | signatures | Relayers signatures see [signatures](./Concepts/Payloads.md#payload-for-savewithdrawAlien-and-savewithdrawNative). |
 
+### Example transactions
+
+- [EVM transaction - Manual mint on EVM](https://bscscan.com/tx/0x932e95423c37693608e9b6e52c56693c3c8931fc026278f581313660fda4a561)
 :::
 
 ---
