@@ -71,12 +71,19 @@
   | expected_Evers | See [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
   | payload        | Operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
+
+  ### Example Transaction
+  - [Alien token - EVM transaction - Auto mint on Everscale](https://bscscan.com/tx/0x7eda3d5ccf603d629611dccc43d922e748be72385501f48a56f4f47cb0a0bbac)
+  - [Alien token - EVM transaction - Manual mint on Everscale](https://bscscan.com/tx/0x5232ef4c820275f9d2e92a85b821842b059a9b67c20215e6118adeffd651b731)
+  - [Native token - EVM transaction - Auto release on Everscale](https://bscscan.com/tx/0x8756f1bc2fc69136c83f5574fd0ae711d2090b677d4bf7cd4afbdad8caedf4f4)
+  - [Native token - EVM transaction - Manual release on Everscale](https://bscscan.com/tx/0xbca02dd8705d9a0463820bf5fafb190b3554b35517bcc4c7c9caab97f5daf9c7)
+  
   :::
 
 
 - - -
 
- 2. Now it's time to deploy the event contract which can be accomplished through two ways:
+ 1. Now it's time to deploy the event contract which can be accomplished through two ways:
 
 - 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1](#overview-of-evm-to-ever-transfer-mechanics).
 
@@ -91,8 +98,6 @@ function deployEvent(IEthereumEverscaleEvent.EthereumEverscaleEventVoteData even
 ::: details
 
 ### Parameters
-
-
 
 ```solidity
 struct EthereumEverscaleEventVoteData {
@@ -115,6 +120,10 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 | eventBlock       | EventBlock Hash       |
 
 Instructions on how to get these values can be found in [deploy Events](../.../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md)
+
+### Example Transactions
+- [Deploy Event - Alien token](https://everscan.io/transactions/be0203cd95bd0e36b17d4ea2db6173b7a3bc73c036f666110569d924ba8556a5)
+- [Deploy Event - Native token](https://everscan.io/transactions/5b8a1feac42ea2da8b4ae860566aecf53f8c8341ae2b2fa7fa128628917a09c9)
 :::
 
 
@@ -151,12 +160,15 @@ struct DepositNativeTokenParams {
 | expected_Evers | See [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
 | payload        | Operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
 
+### Example Transactions
+- [EVM gas token EVM transaction - Auto mint on Everscale](https://bscscan.com/tx/0xf5c09c459d03a0e15536019b27f6156eb913aa660c16c6fb77d87e9950f8eb34)
+- [EVM gas token EVM transaction - Manual mint on Everscale](https://bscscan.com/tx/0xf7de0756932b32624323054a9e878f23a953cd76461a17d7933622b217c9b90f)
 :::
 
 ---
 
 ::: warning
-Next step is only necessary if Everscale operations fees is paid with Ever
+Next step is only necessary if Everscale operations fees are paid with Ever
 :::
 
 
@@ -199,6 +211,9 @@ The previous deposit functions emit `AlienTransfer` or `NativeTransfer` events. 
 | eventBlock       | EventBlock Hash       |
 
 Instructions on how to get these values can be found in [deploy Events](../.../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md)
+
+### Example Transactions
+- [Deploy Event - EVM gas token](https://everscan.io/transactions/b0a40b2c4371d9435277de4b50e3c8ce6cde7f788e66f4a82d9d32f91d1bf076)
 :::
 
 
