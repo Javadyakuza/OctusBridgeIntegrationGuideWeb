@@ -8,7 +8,27 @@
  
 2. Emitting Events: 
   
-   - During this process, two events will be emitted, the `Deposit` event and either the `AlienTransfer` or `NativeTransfer` event, depending on the token type. 
+   - During this process, two events will be emitted, the `Deposit` event and either the `AlienTransfer` or `NativeTransfer` event, depending on the token type.
+  
+   Transactions and logs examples can be found below:
+
+
+    ::: details 
+    <div class="EventsLogs">
+
+      - Deposit Event [Example Transaction](https://bscscan.com/tx/0x4d41b3ff4319f1a80ac037e2d856cba36043c9c87425fe982c68fa27b1d2e5ec)
+      - Deposit Event Example Log
+      <ImgContainer src= './public/Deposit.png' width="100%" altText="DepositEventLog" />
+
+      - AlienTransfer Event [Example Transaction](https://bscscan.com/tx/0xa2fc51d0f27f95f58cc425d2c9211d4d067a6b60396e28ffc9ecbf92678d1e6d)
+      - AlienTransfer Event Example Log
+      <ImgContainer src= './public/AlienTransfer.png' width="100%" altText="AlienTransferEventLog" />
+
+      - NativeTransfer Event [Example Transaction](https://bscscan.com/tx/0x4d41b3ff4319f1a80ac037e2d856cba36043c9c87425fe982c68fa27b1d2e5ec)
+      - NativeTransfer Event Example Log
+      <ImgContainer src= './public/NativeTransfer.png' width="100%" altText="NativeTransferEventLog" />
+    </div>
+    :::
  
 3. Deploying and Confirming the Event Contract: 
    
@@ -222,3 +242,21 @@ Instructions on how to get these values can be found in [deploy Events](../.../.
 > Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EvmToEver/workFlow.md)
 
 > The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+
+
+<script lang="ts" >
+import { defineComponent, ref, onMounted } from "vue";
+import ImgContainer from "../.vitepress/theme/components/shared/BKDImgContainer.vue"
+
+export default defineComponent({
+  name: "EventsLogss",
+  components :{
+    ImgContainer
+  },
+  setup() {
+    return {
+    };
+  },
+});
+
+</script>

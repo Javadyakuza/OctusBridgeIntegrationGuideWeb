@@ -45,7 +45,6 @@ export default defineComponent({
   },
   setup() {
     window.process = process;
-    const flufel = window.process;
     const { provider, connectToWallet, changeAccount, disconnect } = useProvider();
     const { connectToMetamaskWallet,
       getAccounts, MetaMaskProvider, HandleAccountChange } = useEvmProvider()
@@ -86,7 +85,7 @@ export default defineComponent({
       await changeAccount();
     };
 
-    return { flufel, process, connected, requestPermissions, disconnectWallet, changeAccountWallet, requestMetaMaskPermissions, disconnectMetamask, MetaMaskConnected };
+    return { process, connected, requestPermissions, disconnectWallet, changeAccountWallet, requestMetaMaskPermissions, disconnectMetamask, MetaMaskConnected };
   },
 });
 </script>

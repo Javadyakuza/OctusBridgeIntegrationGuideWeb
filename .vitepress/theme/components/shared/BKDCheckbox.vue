@@ -1,4 +1,3 @@
-vue
 <template>
     <label class="everpay-checkbox">
         <input type="checkbox" :checked="checked" @change="toggleCheckbox">
