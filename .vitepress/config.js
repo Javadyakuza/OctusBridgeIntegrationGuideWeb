@@ -40,55 +40,6 @@ module.exports = {
         ],
       },
       {
-        text: 'Work-Flow-Visuals',
-        collapsable: false,
-        link: '/docs/Visual-Guide/README.md',
-        items: [
-          {
-            text: 'Ever to EVM',
-            collapsable: false,
-            items: [
-              {
-                text: 'Ever',
-                collapsable: false,
-                link: '/docs/Visual-Guide/EVER-TO-EVM/1.md',
-              },
-              {
-                text: 'Native Token',
-                collapsable: false,
-                link: '/docs/Visual-Guide/EVER-TO-EVM/2.md',
-              },
-              {
-                text: 'Alien Token',
-                collapsable: false,
-                link: '/docs/Visual-Guide/EVER-TO-EVM/3.md',
-              },
-            ],
-          },
-          {
-            text: 'EVM to Ever',
-            collapsable: false,
-            items: [
-              {
-                text: 'EVM Gas Token',
-                collapsable: false,
-                link: '/docs/Visual-Guide/EVM-TO-EVER/1.md',
-              },
-              {
-                text: 'Native Token',
-                collapsable: false,
-                link: '/docs/Visual-Guide/EVM-TO-EVER/2.md',
-              },
-              {
-                text: 'Alien Token',
-                collapsable: false,
-                link: '/docs/Visual-Guide/EVM-TO-EVER/3.md',
-              },
-            ],
-          },
-        ],
-      },
-      {
         text: 'Concepts',
         collapsable: true,
         link: '/docs/Concepts/ToC.md',

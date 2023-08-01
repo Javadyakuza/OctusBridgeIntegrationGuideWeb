@@ -31,6 +31,12 @@
 
 ## Native Coin transfer
 
+<details>
+<summary> EVER Transfer Workflow diagram</summary>
+  <ImgContainer src= '/EverEVMNativeCoin.png' width="100%" altText="EverEVMNativeCoin" />
+</details>
+<br/>
+
 - 1 - Call the `wrap` function on the `WEVERVault` contract and mint WEVER tokens :
 
 ### Function
@@ -103,7 +109,11 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## Native Token Transfer
 
-> `BRIDGE` is used in this example.
+<details>
+<summary> Native Token Transfer Workflow diagram</summary>
+  <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
+</details>
+<br/>
 
 1 - Transfer the tokens to the `ProxyMultiVaultNativeV-4`'s `TokenWallet` contract by calling the `transfer` function on your `TokenWallet` contract :
 
@@ -180,7 +190,11 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## Alien Token Transfer
 
-> `USDT` is used in this example.
+<details>
+<summary> Alien Token Transfer Workflow diagram</summary>
+  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
+</details>
+<br/>
 
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
@@ -254,7 +268,11 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## EVM Gas Token Transfer
 
-> `WBNB` is used in this example.
+<details>
+<summary> EVM Gas Token Transfer Workflow diagram</summary>
+  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
+</details>
+<br/>
 
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
@@ -325,3 +343,32 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 > Interactive code samples related to examples above can be found [here](../src/codeSamples/md/EverToEvm/workFlow.md)
 
 > The addresses of all the referenced contracts and tokens can be found at [Links](./addresses.md).
+
+<script lang="ts" >
+import { defineComponent, ref, onMounted } from "vue";
+import ImgContainer from "../.vitepress/theme/components/shared/BKDImgContainer.vue"
+
+export default defineComponent({
+  name: "Diagrams",
+  components :{
+    ImgContainer
+  },
+  setup() {
+    return {
+    };
+  },
+});
+
+</script>
+<style>
+  details{
+  background-color: var(--vp-c-bg-mute);
+  transition: background-color 0.1s;
+  padding: 0 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  cursor : pointer;  
+}
+</style>
