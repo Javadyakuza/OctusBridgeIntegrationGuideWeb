@@ -18,15 +18,15 @@
 
       - Deposit Event [Example Transaction](https://bscscan.com/tx/0x4d41b3ff4319f1a80ac037e2d856cba36043c9c87425fe982c68fa27b1d2e5ec)
       - Deposit Event Example Log
-      <ImgContainer src= './public/Deposit.png' width="100%" altText="DepositEventLog" />
+      <ImgContainer src= '/Deposit.png' width="100%" altText="DepositEventLog" />
 
       - AlienTransfer Event [Example Transaction](https://bscscan.com/tx/0xa2fc51d0f27f95f58cc425d2c9211d4d067a6b60396e28ffc9ecbf92678d1e6d)
       - AlienTransfer Event Example Log
-      <ImgContainer src= './public/AlienTransfer.png' width="100%" altText="AlienTransferEventLog" />
+      <ImgContainer src= '/AlienTransfer.png' width="100%" altText="AlienTransferEventLog" />
 
       - NativeTransfer Event [Example Transaction](https://bscscan.com/tx/0x4d41b3ff4319f1a80ac037e2d856cba36043c9c87425fe982c68fa27b1d2e5ec)
       - NativeTransfer Event Example Log
-      <ImgContainer src= './public/NativeTransfer.png' width="100%" altText="NativeTransferEventLog" />
+      <ImgContainer src= '/NativeTransfer.png' width="100%" altText="NativeTransferEventLog" />
     </div>
     :::
  
