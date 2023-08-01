@@ -57,7 +57,7 @@
 ## Alien & Native Token Transfer
 
 <details>
-<summary> Alien Token Transfer Workflow diagram</summary>
+<summary> Alien Token Transfer Workflow Diagram</summary>
 
   <ImgContainer src= '/EVMEverAlienToken.png' width="100%"  altText="EVMEverAlienToken" />
 
@@ -65,7 +65,7 @@
 <br/>
 
 <details>
-<summary> Native Token Transfer Workflow diagram</summary>
+<summary> Native Token Transfer Workflow Diagram</summary>
   <ImgContainer src= '/EVMEverNativeToken.png' width="100%" altText="EVMEverNativeToken" />
 </details>
 
@@ -163,7 +163,7 @@ Instructions on how to get these values can be found in [deploy Events](../.../.
 ## EVM Gas Token Transfer
 
 <details>
-<summary> EVM Gas Token Transfer Workflow diagram</summary>
+<summary> EVM Gas Token Transfer Workflow Diagram</summary>
   <ImgContainer src= '/EVMEverGasToken.png' width="100%" altText="EVMEverGasToken" />
 </details>
 <br/>

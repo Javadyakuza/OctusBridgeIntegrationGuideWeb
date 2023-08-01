@@ -32,7 +32,7 @@
 ## Native Coin transfer
 
 <details>
-<summary> EVER Transfer Workflow diagram</summary>
+<summary> EVER Transfer Workflow Diagram</summary>
   <ImgContainer src= '/EverEVMNativeCoin.png' width="100%" altText="EverEVMNativeCoin" />
 </details>
 <br/>
@@ -110,7 +110,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 ## Native Token Transfer
 
 <details>
-<summary> Native Token Transfer Workflow diagram</summary>
+<summary> Native Token Transfer Workflow Diagram</summary>
   <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
 </details>
 <br/>
@@ -191,7 +191,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 ## Alien Token Transfer
 
 <details>
-<summary> Alien Token Transfer Workflow diagram</summary>
+<summary> Alien Token Transfer Workflow Diagram</summary>
   <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
 </details>
 <br/>
@@ -269,7 +269,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 ## EVM Gas Token Transfer
 
 <details>
-<summary> EVM Gas Token Transfer Workflow diagram</summary>
+<summary> EVM Gas Token Transfer Workflow Diagram</summary>
   <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
 </details>
 <br/>
