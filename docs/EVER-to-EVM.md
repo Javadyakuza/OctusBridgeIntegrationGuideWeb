@@ -48,8 +48,6 @@
 
 ## Native Coin transfer
 
-
-
 - 1 - Call the `wrap` function on the `WEVERVault` contract and mint WEVER tokens :
 
 ### Function
@@ -121,8 +119,6 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 ---
 
 ## Native Token Transfer
-
-
 
 1 - Transfer the tokens to the `ProxyMultiVaultNativeV-4`'s `TokenWallet` contract by calling the `transfer` function on your `TokenWallet` contract :
 
@@ -199,8 +195,6 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## Alien Token Transfer
 
-
-
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
 ### Function
@@ -272,8 +266,6 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 ---
 
 ## EVM Gas Token Transfer
-
-
 
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 

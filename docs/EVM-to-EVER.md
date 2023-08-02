@@ -71,9 +71,6 @@
 
 ## Alien & Native Token Transfer
 
-
-
-
 1. If the the target token was an Alien or a Native token we must use the `deposit` function on `MultiVault` contract,
   but if the token was an Alien token, we must approve `MultiVault` for the desired token amount before depositing the tokens.\
   Once approved deposit function can be called.
@@ -166,8 +163,6 @@ Instructions on how to get these values can be found in [deploy Events](../.../.
 
 ---
 ## EVM Gas Token Transfer
-
-
 
  1. If target token was the EVM network gas token, we must use `depositByNativeToken` function on the `MultiVault` contract and attach the desired amount of the gas token equal to the amount value parameter of the function call to the transaction:
 
