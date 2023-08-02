@@ -1,3 +1,20 @@
+# Workflow Diagrams
+
+ ## EVER Coin Transfer 
+  <ImgContainer src= '/EverEVMNativeCoin.png' width="100%" altText="EverEVMNativeCoin" />
+<br/>
+
+ ## Native Token Transfer 
+  <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
+<br/>
+
+ ## Alien Token Transfer 
+  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
+<br/>
+
+ ## EVM Gas Token Transfer 
+  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
+<br/>
 # Overview of Ever to EVM Transfer Mechanics 
 
 1. Locking or Burning the Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
@@ -31,11 +48,7 @@
 
 ## Native Coin transfer
 
-<details>
-<summary> EVER Transfer Workflow Diagram</summary>
-  <ImgContainer src= '/EverEVMNativeCoin.png' width="100%" altText="EverEVMNativeCoin" />
-</details>
-<br/>
+
 
 - 1 - Call the `wrap` function on the `WEVERVault` contract and mint WEVER tokens :
 
@@ -109,11 +122,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## Native Token Transfer
 
-<details>
-<summary> Native Token Transfer Workflow Diagram</summary>
-  <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
-</details>
-<br/>
+
 
 1 - Transfer the tokens to the `ProxyMultiVaultNativeV-4`'s `TokenWallet` contract by calling the `transfer` function on your `TokenWallet` contract :
 
@@ -190,11 +199,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## Alien Token Transfer
 
-<details>
-<summary> Alien Token Transfer Workflow Diagram</summary>
-  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
-</details>
-<br/>
+
 
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
@@ -268,11 +273,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ## EVM Gas Token Transfer
 
-<details>
-<summary> EVM Gas Token Transfer Workflow Diagram</summary>
-  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
-</details>
-<br/>
+
 
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 

@@ -3,8 +3,8 @@ import { Address } from "everscale-inpage-provider";
 
 import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
+import { calculateEventContractDeployValueInEvmGasToken } from "./helpers/convertNetworksTokens.js";
 import { deployedContracts } from "./helpers/EvmConstants";
-import { calculateEventContractDeployValueInEvmGasToken } from "./helpers/fetchEventDeployValueInEvmGasToken";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 /**

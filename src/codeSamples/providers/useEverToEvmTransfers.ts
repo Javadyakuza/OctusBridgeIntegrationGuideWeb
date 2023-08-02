@@ -15,7 +15,7 @@ import {
 } from "./helpers/deriveEventAddressFromOriginHash";
 import { usePayloadBuilders } from "./usePayloadBuilders";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
-
+// import { calculateEvmSaveWithdrawFeeInEver } from "./helpers/convertNetworksTokens";
 /**
  * Transfers the Ever which is Everscale native coin from Everscale to an Evm network.
  * @param amount Token amount.
