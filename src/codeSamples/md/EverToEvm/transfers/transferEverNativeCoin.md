@@ -206,7 +206,8 @@ let amount: string;
 let payWithEver: boolean;
 
 // Amount to attach to the transaction if payWithEver = true
-const auto_value: string = 13;
+/// @dev This parameter represents the estimated gas fees for one of the saveWithdraws functions in Ever coins.
+const auto_value: string;
 
 // Amount to attach to the transaction if payWithEver = false
 const manual_value: string = 6;
