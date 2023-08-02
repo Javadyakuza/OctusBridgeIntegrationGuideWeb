@@ -1,23 +1,3 @@
-# Workflow Diagrams
-
- ## EVER Coin Transfer 
-  <ImgContainer src= '/EverEVMNativeCoin.png' width="100%" altText="EverEVMNativeCoin" />
-<br/>
-
- ## Native Token Transfer 
-  <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
-<br/>
-
- ## Alien Token Transfer 
-  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
-<br/>
-
- ## EVM Gas Token Transfer 
-  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
-<br/>
-
----
-
 # Overview of Ever to EVM Transfer Mechanics 
 
 1. Locking or Burning the Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
@@ -50,6 +30,9 @@
 ## Step-by-Step Guide: Ever to EVM Transfer
 
 ## Native Coin transfer
+
+  <ImgContainer src= '/EverEVMNativeCoin.png' width="100%" altText="EverEVMNativeCoin" />
+<br/>
 
 - 1 - Call the `wrap` function on the `WEVERVault` contract and mint WEVER tokens :
 
@@ -121,7 +104,10 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ---
 
-## Native Token Transfer
+## Native Token Transfer 
+
+  <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
+<br/>
 
 1 - Transfer the tokens to the `ProxyMultiVaultNativeV-4`'s `TokenWallet` contract by calling the `transfer` function on your `TokenWallet` contract :
 
@@ -196,8 +182,10 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ---
 
-## Alien Token Transfer
+## Alien Token Transfer 
 
+  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
+<br/>
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
 ### Function
@@ -269,6 +257,9 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 ---
 
 ## EVM Gas Token Transfer
+
+  <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
+<br/>
 
 1 - Burn the tokens on Everscale network by calling the `burn` function on your `tokenWallet` contract :
 
