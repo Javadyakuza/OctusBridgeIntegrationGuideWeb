@@ -12,6 +12,7 @@
   <ImgContainer src= '/EVMEverGasToken.png' width="100%" altText="EVMEverGasToken" />
 <br/>
 
+---
 
 # Overview of EVM to Ever Transfer Mechanics 
 

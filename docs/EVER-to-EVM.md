@@ -15,6 +15,9 @@
  ## EVM Gas Token Transfer 
   <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMGasToken" />
 <br/>
+
+---
+
 # Overview of Ever to EVM Transfer Mechanics 
 
 1. Locking or Burning the Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
