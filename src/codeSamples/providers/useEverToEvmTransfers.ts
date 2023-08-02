@@ -9,13 +9,14 @@ import {
 import { FactorySource, factorySource } from "./artifacts/build/factorySource";
 import { EverAbi } from "./artifacts/WEVERVault";
 import * as constants from "./helpers/constants";
+import { calculateEvmSaveWithdrawFeeInEver } from "./helpers/convertNetworksTokens";
 import {
   fetchNativeEventAddressFromOriginTxHash,
   fetchAlienEventAddressFromOriginTxHash,
 } from "./helpers/deriveEventAddressFromOriginHash";
 import { usePayloadBuilders } from "./usePayloadBuilders";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
-// import { calculateEvmSaveWithdrawFeeInEver } from "./helpers/convertNetworksTokens";
+import { useEvmProvider } from "../../providers/useEvmProvider";
 /**
  * Transfers the Ever which is Everscale native coin from Everscale to an Evm network.
  * @param amount Token amount.
@@ -26,6 +27,8 @@ async function transferEverNativeCoin(
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string] | unknown> {
+  // Fetching the network symbol
+  const symbol: string = useEvmProvider().getSymbol()!;
   // fetching the wallet data
   let provider: ProviderRpcClient, everSender: Address;
   try {
@@ -61,8 +64,13 @@ async function transferEverNativeCoin(
       .send({
         from: everSender,
         amount: payWithEver
-          ? constants.transfer_fees.EverToEvmAutoRelease.toString()
-          : constants.transfer_fees.EverToEvmManualRelease.toString(),
+          ? ethers
+              .parseUnits(
+                (await calculateEvmSaveWithdrawFeeInEver(true, symbol))[1],
+                9
+              )
+              .toString()
+          : ethers.parseUnits("6", 9).toString(),
         bounce: true,
       });
     // fetching the event address
@@ -94,6 +102,7 @@ async function transferEverNativeToken(
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string] | unknown> {
+  const symbol: string = useEvmProvider().getSymbol()!;
   // fetching the wallets data
   let provider: ProviderRpcClient, everSender: Address;
   try {
@@ -140,8 +149,13 @@ async function transferEverNativeToken(
       .send({
         from: everSender,
         amount: payWithEver
-          ? constants.transfer_fees.EverToEvmAutoRelease.toString()
-          : constants.transfer_fees.EverToEvmManualRelease.toString(),
+          ? ethers
+              .parseUnits(
+                (await calculateEvmSaveWithdrawFeeInEver(true, symbol))[1],
+                9
+              )
+              .toString()
+          : ethers.parseUnits("6", 9).toString(),
         bounce: true,
       });
 
@@ -177,6 +191,7 @@ async function transferEverAlienToken(
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string] | unknown> {
+  const symbol: string = useEvmProvider().getSymbol()!;
   let provider: ProviderRpcClient, everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -229,8 +244,13 @@ async function transferEverAlienToken(
       .send({
         from: everSender,
         amount: payWithEver
-          ? constants.transfer_fees.EverToEvmAutoRelease.toString()
-          : constants.transfer_fees.EverToEvmManualRelease.toString(),
+          ? ethers
+              .parseUnits(
+                (await calculateEvmSaveWithdrawFeeInEver(false, symbol))[1],
+                9
+              )
+              .toString()
+          : ethers.parseUnits("6", 9).toString(),
         bounce: true,
       });
 
@@ -264,6 +284,8 @@ async function transferEverAlienEvmNativeCoin(
   amount: number,
   payWithEver: boolean
 ): Promise<[string, string] | unknown> {
+  const symbol: string = useEvmProvider().getSymbol()!;
+
   let provider: ProviderRpcClient, everSender: Address;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -308,8 +330,13 @@ async function transferEverAlienEvmNativeCoin(
       .send({
         from: everSender,
         amount: payWithEver
-          ? constants.transfer_fees.EverToEvmAutoRelease.toString()
-          : constants.transfer_fees.EverToEvmManualRelease.toString(),
+          ? ethers
+              .parseUnits(
+                (await calculateEvmSaveWithdrawFeeInEver(false, symbol))[1],
+                9
+              )
+              .toString()
+          : ethers.parseUnits("6", 9).toString(),
         bounce: true,
       });
 

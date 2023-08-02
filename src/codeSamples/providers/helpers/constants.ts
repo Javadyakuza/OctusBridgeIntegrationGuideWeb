@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { Address } from "everscale-inpage-provider";
 
 // -- Everscale Contracts -- //
@@ -78,7 +77,27 @@ export const unWrapper = "0xa5cf4c57a7756943559B6B65f6cC67Aa834F79F5"; // same f
 export const UnfinishedEverscaleEthereumNativeEventForEVER = new Address(
   "0:204145012c9fbfc97cd013ffcaa8e93829b5cf760edcb413c96671c1bae0868f"
 );
-export const transfer_fees = {
-  EverToEvmAutoRelease: ethers.parseUnits("13", 9),
-  EverToEvmManualRelease: ethers.parseUnits("6", 9),
+
+/// @dev The following variables represent the average gas consumption of the saveWithdraws function.
+/// Since there is no signatures parameter available to estimate the required gas for this function,
+/// the provided values are the highest gas consumed by 10 random relevant transactions on each network + 210k gas, from July 20nd to August 2nd 2023.
+/// @notice Please note that the actual gas fees for the transactions may vary from these values.
+/// To avoid any potential loss of assets, it is strongly advised to conduct your own research (DYOR) and attach the appropriate gas value to the transaction if necessary.
+/// @notice If the target token was not deployed on the EVM network an additional 1_000_000 gas's would be added to the transaction
+/// since the tokens provided in this documentation are limited to very common ones tokens, the mentioned case should not be a concern.
+type TransferFees = {
+  [key: string]: string;
+};
+
+export const transfer_fees: TransferFees = {
+  BNBNative: "600000", // 600k
+  BNBAlien: "600000", // 600k
+  ETHNative: "655000", // 655k
+  ETHAlien: "700000", // 700k
+  MATICNative: "670000", // 670k
+  MATICAlien: "700000", // 700k
+  FTMNative: "655000", // 655k
+  FTMAlien: "710000", // 710k
+  AVAXNative: "655000", // 655k
+  AVAXAlien: "780000", // 780k
 };

@@ -14,7 +14,6 @@ import { getRandomUint } from "./helpers/randuint";
 import { EventVoteData, PackedCell } from "./types";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
-// import { calculateEvmSaveWithdrawFeeInEver } from "./helpers/convertNetworksTokens";
 
 /**
  * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
@@ -45,8 +44,6 @@ async function buildWrapPayload(
   } catch (error: any) {
     return ["ERROR", error.message];
   }
-  // console.log("fee", await calculateEvmSaveWithdrawFeeInEver(true, "BNB"));
-
   try {
     //encoding the data
     const transferPayload: PackedCell = await provider.packIntoCell({
