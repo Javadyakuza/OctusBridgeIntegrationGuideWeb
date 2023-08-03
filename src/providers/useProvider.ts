@@ -379,6 +379,7 @@ const disconnect = async () => {
   await provider.disconnect();
 
   connector.disconnectProvider();
+  location.reload();
 };
 
 const hasProvider = ref(false);

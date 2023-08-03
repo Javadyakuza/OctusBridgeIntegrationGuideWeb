@@ -33,7 +33,6 @@ async function buildWrapPayload(
     everSender: Address,
     evmRecipient: string,
     chainId: string;
-
   try {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {

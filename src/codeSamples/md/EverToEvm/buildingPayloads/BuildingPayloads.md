@@ -1113,7 +1113,7 @@ const operationPayload = await provider.packIntoCell({
 
 <br/>
 
-<button ref="buildBurnAlien" @click="HandleBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn USDT Payload</button>
+<button ref="buildBurnAlien" @click="HandleBurnPayload" style="{background-color : gray, border-radius: 100px}">Build burn USDT Payload</button>
 
 <p class="output-p" ref="burnPayloadOutput"></p>
 
@@ -1184,7 +1184,7 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
 
 </details>
 
-<button ref="buildBurnNative" @click="HandleNativeBurnPayload" style="{background-color : gray, border-radius: 100px}">build burn {{BurnNativeBtnText()}} Payload </button>
+<button ref="buildBurnNative" @click="HandleNativeBurnPayload" style="{background-color : gray, border-radius: 100px}">Build burn {{BurnNativeBtnText()}} Payload </button>
 
 <p class="output-p" ref="burnNativePayloadOutput"></p>
 
@@ -1200,6 +1200,7 @@ import { Address } from "Everscale-inpage-provider";
 import {deployedContracts} from "../../../providers/helpers/EvmConstants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {ethers} from "ethers" 
+import {toast} from "../../../providers/helpers/toaster.ts"
 export default defineComponent({
   name: "buildPayload",
   setup() {
@@ -1220,18 +1221,33 @@ export default defineComponent({
     async function HandleWrapPayload() {
       this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
       if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.wrapPayloadOutput.innerHTML = "ERROR: please enter a valid number !!";
+        toast("ERROR: please enter a valid number !!", 0);
+        this.$refs.wrapPayloadOutput.innerHTML = ""
         return
       }
       var wrapPayloadOutput = await buildWrapPayload(
         this.$refs.amount.value.toString(),
         this.$refs.everPay.checked
       );
+      if (wrapPayloadOutput[0] != "ERROR" ){
+        toast("Payload was built successfully", 1)
+        }else{
+        toast(wrapPayloadOutput[1], 0);
+        this.$refs.wrapPayloadOutput.innerHTML = "";
+        return;
+        } 
       this.$refs.wrapPayloadOutput.innerHTML = format(wrapPayloadOutput);
     }
     async function HandleTransferPayload() {
       this.$refs.transferPayloadOutput.innerHTML = "processing ...";
       var transferPayloadOutput = await buildTransferPayload();
+      if (transferPayloadOutput[0] != "ERROR" ){
+        toast("Payload was built successfully", 1)
+        }else{
+        toast(transferPayloadOutput[1], 0);
+        this.$refs.transferPayloadOutput.innerHTML = "";
+        return;
+        } 
       this.$refs.transferPayloadOutput.innerHTML = format(
         transferPayloadOutput
       );
@@ -1239,20 +1255,47 @@ export default defineComponent({
     async function HandleBurnPayload() {
       this.$refs.burnPayloadOutput.innerHTML = "processing ...";
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
-      var burnPayloadOutput = await buildBurnPayloadForEvmAlienToken(
+      let burnPayloadOutput=[];
+      try{ burnPayloadOutput = await buildBurnPayloadForEvmAlienToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.burnToken.value]
-      );
+      );}catch(err){
+        // catching the bad provider error
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        if(err.toString().includes("intermediate value")){
+          toast("unsupported network", 0);
+          this.$refs.burnPayloadOutput.innerHTML = "";
+          return;
+        }else{
+          toast(err.message, 0);
+          this.$refs.burnPayloadOutput.innerHTML = "";
+          return;
+        }
+      }
+      if (burnPayloadOutput[0] != "ERROR" ){
+      toast("Payload was built successfully", 1)
+      }else{
+      toast(burnPayloadOutput[1], 0);
+      this.$refs.burnPayloadOutput.innerHTML = "";
+      return;
+      } 
       this.$refs.burnPayloadOutput.innerHTML = format(burnPayloadOutput);
     }
     async function HandleNativeBurnPayload() {
       this.$refs.burnNativePayloadOutput.innerHTML = "processing ...";
       var burnNativePayloadOutput = await buildBurnPayloadForEvmNativeToken();
+      if (burnNativePayloadOutput[0] != "ERROR" ){
+      toast("Payload was built successfully", 1)
+      }else{
+      toast(burnNativePayloadOutput[1], 0);
+      this.$refs.burnNativePayloadOutput.innerHTML = "";
+      return;
+      } 
       this.$refs.burnNativePayloadOutput.innerHTML = format(
         burnNativePayloadOutput
       );
     } 
     async function HandleSelection(){
-    this.$refs.buildBurnAlien.innerHTML = ` build burn ${this.$refs.burnToken.value} payload`
+    this.$refs.buildBurnAlien.innerHTML = ` Build burn ${this.$refs.burnToken.value} payload`
     }
     return {
       HandleWrapPayload,

@@ -23,3 +23,7 @@ declare module "*.wasm" {
 
   export default initWasm;
 }
+
+declare module "vue-toastification/dist/index.mjs" {
+  export * from "vue-toastification";
+}

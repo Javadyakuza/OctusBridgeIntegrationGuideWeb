@@ -42,6 +42,7 @@
     "vite-plugin-externals": "^0.6.2",
     "vite-plugin-resolve-extension-vue": "^0.1.0",
     "vite-plugin-wasm": "^3.2.2",
+    "vue-toastification": "^2.0.0-rc.5",
     "vitepress": "1.0.0-beta.3",
     "vue": "^3.2.47",
     "web3": "^4.0.2"

@@ -34,10 +34,7 @@ export async function setupAndGetProvidersDetails(): Promise<
   if (
     !supportedNetworks.includes(Number(evmProvider.MetaMaskProvider().chainId!))
   ) {
-    throw new Error(
-      `unsupported network, only 
-  Ethereum, BNB Chain, Polygon, Avalanche and Fantom are supported.`
-    );
+    throw new Error(`unsupported network`);
   }
   if ((await evmProvider.getAccounts())![0] != undefined) {
     // means user is well connected

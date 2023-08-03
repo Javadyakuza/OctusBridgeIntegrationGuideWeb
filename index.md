@@ -8,17 +8,16 @@ OctusBridge's architecture extends beyond token transfers, enabling the bridging
 
 To implement custom cross-chain data bridging, it is necessary to develop, propose, and obtain acceptance through a vote by the OctusBridge DAO for the Configuration and Event contracts.
 
-### Call to Action
-
-- [OctusBridge](https://octusbridge.io)
-- [OctusBridge App](https://app.octusbridge.io/bridge)
-- [OctusBridge Docs](https://docs.octusbridge.io)
-- [OctusBridge DAO](https://app.octusbridge.io/governance)
+### Join our Socials
 - [Discord](https://discord.gg/6dryaZQNmC)
 - [Telegram](https://t.me/broxus_chat)
 - [Reddit](https://www.reddit.com/r/crypto_is_easy)
 - [Medium](https://medium.com/Broxus)
 - [YouTube](https://www.youtube.com/channel/UCQ_XxaWTFxyQbiVI_SDiOmQs)
+- [OctusBridge DAO](https://app.octusbridge.io/governance)
+- [OctusBridge](https://octusbridge.io)
+- [OctusBridge App](https://app.octusbridge.io/bridge)
+- [OctusBridge Docs](https://docs.octusbridge.io)
 
 # Table of Contents
 
