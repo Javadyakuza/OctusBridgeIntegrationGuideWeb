@@ -36,10 +36,10 @@ async function transferEverNativeCoin(
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
   try {
     // fetching the WEVERVault contract
@@ -86,7 +86,7 @@ async function transferEverNativeCoin(
         : ["successful, tx hash: ", res?.id.hash];
     }
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
@@ -110,10 +110,10 @@ async function transferEverNativeToken(
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
 
   try {
@@ -173,7 +173,7 @@ async function transferEverNativeToken(
         : ["successful, tx hash: ", res?.id.hash];
     }
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
@@ -198,10 +198,10 @@ async function transferEverAlienToken(
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
   try {
     // fetching the contracts
@@ -268,7 +268,7 @@ async function transferEverAlienToken(
         : ["successful, tx hash: ", res?.id.hash];
     }
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
@@ -292,12 +292,11 @@ async function transferEverAlienEvmNativeCoin(
     if (providerDetails) {
       [provider, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR :any", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
-
   try {
     // fetching the contracts
     const alienTokenRoot: Contract<FactorySource["TokenRoot"]> =
@@ -354,7 +353,7 @@ async function transferEverAlienEvmNativeCoin(
         : ["successful, tx hash: ", res?.id.hash];
     }
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 

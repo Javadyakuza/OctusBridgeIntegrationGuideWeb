@@ -533,6 +533,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {toast} from "../../../providers/helpers/toaster.ts"
 
 export default defineComponent({
   name: "EvmNativeCoinTransfer",
@@ -547,15 +548,27 @@ export default defineComponent({
       }
     async function HandleTransferEvmNativeCoin(){
         this.$refs.EvmNativeCoinOutput.innerHTML = "processing ...";
-        if (Number(this.$refs.amount.value) <= 0){
-          this.$refs.EvmNativeCoinOutput.innerHTML = "ERROR: please enter valid number !!"
-          return 
+
+        if (Number(this.$refs.amount.value) <= 0) {
+        toast("Please enter a valid number !!", 0);
+        this.$refs.EvmNativeCoinOutput.innerHTML = ""
+        return
         }
+
         const EvmNativeCoinOutput = await transferEverAlienEvmNativeCoin(
             constants[`EVERW${BurnNativeBtnText()}`],
             this.$refs.amount.value,
             this.$refs.everPay.checked 
         );
+        
+        if (EvmNativeCoinOutput[0] != "ERROR :" ){
+        toast("Operation successful", 1)
+        }else{
+        toast(EvmNativeCoinOutput[1], 0);
+        this.$refs.EvmNativeCoinOutput.innerHTML = "";
+        return;
+        } 
+
         this.$refs.EvmNativeCoinOutput.innerHTML = EvmNativeCoinOutput;
     }
     return {

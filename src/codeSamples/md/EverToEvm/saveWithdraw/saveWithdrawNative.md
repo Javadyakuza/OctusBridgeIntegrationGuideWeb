@@ -3480,6 +3480,9 @@ Only EverscaleEthereumNativeEvent contract addresses from incomplete bridging pr
 import { useSaveWithdraws } from "../../../providers/useSaveWithdraws";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address} from "everscale-inpage-provider";
+import {toast} from "../../../providers/helpers/toaster.ts"
+import isValidEverAddress from "../../../providers/helpers/isValidEverAddress.ts"
+
 
 export default defineComponent({
   name: "saveWithdrawNative",
@@ -3488,8 +3491,31 @@ export default defineComponent({
     const { saveWithdrawNative } = useSaveWithdraws();
     async function HandleSaveWithdrawNative() {
       this.$refs.saveWithdrawNativeOutput.innerHTML = "processing ...";
-      let output = await saveWithdrawNative(new Address(this.$refs.eventAddr.value));
-      this.$refs.saveWithdrawNativeOutput.innerHTML = output;
+      
+      if((await isValidEverAddress(true, this.$refs.eventAddr.value)) == false){
+          toast("Please enter valid native event contract address !!", 0)
+          this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+          return
+        } else if ((await isValidEverAddress(true, this.$refs.eventAddr.value)) == 2){
+          toast("Use EVM gas and alien token asset releasing section !!", 0)
+          this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+          return
+        }else if((
+          await isValidEverAddress(true, this.$refs.eventAddr.value)) == 1){
+          toast("Bridging process is not incomplete !!", 0)
+          this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+          return
+        }
+      
+      const saveWithdrawNativeOutput = await saveWithdrawNative(new Address(this.$refs.eventAddr.value));
+      if (saveWithdrawNativeOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(saveWithdrawNativeOutput[1], 0);
+      this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+      return;
+      } 
+     this.$refs.saveWithdrawNativeOutput.innerHTML = saveWithdrawNativeOutput;
     }
     return {
       HandleSaveWithdrawNative,

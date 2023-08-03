@@ -545,24 +545,54 @@ import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
 import {deployedContracts} from "../../../providers/helpers/EvmConstants"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {toast} from "../../../providers/helpers/toaster.ts"
+
 export default defineComponent({
   name: "EverAlienTokenTransfer",
   setup() {
     const { transferEverAlienToken } = useEverToEvmTransfers();
+    
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
+
     async function HandleTransferEverAlienToken(){
         this.$refs.EverAlienTokenOutput.innerHTML = "processing ...";
-        if (Number(this.$refs.amount.value) <= 0){
-          this.$refs.EverAlienTokenOutput.innerHTML = "ERROR: please enter valid number !!"
-          return 
+
+        if (Number(this.$refs.amount.value) <= 0) {
+        toast("Please enter a valid number !!", 0);
+        this.$refs.EverAlienTokenOutput.innerHTML = ""
+        return
         }
-        
-        const transferAlienTokenOutput = await transferEverAlienToken(
+        let EverAlienTokenOutput;
+        try{
+          EverAlienTokenOutput = await transferEverAlienToken(
             constants[this.$refs.AlienToken.value],
             deployedContracts[Number(await useEvmProvider().MetaMaskProvider().chainId)][this.$refs.AlienToken.value.split("EVER")[1]],
             this.$refs.amount.value,
             this.$refs.everPay.checked 
-        );
-        this.$refs.EverAlienTokenOutput.innerHTML = transferAlienTokenOutput;
+        );}catch(err){
+        // catching the bad provider error
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        if(err.toString().includes("intermediate value")){
+          toast("unsupported network", 0);
+          this.$refs.EverAlienTokenOutput.innerHTML = "";
+          return;
+        }else{
+          toast(err.message, 0);
+          this.$refs.EverAlienTokenOutput.innerHTML = "";
+          return;
+        }
+      }
+        if (EverAlienTokenOutput[0] != "ERROR :" ){
+        toast("Operation successful", 1)
+        }else{
+        toast(EverAlienTokenOutput[1], 0);
+        this.$refs.EverAlienTokenOutput.innerHTML = "";
+        return;
+        } 
+
+        this.$refs.EverAlienTokenOutput.innerHTML = EverAlienTokenOutput;
     }
     async function HandleSelectionChange(){
       this.$refs.transferAlienTokenBtn.innerHTML = `Transfer ${this.$refs.AlienToken.value.split("EVER")[1]} Token`

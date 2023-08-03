@@ -541,25 +541,40 @@ import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers"
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
+import {toast} from "../../../providers/helpers/toaster.ts"
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 
 export default defineComponent({
   name: "EverNativeTokenTransfer",
   setup() {
     const { transferEverNativeToken } = useEverToEvmTransfers();
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
     async function HandleSelectionChange(){
     this.$refs.transferNativeTokenButton.innerHTML = `transfer ${this.$refs.NativeToken.value.split("EVER")[1]}`;
     }
     async function HandleTransferEverNativeToken() {
       this.$refs.EverNativeTokenOutput.innerHTML = "processing ...";
+      
       if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.EverNativeTokenOutput.innerHTML = "ERROR: please enter valid number !!"
-        return;
+        toast("Please enter a valid number !!", 0);
+        this.$refs.EverNativeTokenOutput.innerHTML = ""
+        return
       }
+
       var EverNativeTokenOutput = await transferEverNativeToken(
         constants[this.$refs.NativeToken.value],
         this.$refs.amount.value.toString(),
         this.$refs.everPay.checked
       );
+      if (EverNativeTokenOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(EverNativeTokenOutput[1], 0);
+      this.$refs.EverNativeTokenOutput.innerHTML = "";
+      return;
+      } 
       this.$refs.EverNativeTokenOutput.innerHTML = EverNativeTokenOutput;
     }
     return {
