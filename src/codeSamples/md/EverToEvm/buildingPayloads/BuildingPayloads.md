@@ -1221,7 +1221,7 @@ export default defineComponent({
     async function HandleWrapPayload() {
       this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
       if (Number(this.$refs.amount.value) <= 0) {
-        toast("ERROR: please enter a valid number !!", 0);
+        toast("Please enter a valid number !!", 0);
         this.$refs.wrapPayloadOutput.innerHTML = ""
         return
       }

@@ -3481,6 +3481,8 @@ Only EverscaleEthereumAlienEvent contract addresses from incomplete bridging pro
 import { useSaveWithdraws } from "../../../providers/useSaveWithdraws";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address} from "everscale-inpage-provider";
+import {toast} from "../../../providers/helpers/toaster.ts"
+import isValidEverAddress from "../../../providers/helpers/isValidEverAddress.ts"
 
 export default defineComponent({
   name: "saveWithdrawAlien",
@@ -3488,9 +3490,35 @@ export default defineComponent({
   setup() {
     const { saveWithdrawAlien } = useSaveWithdraws();
     async function HandleSaveWithdrawAlien() {
+      
       this.$refs.saveWithdrawAlienOutput.innerHTML = "processing ...";
-      let output = await saveWithdrawAlien(new Address(this.$refs.eventAddr.value));
-      this.$refs.saveWithdrawAlienOutput.innerHTML = output;
+
+        if((await isValidEverAddress(false, this.$refs.eventAddr.value)) == false){
+          toast("Please enter valid alien Event contract address !!", 0)
+          this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+          return
+        } else if ((await isValidEverAddress(false, this.$refs.eventAddr.value)) == 2){
+          toast("Use native token asset releasing section !!", 0)
+          this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+          return
+        }else if((
+          await isValidEverAddress(false, this.$refs.eventAddr.value)) == 1){
+          toast("Bridging process is not incomplete !!", 0)
+          this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+          return
+        }
+      
+      let saveWithdrawAlienOutput = await saveWithdrawAlien(new Address(this.$refs.eventAddr.value));
+      
+      if (saveWithdrawAlienOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(saveWithdrawAlienOutput[1], 0);
+      this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+      return;
+      }
+
+      this.$refs.saveWithdrawAlienOutput.innerHTML = saveWithdrawAlienOutput;
     }
     return {
       HandleSaveWithdrawAlien,

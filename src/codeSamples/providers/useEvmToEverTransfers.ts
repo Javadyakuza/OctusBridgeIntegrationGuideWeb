@@ -25,10 +25,10 @@ async function TransferEvmGasToken(
     if (providerDetails) {
       [, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
   try {
     // Fetching the wallets data
@@ -53,7 +53,7 @@ async function TransferEvmGasToken(
     // Fetching the event initial value in Evm gas token
     const depositManualValue: [string, string] =
       await calculateEventContractDeployValueInEvmGasToken(symbol);
-    if (depositManualValue[0] == "ERROR: ") {
+    if (depositManualValue[0] == "ERROR :") {
       return depositManualValue;
     }
 
@@ -73,14 +73,14 @@ async function TransferEvmGasToken(
         (await evmProvider.getBalance(signer.getAddress())) <=
         toBigInt(deposit_value) + ethers.parseEther(amount.toString())
       ) {
-        return ["ERROR: ", "low balance"];
+        return ["ERROR :", "low balance"];
       }
     } else {
       if (
         (await evmProvider.getBalance(signer.getAddress())) <=
         ethers.parseEther(amount.toString())
       ) {
-        return ["ERROR: ", "low balance"];
+        return ["ERROR :", "low balance"];
       }
     }
     // depositing the gas token
@@ -98,7 +98,7 @@ async function TransferEvmGasToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
@@ -122,10 +122,10 @@ async function TransferEvmMultiVaultToken(
     if (providerDetails) {
       [, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
 
   try {
@@ -150,7 +150,7 @@ async function TransferEvmMultiVaultToken(
     // Fetching the event initial value in Evm gas token
     const depositManualValue: [string, string] =
       await calculateEventContractDeployValueInEvmGasToken(symbol);
-    if (depositManualValue[0] == "ERROR: ") {
+    if (depositManualValue[0] == "ERROR :") {
       return depositManualValue;
     }
     const deposit_value = payWithGasToken
@@ -168,7 +168,7 @@ async function TransferEvmMultiVaultToken(
       (await evmProvider.getBalance(signer.getAddress())) <=
         toBigInt(deposit_value)
     ) {
-      return ["ERROR: ", "low balance"];
+      return ["ERROR :", "low balance"];
     }
 
     // depositing the native token
@@ -187,7 +187,7 @@ async function TransferEvmMultiVaultToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
@@ -211,10 +211,10 @@ async function TransferEvmAlienToken(
     if (providerDetails) {
       [, everSender, ,] = providerDetails;
     } else {
-      return ["ERROR", "rejection by user !"];
+      return ["ERROR :", "rejection by user !"];
     }
   } catch (error: any) {
-    return ["ERROR", error.message];
+    return ["ERROR :", error.message];
   }
   try {
     // Fetching the wallets data
@@ -246,7 +246,7 @@ async function TransferEvmAlienToken(
     // Fetching the event initial value in Evm gas token
     const depositManualValue: [string, string] =
       await calculateEventContractDeployValueInEvmGasToken(symbol);
-    if (depositManualValue[0] == "ERROR: ") {
+    if (depositManualValue[0] == "ERROR :") {
       return depositManualValue;
     }
 
@@ -266,7 +266,7 @@ async function TransferEvmAlienToken(
       (await evmProvider.getBalance(signer.getAddress())) <=
         toBigInt(deposit_value)
     ) {
-      return ["ERROR: ", "low balance"];
+      return ["ERROR :", "low balance"];
     }
     // approving the MultiVault contract
     try {
@@ -283,10 +283,10 @@ async function TransferEvmAlienToken(
           )
         ) < Number(ethers.parseUnits(amount.toString(), decimals))
       ) {
-        return ["ERROR : ", "allowance not enough"];
+        return ["ERROR :", "allowance not enough"];
       }
     } catch (e: any) {
-      return ["an error accrued while approving: ", e.message];
+      return ["ERROR :", e.message];
     }
 
     // depositing the alien token
@@ -305,7 +305,7 @@ async function TransferEvmAlienToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
-    return ["an error accrued : ", e.message];
+    return ["ERROR :", e.message];
   }
 }
 

@@ -265,21 +265,37 @@ import { usePayloadBuilders } from "../../../providers/usePayloadBuilders";
 import { useEverToEvmTransfers } from "../../../providers/useEverToEvmTransfers";
 import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
+import {toast} from "../../../providers/helpers/toaster.ts"
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 
 export default defineComponent({
   name: "EverNativeCoinTransfer",
   setup() {
     const { transferEverNativeCoin } = useEverToEvmTransfers();
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
     async function HandleTransferEverNativeCoin() {
       this.$refs.EverNativeCoinOutput.innerHTML = "processing ...";
+
       if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.EverNativeCoinOutput.innerHTML = "ERROR: please enter valid number !!"
-        return;
+        toast("Please enter a valid number !!", 0);
+        this.$refs.EverNativeCoinOutput.innerHTML = ""
+        return
       }
+
       var EverNativeCoinOutput = await transferEverNativeCoin(
         this.$refs.amount.value.toString(),
         this.$refs.everPay.checked
       );
+
+      if (EverNativeCoinOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(EverNativeCoinOutput[1], 0);
+      this.$refs.EverNativeCoinOutput.innerHTML = "";
+      return;
+      } 
       this.$refs.EverNativeCoinOutput.innerHTML = EverNativeCoinOutput;
     }
     return {
