@@ -3482,6 +3482,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address} from "everscale-inpage-provider";
 import {toast} from "../../../providers/helpers/toaster.ts"
 import isValidEverAddress from "../../../providers/helpers/isValidEverAddress.ts"
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 
 
 export default defineComponent({
@@ -3489,6 +3490,9 @@ export default defineComponent({
 
   setup() {
     const { saveWithdrawNative } = useSaveWithdraws();
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
     async function HandleSaveWithdrawNative() {
       this.$refs.saveWithdrawNativeOutput.innerHTML = "processing ...";
       

@@ -279,19 +279,39 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import { useEventDeployer } from "../../../providers/useEventDeployer"
 const { deployNativeEvent } = useEventDeployer();
+import isValidTxHash from "../../../providers/helpers/isValidTxHash"
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {toast} from "../../../providers/helpers/toaster.ts"
 
 export default defineComponent({
   name: "DeployNativeEvent",
   setup() {
+
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => location.reload());
+    })
+
     async function HandleDeployNativeEvent() {
       this.$refs.deployNativeEventOutput.innerHTML = "processing ...";
-      if (this.$refs.txHash.value == "") {
-        this.$refs.deployNativeEventOutput.innerHTML = "ERROR: please enter valid transaction hash  !!"
-        return;
+
+      if (this.$refs.txHash.value.toString() == "" || !await isValidTxHash(this.$refs.txHash.value.toString())) {
+        toast("Please enter valid transaction hash  !!", 0);
+        this.$refs.deployNativeEventOutput.innerHTML = ""
+        return
       }
+
       var deployNativeEventOutput = await deployNativeEvent(
         this.$refs.txHash.value.toString(),
       );
+
+      if (deployNativeEventOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(deployNativeEventOutput[1], 0);
+      this.$refs.deployNativeEventOutput.innerHTML = "";
+      return;
+      }
+
       this.$refs.deployNativeEventOutput.innerHTML = deployNativeEventOutput;
     }
     return {

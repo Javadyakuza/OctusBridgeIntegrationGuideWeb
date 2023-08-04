@@ -281,19 +281,36 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import { useEventDeployer } from "../../../providers/useEventDeployer"
 const { deployAlienEvent } = useEventDeployer();
+import {toast} from "../../../providers/helpers/toaster.ts"
+import isValidTxHash from "../../../providers/helpers/isValidTxHash"
+import {useEvmProvider} from "../../../../providers/useEvmProvider"
 
 export default defineComponent({
   name: "DeployAlienEvent",
-  setup() {
+  setup() { 
+    onMounted(async ()=>{
+      await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
+    })
     async function HandleDeployAlienEvent() {
       this.$refs.deployAlienEventOutput.innerHTML = "processing ...";
-      if (this.$refs.txHash.value == "") {
-        this.$refs.deployAlienEventOutput.innerHTML = "ERROR: please enter valid transaction hash  !!"
-        return;
+
+      if (this.$refs.txHash.value.toString() == "" ||!await isValidTxHash(this.$refs.txHash.value.toString())) {
+        toast("Please enter valid transaction hash  !!", 0);
+        this.$refs.deployAlienEventOutput.innerHTML = ""
+        return
       }
+
       var deployAlienEventOutput = await deployAlienEvent(
         this.$refs.txHash.value.toString(),
       );
+
+      if (deployAlienEventOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(deployAlienEventOutput[1], 0);
+      this.$refs.deployAlienEventOutput.innerHTML = "";
+      return;
+      } 
       this.$refs.deployAlienEventOutput.innerHTML = deployAlienEventOutput;
     }
     return {

@@ -85,11 +85,11 @@ export const UnfinishedEverscaleEthereumNativeEventForEVER = new Address(
 /// To avoid any potential loss of assets, it is strongly advised to conduct your own research (DYOR) and attach the appropriate gas value to the transaction if necessary.
 /// @notice If the target token was not deployed on the EVM network an additional 1_000_000 gas's would be added to the transaction
 /// since the tokens provided in this documentation are limited to very common ones tokens, the mentioned case should not be a concern.
-type TransferFees = {
+type stringKeys = {
   [key: string]: string;
 };
 
-export const transfer_fees: TransferFees = {
+export const transfer_fees: stringKeys = {
   BNBNative: "600000", // 600k
   BNBAlien: "600000", // 600k
   ETHNative: "655000", // 655k
@@ -100,4 +100,43 @@ export const transfer_fees: TransferFees = {
   FTMAlien: "710000", // 710k
   AVAXNative: "655000", // 655k
   AVAXAlien: "780000", // 780k
+};
+
+type stringKeysAddrValue = {
+  [key: string]: Address;
+};
+
+export const EVMEverEventConfsNative: stringKeysAddrValue = {
+  "1": new Address(
+    "0:e9b0c8700d7ddc3ce3c5f1c35ad337cbc2f88e8abb5afadc9fa09a270cbed0e2"
+  ),
+  "56": new Address(
+    "0:bd71db92ddb726930c0a23aade41d5d6134056efb791605189e8489d1d29e626"
+  ),
+  "137": new Address(
+    "0:97f1e01028e1404c6b0fc0791e04df43616ef8aaf5964195182355093f385ff6"
+  ),
+  "250": new Address(
+    "0:399627ec06dd8075370850aafbfbf99d05752df16b3459b448a7d0b4b9a083d1"
+  ),
+  "43114": new Address(
+    "0:f07e44eb5507527c7527b4399d9cef220c0fcf50c6a4db71b3517bd763fdc528"
+  ),
+};
+export const EVMEverEventConfsAlien: stringKeysAddrValue = {
+  "1": new Address(
+    "0:55ec14a1513eb4570d5933e0fbe5c0b3341d2dfaccfeecfcc9c7c2f4d668ed45"
+  ),
+  "56": new Address(
+    "0:54f2bc1064cbe7d9b057808b8578e9b2f3ff54d27ef472ffbdb16b2e4461292a"
+  ),
+  "137": new Address(
+    "0:3f5f1e9bb4b6921aab0257597eaeaad1b80cc843eb31d977f58ada720cfe9ff2"
+  ),
+  "250": new Address(
+    "0:12861a3fd38d48086343b67d1a17509736d068e807a783f29b558339f0da421a"
+  ),
+  "43114": new Address(
+    "0:124457db37ea02f2b7c5575b86f759e51f02adc11cbf36b36fd1da6c36fc82f6"
+  ),
 };

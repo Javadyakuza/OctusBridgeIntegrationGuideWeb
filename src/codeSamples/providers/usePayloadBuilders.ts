@@ -466,7 +466,7 @@ export async function buildNativeEventVoteData(
   try {
     const txReceipt = await provider.getTransactionReceipt(txHash);
     if (!txReceipt) {
-      return ["ERROR: ", "Transaction receipt not found"];
+      return ["ERROR :", "Transaction receipt not found"];
     }
     const txLogs = txReceipt.logs
       .map((log) => {
@@ -491,7 +491,7 @@ export async function buildNativeEventVoteData(
       (txLog) => txLog.parsedLog.name === "NativeTransfer"
     );
     if (!log) {
-      return ["ERROR", "couldn't find NativeTransfer Event "];
+      return ["ERROR :", "couldn't find NativeTransfer Event "];
     }
 
     // preprint the event vote data
@@ -505,7 +505,7 @@ export async function buildNativeEventVoteData(
 
     return eventVoteData;
   } catch (e: any) {
-    return ["ERROR", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
@@ -543,7 +543,7 @@ export async function buildAlienEventVoteData(
   try {
     const txReceipt = await provider.getTransactionReceipt(txHash);
     if (!txReceipt) {
-      return ["ERROR: ", "Transaction receipt not found"];
+      return ["ERROR :", "Transaction receipt not found"];
     }
     const txLogs = txReceipt.logs
       .map((log) => {
@@ -568,7 +568,7 @@ export async function buildAlienEventVoteData(
       (txLog) => txLog.parsedLog.name === "AlienTransfer"
     );
     if (!log) {
-      return ["ERROR", "couldn't find AlienTransfer Event "];
+      return ["ERROR :", "couldn't find AlienTransfer Event "];
     }
 
     // preparing the event vote data
@@ -582,7 +582,7 @@ export async function buildAlienEventVoteData(
 
     return eventVoteData;
   } catch (e: any) {
-    return ["ERROR", e.message];
+    return ["ERROR :", e.message];
   }
 }
 
