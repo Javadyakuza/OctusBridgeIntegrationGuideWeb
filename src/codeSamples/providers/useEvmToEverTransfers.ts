@@ -99,7 +99,11 @@ async function TransferEvmGasToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
+<<<<<<< HEAD
     return ["ERROR :", e.code];
+=======
+    return ["ERROR :", e.message];
+>>>>>>> 3b0d2e8b4660fa16fe0c34d345cf7665856c6f9f
   }
 }
 
@@ -194,7 +198,11 @@ async function TransferEvmMultiVaultToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
+<<<<<<< HEAD
     return ["ERROR :", e.code];
+=======
+    return ["ERROR :", e.message];
+>>>>>>> 3b0d2e8b4660fa16fe0c34d345cf7665856c6f9f
   }
 }
 
@@ -295,7 +303,11 @@ async function TransferEvmAlienToken(
         return ["ERROR :", "allowance not enough"];
       }
     } catch (e: any) {
+<<<<<<< HEAD
       return ["ERROR :", e.code];
+=======
+      return ["ERROR :", e.message];
+>>>>>>> 3b0d2e8b4660fa16fe0c34d345cf7665856c6f9f
     }
 
     // depositing the alien token
@@ -314,7 +326,11 @@ async function TransferEvmAlienToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
+<<<<<<< HEAD
     return ["ERROR :", e.code];
+=======
+    return ["ERROR :", e.message];
+>>>>>>> 3b0d2e8b4660fa16fe0c34d345cf7665856c6f9f
   }
 }
 
