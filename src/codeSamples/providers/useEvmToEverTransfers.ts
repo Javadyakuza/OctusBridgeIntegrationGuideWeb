@@ -3,6 +3,7 @@ import { Address } from "everscale-inpage-provider";
 
 import ERC20TokenAbi from "./artifacts/EvmAbi/abi/ERC20.json";
 import MultiVaultAbi from "./artifacts/EvmAbi/abi/MultiVault.json";
+import MultiVaultTokenAbi from "./artifacts/EvmAbi/abi/MultiVaultToken.json";
 import { calculateEventContractDeployValueInEvmGasToken } from "./helpers/convertNetworksTokens.js";
 import { deployedContracts } from "./helpers/EvmConstants";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
@@ -98,7 +99,7 @@ async function TransferEvmGasToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
-    return ["ERROR :", e.message];
+    return ["ERROR :", e.code];
   }
 }
 
@@ -140,7 +141,11 @@ async function TransferEvmMultiVaultToken(
       MultiVaultAbi.abi,
       signer
     );
-
+    const MultiVaultToken = new ethers.Contract(
+      MultiVaultTokenAddress,
+      MultiVaultTokenAbi,
+      signer
+    );
     // Fetching the wallets data
     const recipient = {
       wid: everSender.toString().split(":")[0],
@@ -164,9 +169,11 @@ async function TransferEvmMultiVaultToken(
     const deposit_payload = "0x";
     // checking the balance
     if (
-      payWithGasToken &&
-      (await evmProvider.getBalance(signer.getAddress())) <=
-        toBigInt(deposit_value)
+      (payWithGasToken &&
+        (await evmProvider.getBalance(signer.getAddress())) <=
+          toBigInt(deposit_value)) ||
+      (await MultiVaultToken.balanceOf(signer.getAddress())) <=
+        ethers.parseUnits(amount.toString(), 9)
     ) {
       return ["ERROR :", "low balance"];
     }
@@ -187,7 +194,7 @@ async function TransferEvmMultiVaultToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
-    return ["ERROR :", e.message];
+    return ["ERROR :", e.code];
   }
 }
 
@@ -262,9 +269,11 @@ async function TransferEvmAlienToken(
 
     // checking the balance
     if (
-      payWithGasToken &&
-      (await evmProvider.getBalance(signer.getAddress())) <=
-        toBigInt(deposit_value)
+      (payWithGasToken &&
+        (await evmProvider.getBalance(signer.getAddress())) <=
+          toBigInt(deposit_value)) ||
+      (await ERC20Token.balanceOf(signer.getAddress())) <=
+        ethers.parseUnits(amount.toString(), decimals)
     ) {
       return ["ERROR :", "low balance"];
     }
@@ -286,7 +295,7 @@ async function TransferEvmAlienToken(
         return ["ERROR :", "allowance not enough"];
       }
     } catch (e: any) {
-      return ["ERROR :", e.message];
+      return ["ERROR :", e.code];
     }
 
     // depositing the alien token
@@ -305,7 +314,7 @@ async function TransferEvmAlienToken(
 
     return ["successful, tx hash: ", res?.hash];
   } catch (e: any) {
-    return ["ERROR :", e.message];
+    return ["ERROR :", e.code];
   }
 }
 

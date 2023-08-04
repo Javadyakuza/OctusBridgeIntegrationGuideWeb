@@ -2850,7 +2850,7 @@ import { Address } from "everscale-inpage-provider";
 
 <button @click="HandleTransferEvmGasToken" style="{background-color : gray, border-radius: 100px}">Transfer {{BurnNativeBtnText()}}</button>
 
-<p class="output-p" ref="TransferEvmGasToken"></p>
+<p class="output-p" ref="TransferEvmGasTokenOutput"></p>
 
 ---
 
@@ -2864,6 +2864,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { deployedContracts} from "../../../providers/helpers/EvmConstants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 const { TransferEvmGasToken } = useEvmToEverTransfers();
+import {toast} from "../../../providers/helpers/toaster.ts"
 
 export default defineComponent({
   name: "TransferEvmGasToken",
@@ -2871,21 +2872,48 @@ export default defineComponent({
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
+    
     const BurnNativeBtnText = () => {
      return useEvmProvider().getSymbol()
-      }
+    } 
+
     async function HandleTransferEvmGasToken() {
-      this.$refs.TransferEvmGasToken.innerHTML = "processing ...";
-     if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.TransferEvmGasToken.innerHTML = "ERROR: please enter valid amount !!"
-        return;
+      this.$refs.TransferEvmGasTokenOutput.innerHTML = "processing ...";
+
+    if (Number(this.$refs.amount.value) <= 0) {
+        toast("Please enter a valid number !!", 0);
+        this.$refs.TransferEvmGasTokenOutput.innerHTML = ""
+        return
       }
-      let output = await TransferEvmGasToken(
+      let TransferEvmGasTokenOutput;
+      try{
+        TransferEvmGasTokenOutput = await TransferEvmGasToken(
         this.$refs.amount.value, 
         this.$refs.gasTokenPay.checked,
         BurnNativeBtnText()
         );
-      this.$refs.TransferEvmGasToken.innerHTML = output;
+        }catch(err){
+        // catching the bad provider error
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        if(err.toString().includes("intermediate value")){
+          toast("unsupported network", 0);
+          this.$refs.TransferEvmGasTokenOutput.innerHTML = "";
+          return;
+        }else{
+          toast(err.message, 0);
+          this.$refs.TransferEvmGasTokenOutput.innerHTML = "";
+          return;
+        }
+      }
+
+      if (TransferEvmGasTokenOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(TransferEvmGasTokenOutput[1], 0);
+      this.$refs.TransferEvmGasTokenOutput.innerHTML = "";
+      return;
+      } 
+      this.$refs.TransferEvmGasTokenOutput.innerHTML = TransferEvmGasTokenOutput;
     }
     return {
       HandleTransferEvmGasToken,

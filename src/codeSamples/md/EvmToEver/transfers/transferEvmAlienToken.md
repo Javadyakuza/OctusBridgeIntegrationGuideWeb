@@ -3181,7 +3181,7 @@ import { Address } from "everscale-inpage-provider";
 
 <button ref="TransferAlienTokenButton" @click="HandleTransferAlienToken" style="{background-color : gray, border-radius: 100px}">Approve and Transfer USDT</button>
 
-<p class="output-p" ref="TransferAlienToken"></p>
+<p class="output-p" ref="TransferAlienTokenOutput"></p>
 
 
 ---
@@ -3197,33 +3197,68 @@ import { deployedContracts} from "../../../providers/helpers/EvmConstants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {ethers} from "ethers"
 const { TransferEvmAlienToken } = useEvmToEverTransfers();
+import {toast} from "../../../providers/helpers/toaster.ts"
+
+
+
 
 export default defineComponent({
   name: "TransferAlienToken",
   setup() {
+    
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
+
     const symbol = () => {
      return useEvmProvider().getSymbol()
       }
+
     async function HandleSelectionChange(){
         this.$refs.TransferAlienTokenButton.innerHTML = `Approve and Transfer ${this.$refs.AlienToken.value}`
     }
+
     async function HandleTransferAlienToken() {
-      this.$refs.TransferAlienToken.innerHTML = "processing ...";
-     if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.TransferAlienToken.innerHTML = "ERROR: please enter valid amount !!"
-        return;
+      this.$refs.TransferAlienTokenOutput.innerHTML = "processing ...";
+      
+      if (Number(this.$refs.amount.value) <= 0) {
+        toast("Please enter a valid number !!", 0);
+        this.$refs.TransferAlienTokenOutput.innerHTML = ""
+        return
       }
+
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
-      let output = await TransferEvmAlienToken(
+
+      let TransferAlienTokenOutput 
+
+      try{
+       TransferAlienTokenOutput = await TransferEvmAlienToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.AlienToken.value],
         this.$refs.amount.value, 
         this.$refs.gasTokenPay.checked,
         symbol()
-        );
-      this.$refs.TransferAlienToken.innerHTML = output;
+        );}catch(err){
+        // catching the bad provider error
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        if(err.toString().includes("intermediate value")){
+          toast("unsupported network", 0);
+          this.$refs.TransferAlienTokenOutput.innerHTML = "";
+          return;
+        }else{
+          toast(err.message, 0);
+          this.$refs.TransferAlienTokenOutput.innerHTML = "";
+          return;
+        }
+      }
+
+      if (TransferAlienTokenOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(TransferAlienTokenOutput[1], 0);
+      this.$refs.TransferAlienTokenOutput.innerHTML = "";
+      return;
+      } 
+      this.$refs.TransferAlienTokenOutput.innerHTML = TransferAlienTokenOutput;
     }
     return {
       HandleTransferAlienToken,

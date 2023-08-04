@@ -2861,7 +2861,7 @@ import { Address } from "everscale-inpage-provider";
 
 <button ref="TransferNativeTokenButton" @click="HandleTransferNativeToken" style="{background-color : gray, border-radius: 100px}">Burn WEVER</button>
 
-<p class="output-p" ref="TransferNativeToken"></p>
+<p class="output-p" ref="TransferNativeTokenOutput"></p>
 
 ---
 
@@ -2876,6 +2876,7 @@ import { deployedContracts} from "../../../providers/helpers/EvmConstants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {ethers} from "ethers";
 const { TransferEvmMultiVaultToken } = useEvmToEverTransfers();
+import {toast} from "../../../providers/helpers/toaster.ts"
 
 export default defineComponent({
   name: "TransferNativeToken",
@@ -2884,26 +2885,55 @@ export default defineComponent({
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
+
     const symbol = () => {
      return useEvmProvider().getSymbol()
       }
+
     async function HandleSelectionChange(){
         this.$refs.TransferNativeTokenButton.innerHTML = `Burn ${this.$refs.NativeToken.value}`
     }
     async function HandleTransferNativeToken() {
-      this.$refs.TransferNativeToken.innerHTML = "processing ...";
-     if (Number(this.$refs.amount.value) <= 0) {
-        this.$refs.TransferNativeToken.innerHTML = "ERROR: please enter valid amount !!"
-        return;
+      this.$refs.TransferNativeTokenOutput.innerHTML = "processing ...";
+
+      if (Number(this.$refs.amount.value) <= 0) {
+        toast("Please enter a valid number !!", 0);
+        this.$refs.TransferNativeTokenOutput.innerHTML = ""
+        return
       }
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
-      let output = await TransferEvmMultiVaultToken(
+
+      let TransferNativeTokenOutput;
+
+      try{
+        TransferNativeTokenOutput = await TransferEvmMultiVaultToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.NativeToken.value],
         this.$refs.amount.value, 
         this.$refs.gasTokenPay.checked,
         symbol()
         );
-      this.$refs.TransferNativeToken.innerHTML = output;
+        }catch(err){
+        // catching the bad provider error
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        if(err.toString().includes("intermediate value")){
+          toast("unsupported network", 0);
+          this.$refs.TransferNativeTokenOutput.innerHTML = "";
+          return;
+        }else{
+          toast(err.message, 0);
+          this.$refs.TransferNativeTokenOutput.innerHTML = "";
+          return;
+        }
+      }
+
+      if (TransferNativeTokenOutput[0] != "ERROR :" ){
+      toast("Operation successful", 1)
+      }else{
+      toast(TransferNativeTokenOutput[1], 0);
+      this.$refs.TransferNativeTokenOutput.innerHTML = "";
+      return;
+      } 
+      this.$refs.TransferNativeTokenOutput.innerHTML = TransferNativeTokenOutput;
     }
     return {
       HandleTransferNativeToken,
