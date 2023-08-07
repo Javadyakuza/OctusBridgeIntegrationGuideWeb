@@ -509,10 +509,14 @@ await AlienTokenWalletUpgradable.methods
     bounce: true,
   });
 ```
-
 </details>
-<br/>
-<label for="AlienToken">select the token </label>
+
+::: warning
+Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
+::: 
+<wbr/>
+<label for="AlienToken">select the token 
+</label>
 <select ref="AlienToken" @change="HandleSelectionChange">
   <option value="EVERUSDT" selected >USDT</option>
   <option value="EVERUSDC">USDC</option>

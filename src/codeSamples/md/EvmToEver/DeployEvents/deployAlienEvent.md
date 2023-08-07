@@ -262,6 +262,10 @@ await EvmEverEventConf.methods
 
 </details>
 
+::: warning
+Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
+::: 
+
 <label for="txHash">EVM Transaction Hash </label>
 <input ref="txHash" type="text"/>
 

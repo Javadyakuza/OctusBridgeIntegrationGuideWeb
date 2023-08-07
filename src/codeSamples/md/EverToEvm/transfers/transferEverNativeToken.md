@@ -511,6 +511,11 @@ await AlienTokenWalletUpgradable.methods
 
 </details>
 <br/>
+
+::: warning
+Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
+::: 
+<wbr/>
 <label for="NativeToken">select the token </label>
 <select ref="NativeToken" @change="HandleSelectionChange">
 
