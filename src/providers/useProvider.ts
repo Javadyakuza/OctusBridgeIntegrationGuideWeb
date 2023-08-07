@@ -344,12 +344,6 @@ const connector = new Connector({
         event: "ever#initialized",
       },
     },
-    {
-      title: "VENOM Wallet",
-      injected: {
-        object: "__venom",
-      },
-    },
   ],
 });
 
