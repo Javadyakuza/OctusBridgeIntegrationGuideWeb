@@ -6,7 +6,7 @@ To facilitate the transfer of a token from Everscale to an EVM network, it is ne
 
 ### Table of Contents
 
-- [Payload for Ever](./buildingPayloads/BuildingPayloads.md#ever-native-coin-payload)
+- [Payload for EVER](./buildingPayloads/BuildingPayloads.md#ever-native-coin-payload)
 - [Payload for Native token](./buildingPayloads/BuildingPayloads.md#native-token-payload)
 - [Payload for Alien Token](./buildingPayloads/BuildingPayloads.md#alien-token-payload)
 - [Payload for EVM gas Token](./buildingPayloads/BuildingPayloads.md#evm-gas-token-payload)
@@ -17,7 +17,7 @@ The second step involved in transferring a token from Everscale to an EVM networ
 
 ### Table of Contents
 
-- [transfer Ever](./transfers/transferEverNativeCoin.md)
+- [transfer EVER](./transfers/transferEverNativeCoin.md)
 - [transfer Native token](./transfers/transferEverNativeToken.md)
 - [transfer Alien Token](./transfers/transferEverAlienToken.md)
 - [transfer EVM gas Token](./transfers//transferEvmNativeCoin.md)

@@ -5,7 +5,7 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
 const supportedNetworks = [1, 56, 137, 43114, 250];
 
 /**
- * Fetches the data about the two connected wallets which are metamask and ever wallet
+ * Fetches the data about the two connected wallets which are metamask and EVER Wallet
  * @returns Either the Tvm provider, Tvm wallet address, evm wallet address and evm chain id or undefined
  */
 export async function setupAndGetProvidersDetails(): Promise<

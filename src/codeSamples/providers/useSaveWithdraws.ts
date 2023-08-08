@@ -18,7 +18,7 @@ import { useEvmProvider } from "../../providers/useEvmProvider";
 export async function saveWithdrawNative(
   eventAddress: Address
 ): Promise<[string, string]> {
-  // fetching the Ever provider
+  // fetching the Everscale provider
   let provider: ProviderRpcClient;
   try {
     const providerDetails = await setupAndGetProvidersDetails();
@@ -99,7 +99,7 @@ export async function saveWithdrawNative(
 export async function saveWithdrawAlien(
   eventAddress: Address
 ): Promise<[string, string]> {
-  // fetching the Ever provider
+  // fetching the Everscale provider
   let provider: ProviderRpcClient;
   try {
     const providerDetails = await setupAndGetProvidersDetails();

@@ -22,7 +22,7 @@ Note that the deposit functions for Alien tokens and EVM gas tokens are not the 
 ### Event Contract Deploy Value (expected_evers)
 
 In the EVM -> Everscale direction, when paying Everscale fees with EVM gas tokens, it is necessary to set a specific value for this parameter. \
-The user must set it to zero if paying the fees with Ever. \
+The user must set it to zero if paying the fees with EVER. \
 see [how to set expected_evers](../FAQ.md##how-to-set-expected_evers).
 
 ## Everscale Operations
@@ -54,11 +54,11 @@ In the EVM -> Everscale direction, The actions on Everscale are as follows:
 
 - In the Everscale -> EVM direction, if the EVM fees are paid with EVM gas tokens, the target assets need to be manually released or minted. To perform this operation for Native tokens, use the  `saveWithdrawNative`  function and for Alien tokens, use the  `saveWithdrawAlien`  function. 
 
-- In the EVM -> Everscale direction, if Everscale fees are paid with Ever, the assets on Everscale need to be manually released or minted by deploying an event contract. For instructions on deploying an event contract, refer to the [Event Contract Deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md) guide. 
+- In the EVM -> Everscale direction, if Everscale fees are paid with EVER, the assets on Everscale need to be manually released or minted by deploying an event contract. For instructions on deploying an event contract, refer to the [Event Contract Deployment](../../src/codeSamples/md/EvmToEver/DeployEvents/Toc.md) guide. 
 
 ## Automatic Asset Releasing
 
-- In the Everscale -> EVM direction assets will be released or minted on the EVM network by attaching enough Ever and proper [payload](./Payloads.md) to the transaction.
+- In the Everscale -> EVM direction assets will be released or minted on the EVM network by attaching enough EVER and proper [payload](./Payloads.md) to the transaction.
 
 - In the EVM -> Everscale direction assets will be released or minted on Everscale by attaching enough EVM gas tokens to the transaction and setting the expected_Ever to the event contract's initial balance. see [how to set expected_Evers](../FAQ.md#how-to-set-expected_Evers).
 

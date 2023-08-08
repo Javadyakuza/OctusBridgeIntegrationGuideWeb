@@ -467,11 +467,11 @@ const AlienTokenWalletUpgradable = new provider.Contract(
 // Token amount
 let amount: string;
 
-// Pay EVM network fees with Ever ?
+// Pay EVM network fees with EVER ?
 let payWithEver: boolean;
 
 // Amount to attach to the transaction if payWithEver = true
-/// @dev This parameter represents the estimated gas fees for one of the saveWithdraws functions in Ever coins.
+/// @dev This parameter represents the estimated gas fees for one of the saveWithdraws functions in EVER coins.
 const auto_value: string;
 
 // Amount to attach to the transaction if payWithEver = false
@@ -529,7 +529,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <input ref="amount" type="number"/>
 <br/>
 
-<label class="container">pay with Ever
+<label class="container">pay with EVER
 <input class="checkboxInput" ref="everPay" type="checkbox">
 <span class="checkmark"></span>
 </label>

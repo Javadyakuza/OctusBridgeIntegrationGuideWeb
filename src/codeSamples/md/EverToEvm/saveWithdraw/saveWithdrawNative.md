@@ -4,7 +4,7 @@ This operation is utilized when a bridging process is initiated from Everscale t
 
 This operation is specifically used for transferring Native tokens. At this stage, assets are minted and to execute this operation the `saveWithdrawNative` function needs to be called with a payload that includes encoded data related to the deployed event contract on Everscale, as well as all the relayers' signatures that have confirmed the event contract.
 
-In order to execute this kind of transaction, you need to Initiate a transaction and get your event address from the [Transfer Ever](../transfers/transferEverNativeCoin.md) or [Transfer Native Token](../transfers/transferEverNativeToken.md) sections.
+In order to execute this kind of transaction, you need to Initiate a transaction and get your event address from the [Transfer EVER](../transfers/transferEverNativeCoin.md) or [Transfer Native Token](../transfers/transferEverNativeToken.md) sections.
 
 In this example, the interaction takes place with three contracts. The following ABIs are used to interact with those:
 

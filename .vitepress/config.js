@@ -5,9 +5,9 @@ const FEEDBACK_URL = 'https://t.me/broxus_chat';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
 
 module.exports = {
-  title: 'OctusBridgeIntegrationGuide',
+  title: 'Octus Bridge Integration Guide',
   base: '/',
-  description: 'OctusBridgeIntegrationGuide',
+  description: 'Octus Bridge Integration Guide',
   plugins: [vue(), wasm()],
   themeConfig: {
     search: {
@@ -28,12 +28,12 @@ module.exports = {
 
         items: [
           {
-            text: 'Ever to EVM',
+            text: 'Everscale to EVM',
             collapsable: false,
             link: '/docs/EVER-to-EVM.md',
           },
           {
-            text: 'EVM to Ever',
+            text: 'EVM to Everscale',
             collapsable: false,
             link: '/docs/EVM-to-EVER.md',
           },
@@ -66,7 +66,7 @@ module.exports = {
             link: '/src/codeSamples/md/prerequisites.md',
           },
           {
-            text: 'Ever to EVM',
+            text: 'Everscale to EVM',
             collapsable: true,
             link: '/src/codeSamples/md/EverToEvm/workFlow.md',
             items: [
@@ -120,7 +120,7 @@ module.exports = {
             ],
           },
           {
-            text: 'EVM to Ever',
+            text: 'EVM to Everscale',
             collapsable: true,
             link: '/src/codeSamples/md/EvmToEver/workFlow.md',
             items: [

@@ -8,7 +8,7 @@ Payloads are essential in transferring tokens from Everscale to an EVM network. 
 
 ## Instructions 
 
-- Transfer Ever : [wrap payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#ever-Native-coin-payload)
+- Transfer EVER : [wrap payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#ever-Native-coin-payload)
 - Transfer Native Token : [transfer payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#native-token-payload)
 - Transfer Alien Token : [burn payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#alien-token-payload)
 - To mint Native tokens and release Alien tokens on the EVM network, you can utilize the following functions on the `MultiVault` contract:

@@ -64,12 +64,12 @@ structure: [
 ] as const,
 });
 
-// {remainingGasTo} will be user's Ever address if asset releasing is done manually and Event closer address if its done automatically.
+// {remainingGasTo} will be user's Everscale address if asset releasing is done manually and Event closer address if its done automatically.
 const remainingGasTo = releaseByEver ? EventCloser : everSender;
 /**
 * Encodes data related to the EVER wrapper
 * @param to {address} : WEVER receiver, must be ProxyMultiVaultNativeV_4's address.
-* @param amount {uint128} : Ever amount. Example: "1000000000".
+* @param amount {uint128} : EVER amount. Example: "1000000000".
 * @param remainingGasTo {address} : Address to send the change back. Example: "0:0000000000000000000000000000000000000000000000000000000000000000".
 */
 const compounderPayload = await provider.packIntoCell({
@@ -97,7 +97,7 @@ const boc: string = compounderPayload.boc;
 <input ref="amount" type="number"/>
 <br/>
 
-<label class="container">pay with Ever
+<label class="container">pay with EVER
 <input class="checkboxInput" ref="everPay" type="checkbox">
 <span class="checkmark"></span>
 </label>

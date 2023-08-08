@@ -16,7 +16,7 @@ import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 
 /**
- * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer Ever from everscale to an evm network.
+ * buildWrapPayload function prepares the payload to be used in Vault.wrap in order to transfer EVER from everscale to an evm network.
  * @param everSender sender ever account wallet address
  * @param evmRecipient receiver EvmAddress
  * @param amount Target token amount without decimals
@@ -436,7 +436,7 @@ export async function buildSaveWithdraw(
 }
 
 /**
- * Prepares an event vote data to be used in deploying an native event on everscale on evm -> Ever.
+ * Prepares an event vote data to be used in deploying an native event on everscale on evm -> Everscale.
  * @param txHash The root transaction hash that initiated the token transfer on evm network
  * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or an object containing the event vote data.
  */
@@ -510,7 +510,7 @@ export async function buildNativeEventVoteData(
 }
 
 /**
- * Prepares an event vote data to be used in deploying an alien event on everscale on evm -> Ever.
+ * Prepares an event vote data to be used in deploying an alien event on everscale on evm -> Everscale.
  * @param txHash The root transaction hash that initiated the token transfer on evm network
  * @returns {Promise<[string, string] | EventVoteData>} - An array of strings representing error messages or an object containing the event vote data.
  */

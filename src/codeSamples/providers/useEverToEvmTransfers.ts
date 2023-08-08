@@ -18,9 +18,9 @@ import { usePayloadBuilders } from "./usePayloadBuilders";
 import { setupAndGetProvidersDetails } from "./useWalletsData";
 import { useEvmProvider } from "../../providers/useEvmProvider";
 /**
- * Transfers the Ever which is Everscale native coin from Everscale to an Evm network.
+ * Transfers the EVER which is Everscale native coin from Everscale to an Evm network.
  * @param amount Token amount.
- * @param payWithEver Pay Evm operations fees with Ever ?
+ * @param payWithEver Pay Evm operations fees with EVER ?
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverNativeCoin(
@@ -92,9 +92,9 @@ async function transferEverNativeCoin(
 
 /**
  * Transfers an native token such bridge or qube from Everscale to an Evm network.
- * @param tokenAddress Ever token address.
+ * @param tokenAddress Everscale token address.
  * @param amount Token Amount.
- * @param payWithEver Pay Evm operations fees with Ever ?
+ * @param payWithEver Pay Evm operations fees with EVER ?
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverNativeToken(
@@ -182,7 +182,7 @@ async function transferEverNativeToken(
  * @param tokenAddress Address of the token on Everscale.
  * @param tokenAddressEvmAlien Address of the AlienEvm version of the target token.
  * @param amount Token amount.
- * @param payWithEver Pay Evm operations fees with Ever ?
+ * @param payWithEver Pay Evm operations fees with EVER ?
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverAlienToken(
@@ -276,7 +276,7 @@ async function transferEverAlienToken(
  * Transfers Evm gas token such as BNB or ETH from Everscale to an Evm network.
  * @param tokenAddress Address of the token on Everscale.
  * @param amount Token amount.
- * @param payWithEver Pay Evm operations fees with Ever ?
+ * @param payWithEver Pay Evm operations fees with EVER ?
  * @returns {Promise<[string, string]>} - An array of strings representing error messages or the event contract address or the tx hash.
  */
 async function transferEverAlienEvmNativeCoin(

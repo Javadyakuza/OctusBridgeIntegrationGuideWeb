@@ -17,7 +17,7 @@ Users have the option to deploy these contracts by invoking the `deployEvent` fu
  
 The  `MultiVaultEVMEverscaleEventNative`  contract is used when transferring a Native token, while the  `MultiVaultEVMEverscaleEventAlien`  contract is used when transferring an Alien token. 
  
-> Note: There are two deployed versions of the  `EthereumEverscaleEventConfiguration`  contract for each network. As OctusBridge supports 6 networks currently, there are a total of 12  `EthereumEverscaleEventConfiguration`  contracts. You can find all their addresses [here](../addresses.md#event-configurations). 
+> Note: There are two deployed versions of the  `EthereumEverscaleEventConfiguration`  contract for each network. As Octus Bridge supports 6 networks currently, there are a total of 12  `EthereumEverscaleEventConfiguration`  contracts. You can find all their addresses [here](../addresses.md#event-configurations). 
  
 ## Everscale to EVM Events 
 

@@ -3,7 +3,7 @@
 # Deploy Native Events
 
 An [Ethereum Everscale Native Event](../../../../../docs/Concepts/Events.md#evm-to-ever-events) contract is deployed on Everscale when transferring an [native token](../../../../../docs/Concepts/TokenTypes.md), such as [BRIDGE](../../../../../docs/addresses.md#bridge), [QUBE](../../../../../docs/addresses.md#qube) or [WEVER](../../../../../docs/addresses.md#wever) from an EVM network to Everscale.\
-When a user wants to transfer a token from an EVM network to Everscale and chooses to pay for the event contract deployment with EVM gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with Ever instead of EVM gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
+When a user wants to transfer a token from an EVM network to Everscale and chooses to pay for the event contract deployment with EVM gas tokens, the event contract is automatically deployed. But, if the user decides to pay for deploying the event contract with EVER instead of EVM gas tokens, the deployment of the event contract must be done manually. The following code sample demonstrates how to perform such an operation.
 
 To perform such an operation, the EthereumEverscaleEventConfiguration contract ABI is needed which is as follows:
 
@@ -243,7 +243,7 @@ const eventVoteData: EventVoteData = {
 
 /**
  * @param eventVoteData {EventVoteData} Prepared event vote data
- * @param from {Address} User Ever address
+ * @param from {Address} User Everscale address
  * @param amount {string} Event initial value
  * @param bounce {boolean} Should return remained gas ?
  */

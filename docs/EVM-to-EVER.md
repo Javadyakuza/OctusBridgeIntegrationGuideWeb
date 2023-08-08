@@ -1,4 +1,4 @@
-# Overview of EVM to Ever Transfer Mechanics 
+# Overview of EVM to Everscale Transfer Mechanics 
 
 1. Locking or Burning Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
 
@@ -46,13 +46,13 @@
 
       - If Everscale operations gas fees are paid with EVER, the user can proceed without attaching enough EVM gas tokens and set expected_evers to zero. At this point, the user needs to manually deploy the event contract by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract. This will deploy an Event contract, and after exceeding the quorum of confirm votes by relayers, the token will be released if it's a Native token and minted if it's an Alien token. 
   
-4. At this point the tokens must be deposited to the recipient Ever wallet.
+4. At this point the tokens must be deposited to the recipient EVER Wallet.
 
 ::: tip
 `blocksToConfirm` value can be fetched from the relevant event config contract
 :::
 
-## Step-by-Step Guide: EVM to Ever Transfer
+## Step-by-Step Guide: EVM to Everscale Transfer
 
 ## Alien & Native Token Transfer
 
@@ -92,7 +92,7 @@
 
   | Param          | Description                                                                               |
   | -------------- | ----------------------------------------------------------------------------------------- |
-  | recipient      | Ever address of recipient                                                                 |
+  | recipient      | Everscale address of recipient                                                                 |
   | token          | Target token                                                                              |
   | amount         | Amount of the target token                                                                |
   | expected_Evers | See [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
@@ -112,7 +112,7 @@
 
  1. Now it's time to deploy the event contract which can be accomplished in two ways:
 
-- 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1.](#overview-of-evm-to-ever-transfer-mechanics).
+- 2.1: See [Overview of Everscale to EVM transfer mechanics: 3.1.](#overview-of-evm-to-ever-transfer-mechanics).
 - 2.2: Deploy the event contract manually by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract:
 
 ### Function
@@ -185,7 +185,7 @@ struct DepositNativeTokenParams {
 
 | Param          | Description                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------- |
-| recipient      | Ever address of recipient                                                                 |
+| recipient      | Everscale address of recipient                                                                 |
 | amount         | Amount of the EVM gas token                                                               |
 | expected_Evers | See [expected_Evers](./Concepts/Operations.md#event-contract-deploy-value-expected_Evers) |
 | payload        | Operational payload, see [payloads](./Concepts/Payloads.md#payloads)                      |
@@ -198,13 +198,13 @@ struct DepositNativeTokenParams {
 ---
 
 ::: warning
-Next step is only necessary if Everscale operations fees are paid with Ever
+Next step is only necessary if Everscale operations fees are paid with EVER
 :::
 
 
 2. Now it's time to deploy the event contract which can be accomplished in two ways:
 
-- 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1](#overview-of-evm-to-ever-transfer-mechanics).
+- 2.1: See [Overview of Everscale to EVM transfer mechanics: 3.1](#overview-of-evm-to-ever-transfer-mechanics).
 
 - 2.2: Deploy the event contract manually by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract:
 
