@@ -60,7 +60,7 @@ export async function calculateEvmSaveWithdrawFeeInEver(
   tokenSymbol: string
 ): Promise<[string, string]> {
   try {
-    // Fetch Ever price
+    // Fetch EVER price
     const url = "https://api.livecoinwatch.com/coins/single";
     const apiKey = "085407a1-3c9b-4425-bb0b-96336cfd23af";
     const headers = {
