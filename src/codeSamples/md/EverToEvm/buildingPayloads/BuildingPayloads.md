@@ -2,7 +2,7 @@
 
 <div class="buildPayload">
 
-## Ever Native Coin Payload
+## Everscale Native Coin Payload
 
 The following payload is utilized when transferring **EVER**. It encompasses encoded operational data related to wrapping EVER into [WEVER](../../../../../docs/addresses.md#wever), as well as specifying the EVM network and recipient. The code sample below demonstrates how to construct such a payload.
 
@@ -109,7 +109,7 @@ const boc: string = compounderPayload.boc;
 
 ## Native Token Payload
 
-The following payload is utilized when transferring an Native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to EVM network and EVM recipient. The code sample below demonstrates how to construct such a payload.
+The following payload is utilized when transferring a Native token such as [BRIDGE](../../../../../docs/addresses.md#bridge) or [QUBE](../../../../../docs/addresses.md#qube). It encompasses encoded operational data related to EVM network and EVM recipient. The code sample below demonstrates how to construct such a payload.
 
 <details>
 <summary>show code</summary>
@@ -182,7 +182,7 @@ The following payload is utilized when transferring an Native token such as [BRI
 
 ## Alien Token Payload
 
-The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` among others. It encompasses encoded operational data related to EVM network, EVM recipient and target Alien EVM token on Everscale.\
+The following payload is utilized when transferring an Alien token which is not an EVM gas token, such as `USDT`, `USDC`, `WBTC` among others. It encompasses encoded operational data related to EVM networks, EVM recipients and target Alien EVM tokens on Everscale.\
 The code sample below demonstrates how to construct such a payload.
 
 To accomplish that, it is necessary to obtain the ABI files for the ProxyMultiVaultAlien_V7 and ERC-20 contracts which are as follows.

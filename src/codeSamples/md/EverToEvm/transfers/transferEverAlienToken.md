@@ -2,11 +2,11 @@
 
 # Transfer Alien Token
 
-Same as the last two examples, Alien tokens such as [USDT](../../../../../docs/addresses.md#usdt) or others which are not EVM gas tokens such as **WBNB** or **WETH**, can be transferred to another EVM network through two methods. The first method involves manual asset releasing on EVM network, while the second method automatically releases the assets on the EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
+Same as the last two examples, Alien tokens, such as [USDT](../../../../../docs/addresses.md#usdt) or others which are not EVM gas tokens such as **WBNB** or **WETH**, can be transferred to another EVM network via two methods. The first method involves manual asset releasing on an EVM network, while the second method automatically releases the assets on the EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
 
-In order to have a complete token bridging if the Everscale fees are paid with Ever once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
+In order to have a complete token bridging, if the EVM fees are paid with an Evm gas token, once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
 
-To perform such an operation we need Tip3 TokenRoot and TokenWalletUpgradable ABIs which are as follows :
+To perform such an operation we need the Tip3 TokenRoot and TokenWalletUpgradable ABIs which are as follows :
 
 <details>
 <summary>TokenRoot Contract ABI</summary>

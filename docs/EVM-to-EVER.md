@@ -1,9 +1,9 @@
 # Overview of EVM to Ever Transfer Mechanics 
 
-1. Locking or Burning the Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
-  
-   - To initiate the transfer on the EVM network, deposit the desired amount of the target token into the `MultiVault` contract on the EVM network. Please note that if the token is an [Alien token](./Concepts/TokenTypes.md#Alien-tokens) (e.g., DAI, USDT, WBTC, etc.), the token owner must approve the `MultiVault` contract before making the deposit. For detailed instructions, refer to the guide on [Approving Alien Tokens](./Concepts/Operations.md#approving-Alien-tokens). 
-   
+1. Locking or Burning Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
+
+   - To initiate a transfer on the EVM network, deposit the desired amount of the target token into the `MultiVault` contract on the EVM network. Please note that if the token is an [Alien token](./Concepts/TokenTypes.md#Alien-tokens) (e.g., DAI, USDT, WBTC, etc.), the token owner must approve the `MultiVault` contract before making the deposit. For detailed instructions, refer to the guide on [Approving Alien Tokens](./Concepts/Operations.md#approving-Alien-tokens). 
+
    - Once the deposit is complete, the `MultiVault` contract will handle the burning or locking of the token based on its [type](./Concepts/TokenTypes.md). Native tokens will be burned while Alien tokens will be locked. 
  
 2. Emitting Events: 
@@ -44,8 +44,8 @@
  
    3.2 Paying Everscale Operations Gas Fees with EVER: 
 
-      - If Everscale operations gas fees are paid with EVER, the user can proceed without attaching enough EVM gas tokens and set expected_evers to zero. At this point, the user needs to manually deploy the event contract by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract. This will deploy an Event contract, and after exceeding the quorum confirm votes by relayers, the token will be released if it's a Native token and minted if it's an Alien token. 
-
+      - If Everscale operations gas fees are paid with EVER, the user can proceed without attaching enough EVM gas tokens and set expected_evers to zero. At this point, the user needs to manually deploy the event contract by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract. This will deploy an Event contract, and after exceeding the quorum of confirm votes by relayers, the token will be released if it's a Native token and minted if it's an Alien token. 
+  
 4. At this point the tokens must be deposited to the recipient Ever wallet.
 
 ::: tip
@@ -66,7 +66,7 @@
 
 1. If the the target token was an Alien or a Native token we must use the `deposit` function on `MultiVault` contract,
   but if the token was an Alien token, we must approve `MultiVault` for the desired token amount before depositing the tokens.\
-  Once approved deposit function can be called.
+  Once approved, the deposit function can be called.
 
   Notice that if the token was a Native token the approval is not needed.
 
@@ -110,11 +110,10 @@
 
 - - -
 
- 1. Now it's time to deploy the event contract which can be accomplished through two ways:
+ 1. Now it's time to deploy the event contract which can be accomplished in two ways:
 
-- 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1](#overview-of-evm-to-ever-transfer-mechanics).
-
-- 2.2: Deploy event contract manually by calling `deployEvent` function on `EthereumEverscaleEventConfiguration` contract:
+- 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1.](#overview-of-evm-to-ever-transfer-mechanics).
+- 2.2: Deploy the event contract manually by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract:
 
 ### Function
 
@@ -161,9 +160,9 @@ Instructions on how to get these values can be found in [deploy Events](../.../.
   <ImgContainer src= '/EVMEverGasToken.png' width="100%" altText="EVMEverGasToken" />
 <br/>
 
- 1. If target token was the EVM network gas token, we must use `depositByNativeToken` function on the `MultiVault` contract and attach the desired amount of the gas token equal to the amount value parameter of the function call to the transaction:
+ 1. If the target token was the EVM network gas token, we must use the `depositByNativeToken` function on the `MultiVault` contract and attach the desired amount of the gas token equal to the amount value parameter of the function call to the transaction:
 
-  > NOTE : In the `MultiVault` contract the EVM gas token will be converted to its wrapped version and become an ERC20 token, then rest of the operation will be resumed.
+  > NOTE : In the `MultiVault` contract the EVM gas token will be converted to its wrapped version and become an ERC20 token, then the rest of the operation will be resumed.
 
 ### Function
 
@@ -203,11 +202,11 @@ Next step is only necessary if Everscale operations fees are paid with Ever
 :::
 
 
-2. Now it's time to deploy the event contract which can be accomplished through two ways:
+2. Now it's time to deploy the event contract which can be accomplished in two ways:
 
 - 2.1: See [Overview of Ever to EVM transfer mechanics: 3.1](#overview-of-evm-to-ever-transfer-mechanics).
 
-- 2.2: Deploy event contract manually by calling `deployEvent` function on `EthereumEverscaleEventConfiguration` contract:
+- 2.2: Deploy the event contract manually by calling the `deployEvent` function on the `EthereumEverscaleEventConfiguration` contract:
 
 ### Function
 

@@ -1,12 +1,12 @@
 # Save Withdraw Alien
 
-The mentioned operation is utilized when a bridging process is initiated from Everscale to a EVM network. In this scenario, an event contract is deployed on Everscale, but the user prefers to pay the operation fees on the EVM network using its gas tokens, rather than EVER. If the fees were paid with EVER, assets would be released automatically.
+This operation is utilized when a bridging process is initiated from Everscale to a EVM network. In this scenario, an event contract is deployed on Everscale, but the user prefers to pay the operation fees on the EVM network using its gas tokens, rather than EVER. If the fees were paid with EVER, assets would be released automatically.
 
 This operation is specifically used for transferring Alien tokens. At this stage, assets are released and to execute this operation, the `saveWithdrawAlien` function needs to be called with a payload that includes encoded data related to the deployed event contract on Everscale, as well as all the relayers' signatures that have confirmed the event contract.
 
-In order to execute transaction at this page you need to Initiate a transaction and get your event address from [Transfer Alien Token](../transfers/transferEverAlienToken.md) or [Transfer EVM Gas Token](../transfers/transferEvmNativeCoin.md) sections.
+In order to execute this kind of transaction, you need to Initiate a transaction and get your event address from the [Transfer Alien Token](../transfers/transferEverAlienToken.md) or [Transfer EVM Gas Token](../transfers/transferEvmNativeCoin.md) sections.
 
-In this example, interaction takes place with three contracts. The following ABIs are used to interact with those:
+In this example, the interaction takes place with three contracts. The following ABIs are used to interact with those:
 
 <div class="saveWithdrawAlien">
 

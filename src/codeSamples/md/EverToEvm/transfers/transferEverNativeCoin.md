@@ -4,7 +4,7 @@
 
 The Native coin of Everscale, known as EVER, can be transferred to another EVM network through two methods. The first method involves manual asset minting on EVM network, while the second method automatically mints the assets on the EVM network. The code sample provided below demonstrates the implementation of your preferred approach.
 
-In order to have a complete token bridging, if the Everscale fees are paid with Ever once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
+In order to have a complete token bridging, if the EVM fees are paid with an Evm gas token, once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawNative](../saveWithdraw/saveWithdrawNative.md) section.
 
 To perform such an operation we need WEVERVaultContract ABI which is as follows :
 

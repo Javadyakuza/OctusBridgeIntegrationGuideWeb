@@ -5,9 +5,9 @@
 To transfer an EVM network gas token such as **BNB**, **ETH**, **FTM**, or any other supported token, it is necessary to initiate a transaction in Everscale to authorize the transfer. Once the event contract is confirmed, the assets can be released on the EVM network. The asset releasing step can be executed either manually or automatically depending on your preferred method.
 Below, you will find code samples illustrating the implementation of your chosen approach:
 
-In order to have a complete token bridging if the EVM network fees are paid with Ever once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
+In order to have a complete token bridging, if the EVM fees are paid with an Evm gas token, once you have initiated a transaction on this section, get your event address and use it to complete the token bridging on [saveWithdrawAlien](../saveWithdraw/saveWithdrawAlien.md) section.
+To perform such an operation we need the Tip3 TokenRoot and TokenWalletUpgradable ABIs which are as follows:
 
-To perform such an operation Tip3 Token Root and wallet upgradable ABIs are required which are as follows :
 
 <details>
 <summary>TokenRoot Contract ABI</summary>

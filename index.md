@@ -1,8 +1,8 @@
 # OctusBridge Integration Guide
 
-OctusBridge serves as a vital connection between EVM-compatible networks and Everscale network. Its primary function is to facilitate the smooth transfer of tokens and data across supported networks.
+Octus Bridge serves as a vital connection point between EVM-compatible networks and the Everscale network. Its primary function is to facilitate the smooth transfer of tokens and data across supported networks.
 
-OctusBridge's architecture extends beyond token transfers, enabling the bridging of different types of data between the source and destination chains.
+Octus Bridge's architecture extends beyond token transfers, enabling the bridging of different types of data between the source and destination chains.
 
 # Custom Data Bridging
 

@@ -6,26 +6,28 @@
 
 2. Event Contract Deployment and Confirmation: 
    - The event contract is deployed on Everscale through a previous transaction. 
-   - After a few seconds relayers confirm the event contract by voting on it. 
+   - After a few seconds, relayers confirm the event contract by voting on it. 
 
 3. Releasing or Minting Tokens on the EVM Network: 
 
-   3.1 Paying Gas Fees in EVM Network with EVER: 
+   3.1 Paying Gas Fees for an EVM Network with EVER: 
 
     In this case, the process of token release or minting on the EVM network is automated.
-      - The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will call the relevant function on the MultiVault contract,
-      After that MultiVault contract handles minting or releasing the token based on its type.
+      - The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will call the relevant function on the MultiVault contract.
+      After that the MultiVault contract handles the minting or releasing the token based on its type.
 
-   3.2 Paying Gas Fees in EVM Network with the [EVM Gas Token](./Concepts/TokenTypes.md#evm-gas-tokens):
+   3.2 Paying Gas Fees for an EVM Network with an [EVM Gas Token](./Concepts/TokenTypes.md#evm-gas-tokens):
 
     In this case, the process of token release or minting on the EVM network is done manually.
     - For Native tokens, call the `saveWithdrawNative` function to mint tokens. 
     - For Alien tokens, call the `saveWithdrawAlien` function to release tokens. 
+    “Locking or Burning Target Tokens Based on Their Type:
+    
     ::: tip
     Note that these functions must be called on the `MultiVault` contract. 
     :::
     
-4. At this point the desired amount of target token must be deposited to the recipient EVM address.
+4. At this point, the desired amount of target tokens must be deposited to the recipient EVM address.
 
 ## Step-by-Step Guide: Ever to EVM Transfer
 

@@ -1,7 +1,6 @@
 # Payloads
 
-
-**OctusBridge provides a feature to attach payload to bridge transfers in order to perform various operations such as Cross Chain transfer, swapping, arbitrage, and more**.
+**Octus Bridge provides a feature to attach payloads to bridge transfers in order to perform various operations such as cross-chain transfers, swapping, arbitrage and more**.
 
 Payloads are not necessary and can be empty when transferring a token from an EVM network to the Everscale network.
 
@@ -14,7 +13,7 @@ Payloads are essential in transferring tokens from Everscale to an EVM network. 
 - Transfer Alien Token : [burn payload](../../src/codeSamples/md/EverToEvm/buildingPayloads/BuildingPayloads.md#alien-token-payload)
 - To mint Native tokens and release Alien tokens on the EVM network, you can utilize the following functions on the `MultiVault` contract:
    
-  - `saveWithdrawNative`  for minting Native tokens and   
+  - `saveWithdrawNative`  for minting Native tokens.  
   - `saveWithdrawAlien`  for releasing Alien tokens. 
    
    The required inputs for these functions are as follows:
@@ -27,9 +26,8 @@ Payloads are essential in transferring tokens from Everscale to an EVM network. 
 
 
 ## TVM Payloads vs EVM Payloads
-
 During the bridging process, the encoded data from the source network is utilized in the destination network to perform a cross-chain transfer. 
-The encoding and decoding rules in EVM networks are not similar to TVM encoding and decoding rules and there are slight differences between them:
+The encoding and decoding rules in EVM networks are not similar to TVM encoding and decoding rules:
  
 ### TVM-to-EVM ABI Mapping Rules:
 - bytes => Same
@@ -62,3 +60,5 @@ The library used for value conversion is [ eth-ton-abi-converter ](https://githu
 :::
 
 > The addresses of all the referenced contracts and tokens can be found at [Links](../addresses.md).
+
+

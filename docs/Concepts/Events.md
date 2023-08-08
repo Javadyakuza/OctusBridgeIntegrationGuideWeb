@@ -1,8 +1,8 @@
 # Events 
  
-## EVM to Ever Events 
- 
-There are two types of event contracts deployed on Everscale for the mentioned direction: 
+## EVM to Everscale Events 
+
+There are two types of event contracts deployed on Everscale for this transaction direction: 
  
 -  `MultiVaultEVMEverscaleEventNative`  
 -  `MultiVaultEVMEverscaleEventAlien`  
@@ -19,9 +19,9 @@ The  `MultiVaultEVMEverscaleEventNative`  contract is used when transferring a N
  
 > Note: There are two deployed versions of the  `EthereumEverscaleEventConfiguration`  contract for each network. As OctusBridge supports 6 networks currently, there are a total of 12  `EthereumEverscaleEventConfiguration`  contracts. You can find all their addresses [here](../addresses.md#event-configurations). 
  
-## Ever to EVM Events 
- 
-There are two types of event contracts deployed on Everscale for the mentioned direction:
+## Everscale to EVM Events 
+
+There are two types of event contracts deployed on Everscale for this transaction direction:
  
 -  `MultiVaultEverscaleEVMEventNative`  
 -  `MultiVaultEverscaleEVMEventAlien`  
@@ -38,6 +38,6 @@ The  `MultiVaultEverscaleEVMEventAlien`  contract is deployed by the  `Everscale
  
 The  `MultiVaultEverscaleEVMEventNative`  contract is used when transferring a Native token, while the  `MultiVaultEverscaleEVMEventAlien`  contract is used when transferring an Alien token. 
 ::: info 
- **In the Ever -> EVM direction, event deployment is done automatically.** 
+ **In the Everscale -> EVM direction, event deployment is done automatically.** 
  :::
  > The addresses of all the referenced contracts and tokens can be found at [Links](../addresses.md).
