@@ -12,14 +12,14 @@ stages:
 
 cloudbuild:image:prod:
   only:
-    - docs
+    - main
   except:
     - tags
   extends: .cloudbuild:common
 
 deploy:prod:
   only:
-    - docs
+    - main
   except:
     - tags
   extends: .deploy
@@ -29,7 +29,7 @@ deploy:prod:
 
 stop:prod:
   only:
-    - docs
+    - main
   except:
     - tags
   extends: .stop
