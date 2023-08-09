@@ -7,14 +7,14 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/tls-acme: 'true'
   hosts:
-    - host: docs.octusbridge.io
+    - host: integrate.octusbridge.io 
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: docs.octusbridge.io-tls
+    - secretName: integrate.octusbridge.io -tls
       hosts:
-        - docs.octusbridge.io
+        - integrate.octusbridge.io 
 
 livenessProbe:
   tcpSocket:
