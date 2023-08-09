@@ -1,10 +1,10 @@
-# include:
-#   - project: "infrastructure/gitlab-ci"
-#     ref: main
-#     file: "/templates/cloudbuild-common.gitlab-ci.yaml"
-#   - project: "infrastructure/gitlab-ci"
-#     ref: main
-#     file: "templates/deploy.gitlab-ci.yaml"
+include:
+  - project: "infrastructure/gitlab-ci"
+    ref: main
+    file: "/templates/cloudbuild-common.gitlab-ci.yaml"
+  - project: "infrastructure/gitlab-ci"
+    ref: main
+    file: "templates/deploy.gitlab-ci.yaml"
 
 stages:
   - cloudbuild
