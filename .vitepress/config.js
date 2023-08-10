@@ -3,13 +3,14 @@ import wasm from 'vite-plugin-wasm';
 const HELP_URL = 'https://t.me/everdev';
 const FEEDBACK_URL = 'https://t.me/broxus_chat';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
-
 module.exports = {
-  title: 'Octus Bridge Integration Guide',
   base: '/',
   description: 'Octus Bridge Integration Guide',
   plugins: [vue(), wasm()],
+
   themeConfig: {
+    logo: 'https://804616764-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FYHWioUoTfRHYtNnL7rgu%2Flogo%2FspGb36IK2xmKPDLLcirv%2FUnion.svg?alt=media&token=721008a9-1be2-428f-8881-f417092de648',
+    siteTitle: false,
     search: {
       provider: 'local',
     },
