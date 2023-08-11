@@ -118,7 +118,12 @@ watch(
   font-size: 13px;
   font-weight: 600;
 }
+
 .asideOutline ul {
   padding: 0 !important;
+}
+
+.logo {
+  fill: red;
 }
 </style>

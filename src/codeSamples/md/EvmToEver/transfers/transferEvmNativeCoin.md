@@ -2936,20 +2936,18 @@ export default defineComponent({
   display: flex;
   position: relative;
   margin-bottom: 12px;
-  cursor: pointer;
 
 }
 
 .container .checkboxInput {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
-  
 }
 
 .checkmark {
+  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;

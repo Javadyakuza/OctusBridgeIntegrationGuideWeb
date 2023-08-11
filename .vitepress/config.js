@@ -9,7 +9,7 @@ module.exports = {
   plugins: [vue(), wasm()],
 
   themeConfig: {
-    logo: 'https://804616764-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FYHWioUoTfRHYtNnL7rgu%2Flogo%2FspGb36IK2xmKPDLLcirv%2FUnion.svg?alt=media&token=721008a9-1be2-428f-8881-f417092de648',
+    logo: './Union.svg',
     siteTitle: false,
     search: {
       provider: 'local',

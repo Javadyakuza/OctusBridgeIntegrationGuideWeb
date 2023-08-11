@@ -138,5 +138,9 @@ export default defineComponent({
 .ESSVG {
   margin: 0 0 0 2px;
 }
+
+svg:hover {
+  fill: red;
+}
 </style>
 
