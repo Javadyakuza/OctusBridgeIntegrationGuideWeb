@@ -1,6 +1,6 @@
 # Octus Bridge Integration Guide
 
-Octus Bridge serves as a vital connection point between EVM-compatible networks and the Everscale network. Its primary function is to facilitate the smooth transfer of tokens and data across supported networks.
+Octus Bridge is a universal bridge capable of connecting all kinds of blockchain networks, including from one EVM network to another and any other kind of network.
 
 Octus Bridge's architecture extends beyond token transfers, enabling the bridging of different types of data between the source and destination chains.
 
