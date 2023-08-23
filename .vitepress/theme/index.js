@@ -9,11 +9,15 @@ import BDKOutlineComponent from './components/shared/outline/BDKOutline.vue';
 import BDKOutlineItem from './components/shared/outline/BDKOutlineItem.vue';
 import BDKAccordionComponent from './components/shared/BDKAccordion.vue';
 import BDKDisconnectIcon from './components/shared/BDKDisconnectIcon.vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 // Demo components
 import PackDataSample from './../../src/components/demos/PackDataSample.vue';
 import Toast from 'vue-toastification';
 import { toast } from '../../src/codeSamples/providers/helpers/toaster';
-
+library.add(faCopy, faCheck);
 export default {
   ...DefaultTheme,
   Layout: BDKLayout,
@@ -24,9 +28,8 @@ export default {
     app.component('BDKOutlineItem', BDKOutlineItem);
     app.component('BDKDisconnectIcon', BDKDisconnectIcon);
     app.component('BDKAccordion', BDKAccordionComponent);
-
     app.component('PackDataSample', PackDataSample);
-
+    app.component('font-awesome-icon', FontAwesomeIcon);
     app.config.errorHandler = function (err, vm, info) {
       toast(err.message, 0);
     };

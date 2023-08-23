@@ -3,9 +3,27 @@ import wasm from 'vite-plugin-wasm';
 const HELP_URL = 'https://t.me/everdev';
 const FEEDBACK_URL = 'https://t.me/broxus_chat';
 const GITHUB_URL = 'https://github.com/Javadyakuza/OctusBridgeIntegrationGuideWeb.git';
+const NAV = [
+  {
+    text: 'Broxus Docs',
+    items: [
+      { text: 'Home', link: 'https://docs.broxus.com' },
+      { text: 'Inpage Provider', link: 'https://provider-docs.broxus.com/' },
+      { text: 'Locklift', link: 'https://docs.locklift.io/' },
+      { text: 'OctusBridge Integration', link: '/' },
+      {
+        text: 'TIP-3 Api Reference',
+        link: 'https://tip3-api-reference.netlify.app/',
+      },
+    ],
+  },
+  { text: 'Feedback', link: FEEDBACK_URL },
+  { text: 'Community', link: HELP_URL },
+];
+
 module.exports = {
   base: '/',
-  description: 'Octus Bridge Integration Guide',
+  title: 'Octus Bridge Integration',
   plugins: [vue(), wasm()],
 
   themeConfig: {
@@ -14,10 +32,7 @@ module.exports = {
     search: {
       provider: 'local',
     },
-    nav: [
-      { text: 'Feedback', link: FEEDBACK_URL },
-      { text: 'Community', link: HELP_URL },
-    ],
+    nav: NAV,
     sidebar: [
       {
         text: 'Introduction',
@@ -162,6 +177,62 @@ module.exports = {
                     link: '/src/codeSamples/md/EvmToEver/DeployEvents/deployAlienEvent.md',
                   },
                 ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        text: 'Open API',
+        collapsable: true,
+        link: '/docs/api/ToC.md',
+        items: [
+          {
+            text: 'Bridge API',
+            collapsable: true,
+            link: '/docs/api/bridge/ToC.md',
+            items: [
+              {
+                text: 'Relayers',
+                collapsable: true,
+                link: '/docs/api/bridge/relays.md',
+              },
+              {
+                text: 'DAO',
+                collapsable: true,
+                link: '/docs/api/bridge/dao.md',
+              },
+              {
+                text: 'Staking',
+                collapsable: true,
+                link: '/docs/api/bridge/staking.md',
+              },
+              {
+                text: 'Transfer',
+                collapsable: true,
+                link: '/docs/api/bridge/transfers.md',
+              },
+            ],
+          },
+          {
+            text: 'Dao API',
+            collapsable: true,
+            link: '/docs/api/dao/ToC.md',
+            items: [
+              {
+                text: 'Proposal',
+                collapsable: true,
+                link: '/docs/api/dao/proposals.md',
+              },
+              {
+                text: 'Voters',
+                collapsable: true,
+                link: '/docs/api/dao/voters.md',
+              },
+              {
+                text: 'Votes',
+                collapsable: true,
+                link: '/docs/api/dao/votes.md',
               },
             ],
           },
