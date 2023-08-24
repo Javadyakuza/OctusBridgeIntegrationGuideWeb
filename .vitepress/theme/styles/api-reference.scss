@@ -603,7 +603,9 @@ input[type="checkbox"]:checked + .tsd-widget:before {
 img {
   max-width: 100%;
 }
-
+.button{
+  border: none;
+}
 .tsd-anchor-icon {
   display: inline-flex;
   align-items: center;
