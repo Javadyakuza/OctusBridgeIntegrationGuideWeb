@@ -2904,7 +2904,7 @@ export default defineComponent({
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
 
       let TransferNativeTokenOutput;
-
+      console.log("token address : ", deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.NativeToken.value])
       try{
         TransferNativeTokenOutput = await TransferEvmMultiVaultToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.NativeToken.value],

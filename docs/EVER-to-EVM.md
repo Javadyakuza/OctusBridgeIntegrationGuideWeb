@@ -1,16 +1,16 @@
-# Overview of Everscale to EVM Transfer Mechanics 
+# Overview of Everscale to EVM Transfer Mechanics
 
 1. Locking or Burning the Target Tokens Based on Their [Type](./Concepts/TokenTypes.md#token-types):
-   - If the target token is a Native token, it will be locked on Everscale. 
-   - If it is an Alien token, it will be burned. 
+   - If the target token is a Native token, it will be locked on Everscale.
+   - If it is an Alien token, it will be burned.
 
-2. Event Contract Deployment and Confirmation: 
-   - The event contract is deployed on Everscale through a previous transaction. 
-   - After a few seconds, relayers confirm the event contract by voting on it. 
+2. Event Contract Deployment and Confirmation:
+   - The event contract is deployed on Everscale through a previous transaction.
+   - After a few seconds, relayers confirm the event contract by voting on it.
 
-3. Releasing or Minting Tokens on the EVM Network: 
+3. Releasing or Minting Tokens on the EVM Network:
 
-   3.1 Paying Gas Fees for an EVM Network with EVER: 
+   3.1 Paying Gas Fees for an EVM Network with EVER:
 
     In this case, the process of token release or minting on the EVM network is automated.
       - The [Credit Modules](./Concepts/CreditModules.md#Credit-Modules) will call the relevant function on the MultiVault contract.
@@ -19,14 +19,14 @@
    3.2 Paying Gas Fees for an EVM Network with an [EVM Gas Token](./Concepts/TokenTypes.md#evm-gas-tokens):
 
     In this case, the process of token release or minting on the EVM network is done manually.
-    - For Native tokens, call the `saveWithdrawNative` function to mint tokens. 
-    - For Alien tokens, call the `saveWithdrawAlien` function to release tokens. 
+    - For Native tokens, call the `saveWithdrawNative` function to mint tokens.
+    - For Alien tokens, call the `saveWithdrawAlien` function to release tokens.
     “Locking or Burning Target Tokens Based on Their Type:
-    
+
     ::: tip
-    Note that these functions must be called on the `MultiVault` contract. 
+    Note that these functions must be called on the `MultiVault` contract.
     :::
-    
+
 4. At this point, the desired amount of target tokens must be deposited to the recipient EVM address.
 
 ## Step-by-Step Guide: Everscale to EVM Transfer
@@ -64,7 +64,7 @@
 
 ### Example Transactions
 
-- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/71ae5978b9257fa4af27ca451cfa66c2fe55efcb8e8391e4a2006a76fb5616aa)   
+- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/71ae5978b9257fa4af27ca451cfa66c2fe55efcb8e8391e4a2006a76fb5616aa)
 
 - [Everscale transaction - Manual mint on EVM](https://everscan.io/transactions/0f3ea0439cddb3a4814f15ed2091c93a72e236338d75d33fa94fae4e8e8cb66f)
 
@@ -106,7 +106,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ---
 
-## Native Token Transfer 
+## Native Token Transfer
 
   <ImgContainer src= '/EverEVMNativeToken.png' width="100%" altText="EverEVMNativeToken" />
 <br/>
@@ -142,7 +142,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ### Example Transactions
 
-- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/2edae42cda0943436455e1b4e81b462e4e6fb552244a4a53363efcb5c5ed48e1)   
+- [Everscale transaction - Auto mint on EVM](https://everscan.io/transactions/2edae42cda0943436455e1b4e81b462e4e6fb552244a4a53363efcb5c5ed48e1)
 
 - [Everscale transaction - Manual mint on EVM](https://everscan.io/transactions/f7c568ae0baf7547721be36d947a4df243b3f6b45810b50f724e1721665e80dd)
 
@@ -184,7 +184,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ---
 
-## Alien Token Transfer 
+## Alien Token Transfer
 
   <ImgContainer src= '/EverEVMAlienToken.png' width="100%" altText="EverEVMAlienToken" />
 <br/>
@@ -216,7 +216,7 @@ The next step is only necessary if EVM network fees are paid with its gas token.
 
 ### Example Transactions
 
-- [Everscale transaction - Auto release on EVM](https://everscan.io/transactions/afd6506185c95b20bbff62c8da0d54178ea0785ca3a13e1672e831407eef1820)   
+- [Everscale transaction - Auto release on EVM](https://everscan.io/transactions/afd6506185c95b20bbff62c8da0d54178ea0785ca3a13e1672e831407eef1820)
 
 - [Everscale transaction - Manual release on EVM](https://everscan.io/transactions/54a9adf2d0960416cbc13df34e02b760828b15a2a32770631b0828a1782e2585)
 
@@ -358,6 +358,6 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 </style>

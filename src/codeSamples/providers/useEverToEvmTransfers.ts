@@ -287,6 +287,7 @@ async function transferEverAlienEvmNativeCoin(
   const symbol: string = useEvmProvider().getSymbol()!;
 
   let provider: ProviderRpcClient, everSender: Address;
+
   try {
     const providerDetails = await setupAndGetProvidersDetails();
     if (providerDetails) {

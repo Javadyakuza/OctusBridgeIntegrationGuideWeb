@@ -168,6 +168,14 @@ async function TransferEvmMultiVaultToken(
 
     const deposit_payload = "0x";
     // checking the balance
+    console.log(
+      "deposit value :",
+      deposit_value,
+      "amount: ",
+      amount,
+      "user balance ",
+      await MultiVaultToken.balanceOf(signer.getAddress())
+    );
     if (
       (payWithGasToken &&
         (await evmProvider.getBalance(signer.getAddress())) <=
