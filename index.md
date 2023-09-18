@@ -11,8 +11,6 @@ To implement custom cross-chain data bridging, it is necessary to develop, propo
 ### Join our Socials
 - [Discord](https://discord.gg/6dryaZQNmC)
 - [Telegram](https://t.me/broxus_chat)
-- [Medium](https://medium.com/Broxus)
-- [YouTube](https://www.youtube.com/channel/UCQ_XxaWTFxyQbiVI_SDiOmQs)
 - [Octus Bridge DAO](https://app.octusbridge.io/governance)
 - [Octus Bridge](https://octusbridge.io)
 - [Octus Bridge App](https://app.octusbridge.io/bridge)
