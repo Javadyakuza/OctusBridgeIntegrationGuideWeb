@@ -2842,7 +2842,7 @@ import { Address } from "everscale-inpage-provider";
 <label for="NativeToken">select the token </label>
 <select ref="NativeToken" @change="HandleSelectionChange">
   <option value="WEVER" selected>WEVER</option>
-  <option value="BRIDGE">BRIDGE</option>   
+  <option value="BRIDGE">BRIDGE</option>
   <option value="QUBE">QUBE</option>
 
 </select>
@@ -2861,7 +2861,7 @@ import { Address } from "everscale-inpage-provider";
 
 <button ref="TransferNativeTokenButton" @click="HandleTransferNativeToken" style="{background-color : gray, border-radius: 100px}">Burn WEVER</button>
 
-<p class="output-p" ref="TransferNativeTokenOutput"></p>
+<p class="output-p" ref="TransferNativeTokenOutput"><loading :text="loadingText"/></p>
 
 ---
 
@@ -2877,9 +2877,18 @@ import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {ethers} from "ethers";
 const { TransferEvmMultiVaultToken } = useEvmToEverTransfers();
 import {toast} from "../../../providers/helpers/toaster.ts"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "TransferNativeToken",
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
 
     onMounted(async ()=>{
@@ -2894,11 +2903,11 @@ export default defineComponent({
         this.$refs.TransferNativeTokenButton.innerHTML = `Burn ${this.$refs.NativeToken.value}`
     }
     async function HandleTransferNativeToken() {
-      this.$refs.TransferNativeTokenOutput.innerHTML = "processing ...";
+      this.loadingText = "";
 
       if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.TransferNativeTokenOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
@@ -2908,20 +2917,20 @@ export default defineComponent({
       try{
         TransferNativeTokenOutput = await TransferEvmMultiVaultToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.NativeToken.value],
-        this.$refs.amount.value, 
+        this.$refs.amount.value,
         this.$refs.gasTokenPay.checked,
         symbol()
         );
         }catch(err){
         // catching the bad provider error
-        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError.
         if(err.toString().includes("intermediate value")){
           toast("unsupported network", 0);
-          this.$refs.TransferNativeTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }else{
           toast(err.message, 0);
-          this.$refs.TransferNativeTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }
       }
@@ -2930,10 +2939,10 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(TransferNativeTokenOutput[1], 0);
-      this.$refs.TransferNativeTokenOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-      this.$refs.TransferNativeTokenOutput.innerHTML = TransferNativeTokenOutput;
+      }
+      this.loadingText = TransferNativeTokenOutput;
     }
     return {
       HandleTransferNativeToken,
@@ -2953,7 +2962,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 .container {
   display: flex;
@@ -2967,7 +2976,7 @@ export default defineComponent({
   opacity: 0;
   height: 0;
   width: 0;
-  
+
 }
 
 .checkmark {

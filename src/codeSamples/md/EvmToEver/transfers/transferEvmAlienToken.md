@@ -3180,7 +3180,7 @@ import { Address } from "everscale-inpage-provider";
 
 <button ref="TransferAlienTokenButton" @click="HandleTransferAlienToken" style="{background-color : gray, border-radius: 100px}">Approve and Transfer USDT</button>
 
-<p class="output-p" ref="TransferAlienTokenOutput"></p>
+<p class="output-p" ref="TransferAlienTokenOutput"><loading :text="loadingText"/></p>
 
 
 ---
@@ -3197,14 +3197,20 @@ import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {ethers} from "ethers"
 const { TransferEvmAlienToken } = useEvmToEverTransfers();
 import {toast} from "../../../providers/helpers/toaster.ts"
-
-
-
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "TransferAlienToken",
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
-    
+
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
@@ -3218,34 +3224,34 @@ export default defineComponent({
     }
 
     async function HandleTransferAlienToken() {
-      this.$refs.TransferAlienTokenOutput.innerHTML = "processing ...";
-      
+      this.loadingText = "";
+
       if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.TransferAlienTokenOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
 
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
 
-      let TransferAlienTokenOutput 
+      let TransferAlienTokenOutput
 
       try{
        TransferAlienTokenOutput = await TransferEvmAlienToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.AlienToken.value],
-        this.$refs.amount.value, 
+        this.$refs.amount.value,
         this.$refs.gasTokenPay.checked,
         symbol()
         );}catch(err){
         // catching the bad provider error
-        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError.
         if(err.toString().includes("intermediate value")){
           toast("unsupported network", 0);
-          this.$refs.TransferAlienTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }else{
           toast(err.message, 0);
-          this.$refs.TransferAlienTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }
       }
@@ -3254,10 +3260,10 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(TransferAlienTokenOutput[1], 0);
-      this.$refs.TransferAlienTokenOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-      this.$refs.TransferAlienTokenOutput.innerHTML = TransferAlienTokenOutput;
+      }
+      this.loadingText = TransferAlienTokenOutput;
     }
     return {
       HandleTransferAlienToken,
@@ -3277,7 +3283,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 
 .container {
@@ -3295,7 +3301,7 @@ export default defineComponent({
   }
 
 .checkmark {
-  cursor: pointer;  
+  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;

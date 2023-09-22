@@ -137,7 +137,7 @@ let abi = new ethers.Interface([
 
 /**
  * Fetches the transaction receipt from a tx hash to extract the logs and use them to build event vote data.
- * @param txHash {string} The initializer function call transaction hash 
+ * @param txHash {string} The initializer function call transaction hash
  */
 const txReceipt = await provider.getTransactionReceipt(txHash);
 if (!txReceipt) {
@@ -199,7 +199,7 @@ const everSender: Address = new Address("0:12345");
 
 /**
  * @param EthereumEverscaleEventConfAbi {JSON} The event config contract ABI
- * @param EthereumEverscaleAlienEventConfigurationAddr {Address} The alien event config contract address. 
+ * @param EthereumEverscaleAlienEventConfigurationAddr {Address} The alien event config contract address.
  */
 const EvmEverEventConf = new provider.Contract(
   EthereumEverscaleEventConfAbi,
@@ -264,7 +264,7 @@ await EvmEverEventConf.methods
 
 ::: warning
 Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
-::: 
+:::
 
 <label for="txHash">EVM Transaction Hash </label>
 <input ref="txHash" type="text"/>
@@ -272,7 +272,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <br/>
 <button @click="HandleDeployAlienEvent" style="{background-color : gray, border-radius: 100px}">Deploy Alien Event</button>
 
-<p class="output-p" ref="deployAlienEventOutput"></p>
+<p class="output-p" ref="deployAlienEventOutput"><loading :text="loadingText"/></p>
 
 ---
 
@@ -288,19 +288,28 @@ const { deployAlienEvent } = useEventDeployer();
 import {toast} from "../../../providers/helpers/toaster.ts"
 import isValidTxHash from "../../../providers/helpers/isValidTxHash"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "DeployAlienEvent",
-  setup() { 
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
+  setup() {
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
     async function HandleDeployAlienEvent() {
-      this.$refs.deployAlienEventOutput.innerHTML = "processing ...";
+      this.loadingText = "";
 
       if (this.$refs.txHash.value.toString() == "" ||!await isValidTxHash(this.$refs.txHash.value.toString())) {
         toast("Please enter valid transaction hash  !!", 0);
-        this.$refs.deployAlienEventOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
 
@@ -312,10 +321,10 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(deployAlienEventOutput[1], 0);
-      this.$refs.deployAlienEventOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-      this.$refs.deployAlienEventOutput.innerHTML = deployAlienEventOutput;
+      }
+      this.loadingText = deployAlienEventOutput;
     }
     return {
       HandleDeployAlienEvent,
@@ -334,7 +343,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 
 </style>

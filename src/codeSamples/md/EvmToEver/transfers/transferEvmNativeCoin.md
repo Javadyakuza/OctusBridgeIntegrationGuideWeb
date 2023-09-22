@@ -2848,7 +2848,7 @@ import { Address } from "everscale-inpage-provider";
 
 <button @click="HandleTransferEvmGasToken" style="{background-color : gray, border-radius: 100px}">Transfer {{BurnNativeBtnText()}}</button>
 
-<p class="output-p" ref="TransferEvmGasTokenOutput"></p>
+<p class="output-p" ref="TransferEvmGasTokenOutput"><loading :text="loadingText"/></p>
 
 ---
 
@@ -2863,43 +2863,52 @@ import { deployedContracts} from "../../../providers/helpers/EvmConstants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 const { TransferEvmGasToken } = useEvmToEverTransfers();
 import {toast} from "../../../providers/helpers/toaster.ts"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "TransferEvmGasToken",
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
-    
+
     const BurnNativeBtnText = () => {
      return useEvmProvider().getSymbol()
-    } 
+    }
 
     async function HandleTransferEvmGasToken() {
-      this.$refs.TransferEvmGasTokenOutput.innerHTML = "processing ...";
+      this.loadingText = "";
 
     if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.TransferEvmGasTokenOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
       let TransferEvmGasTokenOutput;
       try{
         TransferEvmGasTokenOutput = await TransferEvmGasToken(
-        this.$refs.amount.value, 
+        this.$refs.amount.value,
         this.$refs.gasTokenPay.checked,
         BurnNativeBtnText()
         );
         }catch(err){
         // catching the bad provider error
-        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError.
         if(err.toString().includes("intermediate value")){
           toast("unsupported network", 0);
-          this.$refs.TransferEvmGasTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }else{
           toast(err.message, 0);
-          this.$refs.TransferEvmGasTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }
       }
@@ -2908,10 +2917,10 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(TransferEvmGasTokenOutput[1], 0);
-      this.$refs.TransferEvmGasTokenOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-      this.$refs.TransferEvmGasTokenOutput.innerHTML = TransferEvmGasTokenOutput;
+      }
+      this.loadingText = TransferEvmGasTokenOutput;
     }
     return {
       HandleTransferEvmGasToken,
@@ -2930,7 +2939,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 .container {
   display: flex;

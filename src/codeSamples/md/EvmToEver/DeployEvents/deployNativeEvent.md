@@ -133,7 +133,7 @@ let abi = new ethers.Interface([
 
 /**
  * Fetches the transaction receipt from a tx hash to extract the logs and use them to build event vote data.
- * @param txHash {string} The initializer function call transaction hash 
+ * @param txHash {string} The initializer function call transaction hash
  */
 const txReceipt = await provider.getTransactionReceipt(txHash);
 if (!txReceipt) {
@@ -260,7 +260,7 @@ await EvmEverEventConf.methods
 
 ::: warning
 Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
-::: 
+:::
 
 <label for="txHash">EVM Transaction Hash </label>
 <input ref="txHash" type="text"/>
@@ -268,7 +268,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <br/>
 <button @click="HandleDeployNativeEvent" style="{background-color : gray, border-radius: 100px}">Deploy Native Event</button>
 
-<p class="output-p" ref="deployNativeEventOutput"></p>
+<p class="output-p" ref="deployNativeEventOutput"><loading :text="loadingText"/></p>
 
 
 ---
@@ -286,9 +286,18 @@ const { deployNativeEvent } = useEventDeployer();
 import isValidTxHash from "../../../providers/helpers/isValidTxHash"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {toast} from "../../../providers/helpers/toaster.ts"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "DeployNativeEvent",
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
 
     onMounted(async ()=>{
@@ -296,11 +305,11 @@ export default defineComponent({
     })
 
     async function HandleDeployNativeEvent() {
-      this.$refs.deployNativeEventOutput.innerHTML = "processing ...";
+      this.loadingText = "";
 
       if (this.$refs.txHash.value.toString() == "" || !await isValidTxHash(this.$refs.txHash.value.toString())) {
         toast("Please enter valid transaction hash  !!", 0);
-        this.$refs.deployNativeEventOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
 
@@ -312,11 +321,11 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(deployNativeEventOutput[1], 0);
-      this.$refs.deployNativeEventOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
       }
 
-      this.$refs.deployNativeEventOutput.innerHTML = deployNativeEventOutput;
+      this.loadingText = deployNativeEventOutput;
     }
     return {
       HandleDeployNativeEvent,
@@ -335,7 +344,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 
 </style>
