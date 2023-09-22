@@ -592,9 +592,10 @@ export async function buildAlienEventVoteData(
  * @returns {string} formatted string.
  */
 const format = (data: string[]): string => {
-  return `${data[0] != "ERROR" ? "payload : " : ""}  ${data[0]} <br/>
-  ${data[0] != "ERROR" ? "random nonce" : ""} ${data[1]}
-`;
+  return `${data[0] != "ERROR" ? "Payload: " : ""}
+  ${data[0]}
+  ${data[0] != "ERROR" ? "Random Nonce: " : ""}
+  ${data[1]}`;
 };
 
 export function usePayloadBuilders() {

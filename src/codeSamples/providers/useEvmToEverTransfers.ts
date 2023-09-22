@@ -146,6 +146,16 @@ async function TransferEvmMultiVaultToken(
       MultiVaultTokenAbi,
       signer
     );
+
+    let MultiVaultTokenStorage = MultiVaultToken;
+
+    if ((await MultiVaultToken.symbol()) == "WEVER") {
+      MultiVaultTokenStorage = new ethers.Contract(
+        deployedContracts["56"].WEVERSTORAGE,
+        ERC20TokenAbi.abi,
+        signer
+      );
+    }
     // Fetching the wallets data
     const recipient = {
       wid: everSender.toString().split(":")[0],
@@ -167,20 +177,13 @@ async function TransferEvmMultiVaultToken(
       : "0";
 
     const deposit_payload = "0x";
+
     // checking the balance
-    console.log(
-      "deposit value :",
-      deposit_value,
-      "amount: ",
-      amount,
-      "user balance ",
-      await MultiVaultToken.balanceOf(signer.getAddress())
-    );
     if (
       (payWithGasToken &&
         (await evmProvider.getBalance(signer.getAddress())) <=
           toBigInt(deposit_value)) ||
-      (await MultiVaultToken.balanceOf(signer.getAddress())) <=
+      (await MultiVaultTokenStorage.balanceOf(signer.getAddress())) <=
         ethers.parseUnits(amount.toString(), 9)
     ) {
       return ["ERROR :", "low balance"];

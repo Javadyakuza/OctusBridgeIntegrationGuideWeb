@@ -105,7 +105,7 @@ const boc: string = compounderPayload.boc;
 <br/>
 <button @click="HandleWrapPayload" style="{background-color : gray, border-radius: 100px}">Build wrap Payload</button>
 
-<p class="output-p" ref="wrapPayloadOutput"></p>
+<p class="output-p" ref="wrapPayloadOutput"><loading :text="loadingText1"/></p>
 
 ## Native Token Payload
 
@@ -178,7 +178,7 @@ The following payload is utilized when transferring a Native token such as [BRID
 
 <button @click="HandleTransferPayload" style="{background-color : gray, border-radius: 100px}">Build transfer Payload</button>
 
-<p class="output-p" ref="transferPayloadOutput"></p>
+<p class="output-p" ref="transferPayloadOutput"><loading :text="loadingText2"/></p>
 
 ## Alien Token Payload
 
@@ -1115,7 +1115,7 @@ const operationPayload = await provider.packIntoCell({
 
 <button ref="buildBurnAlien" @click="HandleBurnPayload" style="{background-color : gray, border-radius: 100px}">Build burn USDT Payload</button>
 
-<p class="output-p" ref="burnPayloadOutput"></p>
+<p class="output-p" ref="burnPayloadOutput"><loading :text="loadingText3"/></p>
 
 ## EVM Gas Token Payload
 
@@ -1186,7 +1186,7 @@ The provided payload is utilized for transferring an EVM gas token (such as BNB,
 
 <button ref="buildBurnNative" @click="HandleNativeBurnPayload" style="{background-color : gray, border-radius: 100px}">Build burn {{BurnNativeBtnText()}} Payload </button>
 
-<p class="output-p" ref="burnNativePayloadOutput"></p>
+<p class="output-p" ref="burnNativePayloadOutput"><loading :text="loadingText4"/></p>
 
 ---
 
@@ -1199,10 +1199,23 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "Everscale-inpage-provider";
 import {deployedContracts} from "../../../providers/helpers/EvmConstants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
-import {ethers} from "ethers" 
+import {ethers} from "ethers"
 import {toast} from "../../../providers/helpers/toaster.ts"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
+
 export default defineComponent({
   name: "buildPayload",
+  components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText1: " ",
+      loadingText2: " ",
+      loadingText3: " ",
+      loadingText4: " ",
+    }
+  },
   setup() {
     const {
       buildWrapPayload,
@@ -1219,10 +1232,10 @@ export default defineComponent({
      return useEvmProvider().getSymbol()
       }
     async function HandleWrapPayload() {
-      this.$refs.wrapPayloadOutput.innerHTML = "processing ...";
+      this.loadingText1 = "";
       if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.wrapPayloadOutput.innerHTML = ""
+        this.loadingText1 = " "
         return
       }
       var wrapPayloadOutput = await buildWrapPayload(
@@ -1233,41 +1246,42 @@ export default defineComponent({
         toast("Payload was built successfully", 1)
         }else{
         toast(wrapPayloadOutput[1], 0);
-        this.$refs.wrapPayloadOutput.innerHTML = "";
+        this.loadingText1 = " ";
         return;
-        } 
-      this.$refs.wrapPayloadOutput.innerHTML = format(wrapPayloadOutput);
+        }
+        console.log(format(wrapPayloadOutput))
+        this.loadingText1 = format(wrapPayloadOutput);
     }
     async function HandleTransferPayload() {
-      this.$refs.transferPayloadOutput.innerHTML = "processing ...";
+      this.loadingText2 = "";
       var transferPayloadOutput = await buildTransferPayload();
       if (transferPayloadOutput[0] != "ERROR" ){
         toast("Payload was built successfully", 1)
         }else{
         toast(transferPayloadOutput[1], 0);
-        this.$refs.transferPayloadOutput.innerHTML = "";
+        this.loadingText2 = " ";
         return;
-        } 
-      this.$refs.transferPayloadOutput.innerHTML = format(
+        }
+      this.loadingText2 = format(
         transferPayloadOutput
       );
     }
     async function HandleBurnPayload() {
-      this.$refs.burnPayloadOutput.innerHTML = "processing ...";
+      this.loadingText3 = "";
       const EvmProvider = new ethers.BrowserProvider(useEvmProvider().MetaMaskProvider())
       let burnPayloadOutput=[];
       try{ burnPayloadOutput = await buildBurnPayloadForEvmAlienToken(
         deployedContracts[Number((await EvmProvider.getNetwork()).chainId.toString())][this.$refs.burnToken.value]
       );}catch(err){
         // catching the bad provider error
-        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError.
         if(err.toString().includes("intermediate value")){
           toast("unsupported network", 0);
-          this.$refs.burnPayloadOutput.innerHTML = "";
+          this.loadingText3 = " ";
           return;
         }else{
           toast(err.message, 0);
-          this.$refs.burnPayloadOutput.innerHTML = "";
+          this.loadingText3 = " ";
           return;
         }
       }
@@ -1275,25 +1289,25 @@ export default defineComponent({
       toast("Payload was built successfully", 1)
       }else{
       toast(burnPayloadOutput[1], 0);
-      this.$refs.burnPayloadOutput.innerHTML = "";
+      this.loadingText3 = " ";
       return;
-      } 
-      this.$refs.burnPayloadOutput.innerHTML = format(burnPayloadOutput);
+      }
+      this.loadingText3 = format(burnPayloadOutput);
     }
     async function HandleNativeBurnPayload() {
-      this.$refs.burnNativePayloadOutput.innerHTML = "processing ...";
+      this.loadingText4 = "";
       var burnNativePayloadOutput = await buildBurnPayloadForEvmNativeToken();
       if (burnNativePayloadOutput[0] != "ERROR" ){
       toast("Payload was built successfully", 1)
       }else{
       toast(burnNativePayloadOutput[1], 0);
-      this.$refs.burnNativePayloadOutput.innerHTML = "";
+      this.loadingText4 = " ";
       return;
-      } 
-      this.$refs.burnNativePayloadOutput.innerHTML = format(
+      }
+      this.loadingText4 = format(
         burnNativePayloadOutput
       );
-    } 
+    }
     async function HandleSelection(){
     this.$refs.buildBurnAlien.innerHTML = ` Build burn ${this.$refs.burnToken.value} payload`
     }
@@ -1303,7 +1317,7 @@ export default defineComponent({
       HandleBurnPayload,
       HandleNativeBurnPayload,
       HandleSelection,
-      BurnNativeBtnText
+      BurnNativeBtnText,
     };
   },
 });
@@ -1318,7 +1332,10 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
+}
+.output-p{
+    white-space: pre-line;
 }
 .container {
   display: flex;
@@ -1331,7 +1348,7 @@ export default defineComponent({
   opacity: 0;
   height: 0;
   width: 0;
-  
+
 }
 
 .checkmark {
