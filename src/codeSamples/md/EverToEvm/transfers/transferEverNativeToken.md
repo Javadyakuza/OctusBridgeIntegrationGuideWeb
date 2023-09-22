@@ -498,7 +498,7 @@ await AlienTokenWalletUpgradable.methods
     notify: true,
     payload: NativeTokenPayload,
     recipient: ProxyMultiVaultNativeV_4,
-    remainingGasTo: payWithEver ? EventCloser : everSender, 
+    remainingGasTo: payWithEver ? EventCloser : everSender,
   })
   .send({
     from: everSender,
@@ -514,7 +514,7 @@ await AlienTokenWalletUpgradable.methods
 
 ::: warning
 Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
-::: 
+:::
 <wbr/>
 <label for="NativeToken">select the token </label>
 <select ref="NativeToken" @change="HandleSelectionChange">
@@ -536,7 +536,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <br/>
 <button ref="transferNativeTokenButton" @click="HandleTransferEverNativeToken" style="{background-color : gray, border-radius: 100px}">Transfer BRIDGE</button>
 
-<p class="output-p" ref="EverNativeTokenOutput"></p>
+<p class="output-p" ref="EverNativeTokenOutput"><loading :text="loadingText"/></p>
 
 </div>
 
@@ -547,24 +547,34 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
 import {toast} from "../../../providers/helpers/toaster.ts"
-import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import {useEvmProvider} from "../../../../providers/useEvmProvider";
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
+
 
 export default defineComponent({
   name: "EverNativeTokenTransfer",
+  components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     const { transferEverNativeToken } = useEverToEvmTransfers();
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
     async function HandleSelectionChange(){
-    this.$refs.transferNativeTokenButton.innerHTML = `transfer ${this.$refs.NativeToken.value.split("EVER")[1]}`;
+    this.$refs.transferNativeTokenButton.innerHTML = `Transfer ${this.$refs.NativeToken.value.split("EVER")[1]}`;
     }
     async function HandleTransferEverNativeToken() {
-      this.$refs.EverNativeTokenOutput.innerHTML = "processing ...";
-      
+      this.loadingText = "";
+
       if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.EverNativeTokenOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
 
@@ -577,10 +587,10 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(EverNativeTokenOutput[1], 0);
-      this.$refs.EverNativeTokenOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-      this.$refs.EverNativeTokenOutput.innerHTML = EverNativeTokenOutput;
+      }
+      this.loadingText = EverNativeTokenOutput;
     }
     return {
       HandleTransferEverNativeToken,
@@ -609,7 +619,7 @@ export default defineComponent({
 }
 
 .container .checkboxInput {
-  cursor: pointer;  
+  cursor: pointer;
   position: absolute;
   opacity: 0;
   height: 0;
@@ -617,7 +627,7 @@ export default defineComponent({
 }
 
 .checkmark {
-  cursor: pointer;  
+  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;

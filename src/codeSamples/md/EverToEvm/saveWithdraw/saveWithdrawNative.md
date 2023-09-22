@@ -3468,7 +3468,7 @@ Only EverscaleEthereumNativeEvent contract addresses from incomplete bridging pr
 <br/>
 <button @click="HandleSaveWithdrawNative" style="{background-color : gray, border-radius: 100px}">saveWithdrawNative</button>
 
-<p class="output-p" ref="saveWithdrawNativeOutput"></p>
+<p class="output-p" ref="saveWithdrawNativeOutput"><loading :text="loadingText"/></p>
 
 ---
 
@@ -3483,43 +3483,51 @@ import { Address} from "everscale-inpage-provider";
 import {toast} from "../../../providers/helpers/toaster.ts"
 import isValidEverAddress from "../../../providers/helpers/isValidEverAddress.ts"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 
 export default defineComponent({
   name: "saveWithdrawNative",
-
+  components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     const { saveWithdrawNative } = useSaveWithdraws();
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
     async function HandleSaveWithdrawNative() {
-      this.$refs.saveWithdrawNativeOutput.innerHTML = "processing ...";
-      
+      this.loadingText = "";
+
       if((await isValidEverAddress(true, this.$refs.eventAddr.value)) == false){
           toast("Please enter valid native event contract address !!", 0)
-          this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+          this.loadingText = " ";
           return
         } else if ((await isValidEverAddress(true, this.$refs.eventAddr.value)) == 2){
           toast("Use EVM gas and alien token asset releasing section !!", 0)
-          this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+          this.loadingText = " ";
           return
         }else if((
           await isValidEverAddress(true, this.$refs.eventAddr.value)) == 1){
           toast("Bridging process is not incomplete !!", 0)
-          this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+          this.loadingText = " ";
           return
         }
-      
+
       const saveWithdrawNativeOutput = await saveWithdrawNative(new Address(this.$refs.eventAddr.value));
       if (saveWithdrawNativeOutput[0] != "ERROR :" ){
       toast("Operation successful", 1)
       }else{
       toast(saveWithdrawNativeOutput[1], 0);
-      this.$refs.saveWithdrawNativeOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-     this.$refs.saveWithdrawNativeOutput.innerHTML = saveWithdrawNativeOutput;
+      }
+     this.loadingText = saveWithdrawNativeOutput;
     }
     return {
       HandleSaveWithdrawNative,
@@ -3537,7 +3545,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 
 </style>

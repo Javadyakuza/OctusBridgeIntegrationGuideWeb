@@ -499,7 +499,7 @@ await AlienTokenWalletUpgradable.methods
     amount: ethers.parseUnits(amount, decimals).toString(),
     callbackTo: MergePool_V4,
     payload: ALienTokenPayload,
-    remainingGasTo: payWithEver ? EventCloser : everSender, 
+    remainingGasTo: payWithEver ? EventCloser : everSender,
   })
   .send({
     from: everSender,
@@ -513,9 +513,9 @@ await AlienTokenWalletUpgradable.methods
 
 ::: warning
 Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
-::: 
+:::
 <wbr/>
-<label for="AlienToken">select the token 
+<label for="AlienToken">select the token
 </label>
 <select ref="AlienToken" @change="HandleSelectionChange">
   <option value="EVERUSDT" selected >USDT</option>
@@ -537,7 +537,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <br/>
 <button ref="transferAlienTokenBtn" @click="HandleTransferEverAlienToken" style="{background-color : gray, border-radius: 100px}">Transfer USDT token</button>
 
-<p class="output-p" ref="EverAlienTokenOutput"></p>
+<p class="output-p" ref="EverAlienTokenOutput"><loading :text="loadingText"/></p>
 
 </div>
 
@@ -550,22 +550,31 @@ import * as constants from "../../../providers/helpers/constants";
 import {deployedContracts} from "../../../providers/helpers/EvmConstants"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {toast} from "../../../providers/helpers/toaster.ts"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "EverAlienTokenTransfer",
+  components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     const { transferEverAlienToken } = useEverToEvmTransfers();
-    
+
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
 
     async function HandleTransferEverAlienToken(){
-        this.$refs.EverAlienTokenOutput.innerHTML = "processing ...";
+        this.loadingText = "";
 
         if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.EverAlienTokenOutput.innerHTML = ""
+        this.loadingText = " "
         return
         }
         let EverAlienTokenOutput;
@@ -574,17 +583,17 @@ export default defineComponent({
             constants[this.$refs.AlienToken.value],
             deployedContracts[Number(await useEvmProvider().MetaMaskProvider().chainId)][this.$refs.AlienToken.value.split("EVER")[1]],
             this.$refs.amount.value,
-            this.$refs.everPay.checked 
+            this.$refs.everPay.checked
         );}catch(err){
         // catching the bad provider error
-        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError. 
+        // in this case the chain id and symbol are not derivable from the provider so we encounter a TypeError.
         if(err.toString().includes("intermediate value")){
           toast("unsupported network", 0);
-          this.$refs.EverAlienTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }else{
           toast(err.message, 0);
-          this.$refs.EverAlienTokenOutput.innerHTML = "";
+          this.loadingText = " ";
           return;
         }
       }
@@ -592,11 +601,11 @@ export default defineComponent({
         toast("Operation successful", 1)
         }else{
         toast(EverAlienTokenOutput[1], 0);
-        this.$refs.EverAlienTokenOutput.innerHTML = "";
+        this.loadingText = " ";
         return;
-        } 
+        }
 
-        this.$refs.EverAlienTokenOutput.innerHTML = EverAlienTokenOutput;
+        this.loadingText = EverAlienTokenOutput;
     }
     async function HandleSelectionChange(){
       this.$refs.transferAlienTokenBtn.innerHTML = `Transfer ${this.$refs.AlienToken.value.split("EVER")[1]} Token`
@@ -636,7 +645,7 @@ export default defineComponent({
 }
 
 .checkmark {
-  cursor: pointer;  
+  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;

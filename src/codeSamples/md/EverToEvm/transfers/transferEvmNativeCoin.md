@@ -495,7 +495,7 @@ await AlienTokenWalletUpgradable.methods
     amount: ethers.parseEther(amount).toString(),
     callbackTo: ProxyMultiVaultAlienV_7,
     payload: EvmGasTokenPayload,
-    remainingGasTo: payWithEver ? EventCloser : everSender, 
+    remainingGasTo: payWithEver ? EventCloser : everSender,
   })
   .send({
     from: everSender,
@@ -511,7 +511,7 @@ await AlienTokenWalletUpgradable.methods
 
 ::: warning
 Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
-::: 
+:::
 
 <label for="amount">amount </label>
 <input ref="amount" type="number"/>
@@ -525,7 +525,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <br/>
 <button @click="HandleTransferEvmNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer {{BurnNativeBtnText()}}</button>
 
-<p class="output-p" ref="EvmNativeCoinOutput"></p>
+<p class="output-p" ref="EvmNativeCoinOutput"><loading :text="loadingText"/></p>
 
 </div>
 
@@ -537,9 +537,18 @@ import { Address } from "everscale-inpage-provider";
 import * as constants from "../../../providers/helpers/constants";
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
 import {toast} from "../../../providers/helpers/toaster.ts"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "EvmNativeCoinTransfer",
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     const { transferEverAlienEvmNativeCoin } = useEverToEvmTransfers();
     onMounted(async ()=>{
@@ -550,29 +559,29 @@ export default defineComponent({
 
       }
     async function HandleTransferEvmNativeCoin(){
-        this.$refs.EvmNativeCoinOutput.innerHTML = "processing ...";
+        this.loadingText = "";
 
         if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.EvmNativeCoinOutput.innerHTML = ""
+        this.loadingText = " ";
         return
         }
 
         const EvmNativeCoinOutput = await transferEverAlienEvmNativeCoin(
             constants[`EVERW${BurnNativeBtnText()}`],
             this.$refs.amount.value,
-            this.$refs.everPay.checked 
+            this.$refs.everPay.checked
         );
-        
+
         if (EvmNativeCoinOutput[0] != "ERROR :" ){
         toast("Operation successful", 1)
         }else{
         toast(EvmNativeCoinOutput[1], 0);
-        this.$refs.EvmNativeCoinOutput.innerHTML = "";
+        this.loadingText = " ";
         return;
-        } 
+        }
 
-        this.$refs.EvmNativeCoinOutput.innerHTML = EvmNativeCoinOutput;
+        this.loadingText = EvmNativeCoinOutput;
     }
     return {
       HandleTransferEvmNativeCoin,

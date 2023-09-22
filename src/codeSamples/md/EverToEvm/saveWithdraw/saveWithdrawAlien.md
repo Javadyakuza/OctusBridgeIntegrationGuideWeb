@@ -3468,7 +3468,7 @@ Only EverscaleEthereumAlienEvent contract addresses from incomplete bridging pro
 <br/>
 <button @click="HandleSaveWithdrawAlien" style="{background-color : gray, border-radius: 100px}">saveWithdrawAlien</button>
 
-<p class="output-p" ref="saveWithdrawAlienOutput"></p>
+<p class="output-p" ref="saveWithdrawAlienOutput"><loading :text="loadingText"/></p>
 
 ---
 
@@ -3484,45 +3484,53 @@ import { Address} from "everscale-inpage-provider";
 import {toast} from "../../../providers/helpers/toaster.ts"
 import isValidEverAddress from "../../../providers/helpers/isValidEverAddress.ts"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "saveWithdrawAlien",
-
+  components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     const { saveWithdrawAlien } = useSaveWithdraws();
-    
+
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
-    
+
     async function HandleSaveWithdrawAlien() {
-      this.$refs.saveWithdrawAlienOutput.innerHTML = "processing ...";
+      this.loadingText = "";
         if((await isValidEverAddress(false, this.$refs.eventAddr.value)) == false){
           toast("Please enter valid alien Event contract address !!", 0)
-          this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+          this.loadingText = " ";
           return
         } else if ((await isValidEverAddress(false, this.$refs.eventAddr.value)) == 2){
           toast("Use native token asset releasing section !!", 0)
-          this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+          this.loadingText = " ";
           return
         }else if((
           await isValidEverAddress(false, this.$refs.eventAddr.value)) == 1){
           toast("Bridging process is not incomplete !!", 0)
-          this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+          this.loadingText = " ";
           return
         }
-      
+
       let saveWithdrawAlienOutput = await saveWithdrawAlien(new Address(this.$refs.eventAddr.value));
-      
+
       if (saveWithdrawAlienOutput[0] != "ERROR :" ){
       toast("Operation successful", 1)
       }else{
       toast(saveWithdrawAlienOutput[1], 0);
-      this.$refs.saveWithdrawAlienOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
       }
 
-      this.$refs.saveWithdrawAlienOutput.innerHTML = saveWithdrawAlienOutput;
+      this.loadingText = saveWithdrawAlienOutput;
     }
     return {
       HandleSaveWithdrawAlien,
@@ -3540,7 +3548,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 
 </style>

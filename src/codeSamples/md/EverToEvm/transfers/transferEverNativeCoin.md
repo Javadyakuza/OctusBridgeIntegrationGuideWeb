@@ -228,7 +228,7 @@ let EverNativeCoinPayload: string;
     .wrap({
       tokens: ethers.parseUnits(amount, 9).toString(),
       owner_address: Compounder,
-      gas_back_address: payWithEver ? EventCloser : everSender, 
+      gas_back_address: payWithEver ? EventCloser : everSender,
       payload: EverNativeCoinPayload,
     })
     .send({
@@ -242,7 +242,7 @@ let EverNativeCoinPayload: string;
 
 ::: warning
 Kindly be aware that you are signing a transaction on the mainnet (this is not a testnet).
-::: 
+:::
 
 <label for="amount">amount </label>
 <input ref="amount" type="number"/>
@@ -256,7 +256,7 @@ Kindly be aware that you are signing a transaction on the mainnet (this is not a
 <br/>
 <button @click="HandleTransferEverNativeCoin" style="{background-color : gray, border-radius: 100px}">Transfer EVER</button>
 
-<p class="output-p" ref="EverNativeCoinOutput"></p>
+<p class="output-p" ref="EverNativeCoinOutput"><loading :text="loadingText"/></p>
 
 ---
 
@@ -271,20 +271,29 @@ import { defineComponent, ref, onMounted } from "vue";
 import { Address } from "everscale-inpage-provider";
 import {toast} from "../../../providers/helpers/toaster.ts"
 import {useEvmProvider} from "../../../../providers/useEvmProvider"
+import loading from "../../../../../.vitepress/theme/components/shared/BKDLoading.vue"
 
 export default defineComponent({
   name: "EverNativeCoinTransfer",
+    components:{
+    loading
+  },
+  data(){
+    return{
+      loadingText: " "
+    }
+  },
   setup() {
     const { transferEverNativeCoin } = useEverToEvmTransfers();
     onMounted(async ()=>{
       await useEvmProvider().MetaMaskProvider().on('chainChanged', (chainId) => window.location.reload());
     })
     async function HandleTransferEverNativeCoin() {
-      this.$refs.EverNativeCoinOutput.innerHTML = "processing ...";
+      this.loadingText = "";
 
       if (Number(this.$refs.amount.value) <= 0) {
         toast("Please enter a valid number !!", 0);
-        this.$refs.EverNativeCoinOutput.innerHTML = ""
+        this.loadingText = " "
         return
       }
 
@@ -297,10 +306,10 @@ export default defineComponent({
       toast("Operation successful", 1)
       }else{
       toast(EverNativeCoinOutput[1], 0);
-      this.$refs.EverNativeCoinOutput.innerHTML = "";
+      this.loadingText = " ";
       return;
-      } 
-      this.$refs.EverNativeCoinOutput.innerHTML = EverNativeCoinOutput;
+      }
+      this.loadingText = EverNativeCoinOutput;
     }
     return {
       HandleTransferEverNativeCoin,
@@ -319,7 +328,7 @@ export default defineComponent({
   border-radius: 8px;
   font-weight: 600;
   margin-right: 0.5rem;
-  cursor : pointer;  
+  cursor : pointer;
 }
 .container {
   display: flex;
@@ -335,7 +344,7 @@ export default defineComponent({
 }
 
 .checkmark {
-  cursor: pointer;  
+  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;
